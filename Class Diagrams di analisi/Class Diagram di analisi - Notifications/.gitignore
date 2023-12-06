@@ -1,0 +1,15 @@
+#Visual paradigm
+*.bak
+*.uml
+*.xml
+*.csv
+*.xlsx
+*.docx
+*.pptx
+*.txt
+*.bak
+*.log
+*.vpd
+*.vux
+*.lck
+*.vpp.*

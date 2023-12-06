@@ -175,3 +175,6 @@ fabric.properties
 *.vpd
 *.vux
 *.lck
+*.bak_000d
+*.bak_000d
+*.bak_000f

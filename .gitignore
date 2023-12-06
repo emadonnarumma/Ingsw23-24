@@ -11,7 +11,7 @@ local.properties
 
 # Android Studio generated files and folders
 captures/
-.externalNativeBuild/
+.externalNativeBuild/  
 .cxx/
 *.apk
 output.json
@@ -161,4 +161,16 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/android,androidstudio
+#Visual paradigm
+*.bak
+*.uml
+*.xml
+*.csv
+*.xlsx
+*.docx
+*.pptx
+*.txt
+*.bak
+*.log
+*.vpd
+*.vux

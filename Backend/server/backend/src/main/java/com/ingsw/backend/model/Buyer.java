@@ -6,4 +6,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="buyers")
 public class Buyer extends User {
+
+
 }

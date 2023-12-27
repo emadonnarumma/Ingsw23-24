@@ -2,20 +2,28 @@ package com.ingsw.backend.model;
 
 import com.ingsw.backend.enumeration.Region;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name="users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="user_type", discriminatorType = DiscriminatorType.STRING)
 public class User {
-	
+
+	@Column(nullable = false)
 	private String username;
 	
 	@Id
 	private String email;
-	
+
+	@Column(nullable = false)
+	@Length(min=8)
 	private String password;
-	
+
+	@Length(max=1000)
 	private String bio;
 	
 	@Enumerated(EnumType.STRING)

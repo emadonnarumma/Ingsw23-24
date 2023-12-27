@@ -164,7 +164,7 @@ fabric.properties
 #Visual paradigm
 *.bak
 *.uml
-*.xml
+# *.xml
 *.csv
 *.xlsx
 *.docx

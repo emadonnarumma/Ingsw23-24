@@ -1,8 +1,6 @@
 package com.ingsw.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
@@ -20,7 +18,22 @@ public class DownwardAuction extends Auction {
     private Double decrementAmount;
 
     @Column(nullable = false)
-    private Long decremntTime;
+    private Long decrementTime;
+
+    @Column(nullable = false)
+    private Timestamp nextDecrement;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    private Seller owner;
+
+
+
+
+
+
+
+
 
     public Double getSecretMinimumPrice() {
         return secretMinimumPrice;
@@ -46,12 +59,12 @@ public class DownwardAuction extends Auction {
         this.decrementAmount = decrementAmount;
     }
 
-    public Long getDecremntTime() {
-        return decremntTime;
+    public Long getDecrementTime() {
+        return decrementTime;
     }
 
-    public void setDecremntTime(Long decremntTime) {
-        this.decremntTime = decremntTime;
+    public void setDecrementTime(Long decremntTime) {
+        this.decrementTime = decremntTime;
     }
 
     public Timestamp getNextDecrement() {
@@ -61,7 +74,4 @@ public class DownwardAuction extends Auction {
     public void setNextDecrement(Timestamp nextDecrement) {
         this.nextDecrement = nextDecrement;
     }
-
-    @Column(nullable = false)
-    private Timestamp nextDecrement;
 }

@@ -1,9 +1,6 @@
 package com.ingsw.backend.model;
 
 import com.ingsw.backend.enumeration.Region;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.validator.constraints.Length;
 

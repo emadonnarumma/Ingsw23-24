@@ -2,14 +2,11 @@ package com.ingsw.backend.model;
 
 import com.ingsw.backend.enumeration.Region;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User {
 	
 	private String username;

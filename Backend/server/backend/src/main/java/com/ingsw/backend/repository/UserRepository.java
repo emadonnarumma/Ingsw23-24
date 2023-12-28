@@ -2,6 +2,7 @@ package com.ingsw.backend.repository;
 
 import java.util.Optional;
 
+import jakarta.annotation.Nonnull;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

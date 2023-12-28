@@ -33,7 +33,6 @@ public abstract class Bid {
 
 
 
-
     public Integer getId() {
         return id;
     }

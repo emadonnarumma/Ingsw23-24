@@ -5,14 +5,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.ingsw.backend.model.User;
 import com.ingsw.backend.serviceinterface.UserService;
+
+import javax.print.attribute.standard.Media;
 
 @RestController
 @RequestMapping("/user")
@@ -34,5 +34,10 @@ public class UserController {
 		}
 		
 		return user.get();
+	}
+
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public User addUser(@RequestBody User user) {
+		return userService.addUser(user);
 	}
 }

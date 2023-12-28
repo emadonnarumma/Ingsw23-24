@@ -21,4 +21,8 @@ public class DbUserService implements UserService{
 		return userRepository.findByEmailAndPassword(email, password);
 	}
 
+	@Override
+	public User addUser(User user) {
+		return userRepository.save(user);
+	}
 }

@@ -25,7 +25,6 @@ public class ReverseAuction extends Auction {
 
 
 
-
     public Double getStartingPrice() {
         return startingPrice;
     }

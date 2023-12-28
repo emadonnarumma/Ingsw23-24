@@ -22,6 +22,7 @@ public class ReverseBid extends Bid {
 
 
 
+
     public Seller getOwner() {
         return owner;
     }

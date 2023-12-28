@@ -22,6 +22,7 @@ public class SilentBid extends Bid {
 
 
 
+
     public Buyer getOwner() {
         return owner;
     }

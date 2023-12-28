@@ -9,10 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.User;
 import com.ingsw.backend.serviceinterface.UserService;
 
-import javax.print.attribute.standard.Media;
 
 @RestController
 @RequestMapping("/user")
@@ -37,7 +37,7 @@ public class UserController {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public User addUser(@RequestBody User user) {
+	public User addUser(@RequestBody Buyer user) {
 		return userService.addUser(user);
 	}
 }

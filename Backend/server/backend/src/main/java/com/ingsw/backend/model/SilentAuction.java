@@ -14,6 +14,7 @@ public class SilentAuction extends Auction {
     @Column(nullable = false)
     private Long withdrawalTime;
 
+
     @ManyToOne
     @JoinColumn(name = "owner_email", referencedColumnName = "email")
     private Seller owner;

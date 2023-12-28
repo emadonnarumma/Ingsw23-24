@@ -25,7 +25,7 @@ public class UserController {
 	
 	@GetMapping("/{email}/{password}")
 	public User getByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
-		
+
 		Optional<User> user = userService.getUser(email, password);
 		
 		if (user.isEmpty()) {

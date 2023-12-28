@@ -1,8 +1,8 @@
-package com.ingsw.backend.enumeration;
+package com.ingsw.dietiDeals24.enumeration;
 
 public enum Region {
 
-	CAMPANIA,
+    CAMPANIA,
     LAZIO,
     LOMBARDIA,
     VENETO,

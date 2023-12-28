@@ -11,13 +11,16 @@ import com.ingsw.backend.serviceinterface.UserService;
 
 @Service("mainService")
 public class DbUserService implements UserService{
-	
+
+	private final UserRepository userRepository;
+
 	@Autowired
-	private UserRepository userRepository;
+	public DbUserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	@Override
 	public Optional<User> getUser(String email, String password) {
-		
 		return userRepository.findByEmailAndPassword(email, password);
 	}
 

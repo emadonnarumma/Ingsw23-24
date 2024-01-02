@@ -1,8 +1,17 @@
 package com.ingsw.backend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.validator.constraints.Length;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="bank_accounts")
 public class BankAccount {
@@ -19,35 +28,4 @@ public class BankAccount {
     private String iva;
 
 
-
-
-
-
-
-
-
-
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-
-    public String getIva() {
-        return iva;
-    }
-
-    public void setIva(String iva) {
-        this.iva = iva;
-    }
-
-    public Seller getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Seller seller) {
-        this.seller = seller;
-    }
 }

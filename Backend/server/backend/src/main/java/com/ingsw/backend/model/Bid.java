@@ -2,10 +2,16 @@ package com.ingsw.backend.model;
 
 import com.ingsw.backend.enumeration.BidStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="bids")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -26,42 +32,4 @@ public abstract class Bid {
     private Timestamp timestamp;
 
 
-
-
-
-
-
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Double getMoneyAmount() {
-        return moneyAmount;
-    }
-
-    public void setMoneyAmount(Double moneyAmount) {
-        this.moneyAmount = moneyAmount;
-    }
-
-    public BidStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(BidStatus status) {
-        this.status = status;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
-    }
 }

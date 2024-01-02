@@ -1,9 +1,19 @@
 package com.ingsw.backend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="downward_auctions")
 public class DownwardAuction extends Auction {
@@ -29,49 +39,4 @@ public class DownwardAuction extends Auction {
 
 
 
-
-
-
-
-
-
-    public Double getSecretMinimumPrice() {
-        return secretMinimumPrice;
-    }
-
-    public void setSecretMinimumPrice(Double secretMinimumPrice) {
-        this.secretMinimumPrice = secretMinimumPrice;
-    }
-
-    public Double getCurrentPrice() {
-        return currentPrice;
-    }
-
-    public void setCurrentPrice(Double currentPrice) {
-        this.currentPrice = currentPrice;
-    }
-
-    public Double getDecrementAmount() {
-        return decrementAmount;
-    }
-
-    public void setDecrementAmount(Double decrementAmount) {
-        this.decrementAmount = decrementAmount;
-    }
-
-    public Long getDecrementTime() {
-        return decrementTime;
-    }
-
-    public void setDecrementTime(Long decremntTime) {
-        this.decrementTime = decremntTime;
-    }
-
-    public Timestamp getNextDecrement() {
-        return nextDecrement;
-    }
-
-    public void setNextDecrement(Timestamp nextDecrement) {
-        this.nextDecrement = nextDecrement;
-    }
 }

@@ -1,14 +1,33 @@
 package com.ingsw.backend.model;
 
 import com.ingsw.backend.enumeration.Region;
-import jakarta.persistence.*;
-import org.hibernate.validator.constraints.Length;
+import com.ingsw.backend.enumeration.Role;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+@SuppressWarnings("serial")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="user_type", discriminatorType = DiscriminatorType.STRING)
-public class User {
+@DiscriminatorColumn(name="role", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("USER")
+public class User implements UserDetails{
 
 	@Column(nullable = false)
 	private String username;
@@ -25,47 +44,46 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private Region region;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="role", insertable = false, updatable = false)
+	private Role role;
 
-	public String getUsername() {
-		return username;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
+	@Override
 	public String getPassword() {
 		return password;
 	}
 
-	public String getBio() {
-		return bio;
+	@Override
+	public String getUsername() {
+		return email;
 	}
 
-	public Region getRegion() {
-		return region;
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
-	public void setBio(String bio) {
-		this.bio = bio;
-	}
-
-	public void setRegion(Region region) {
-		this.region = region;
-	}
-	
-	
 
 }

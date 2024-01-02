@@ -1,11 +1,17 @@
 package com.ingsw.backend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
+@SuppressWarnings("serial")
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="sellers")
+@DiscriminatorValue("SELLER")
 public class Seller extends User {
 
     @OneToOne(mappedBy = "seller")
@@ -21,29 +27,4 @@ public class Seller extends User {
     private List<ReverseBid> bids;
 
 
-
-
-
-
-
-
-    public List<SilentAuction> getSilentAuctions() {
-        return silentAuctions;
-    }
-
-    public void setSilentAuctions(List<SilentAuction> silentAuctions) {
-        this.silentAuctions = silentAuctions;
-    }
-
-    public List<DownwardAuction> getDownwardAuctions() {
-        return downwardAuctions;
-    }
-
-    public void setDownwardAuctions(List<DownwardAuction> downwardAuctions) {
-        this.downwardAuctions = downwardAuctions;
-    }
-
-    public BankAccount getBankAccount() {
-        return bankAccount;
-    }
 }

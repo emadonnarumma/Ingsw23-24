@@ -1,26 +1,24 @@
-package com.ingsw.dietiDeals24;
+package com.ingsw.dietiDeals24.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 
-import com.ingsw.dietiDeals24.dao.UserDao;
-import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.R;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
+    View emailView, passwordView;
+    Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
+        /*
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.1.20:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -40,6 +38,20 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
                 System.out.println(t.toString());
             }
+        });
+    */
+        emailView = findViewById(R.id.emailEditText);
+        passwordView = findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
         });
     }
 }

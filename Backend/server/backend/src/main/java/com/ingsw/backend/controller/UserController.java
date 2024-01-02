@@ -15,7 +15,7 @@ import com.ingsw.backend.serviceinterface.UserService;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
 	
 	@Autowired

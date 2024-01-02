@@ -1,14 +1,19 @@
 package com.ingsw.backend.model;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@SuppressWarnings("serial")
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="buyers")
+@DiscriminatorValue("BUYER")
 public class Buyer extends User {
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
@@ -17,28 +22,4 @@ public class Buyer extends User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<SilentBid> bids;
 
-
-
-
-
-
-
-
-
-
-    public List<SilentBid> getBids() {
-        return bids;
-    }
-
-    public void setBids(List<SilentBid> bids) {
-        this.bids = bids;
-    }
-
-    public List<ReverseAuction> getReverseAuctions() {
-        return reverseAuctions;
-    }
-
-    public void setReverseAuctions(List<ReverseAuction> reverseAuctions) {
-        this.reverseAuctions = reverseAuctions;
-    }
 }

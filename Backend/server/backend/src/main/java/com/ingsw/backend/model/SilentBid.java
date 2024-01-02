@@ -4,7 +4,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "silent_bids")
 public class SilentBid extends Bid {
@@ -14,20 +24,4 @@ public class SilentBid extends Bid {
     private Buyer owner;
 
 
-
-
-
-
-
-
-
-
-
-    public Buyer getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Buyer owner) {
-        this.owner = owner;
-    }
 }

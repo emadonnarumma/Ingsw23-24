@@ -37,6 +37,8 @@ android {
 dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
     val navigatorVersion = "2.7.6"
     implementation("androidx.navigation:navigation-fragment:$navigatorVersion")
     implementation("androidx.navigation:navigation-ui:$navigatorVersion")

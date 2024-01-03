@@ -7,7 +7,9 @@
     <string name="registration_phrase">Non sei ancora registrato?</string>
     <string name="registered">Registrati</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_search">Cerca</string>
+    <string name="title_create_auction">Vendi</string>
+    <string name="title_profile">Profilo</string>
+    <string name="my_bids">Le tue offerte</string>
+    <string name="my_auctions">Le tue aste</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.dashboard;
+package com.ingsw.dietiDeals24.activity.ui.myAuctions;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.ingsw.dietiDeals24.databinding.FragmentDashboardBinding;
+import com.ingsw.dietiDeals24.databinding.FragmentMyAuctionsBinding;
 
-public class DashboardFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+public class MyAuctionsFragment extends Fragment {
+
+    private FragmentMyAuctionsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        MyAuctionViewModel createAuctionViewModel =
+                new ViewModelProvider(this).get(MyAuctionViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentMyAuctionsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textMyAuction;
+        createAuctionViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

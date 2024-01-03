@@ -35,11 +35,13 @@ public class User implements UserDetails{
 	@Id
 	private String email;
 
-	@Column(nullable = false)
+	
+	@Column(nullable = false, length = 1000)
 	@Length(min=8)
 	private String password;
 
-	@Length(max=1000)
+	@Column(length = 1000)
+	@Length(max = 1000)
 	private String bio;
 	
 	@Enumerated(EnumType.STRING)

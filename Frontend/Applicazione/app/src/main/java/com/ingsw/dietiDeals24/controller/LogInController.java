@@ -25,7 +25,7 @@ public class LogInController {
 
     public static void login(String email, String password) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.20:8080/")
+                .baseUrl("http://192.168.199.135:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -36,7 +36,13 @@ public class LogInController {
             @Override
             public void onResponse(@NonNull Call<AuthenticationToken> call, @NonNull Response<AuthenticationToken> response) {
                 AuthenticationToken authenticationToken = response.body();
-                isLoggedIn = true;
+
+                if (authenticationToken == null) {
+                    isLoggedIn = false;
+                } else {
+
+                    isLoggedIn = true;
+                }
             }
 
             @Override

@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.LogInController;
 
 public class LoginActivity extends AppCompatActivity {
-    View emailView, passwordView;
+    EditText emailView, passwordView;
     Button loginButton;
 
     @Override
@@ -18,28 +20,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        /*
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.20:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        UserDao userDao = retrofit.create(UserDao.class);
-        Call<User> call = userDao.getUserByEmailAndPassword("admin@admin.com", "admin");
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                User u = response.body();
-                TextView prova = findViewById(R.id.Prova);
-                prova.setText(u.username);
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                System.out.println(t.toString());
-            }
-        });
-    */
         emailView = findViewById(R.id.emailEditText);
         passwordView = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
@@ -50,8 +30,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onResume();
 
         loginButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
+            String email = emailView.getText().toString();
+            String password = passwordView.getText().toString();
+
+            LogInController.login(email, password);
+            if (LogInController.isLoggedIn) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), "Credenziali non valide", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

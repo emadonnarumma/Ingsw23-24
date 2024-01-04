@@ -7,6 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ingsw.backend.configuration.JwtService;
+import com.ingsw.backend.enumeration.Role;
+import com.ingsw.backend.model.Buyer;
+import com.ingsw.backend.model.Seller;
 import com.ingsw.backend.model.User;
 import com.ingsw.backend.repository.UserRepository;
 
@@ -23,14 +26,39 @@ public class AuthenticationService {
 
 	public AuthenticationResponse register(RegisterRequest request) {
 		
-		var user = User.builder()
-				.bio(request.getBio())
-				.email(request.getEmail())
-				.password(passwordEncoder.encode(request.getPassword()))
-				.name(request.getName())
-				.region(request.getRegion())
-				.role(request.getRole())
-				.build();
+//		var user = User.builder()
+//				.bio(request.getBio())
+//				.email(request.getEmail())
+//				.password(passwordEncoder.encode(request.getPassword()))
+//				.name(request.getName())
+//				.region(request.getRegion())
+//				.role(request.getRole())
+//				.build();
+		
+		User user;
+		
+		if (request.getRole() == Role.BUYER) {
+			
+			user = Buyer.builder()
+					.bio(request.getBio())
+					.email(request.getEmail())
+					.password(passwordEncoder.encode(request.getPassword()))
+					.name(request.getName())
+					.region(request.getRegion())
+					.role(request.getRole())
+					.build();
+			
+		} else {
+			
+			user = Seller.builder()
+					.bio(request.getBio())
+					.email(request.getEmail())
+					.password(passwordEncoder.encode(request.getPassword()))
+					.name(request.getName())
+					.region(request.getRegion())
+					.role(request.getRole())
+					.build();
+		}
 		
 		repository.save(user);
 		

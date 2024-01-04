@@ -40,16 +40,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		
 		jwt = authHeader.substring(7);
 		
-//		jwt = authHeader.substring("Bearer".length()).trim();
 		
 		userEmail = jwtService.extractUsername(jwt);
-		//System.out.println(jwt);
 		
 		
 		if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-			
-			//UserDetails userDetails = new User("donnarummaemanuele1@gmail.com", "donnarummaemanuele1@gmail.com", "password", "ciao", Region.CAMPANIA, Role.BUYER);
 			
 			if (jwtService.isTokenValid(jwt, userDetails)) {
 				

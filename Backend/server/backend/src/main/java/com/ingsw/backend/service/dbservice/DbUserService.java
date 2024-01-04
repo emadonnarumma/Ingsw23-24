@@ -1,4 +1,4 @@
-package com.ingsw.backend.dbservice;
+package com.ingsw.backend.service.dbservice;
 
 import java.util.Optional;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ingsw.backend.model.User;
 import com.ingsw.backend.repository.UserRepository;
-import com.ingsw.backend.serviceinterface.UserService;
+import com.ingsw.backend.service.UserService;
 
 @Service("mainService")
 public class DbUserService implements UserService{

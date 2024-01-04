@@ -1,4 +1,4 @@
-package com.ingsw.backend.serviceinterface;
+package com.ingsw.backend.service;
 
 import java.util.Optional;
 

@@ -3,7 +3,7 @@
     <string name="e_mail">E-Mail</string>
     <string name="password">Password</string>
     <string name="login">Accedi</string>
-    <string name="or">----------------------OPPURE----------------------</string>
+    <string name="or">OPPURE</string>
     <string name="registration_phrase">Non sei ancora registrato?</string>
     <string name="registered">Registrati</string>
     <string name="title_activity_home">HomeActivity</string>

@@ -63,6 +63,17 @@
         app:layout_constraintTop_toBottomOf="@id/passwordLayout"
         android:layout_marginTop="30dp" />
 
+    <View
+        android:id="@+id/or_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"/>
 
     <TextView
         android:id="@+id/separator"
@@ -70,10 +81,10 @@
         android:layout_height="wrap_content"
         android:text="@string/or"
         android:textSize="20sp"
-        android:backgroundTint="@color/white"
+        android:background="@color/white"
 
-        app:layout_constraintStart_toStartOf="@id/passwordLayout"
-        app:layout_constraintEnd_toEndOf="@id/passwordLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginButton"
         android:layout_marginTop="50dp" />
 

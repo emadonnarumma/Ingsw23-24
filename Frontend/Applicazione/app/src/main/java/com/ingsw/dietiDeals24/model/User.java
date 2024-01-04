@@ -4,14 +4,14 @@ import com.ingsw.dietiDeals24.enumeration.Region;
 
 public class User {
 
-    public String username;
+    private String name;
     private String email;
     private String password;
     private String bio;
     private Region region;
 
-    public User(String username, String email, String password, String bio, Region region) {
-        this.username = username;
+    public User(String name, String email, String password, String bio, Region region) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.bio = bio;

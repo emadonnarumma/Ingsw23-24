@@ -30,7 +30,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails{
 
 	@Column(nullable = false)
-	private String username;
+	private String name;
 	
 	@Id
 	private String email;

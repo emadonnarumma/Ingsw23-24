@@ -28,4 +28,9 @@ public class DbUserService implements UserService{
 	public User addUser(User user) {
 		return userRepository.save(user);
 	}
+
+	@Override
+	public Optional<User> getUser(String email) {
+		return userRepository.findByEmail(email);
+	}
 }

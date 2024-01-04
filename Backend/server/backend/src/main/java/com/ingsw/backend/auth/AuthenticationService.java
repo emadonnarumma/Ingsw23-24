@@ -27,7 +27,7 @@ public class AuthenticationService {
 				.bio(request.getBio())
 				.email(request.getEmail())
 				.password(passwordEncoder.encode(request.getPassword()))
-				.username(request.getUsername())
+				.name(request.getName())
 				.region(request.getRegion())
 				.role(request.getRole())
 				.build();

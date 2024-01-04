@@ -8,4 +8,5 @@ public interface UserService {
 
 	public User addUser(User user);
 	public Optional<User> getUser(String email, String password);
+	public Optional<User> getUser(String email);
 }

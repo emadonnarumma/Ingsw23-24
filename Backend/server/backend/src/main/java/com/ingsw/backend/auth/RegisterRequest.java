@@ -19,5 +19,6 @@ public class RegisterRequest {
 	private String bio;
 	private String password;
 	private Region region;
-	private String username;
+	private String name;
+
 }

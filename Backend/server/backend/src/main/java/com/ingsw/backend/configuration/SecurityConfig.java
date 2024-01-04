@@ -23,7 +23,7 @@ public class SecurityConfig {
 
 	
 	   @Bean
-	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	        http
 	                .csrf(csrf -> csrf
 	                        .disable()
@@ -32,7 +32,7 @@ public class SecurityConfig {
 	                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	                )
 	                .authorizeHttpRequests(authorize -> authorize
-	                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+	                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 	                        .anyRequest().authenticated()
 	                )
 	                .authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

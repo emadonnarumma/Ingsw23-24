@@ -1,13 +1,15 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.enumeration.Role;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @SuppressWarnings("serial")
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -52,6 +54,8 @@ public class User implements UserDetails{
 	private Role role;
 
 	@Override
+	@JsonIgnore
+	@JsonProperty(value = "authorities")
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		return List.of(new SimpleGrantedAuthority(role.name()));
@@ -63,26 +67,36 @@ public class User implements UserDetails{
 	}
 
 	@Override
+	@JsonIgnore
+	@JsonProperty(value = "username")
 	public String getUsername() {
 		return email;
 	}
 
 	@Override
+	@JsonIgnore
+	@JsonProperty(value = "accountNonExpired")
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
+	@JsonProperty(value = "accountNonLocked")
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
+	@JsonProperty(value = "credentialsNonExpired")
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
+	@JsonProperty(value = "enabled")
 	public boolean isEnabled() {
 		return true;
 	}

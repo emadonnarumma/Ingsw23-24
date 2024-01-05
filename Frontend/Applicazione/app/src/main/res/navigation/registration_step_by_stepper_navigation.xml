@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/registration_step_by_stepper_navigation"
+    app:startDestination="@id/navigation_step_1_mandatory_info">
+
+    <fragment
+        android:id="@id/navigation_step_1_mandatory_info"
+        android:name="com.ingsw.dietiDeals24.activity.ui.registration.mandatoryInfo.RegistrationMandatoryInfoFragment"
+        android:label="@string/title_mandatory_information" />
+
+    <fragment
+        android:id="@id/navigation_step_2_optional_info"
+        android:name="com.ingsw.dietiDeals24.activity.ui.registration.optionalInfo.RegistrationOptionalInfoFragment"
+        android:label="@string/title_optional_information" />
+
+    <fragment
+        android:id="@id/navigation_step_3_bank_info"
+        android:name="com.ingsw.dietiDeals24.activity.ui.registration.bankInfo.BankInfoFragment"
+        android:label="@string/title_bank_information" />
+
+</navigation>

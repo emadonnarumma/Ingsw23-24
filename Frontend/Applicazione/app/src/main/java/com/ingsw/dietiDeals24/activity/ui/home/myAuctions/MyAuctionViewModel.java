@@ -1,16 +1,16 @@
-package com.ingsw.dietiDeals24.activity.ui.search;
+package com.ingsw.dietiDeals24.activity.ui.home.myAuctions;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SearchViewModel extends ViewModel {
+public class MyAuctionViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SearchViewModel() {
+    public MyAuctionViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is myAuction fragment");
     }
 
     public LiveData<String> getText() {

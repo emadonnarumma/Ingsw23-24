@@ -1,16 +1,16 @@
-package com.ingsw.dietiDeals24.activity.ui.myAuctions;
+package com.ingsw.dietiDeals24.activity.ui.home.createAuction;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class MyAuctionViewModel extends ViewModel {
+public class CreateAuctionViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public MyAuctionViewModel() {
+    public CreateAuctionViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is myAuction fragment");
+        mText.setValue("This is dashboard fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.profile;
+package com.ingsw.dietiDeals24.activity.ui.home.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

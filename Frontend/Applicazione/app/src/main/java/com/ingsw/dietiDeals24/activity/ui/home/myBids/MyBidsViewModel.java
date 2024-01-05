@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.myBids;
+package com.ingsw.dietiDeals24.activity.ui.home.myBids;
 
 import androidx.lifecycle.ViewModel;
 

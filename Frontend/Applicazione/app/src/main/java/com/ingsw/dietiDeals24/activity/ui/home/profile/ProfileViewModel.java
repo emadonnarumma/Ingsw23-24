@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.profile;
+package com.ingsw.dietiDeals24.activity.ui.home.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -1,18 +1,23 @@
 package com.ingsw.dietiDeals24.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.activity.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
 
+import java.util.concurrent.Future;
+
 public class LoginActivity extends AppCompatActivity {
-    EditText emailView, passwordView;
+    TextView registrationTextView;
+    EditText emailEditText, passwordEditText;
     Button loginButton;
 
     @Override
@@ -20,26 +25,56 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailView = findViewById(R.id.emailEditText);
-        passwordView = findViewById(R.id.passwordEditText);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
+        registrationTextView = findViewById(R.id.registrationTextView);
+
+        userPressRegistrationButton();
+        userPressLoginButton();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void userPressRegistrationButton() {
+        registrationTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
+            startActivity(intent);
+        });
+    }
 
+
+    private void userPressLoginButton() {
         loginButton.setOnClickListener(v -> {
-            String email = emailView.getText().toString();
-            String password = passwordView.getText().toString();
+            String email = emailEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
 
-            LogInController.login(email, password);
-            if (LogInController.isLoggedIn) {
+            Thread thread = getLoginThread(email, password);
+            thread.start();
+        });
+    }
+
+    @NonNull
+    private Thread getLoginThread(String email, String password) {
+        return new Thread(() ->
+        {
+            boolean isLoggedIn = tryToLogin(email, password);
+
+            if (isLoggedIn) {
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
             } else {
-                Toast.makeText(getApplicationContext(), "Credenziali non valide", Toast.LENGTH_SHORT).show();
+                runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
             }
         });
+    }
+
+    private static boolean tryToLogin(String email, String password) {
+        Future<Boolean> future = LogInController.login(email, password);
+        boolean isLoggedIn;
+        try {
+            isLoggedIn = future.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return isLoggedIn;
     }
 }

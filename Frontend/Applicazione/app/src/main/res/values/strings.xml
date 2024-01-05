@@ -12,4 +12,7 @@
     <string name="title_profile">Profilo</string>
     <string name="my_bids">Le tue offerte</string>
     <string name="my_auctions">Le tue aste</string>
+    <string name="title_mandatory_information">Informazioni obbligatorie</string>
+    <string name="title_optional_information">Informazioni opzionali</string>
+    <string name="title_bank_information">Informazioni bancarie</string>
 </resources>

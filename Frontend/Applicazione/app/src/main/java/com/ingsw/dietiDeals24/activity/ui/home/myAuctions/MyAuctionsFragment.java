@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.createAuction;
+package com.ingsw.dietiDeals24.activity.ui.home.myAuctions;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.ingsw.dietiDeals24.databinding.FragmentCreateAuctionBinding;
+import com.ingsw.dietiDeals24.databinding.FragmentMyAuctionsBinding;
 
 
-public class CreateAuctionFragment extends Fragment {
+public class MyAuctionsFragment extends Fragment {
 
-    private FragmentCreateAuctionBinding binding;
+    private FragmentMyAuctionsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        CreateAuctionViewModel createAuctionViewModel =
-                new ViewModelProvider(this).get(CreateAuctionViewModel.class);
+        MyAuctionViewModel createAuctionViewModel =
+                new ViewModelProvider(this).get(MyAuctionViewModel.class);
 
-        binding = FragmentCreateAuctionBinding.inflate(inflater, container, false);
+        binding = FragmentMyAuctionsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textCreateAuction;
+        final TextView textView = binding.textMyAuction;
         createAuctionViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }

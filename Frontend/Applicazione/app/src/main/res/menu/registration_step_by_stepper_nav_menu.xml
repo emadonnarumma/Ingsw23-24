@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/navigation_step_1_mandatory_info"
+        android:title="@string/title_mandatory_information" />
+
+    <item android:id="@+id/navigation_step_2_optional_info"
+        android:title="@string/title_optional_information" />
+
+    <item android:id="@+id/navigation_step_3_bank_info"
+        android:title="@string/title_bank_information" />
+</menu>

@@ -9,7 +9,7 @@ import com.ingsw.backend.model.User;
 import com.ingsw.backend.repository.UserRepository;
 import com.ingsw.backend.service.UserService;
 
-@Service("mainService")
+@Service("mainUserService")
 public class UserDbService implements UserService{
 
 	private final UserRepository userRepository;

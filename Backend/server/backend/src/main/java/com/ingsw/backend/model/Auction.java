@@ -1,6 +1,7 @@
 package com.ingsw.backend.model;
 
 import com.ingsw.backend.enumeration.AuctionStatus;
+import com.ingsw.backend.enumeration.Category;
 import com.ingsw.backend.enumeration.Wear;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,9 @@ public abstract class Auction {
 
     @Enumerated(EnumType.STRING)
     private AuctionStatus status;
+    
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
 }
 

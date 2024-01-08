@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	@Autowired
-	@Qualifier("mainService")
+	@Qualifier("mainUserService")
 	private UserService userService;
 	
 //	@GetMapping

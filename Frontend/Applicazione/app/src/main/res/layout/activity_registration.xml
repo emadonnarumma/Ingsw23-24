@@ -1,27 +1,7 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity">
-
-    <fragment
-        android:id="@+id/frame_stepper"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/registration_step_by_stepper_navigation" />
-
-    <com.aceinteract.android.stepper.StepperNavigationView
-        android:id="@+id/stepper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:stepperType="tab"
-        app:stepperItems="@menu/registration_step_by_stepper_nav_menu"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".activity.RegistrationActivity" />

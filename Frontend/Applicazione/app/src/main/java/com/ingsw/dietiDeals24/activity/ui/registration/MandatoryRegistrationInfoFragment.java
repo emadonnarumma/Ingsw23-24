@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.registration.mandatoryInfo;
+package com.ingsw.dietiDeals24.activity.ui.registration;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,18 +14,18 @@ import android.view.ViewGroup;
 
 import com.ingsw.dietiDeals24.R;
 
-public class RegistrationMandatoryInfoFragment extends Fragment {
+public class MandatoryRegistrationInfoFragment extends Fragment {
 
-    private RegistrationMandatoryInfoViewModel mViewModel;
+    private MandatoryRegistrationInfoViewModel mViewModel;
 
-    public static RegistrationMandatoryInfoFragment newInstance() {
-        return new RegistrationMandatoryInfoFragment();
+    public static MandatoryRegistrationInfoFragment newInstance() {
+        return new MandatoryRegistrationInfoFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(RegistrationMandatoryInfoViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MandatoryRegistrationInfoViewModel.class);
         // TODO: Use the ViewModel
     }
 
@@ -33,7 +33,7 @@ public class RegistrationMandatoryInfoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_registration_mandatory_info, container, false);
+        return inflater.inflate(R.layout.fragment_mandatory_registration_info, container, false);
     }
 
 }

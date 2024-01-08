@@ -24,13 +24,13 @@ public class Seller extends User {
     @OneToOne(mappedBy = "seller")
     private BankAccount bankAccount;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<SilentAuction> silentAuctions;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<DownwardAuction> downwardAuctions;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<ReverseBid> bids;
 
 

@@ -28,7 +28,7 @@ public abstract class Auction {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String description;
 
     @Enumerated(EnumType.STRING)

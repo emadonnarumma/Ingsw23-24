@@ -10,12 +10,12 @@ import com.ingsw.backend.repository.UserRepository;
 import com.ingsw.backend.service.UserService;
 
 @Service("mainService")
-public class DbUserService implements UserService{
+public class UserDbService implements UserService{
 
 	private final UserRepository userRepository;
 
 	@Autowired
-	public DbUserService(UserRepository userRepository) {
+	public UserDbService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 

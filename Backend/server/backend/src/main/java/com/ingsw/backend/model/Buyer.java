@@ -24,10 +24,10 @@ import java.util.List;
 @DiscriminatorValue("BUYER")
 public class Buyer extends User {
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<ReverseAuction> reverseAuctions;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<SilentBid> bids;
 
 }

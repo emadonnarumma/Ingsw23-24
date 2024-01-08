@@ -29,21 +29,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="role", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("USER")
-public class User implements UserDetails{
+public abstract class User implements UserDetails{
 
 	@Column(nullable = false)
 	private String name;
 	
 	@Id
+	@Column(length = 320)
 	private String email;
 
 	
-	@Column(nullable = false, length = 1000)
-	@Length(min=8)
+	@Column(nullable = false)
 	private String password;
 
-	@Column(length = 1000)
-	@Length(max = 1000)
+	@Column(length = 500)
+	@Length(max = 500)
 	private String bio;
 	
 	@Enumerated(EnumType.STRING)

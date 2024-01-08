@@ -22,9 +22,11 @@ public class BankAccount {
 
     @Id
     @Length(min=27, max=27)
+    @Column(nullable = false, length = 27)
     private String iban;
 
     @Length(min=11, max=11)
+    @Column(nullable = false, length = 11)
     private String iva;
 
 

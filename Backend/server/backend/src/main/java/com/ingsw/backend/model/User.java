@@ -2,6 +2,8 @@ package com.ingsw.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.enumeration.Role;
 
@@ -29,6 +31,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="role", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("USER")
+@JsonTypeInfo(
+		  use = JsonTypeInfo.Id.NAME, 
+		  include = JsonTypeInfo.As.PROPERTY, 
+		  property = "role"
+		)
+@JsonSubTypes({
+		  @JsonSubTypes.Type(value = Seller.class, name = "SELLER"),
+		  @JsonSubTypes.Type(value = Buyer.class, name = "BUYER")
+		  
+		})
 public abstract class User implements UserDetails{
 
 	@Column(nullable = false)

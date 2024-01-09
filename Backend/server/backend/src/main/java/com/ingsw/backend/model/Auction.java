@@ -7,15 +7,33 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+
 @Data
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="auctions")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(
+		  use = JsonTypeInfo.Id.NAME, 
+		  include = JsonTypeInfo.As.PROPERTY, 
+		  property = "type"
+		)
+@JsonSubTypes({
+		  @JsonSubTypes.Type(value = SilentAuction.class, name = "SILENT"),
+		  @JsonSubTypes.Type(value = DownwardAuction.class, name = "DOWNWARD"),
+		  @JsonSubTypes.Type(value = ReverseAuction.class, name = "REVERSE")
+				})
 public abstract class Auction {
 
     @Id
@@ -40,6 +58,11 @@ public abstract class Auction {
     
     @Enumerated(EnumType.STRING)
     private Category category;
+    
+    @ManyToOne
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    @JsonBackReference
+    private User owner;
 
 }
 

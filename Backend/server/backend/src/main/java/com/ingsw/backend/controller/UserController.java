@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.ingsw.backend.model.User;
 import com.ingsw.backend.service.UserService;
@@ -32,13 +31,13 @@ public class UserController {
 //	}
 //	
 	@GetMapping("/{email}")
-	public ResponseEntity<User> getByEmailAndPassword(@PathVariable String email) {
+	public ResponseEntity<User> getByEmail(@PathVariable String email) {
 
 		Optional<User> user = userService.getUser(email);
 		
 		if (user.isEmpty()) {
 			
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
 		return ResponseEntity.ok(user.get());

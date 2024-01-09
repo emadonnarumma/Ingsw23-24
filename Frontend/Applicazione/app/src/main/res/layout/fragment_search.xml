@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".activity.ui.home.search.SearchFragment">
 
+
+
+
     <TextView
         android:id="@+id/text_search"
         android:layout_width="match_parent"

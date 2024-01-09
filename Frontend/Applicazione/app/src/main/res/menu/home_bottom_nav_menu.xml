@@ -4,27 +4,27 @@
     <item
         android:id="@+id/navigation_search"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/title_search" />
+        android:title="@string/bottom_nav_search" />
 
     <item
         android:id="@+id/navigation_my_auction"
         android:icon="@drawable/ic_auction_hammer_black_24dp"
-        android:title="@string/my_auctions" />
+        android:title="@string/bottom_nav_my_auctions" />
 
     <item
         android:id="@+id/navigation_create_auction"
         android:icon="@drawable/ic_plus_black_24dp"
-        android:title="@string/title_create_auction" />
+        android:title="@string/bottom_nav_create_auction" />
 
     <item
         android:id="@+id/navigation_my_bids"
         android:icon="@drawable/ic_hand_with_money_black_24dp"
-        android:title="@string/my_bids" />
+        android:title="@string/bottom_nav_my_bids" />
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile_black_24dp"
-        android:title="@string/title_profile" />
+        android:title="@string/bottom_nav_profile" />
 
 
 </menu>

@@ -24,7 +24,7 @@ public class LogInController {
 
     public static Future<Boolean> login(String email, String password) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.27:8080/")
+                .baseUrl("http://192.168.153.135:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

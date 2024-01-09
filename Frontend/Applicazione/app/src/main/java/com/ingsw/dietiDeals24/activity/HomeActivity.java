@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -13,7 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 ;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.databinding.ActivityHomeBinding;
@@ -33,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         toolbar.setLogo(R.drawable.dieti_deals_24_logo_small);
         setSupportActionBar(binding.toolbar);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        BottomNavigationView navView = findViewById(R.id.bottom_nav_view_home);
         navView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -42,9 +40,9 @@ public class HomeActivity extends AppCompatActivity {
                 R.id.navigation_my_bids, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this,
-                R.id.nav_host_fragment_activity_home);
+                R.id.nav_host_fragment_home);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavigationUI.setupWithNavController(binding.bottomNavViewHome, navController);
 
     }
 

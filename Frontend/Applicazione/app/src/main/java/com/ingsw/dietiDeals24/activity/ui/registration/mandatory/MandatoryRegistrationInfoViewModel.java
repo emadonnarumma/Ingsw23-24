@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.registration;
+package com.ingsw.dietiDeals24.activity.ui.registration.mandatory;
 
 import androidx.lifecycle.ViewModel;
 

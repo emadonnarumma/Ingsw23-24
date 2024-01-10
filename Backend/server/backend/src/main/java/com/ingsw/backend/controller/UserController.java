@@ -23,13 +23,6 @@ public class UserController {
 	@Qualifier("mainUserService")
 	private UserService userService;
 	
-//	@GetMapping
-//	public ResponseEntity<String> sayHello() {
-//		return ResponseEntity.ok("Ciao Mondo");
-//		
-//		
-//	}
-//	
 	@GetMapping("/{email}")
 	public ResponseEntity<User> getByEmail(@PathVariable String email) {
 
@@ -42,9 +35,4 @@ public class UserController {
 		
 		return ResponseEntity.ok(user.get());
 	}
-
-//	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//	public User addUser(@RequestBody Buyer user) {
-//		return userService.addUser(user);
-//	}
 }

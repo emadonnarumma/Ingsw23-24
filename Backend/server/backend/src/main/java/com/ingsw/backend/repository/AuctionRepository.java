@@ -14,8 +14,9 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer>{
 	
 	public List<Auction> findAllByCategory(Category category);
 	
-	public List<Auction> findAllByTitleContaining(String keyword);
+	public List<Auction> findAllByTitleContainingIgnoreCase(String keyword);
 	
-	public List<Auction> findAllByTitleContainingAndCategory(String keyword, Category category);
+	public List<Auction> findAllByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);
+	
 	
 }

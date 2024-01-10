@@ -34,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 		  @JsonSubTypes.Type(value = DownwardAuction.class, name = "DOWNWARD"),
 		  @JsonSubTypes.Type(value = ReverseAuction.class, name = "REVERSE")
 				})
+
 public abstract class Auction {
 
     @Id

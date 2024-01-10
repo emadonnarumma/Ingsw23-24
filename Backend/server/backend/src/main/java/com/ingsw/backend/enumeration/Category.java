@@ -16,5 +16,6 @@ public enum Category {
     MUSICA_E_FOTOCAMERE,
     OROLOGI_DA_POLSO,
     SPORT,
-    VINI_E_DISTILLATI
+    VINI_E_DISTILLATI,
+    SERVIZI
 }

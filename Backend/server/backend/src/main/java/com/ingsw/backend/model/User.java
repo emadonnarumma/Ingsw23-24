@@ -1,6 +1,7 @@
 package com.ingsw.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -64,6 +65,10 @@ public abstract class User implements UserDetails{
 	@Enumerated(EnumType.STRING)
 	@Column(name="role", insertable = false, updatable = false)
 	private Role role;
+	
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<ExternalLink> externalLinks;
 
 	@Override
 	@JsonIgnore

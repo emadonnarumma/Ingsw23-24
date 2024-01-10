@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class BankAccount {
 
     @OneToOne
     @JoinColumn(name = "seller_email", referencedColumnName = "email")
+    @JsonBackReference
     private Seller seller;
 
     @Id

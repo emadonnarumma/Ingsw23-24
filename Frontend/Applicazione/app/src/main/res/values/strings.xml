@@ -21,4 +21,30 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_password_input">Conferma password</string>
+
+    <string name="region_phrase">Seleziona una regione</string>
+
+    <string-array name="italian_regions">
+        <item>Non specificare</item>
+        <item>Abruzzo</item>
+        <item>Basilicata</item>
+        <item>Calabria</item>
+        <item>Campania</item>
+        <item>Emilia Romagna</item>
+        <item>Friuli Venezia Giulia</item>
+        <item>Lazio</item>
+        <item>Liguria</item>
+        <item>Lombardia</item>
+        <item>Marche</item>
+        <item>Molise</item>
+        <item>Piemonte</item>
+        <item>Puglia</item>
+        <item>Sardegna</item>
+        <item>Sicilia</item>
+        <item>Toscana</item>
+        <item>Trentino Alto Adige</item>
+        <item>Umbria</item>
+        <item>Valle d\'Aosta</item>
+        <item>Veneto</item>
+    </string-array>
 </resources>

@@ -3,8 +3,9 @@ package com.ingsw.dietiDeals24.controller;
 import com.ingsw.dietiDeals24.network.IPHolder;
 import com.ingsw.dietiDeals24.network.login.LoginDao;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.login.LogInRequest;
 import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.network.registration.RegistrationDao;
+import com.ingsw.dietiDeals24.network.registration.RegistrationRequest;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -16,21 +17,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LogInController implements IPHolder {
-    public static User loggedUser;
+public class RegistrationController implements IPHolder {
+    public static User user;
 
-    private LogInController() {
-    }
+    private RegistrationController() {}
 
-    public static Future<Boolean> login(String email, String password) {
-
+    public static Future<Boolean> register() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP + "auth/authenticate")
+                .baseUrl(IP + "auth/register")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        LoginDao loginDao = retrofit.create(LoginDao.class);
-        Call<TokenHolder> call = loginDao.login(new LogInRequest(email, password));
+        RegistrationDao registrationDao = retrofit.create(RegistrationDao.class);
+        Call<TokenHolder> call = registrationDao.register(new RegistrationRequest(
+                user.getName(), user.getEmail(), user.getPassword(), user.getBio(), user.getBio()));
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 

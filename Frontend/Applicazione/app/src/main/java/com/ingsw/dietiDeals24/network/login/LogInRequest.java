@@ -1,8 +1,8 @@
-package com.ingsw.dietiDeals24.authentication;
+package com.ingsw.dietiDeals24.network.login;
 
 public class LogInRequest {
-    public String email;
-    public String password;
+    private final String email;
+    private final String password;
 
     public LogInRequest(String email, String password) {
         this.email = email;

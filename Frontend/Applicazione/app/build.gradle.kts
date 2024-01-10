@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation("com.github.chivorns:smartmaterialspinner:1.5.0")
+
     implementation("com.github.acefalobi:android-stepper:0.3.0")
 
     implementation("com.squareup.okhttp3:okhttp:4.9.2")

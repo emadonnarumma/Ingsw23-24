@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailEditText, passwordEditText;
     Button loginButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         userPressRegistrationButton();
         userPressLoginButton();
     }
+
 
     private void userPressRegistrationButton() {
         registrationTextView.setOnClickListener(v -> {
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     @NonNull
     private Thread getLoginThread(String email, String password) {
         return new Thread(() ->
@@ -66,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private static boolean tryToLogin(String email, String password) {
         Future<Boolean> future = LogInController.login(email, password);

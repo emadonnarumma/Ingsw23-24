@@ -11,7 +11,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/bio_edit_text_registration"
+        android:id="@+id/bio_layout_registration"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
@@ -26,13 +26,39 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_edit_text_login"
+            android:id="@+id/bio_edit_text_registration"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:hint="Aggiungi una descrizione personale"
             android:inputType="textMultiLine"
             android:maxLength="200" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+        android:id="@+id/spinner1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:smsp_hint="@string/region_phrase"
+        app:smsp_hintColor="@color/black"
+        app:smsp_itemColor="@color/green"
+        app:smsp_itemListColor="@color/black"
+        app:smsp_selectedItemListColor="@color/green"
+        app:smsp_itemListHintBackgroundColor="#808080"
+        app:smsp_itemListHintColor="#FFFFFF"
+        app:smsp_multilineError="false"
+        app:smsp_isSearchable="true"
+        app:smsp_searchHint="Cerca"
+        app:smsp_searchHeaderText="@string/region_phrase"
+        app:smsp_searchHeaderBackgroundColor="@color/green"
+        app:smsp_isOutlined="true"
+
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@id/bio_layout_registration"
+        app:layout_constraintStart_toStartOf="@id/bio_layout_registration"
+        app:layout_constraintTop_toBottomOf="@id/bio_layout_registration" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,13 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.activity.ui.registration.RegistrationInfoViewModel;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 public class MandatoryRegistrationInfoFragment extends Fragment implements BlockingStep {
 
-    private MandatoryRegistrationInfoViewModel viewModel;
+    private RegistrationInfoViewModel viewModel;
 
     public static MandatoryRegistrationInfoFragment newInstance() {
         return new MandatoryRegistrationInfoFragment();
@@ -28,7 +29,7 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MandatoryRegistrationInfoViewModel.class);
+        viewModel = new ViewModelProvider(this).get(RegistrationInfoViewModel.class);
     }
 
     @Nullable

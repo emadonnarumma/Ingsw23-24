@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Seller extends User {
 
     @OneToOne(mappedBy = "seller")
+    @JsonManagedReference
     private BankAccount bankAccount;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)

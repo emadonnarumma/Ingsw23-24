@@ -35,13 +35,13 @@ public class AuctionDbService implements AuctionService {
 	@Override
 	public List<Auction> getAuctionsByTitleContaining(String keyword) {
 		
-		return auctionRepository.findAllByTitleContaining(keyword);
+		return auctionRepository.findAllByTitleContainingIgnoreCase(keyword);
 	}
 
 	@Override
 	public List<Auction> getAuctionsByTitleContainingAndCategory(String keyword, Category category) {
 		
-		return auctionRepository.findAllByTitleContainingAndCategory(keyword, category);
+		return auctionRepository.findAllByTitleContainingIgnoreCaseAndCategory(keyword, category);
 	}
 
 	@Override

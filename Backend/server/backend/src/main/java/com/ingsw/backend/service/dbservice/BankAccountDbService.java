@@ -26,21 +26,21 @@ public class BankAccountDbService implements BankAccountService {
 	}
 
 	@Override
-	public Boolean delete(String iban) {
+	public Boolean delete(Integer id) {
 	    
-		if (!bankAccountRepository.existsById(iban)) {
+		if (!bankAccountRepository.existsById(id)) {
 	        return false;
 	    }
 	    
-	    bankAccountRepository.deleteById(iban);
+	    bankAccountRepository.deleteById(id);
 	    
 	    return true;	
 	}
 
 	@Override
-	public Optional<BankAccount> update(String iban, BankAccount bankAccount) {
+	public Optional<BankAccount> update(Integer id, BankAccount bankAccount) {
 	    
-		if (!bankAccountRepository.existsById(iban)) {
+		if (!bankAccountRepository.existsById(id)) {
 	        return Optional.empty();
 	    }
 

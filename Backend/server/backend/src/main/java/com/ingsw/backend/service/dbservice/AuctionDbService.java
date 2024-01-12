@@ -2,7 +2,6 @@ package com.ingsw.backend.service.dbservice;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ingsw.backend.enumeration.Category;
@@ -15,7 +14,7 @@ public class AuctionDbService implements AuctionService {
 	
 	private final AuctionRepository auctionRepository;
 
-	@Autowired
+
 	public AuctionDbService(AuctionRepository auctionRepository) {
 		this.auctionRepository = auctionRepository;
 	}

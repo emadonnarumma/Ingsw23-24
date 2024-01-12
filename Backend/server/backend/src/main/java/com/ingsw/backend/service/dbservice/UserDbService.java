@@ -2,7 +2,6 @@ package com.ingsw.backend.service.dbservice;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ingsw.backend.model.User;
@@ -14,7 +13,7 @@ public class UserDbService implements UserService{
 
 	private final UserRepository userRepository;
 
-	@Autowired
+
 	public UserDbService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}

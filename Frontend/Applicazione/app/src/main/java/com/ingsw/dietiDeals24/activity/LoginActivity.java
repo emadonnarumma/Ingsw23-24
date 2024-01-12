@@ -5,20 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.activity.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
 
+import java.io.IOException;
+import java.net.ConnectException;
 import java.util.concurrent.Future;
 
 public class LoginActivity extends AppCompatActivity {
     TextView registrationTextView;
     EditText emailEditText, passwordEditText;
-    Button loginButton;
+    CircularProgressButton loginButton;
 
 
     @Override
@@ -49,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
+            loginButton.startAnimation();
             Thread thread = getLoginThread(email, password);
             thread.start();
         });
@@ -57,28 +62,39 @@ public class LoginActivity extends AppCompatActivity {
 
     @NonNull
     private Thread getLoginThread(String email, String password) {
-        return new Thread(() ->
-        {
-            boolean isLoggedIn = tryToLogin(email, password);
+        return new Thread(() -> {
+            boolean isLoggedIn;
 
-            if (isLoggedIn) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-            } else {
-                runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
+            try {
+                isLoggedIn = tryToLogin(email, password);
+
+                if (isLoggedIn) {
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    runOnUiThread(() -> loginButton.revertAnimation());
+                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
+                }
+
+            } catch (IOException e) {
+                runOnUiThread(() -> loginButton.revertAnimation());
+                runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Errore di connessione"));
             }
+
         });
     }
 
 
-    private static boolean tryToLogin(String email, String password) {
-        Future<Boolean> future = LogInController.login(email, password);
+    private boolean tryToLogin(String email, String password) throws IOException {
         boolean isLoggedIn;
+
         try {
+            Future<Boolean> future = LogInController.login(email, password);
             isLoggedIn = future.get();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IOException();
         }
+
         return isLoggedIn;
     }
 }

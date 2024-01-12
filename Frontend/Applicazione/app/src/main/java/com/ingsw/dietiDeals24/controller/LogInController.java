@@ -22,10 +22,10 @@ public class LogInController implements IPHolder {
     private LogInController() {
     }
 
-    public static Future<Boolean> login(String email, String password) {
+    public static Future<Boolean> login(String email, String password) throws IOException {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP + "auth/authenticate")
+                .baseUrl(IP)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -37,10 +37,11 @@ public class LogInController implements IPHolder {
         return executorService.submit(() -> {
             try {
                 Response<TokenHolder> response = call.execute();
+                int status = response.code();
                 TokenHolder tokenHolder = response.body();
                 return tokenHolder != null;
             } catch (IOException e) {
-                return false;
+                throw e;
             }
         });
     }

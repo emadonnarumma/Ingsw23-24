@@ -18,19 +18,19 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrationController implements IPHolder {
-    public static User user;
+    public static User user = new User();
 
     private RegistrationController() {}
 
     public static Future<Boolean> register() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP + "auth/register")
+                .baseUrl(IP)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         RegistrationDao registrationDao = retrofit.create(RegistrationDao.class);
-        Call<TokenHolder> call = registrationDao.register(new RegistrationRequest(
-                user.getName(), user.getEmail(), user.getPassword(), user.getBio(), user.getBio()));
+        RegistrationRequest registrationRequest =  new RegistrationRequest(user.getName(), user.getEmail(), user.getPassword(), user.getBio(), user.getRegion());
+        Call<TokenHolder> call = registrationDao.register(registrationRequest);
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 

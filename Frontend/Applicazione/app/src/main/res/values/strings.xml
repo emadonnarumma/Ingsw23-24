@@ -7,7 +7,7 @@
     <string name="login_phrase">Accedi</string>
     <string name="registration_phrase">Non sei ancora registrato?</string>
     <string name="or_phrase">OPPURE</string>
-    <string name="registration_link">Registrati</string>
+    <string name="registration_link"><u>Registrati</u></string>
 
     <string name="bottom_nav_search">Cerca</string>
     <string name="bottom_nav_create_auction">Vendi</string>

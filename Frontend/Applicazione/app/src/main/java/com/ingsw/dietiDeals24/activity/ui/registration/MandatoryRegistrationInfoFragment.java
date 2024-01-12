@@ -1,6 +1,4 @@
-package com.ingsw.dietiDeals24.activity.ui.registration.mandatory;
-
-import androidx.lifecycle.ViewModelProvider;
+package com.ingsw.dietiDeals24.activity.ui.registration;
 
 import android.os.Bundle;
 
@@ -11,26 +9,31 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.activity.ui.registration.RegistrationInfoViewModel;
+import com.ingsw.dietiDeals24.controller.RegistrationController;
+import com.ingsw.dietiDeals24.model.User;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 public class MandatoryRegistrationInfoFragment extends Fragment implements BlockingStep {
-
-    private RegistrationInfoViewModel viewModel;
+    private EditText userNameEditText, emailEditText, passwordEditText;
+    private User registeringUser = RegistrationController.user;
 
     public static MandatoryRegistrationInfoFragment newInstance() {
         return new MandatoryRegistrationInfoFragment();
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(RegistrationInfoViewModel.class);
+
+
     }
+
 
     @Nullable
     @Override
@@ -39,20 +42,33 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
         return inflater.inflate( R.layout.fragment_mandatory_registration_info, container, false);
     }
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        findTheViews();
+    }
+
+
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
+        setRegisteringUserValues();
         callback.goToNextStep();
     }
+
+
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
 
     }
 
+
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
 
     }
+
 
     @Nullable
     @Override
@@ -60,13 +76,29 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
         return null;
     }
 
+
     @Override
     public void onSelected() {
 
     }
 
+
     @Override
     public void onError(@NonNull VerificationError error) {
 
+    }
+
+
+    private void findTheViews() {
+        userNameEditText = requireView().findViewById(R.id.username_edit_text_registration);
+        emailEditText = requireView().findViewById(R.id.email_edit_text_registration);
+        passwordEditText = requireView().findViewById(R.id.password_edit_text_registration);
+    }
+
+
+    private void setRegisteringUserValues() {
+        registeringUser.setPassword(passwordEditText.getText().toString());
+        registeringUser.setEmail(emailEditText.getText().toString());
+        registeringUser.setUsername(userNameEditText.getText().toString());
     }
 }

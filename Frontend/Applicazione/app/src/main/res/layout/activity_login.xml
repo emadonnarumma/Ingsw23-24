@@ -70,14 +70,18 @@
 
 
 
-    <Button
+    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/login_button"
         android:layout_width="120dp"
         android:layout_height="66dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/green"
-
         android:text="@string/login_phrase"
+        android:textColor="@color/white"
+        app:spinning_bar_padding="10dp"
+        app:initialCornerAngle="50dp"
+        app:spinning_bar_color="@color/white"
+
         app:layout_constraintEnd_toEndOf="@id/password_layout_login"
         app:layout_constraintTop_toBottomOf="@id/password_layout_login" />
 
@@ -104,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:background="@color/white"
+        android:background="@color/cardview_light_background"
         android:text="@string/or_phrase"
 
         android:textSize="20sp"
@@ -135,6 +139,9 @@
         android:layout_height="wrap_content"
         android:text="@string/registration_link"
         android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:textStyle=""
+
 
         app:layout_constraintEnd_toEndOf="@id/registration_phrase_registration"
         app:layout_constraintStart_toStartOf="@id/registration_phrase_registration"

@@ -1,22 +1,24 @@
 package com.ingsw.dietiDeals24.network.registration;
 
+import com.ingsw.dietiDeals24.activity.utility.RegionStringConverter;
 import com.ingsw.dietiDeals24.enumeration.Region;
+import com.ingsw.dietiDeals24.enumeration.Role;
 
 public class RegistrationRequest {
-    private String userName;
+    private String name;
     private String bio;
-    private String role;
+    private Role role;
     private String email;
     private String password;
     private Region region;
 
 
-    public RegistrationRequest(String userName, String email, String password, String bio, String region) {
-        this.role = "BUYER";
+    public RegistrationRequest(String name, String email, String password, String bio, Region region) {
+        this.role = Role.BUYER;
         this.email = email;
         this.password = password;
-        this.userName = userName;
-        this.region = Region.valueOf(region);
+        this.name = name;
+        this.region = region;
         this.bio = bio;
     }
 }

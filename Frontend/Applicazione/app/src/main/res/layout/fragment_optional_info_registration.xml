@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activity.ui.registration.optional.OptionalInfoRegistrationFragment">
+    tools:context=".activity.ui.registration.OptionalInfoRegistrationFragment">
 
 
 
@@ -38,7 +38,7 @@
 
 
     <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-        android:id="@+id/spinner1"
+        android:id="@+id/region_spinner_registration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:smsp_hint="@string/region_phrase"

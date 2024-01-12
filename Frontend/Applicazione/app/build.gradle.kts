@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
+
     implementation("com.github.chivorns:smartmaterialspinner:1.5.0")
 
     implementation("com.github.acefalobi:android-stepper:0.3.0")

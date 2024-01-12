@@ -8,8 +8,8 @@ public interface BankAccountService {
 	
 	public BankAccount addBankAccount(BankAccount bankAccount);
 	
-	public Boolean delete(String iban);
+	public Boolean delete(Integer id);
 	
-	public Optional<BankAccount> update(String iban, BankAccount bankAccount);
+	public Optional<BankAccount> update(Integer id, BankAccount bankAccount);
 
 }

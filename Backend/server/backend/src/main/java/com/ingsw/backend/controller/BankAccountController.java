@@ -12,6 +12,8 @@ import com.ingsw.backend.model.User;
 import com.ingsw.backend.service.BankAccountService;
 import com.ingsw.backend.service.UserService;
 
+import jakarta.validation.Valid;
+
 import java.util.Optional;
 
 @RestController
@@ -27,7 +29,7 @@ public class BankAccountController {
 	private UserService userService;
 
     @PostMapping
-    public ResponseEntity<BankAccount> addBankAccount(@RequestBody BankAccount bankAccount) {
+    public ResponseEntity<BankAccount> addBankAccount(@Valid @RequestBody BankAccount bankAccount) {
         
     	Optional<User> seller = userService.getUser(bankAccount.getSeller().getEmail());
         
@@ -43,10 +45,10 @@ public class BankAccountController {
         return new ResponseEntity<>(savedBankAccount, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{iban}")
-    public ResponseEntity<BankAccount> updateBankAccount(@PathVariable String iban, @RequestBody BankAccount bankAccount) {
+    @PutMapping("/{id}")
+    public ResponseEntity<BankAccount> updateBankAccount(@PathVariable Integer id, @Valid @RequestBody BankAccount bankAccount) {
        
-    	Optional<BankAccount> updatedBankAccount = bankAccountService.update(iban, bankAccount);
+    	Optional<BankAccount> updatedBankAccount = bankAccountService.update(id, bankAccount);
         
     	if (updatedBankAccount.isPresent()) {
         	
@@ -58,10 +60,10 @@ public class BankAccountController {
         }
     }
 
-    @DeleteMapping("/{iban}")
-    public ResponseEntity<Void> deleteBankAccount(@PathVariable String iban) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBankAccount(@PathVariable Integer id) {
         
-    	if (bankAccountService.delete(iban)) {
+    	if (bankAccountService.delete(id)) {
     		
             return ResponseEntity.noContent().build();
             

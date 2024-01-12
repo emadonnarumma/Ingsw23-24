@@ -17,13 +17,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name="bank_accounts")
 public class BankAccount {
+	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "seller_email", referencedColumnName = "email")
     @JsonBackReference
     private Seller seller;
 
-    @Id
     @Length(min=27, max=27)
     @Column(nullable = false, length = 27)
     private String iban;

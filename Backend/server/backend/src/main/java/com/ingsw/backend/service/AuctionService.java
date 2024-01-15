@@ -1,6 +1,7 @@
 package com.ingsw.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ingsw.backend.enumeration.Category;
 import com.ingsw.backend.model.Auction;
@@ -18,5 +19,7 @@ public interface AuctionService {
 	public Auction addAuction(Auction auction);
 	
 	public Boolean delete(int id);
+
+	public Optional<Auction> findById(Integer auctionId);
 
 }

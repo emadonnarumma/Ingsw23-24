@@ -1,6 +1,7 @@
 package com.ingsw.backend.service.dbservice;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,12 @@ public class AuctionDbService implements AuctionService {
 	    auctionRepository.deleteById(id);
 	    
 	    return true;
+	}
+
+	@Override
+	public Optional<Auction> findById(Integer auctionId) {
+		
+		return auctionRepository.findById(auctionId);
 	}
 
 

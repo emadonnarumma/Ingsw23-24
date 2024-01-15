@@ -12,6 +12,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @SuppressWarnings("serial")
 
@@ -25,9 +27,11 @@ import java.util.List;
 public class Buyer extends User {
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<ReverseAuction> reverseAuctions;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<SilentBid> bids;
 
 }

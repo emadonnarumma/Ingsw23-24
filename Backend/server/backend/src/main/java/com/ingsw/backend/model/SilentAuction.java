@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -22,7 +25,9 @@ public class SilentAuction extends Auction {
 
     private Long withdrawalTime;
 
-
+    @OneToMany(mappedBy = "silentAuction", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<SilentBid> receivedBids;
 
 
 

@@ -1,5 +1,7 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ingsw.backend.enumeration.BidStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +16,17 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Table(name="bids")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(
+		  use = JsonTypeInfo.Id.NAME, 
+		  include = JsonTypeInfo.As.PROPERTY, 
+		  property = "type"
+		)
+@JsonSubTypes({
+		  @JsonSubTypes.Type(value = SilentBid.class, name = "SILENT"),
+		  @JsonSubTypes.Type(value = ReverseBid.class, name = "REVERSE")
+				})
 public abstract class Bid {
 
     @Id

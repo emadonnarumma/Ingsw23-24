@@ -2,7 +2,6 @@ package com.ingsw.backend.service.dbservice;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ingsw.backend.model.BankAccount;
@@ -14,7 +13,7 @@ public class BankAccountDbService implements BankAccountService {
 	
 	private final BankAccountRepository bankAccountRepository;
 	
-	@Autowired
+
 	public BankAccountDbService(BankAccountRepository bankAccountRepository) {
 		this.bankAccountRepository = bankAccountRepository;
 	}

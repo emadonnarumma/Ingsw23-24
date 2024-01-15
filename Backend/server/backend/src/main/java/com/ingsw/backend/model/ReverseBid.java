@@ -1,9 +1,11 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,12 +18,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "reverse_bids")
+@DiscriminatorValue("REVERSE")
 public class ReverseBid extends Bid {
 
     @ManyToOne
     @JoinColumn(name = "owner_email", referencedColumnName = "email")
-    private Seller owner;
+    @JsonBackReference
+    private Seller seller;
+    
+    @ManyToOne
+    @JoinColumn(name = "auction_id", referencedColumnName = "id")
+    @JsonBackReference
+    private ReverseAuction reverseAuction;
 
 
 }

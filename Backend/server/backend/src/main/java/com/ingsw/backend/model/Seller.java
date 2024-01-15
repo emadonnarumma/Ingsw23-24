@@ -32,9 +32,11 @@ public class Seller extends User {
     private List<SilentAuction> silentAuctions;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<DownwardAuction> downwardAuctions;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<ReverseBid> bids;
 
 

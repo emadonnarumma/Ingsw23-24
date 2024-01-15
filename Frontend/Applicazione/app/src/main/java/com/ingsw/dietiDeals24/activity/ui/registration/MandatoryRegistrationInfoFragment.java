@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.activity.ui.registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.activity.LoginActivity;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
 import com.stepstone.stepper.BlockingStep;
@@ -66,7 +68,8 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
 
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
-
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
     }
 
 

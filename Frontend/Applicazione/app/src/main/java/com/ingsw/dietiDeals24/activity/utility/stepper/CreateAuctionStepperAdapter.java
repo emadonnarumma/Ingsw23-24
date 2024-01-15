@@ -7,17 +7,20 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
+import com.ingsw.dietiDeals24.activity.ui.home.createAuction.AuctionGeneralAttributesFragment;
+import com.ingsw.dietiDeals24.activity.ui.home.createAuction.AuctionTypeFragment;
 import com.ingsw.dietiDeals24.activity.ui.registration.MandatoryRegistrationInfoFragment;
 import com.ingsw.dietiDeals24.activity.ui.registration.OptionalInfoRegistrationFragment;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 import com.stepstone.stepper.viewmodel.StepViewModel;
 
-public class RegistrationStepperAdapter extends AbstractFragmentStepAdapter {
+public class CreateAuctionStepperAdapter extends AbstractFragmentStepAdapter {
+
 
     private static final String CURRENT_STEP_POSITION_KEY = "0";
 
-    public RegistrationStepperAdapter(FragmentManager fm, Context context) {
+    public CreateAuctionStepperAdapter(FragmentManager fm, Context context) {
         super(fm, context);
     }
 
@@ -27,20 +30,20 @@ public class RegistrationStepperAdapter extends AbstractFragmentStepAdapter {
 
         switch (position) {
             case 0:
-                MandatoryRegistrationInfoFragment mandatoryRegistrationInfoFragment =
-                        new MandatoryRegistrationInfoFragment();
-                b.putInt(CURRENT_STEP_POSITION_KEY, position);
-                mandatoryRegistrationInfoFragment.setArguments(b);
+                AuctionGeneralAttributesFragment auctionGeneralAttributesFragment =
+                        new AuctionGeneralAttributesFragment();
 
-                return mandatoryRegistrationInfoFragment;
+                b.putInt(CURRENT_STEP_POSITION_KEY, position);
+                auctionGeneralAttributesFragment.setArguments(b);
+
+                return auctionGeneralAttributesFragment;
 
             case 1:
-                OptionalInfoRegistrationFragment optionalInfoRegistrationFragment =
-                        new OptionalInfoRegistrationFragment();
+                AuctionTypeFragment auctionTypeFragment = new AuctionTypeFragment();
                 b.putInt(CURRENT_STEP_POSITION_KEY, position);
-                optionalInfoRegistrationFragment.setArguments(b);
+                auctionTypeFragment.setArguments(b);
 
-                return optionalInfoRegistrationFragment;
+                return auctionTypeFragment;
 
             default:
                 throw new IllegalArgumentException("Unsupported position: " + position);
@@ -54,17 +57,15 @@ public class RegistrationStepperAdapter extends AbstractFragmentStepAdapter {
         switch (position) {
             case 0:
                 builder
-                        .setTitle("Informazioni obbligatorie")
-                        .setEndButtonLabel("Personalizza")
-                        .setBackButtonLabel("Login");
+                        .setTitle("Attributi generali")
+                        .setEndButtonLabel("Tipologia");
                 break;
 
             case 1:
-                builder
-                        .setTitle("Informazioni opzionali")
-                        .setEndButtonLabel("Registrati")
-                        .setBackButtonLabel("Indietro");
-                break;
+            builder
+                    .setTitle("Tipologia")
+                    .setBackButtonLabel("Attributi generali");
+            break;
 
             default:
                 throw new IllegalArgumentException("Unsupported position: " + position);
@@ -74,6 +75,6 @@ public class RegistrationStepperAdapter extends AbstractFragmentStepAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 1;
     }
 }

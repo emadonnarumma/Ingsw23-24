@@ -40,12 +40,10 @@ dependencies {
 
     implementation("com.github.chivorns:smartmaterialspinner:1.5.0")
 
-    implementation("com.github.acefalobi:android-stepper:0.3.0")
-
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
 
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 

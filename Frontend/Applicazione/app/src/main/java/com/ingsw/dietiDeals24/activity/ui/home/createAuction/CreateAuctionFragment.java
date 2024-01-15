@@ -1,38 +1,33 @@
 package com.ingsw.dietiDeals24.activity.ui.home.createAuction;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.activity.LoginActivity;
+import com.ingsw.dietiDeals24.activity.utility.stepper.CreateAuctionStepperAdapter;
+import com.stepstone.stepper.BlockingStep;
+import com.stepstone.stepper.StepperLayout;
+import com.stepstone.stepper.VerificationError;
 
-import com.ingsw.dietiDeals24.databinding.FragmentCreateAuctionBinding;
-
-
-public class CreateAuctionFragment extends Fragment {
-
-    private FragmentCreateAuctionBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        CreateAuctionViewModel createAuctionViewModel =
-                new ViewModelProvider(this).get(CreateAuctionViewModel.class);
-
-        binding = FragmentCreateAuctionBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textCreateAuction;
-        createAuctionViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
-    }
+public class CreateAuctionFragment extends AppCompatActivity {
+    StepperLayout stepperLayout;
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //stepperLayout = findViewById(R.id.stepper_layout_create_auction);
+        //stepperLayout.setAdapter(new CreateAuctionStepperAdapter(getSupportFragmentManager(), getApplicationContext()));
     }
 }

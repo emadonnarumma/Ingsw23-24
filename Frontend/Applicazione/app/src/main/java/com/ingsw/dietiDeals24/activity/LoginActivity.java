@@ -50,12 +50,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void userPressLoginButton() {
         loginButton.setOnClickListener(v -> {
-            String email = emailEditText.getText().toString();
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+
+            /*String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
             loginButton.startAnimation();
             Thread thread = getLoginThread(email, password);
-            thread.start();
+            thread.start();*/
         });
     }
 

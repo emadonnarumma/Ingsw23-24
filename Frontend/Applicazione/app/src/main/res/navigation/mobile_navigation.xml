@@ -5,34 +5,38 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_search">
 
+
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.ingsw.dietiDeals24.activity.ui.home.search.SearchFragment"
         android:label="@string/bottom_nav_search"
         tools:layout="@layout/fragment_search" />
 
+
     <fragment
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_create_auction"
         android:name="com.ingsw.dietiDeals24.activity.ui.home.createAuction.CreateAuctionFragment"
         android:label="@string/bottom_nav_create_auction"
         tools:layout="@layout/fragment_profile" />
 
+
     <fragment
-        android:id="@+id/navigation_create_auction"
+        android:id="@+id/navigation_profile"
         android:name="com.ingsw.dietiDeals24.activity.ui.home.profile.ProfileFragment"
         android:label="@string/bottom_nav_profile"
-        tools:layout="@layout/fragment_create_auction" />
+        tools:layout="@layout/fragment_general_auction_attributes" />
+
 
     <fragment
         android:id="@+id/navigation_my_auctions"
-        android:name="com.ingsw.dietiDeals24.activity.ui.home.myAuctions.MyAuctionsFragment"
+        android:name="com.ingsw.dietiDeals24.activity.ui.home.myAuctions.MyAuctionFragment"
         android:label="@string/bottom_nav_my_auctions"
         tools:layout="@layout/fragment_my_auctions" />
+
 
     <fragment
         android:id="@+id/navigation_my_bids"
         android:name="com.ingsw.dietiDeals24.activity.ui.home.myBids.MyBidsFragment"
         android:label="@string/bottom_nav_my_bids"
         tools:layout="@layout/fragment_my_bids" />
-
 </navigation>

@@ -18,6 +18,7 @@
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
+        app:ms_showBackButtonOnFirstStep="true"
         app:ms_tabNavigationEnabled="false"
         app:ms_nextButtonColor="@drawable/button_next_color_selector"
         app:ms_backButtonColor="@color/green"

@@ -1,49 +1,66 @@
 package com.ingsw.dietiDeals24.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.databinding.ActivityHomeBinding;
+import com.ingsw.dietiDeals24.activity.ui.home.createAuction.CreateAuctionFragment;
+import com.ingsw.dietiDeals24.activity.ui.home.myAuctions.MyAuctionFragment;
+import com.ingsw.dietiDeals24.activity.ui.home.profile.ProfileFragment;
+import com.ingsw.dietiDeals24.activity.ui.home.search.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity {
+    private NavigationBarView navigationBarView;
 
-    private ActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
 
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        navigationBarView = findViewById(R.id.bottom_navigation);
+        setNavigatioBarView();
+    }
 
-        Toolbar toolbar = binding.toolbar;
-        toolbar.setLogo(R.drawable.dieti_deals_24_logo_small);
-        setSupportActionBar(binding.toolbar);
 
-        BottomNavigationView navView = findViewById(R.id.bottom_nav_view_home);
-        navView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_search, R.id.navigation_my_auction, R.id.navigation_create_auction,
-                R.id.navigation_my_bids, R.id.navigation_profile)
-                .build();
-        NavController navController = Navigation.findNavController(this,
-                R.id.nav_host_fragment_home);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.bottomNavViewHome, navController);
+    private void setNavigatioBarView() {
+        navigationBarView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.navigation_search){
 
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                        new SearchFragment()).commit();
+                return true;
+
+            } else if (item.getItemId() == R.id.navigation_my_auctions) {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                        new MyAuctionFragment()).commit();
+                return true;
+
+            } else if (item.getItemId() == R.id.navigation_create_auction) {
+
+                Intent intent = new Intent(getApplicationContext(), CreateAuctionFragment.class);
+                startActivity(intent);
+                return true;
+
+            } else if (item.getItemId() == R.id.navigation_my_bids) {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                        new MyAuctionFragment()).commit();
+                return true;
+
+            } else if (item.getItemId() == R.id.navigation_profile) {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home, new ProfileFragment()).commit();
+                return true;
+
+            } else {
+
+                return false;
+            }
+        });
     }
 
 }

@@ -1,9 +1,13 @@
 package com.ingsw.backend.service.dbservice;
 
+import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ingsw.backend.enumeration.BidStatus;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.ReverseAuction;
 import com.ingsw.backend.model.ReverseBid;
@@ -68,4 +72,18 @@ public class BidDbService implements BidService {
 		return bidRepository.save(reverseBid);
 	}
 
+
+	@Scheduled(fixedRate = 60000) //executed every minute
+	@Transactional
+	public void updateSilentBidStatuses() {
+	    
+		List<SilentBid> expiringBids = bidRepository.findExpiredSilentBidsByStatus(BidStatus.PENDING, new Timestamp(System.currentTimeMillis()));
+		
+		for (SilentBid bid: expiringBids) {
+			
+			bid.setStatus(BidStatus.EXPIRED);
+			
+			bidRepository.save(bid);
+		}
+	}
 }

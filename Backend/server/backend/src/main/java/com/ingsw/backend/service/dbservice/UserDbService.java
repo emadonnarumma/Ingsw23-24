@@ -32,4 +32,10 @@ public class UserDbService implements UserService{
 	public Optional<User> getUser(String email) {
 		return userRepository.findByEmail(email);
 	}
+
+	@Override
+	public Boolean isEmailAlreadyUsed(String email) {
+		
+		return userRepository.existsByEmail(email);
+	}
 }

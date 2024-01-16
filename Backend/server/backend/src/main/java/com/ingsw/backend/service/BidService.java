@@ -25,4 +25,5 @@ public interface BidService {
 	
 	public Boolean delete(Integer id);
 	
+	
 }

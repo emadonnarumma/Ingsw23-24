@@ -1,12 +1,18 @@
 package com.ingsw.backend.service.dbservice;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ingsw.backend.enumeration.AuctionStatus;
 import com.ingsw.backend.enumeration.Category;
 import com.ingsw.backend.model.Auction;
+import com.ingsw.backend.model.DownwardAuction;
+import com.ingsw.backend.model.SilentAuction;
 import com.ingsw.backend.repository.AuctionRepository;
 import com.ingsw.backend.service.AuctionService;
 
@@ -68,5 +74,47 @@ public class AuctionDbService implements AuctionService {
 		return auctionRepository.findById(auctionId);
 	}
 
-
+	
+	
+	@Scheduled(fixedRate = 60000) //executed every minute
+	@Transactional
+	public void updateSilentAuctionsStatuse() {
+	    
+		List<SilentAuction> expiringAuctions = auctionRepository.findByStatusAndExpirationDateBefore(AuctionStatus.IN_PROGRESS, new Timestamp(System.currentTimeMillis()));
+	    
+	    for (SilentAuction auction : expiringAuctions) {
+	    		    				            
+    		auction.setStatus(AuctionStatus.FAILED);
+            
+    		auctionRepository.save(auction);        
+	    }
+	}
+	
+	@Scheduled(fixedRate = 60000) //executed every minute
+	@Transactional
+	public void updateDownwardAuctionsDetails() {
+	    
+		List<DownwardAuction> auctions = auctionRepository.findAllByStatus(AuctionStatus.IN_PROGRESS);
+	    
+	    Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+	    
+	    for (DownwardAuction auction : auctions) {
+	        
+	        if (currentTime.after(auction.getNextDecrement())) {
+	            
+	            auction.setCurrentPrice(auction.getCurrentPrice() - auction.getDecrementAmount());
+	            
+	            long nextDecrementTimeMillis = auction.getNextDecrement().getTime() + (auction.getDecrementTime() * 1000);
+	            
+	            auction.setNextDecrement(new Timestamp(nextDecrementTimeMillis));
+	            
+	            if (auction.getCurrentPrice() <= auction.getSecretMinimumPrice()) {
+	                
+	                auction.setStatus(AuctionStatus.FAILED);
+	            }
+	           
+	            auctionRepository.save(auction);
+	        }
+	    }
+	}
 }

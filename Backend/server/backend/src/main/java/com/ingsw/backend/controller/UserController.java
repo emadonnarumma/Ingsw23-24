@@ -35,4 +35,13 @@ public class UserController {
 		
 		return ResponseEntity.ok(user.get());
 	}
+	
+	@GetMapping("/check-email/{email}")
+    public ResponseEntity<Boolean> checkIfEmailIsUsed(@PathVariable String email) {
+        
+		Boolean isUsed = userService.isEmailAlreadyUsed(email);
+        
+        return ResponseEntity.ok(isUsed);
+    }
 }
+

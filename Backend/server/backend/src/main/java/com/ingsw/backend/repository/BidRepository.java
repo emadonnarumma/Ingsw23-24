@@ -1,9 +1,12 @@
 package com.ingsw.backend.repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import com.ingsw.backend.enumeration.BidStatus;
 import com.ingsw.backend.model.Bid;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.ReverseAuction;
@@ -22,4 +25,10 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
 
 	List<ReverseBid> findAllReverseBidsByReverseAuction(ReverseAuction auction);
 
+	List<SilentBid> findByStatus(BidStatus status);
+	
+	@Query("SELECT sb FROM SilentBid sb WHERE sb.status = :status AND sb.silentAuction.expirationDate < :currentTimestamp")
+    List<SilentBid> findExpiredSilentBidsByStatus(BidStatus status, Timestamp currentTimestamp);
 }
+
+

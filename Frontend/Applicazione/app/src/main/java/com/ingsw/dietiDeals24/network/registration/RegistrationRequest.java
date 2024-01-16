@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.network.registration;
 
-import com.ingsw.dietiDeals24.activity.utility.RegionStringConverter;
 import com.ingsw.dietiDeals24.enumeration.Region;
 import com.ingsw.dietiDeals24.enumeration.Role;
 

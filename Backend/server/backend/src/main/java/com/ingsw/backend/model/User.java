@@ -1,10 +1,12 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.enumeration.Role;
 
@@ -42,6 +44,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 		  @JsonSubTypes.Type(value = Buyer.class, name = "BUYER")
 		  
 		})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "email")
 public abstract class User implements UserDetails{
 
 	@Column(nullable = false)
@@ -67,7 +70,7 @@ public abstract class User implements UserDetails{
 	private Role role;
 	
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("user-externalLink")
     private List<ExternalLink> externalLinks;
 
 	@Override

@@ -26,7 +26,7 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("auction-image")
     private Auction auction;
 
     

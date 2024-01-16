@@ -31,7 +31,7 @@ public class Buyer extends User {
     private List<ReverseAuction> reverseAuctions;
 
     @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("buyer-silentBid")
     private List<SilentBid> bids;
 
 }

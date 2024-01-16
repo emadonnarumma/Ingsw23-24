@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Seller extends User {
 
     @OneToOne(mappedBy = "seller")
-    @JsonManagedReference
+    @JsonManagedReference("seller-bankAccount")
     private BankAccount bankAccount;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
@@ -36,7 +36,7 @@ public class Seller extends User {
     private List<DownwardAuction> downwardAuctions;
 
     @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("seller-reverseBid")
     private List<ReverseBid> bids;
 
 

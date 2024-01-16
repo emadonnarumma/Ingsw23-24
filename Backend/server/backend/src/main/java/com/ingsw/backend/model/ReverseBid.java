@@ -23,12 +23,12 @@ public class ReverseBid extends Bid {
 
     @ManyToOne
     @JoinColumn(name = "owner_email", referencedColumnName = "email")
-    @JsonBackReference
+    @JsonBackReference("seller-reverseBid")
     private Seller seller;
     
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("reverseAuction-reverseBid")
     private ReverseAuction reverseAuction;
 
 

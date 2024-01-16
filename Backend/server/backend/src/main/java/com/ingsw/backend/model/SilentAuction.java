@@ -26,7 +26,7 @@ public class SilentAuction extends Auction {
     private Long withdrawalTime;
 
     @OneToMany(mappedBy = "silentAuction", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("silentAuction-silentBid")
     private List<SilentBid> receivedBids;
 
 

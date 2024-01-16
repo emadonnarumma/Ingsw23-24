@@ -12,9 +12,11 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Data
@@ -35,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 		  @JsonSubTypes.Type(value = DownwardAuction.class, name = "DOWNWARD"),
 		  @JsonSubTypes.Type(value = ReverseAuction.class, name = "REVERSE")
 				})
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Auction {
 
     @Id
@@ -44,7 +46,7 @@ public abstract class Auction {
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("auction-image")
     private List<Image> images;
 
     @Column(nullable = false)

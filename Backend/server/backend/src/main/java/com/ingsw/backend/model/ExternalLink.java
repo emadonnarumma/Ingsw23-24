@@ -36,6 +36,6 @@ public class ExternalLink {
     
     @ManyToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email")
-    @JsonBackReference
+    @JsonBackReference("user-externalLink")
     private User user;
 }

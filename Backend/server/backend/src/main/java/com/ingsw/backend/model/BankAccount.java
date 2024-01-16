@@ -24,7 +24,7 @@ public class BankAccount {
 
     @OneToOne
     @JoinColumn(name = "seller_email", referencedColumnName = "email")
-    @JsonBackReference
+    @JsonBackReference("seller-bankAccount")
     private Seller seller;
 
     @Length(min=27, max=27)

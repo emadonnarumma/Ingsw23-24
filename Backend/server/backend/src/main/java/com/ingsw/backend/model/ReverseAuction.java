@@ -26,7 +26,7 @@ public class ReverseAuction extends Auction {
     private Timestamp expirationDate;
     
     @OneToMany(mappedBy = "reverseAuction", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("reverseAuction-reverseBid")
     private List<ReverseBid> receivedBids;
 
 

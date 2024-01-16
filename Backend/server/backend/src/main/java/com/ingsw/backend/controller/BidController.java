@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingsw.backend.enumeration.Role;
 import com.ingsw.backend.model.Auction;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.ReverseAuction;
@@ -52,7 +53,7 @@ public class BidController {
         
 		Optional<User> buyer = userService.getUser(buyerEmail); 
 		
-		if (buyer.isEmpty()) {
+		if (buyer.isEmpty() || buyer.get().getRole() != Role.BUYER) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -68,7 +69,7 @@ public class BidController {
 		
     	Optional<User> seller = userService.getUser(sellerEmail);
 		
-		if (seller.isEmpty()) {
+		if (seller.isEmpty() || seller.get().getRole() != Role.SELLER) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -83,7 +84,7 @@ public class BidController {
 
 		Optional<Auction> auction = auctionService.findById(auctionId); 
 		
-		if (auction.isEmpty()) {
+		if (auction.isEmpty() || !(auction.get() instanceof SilentAuction)) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -99,7 +100,7 @@ public class BidController {
 		
     	Optional<Auction> auction = auctionService.findById(auctionId); 
 		
-		if (auction.isEmpty()) {
+		if (auction.isEmpty() || !(auction.get() instanceof ReverseAuction)) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -115,7 +116,7 @@ public class BidController {
         
         Optional<User> owner = userService.getUser(silentBid.getBuyer().getEmail());
         
-		if (owner.isEmpty()) {
+		if (owner.isEmpty() || owner.get().getRole() == Role.SELLER) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -124,7 +125,7 @@ public class BidController {
         
         Optional<Auction> auction = auctionService.findById(silentBid.getSilentAuction().getId());
         
-		if (auction.isEmpty()) {
+		if (auction.isEmpty() || !(auction.get() instanceof SilentAuction)) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -141,7 +142,7 @@ public class BidController {
         
         Optional<User> owner = userService.getUser(reverseBid.getSeller().getEmail());
         
-		if (owner.isEmpty()) {
+		if (owner.isEmpty() || owner.get().getRole() == Role.BUYER) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -150,7 +151,7 @@ public class BidController {
         
         Optional<Auction> auction = auctionService.findById(reverseBid.getReverseAuction().getId());
         
-		if (auction.isEmpty()) {
+		if (auction.isEmpty() || !(auction.get() instanceof ReverseAuction)) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

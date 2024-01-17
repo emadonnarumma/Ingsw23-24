@@ -1,12 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ui.home.profile.ProfileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment">
 
 
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_layout_general_auction_attributes"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_edit_text_general_auction_attributes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Titolo"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/create_auction_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+        android:layout_marginTop="20sp"
+        app:layout_constraintTop_toBottomOf="@id/title_layout_general_auction_attributes"
+        app:layout_constraintStart_toStartOf="@id/title_layout_general_auction_attributes"
+        app:layout_constraintEnd_toEndOf="@id/title_layout_general_auction_attributes" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_auction_recyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

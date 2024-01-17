@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ui.home.myAuctions.MyAuctionFragment">
+    tools:context=".ui.home.myAuctions.MyAuctionFragment">
 
     <TextView
         android:layout_width="match_parent"

@@ -47,4 +47,5 @@
         <item>Valle d\'Aosta</item>
         <item>Veneto</item>
     </string-array>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

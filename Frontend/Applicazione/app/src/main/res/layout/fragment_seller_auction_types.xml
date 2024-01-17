@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.myBids.MyBidsFragment">
-
-
-
+    tools:context=".ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="le mie offerte" />
+        android:text="Hello" />
+
 </FrameLayout>

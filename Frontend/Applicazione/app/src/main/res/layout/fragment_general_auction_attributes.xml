@@ -26,26 +26,44 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/create_auction_recyclerView"
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_general_auction_attributes"
+        app:cardCornerRadius="6dp"
+        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-        android:layout_marginTop="20sp"
         app:layout_constraintTop_toBottomOf="@id/title_layout_general_auction_attributes"
-        app:layout_constraintStart_toStartOf="@id/title_layout_general_auction_attributes"
-        app:layout_constraintEnd_toEndOf="@id/title_layout_general_auction_attributes" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/button2"
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/image_slider_view_small"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="@color/white"
+            app:sliderIndicatorUnselectedColor="@color/green"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="true" />
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_image_button_general_auction_attributes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_auction_recyclerView" />
+        android:clickable="true"
+        android:src="@drawable/ic_plus_black_24dp"
 
+        app:layout_constraintEnd_toEndOf="@id/card_view_general_auction_attributes"
+        app:layout_constraintBottom_toBottomOf="@id/card_view_general_auction_attributes"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

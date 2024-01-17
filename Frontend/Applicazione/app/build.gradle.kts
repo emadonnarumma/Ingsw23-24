@@ -45,9 +45,11 @@ android {
 }
 
 dependencies {
-    implementation ("io.github.sangcomz:fishbun:x.x.x")
-    implementation ("io.coil-kt:coil:0.11.0")
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    implementation("com.jsibbold:zoomage:1.3.1")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("com.github.smarteist:autoimageslider:1.4.0")
 
     implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
 

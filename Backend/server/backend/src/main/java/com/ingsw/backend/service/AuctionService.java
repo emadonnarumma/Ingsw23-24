@@ -21,5 +21,8 @@ public interface AuctionService {
 	public Boolean delete(int id);
 
 	public Optional<Auction> findById(Integer auctionId);
+	
+	
+	public Boolean buyDownwardAuctionNow(Integer auctionId);
 
 }

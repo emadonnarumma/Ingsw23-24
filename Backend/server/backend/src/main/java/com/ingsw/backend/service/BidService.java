@@ -25,5 +25,7 @@ public interface BidService {
 	
 	public Boolean delete(Integer id);
 	
+	public Boolean acceptSilentBid(Integer id);
 	
+	public Boolean declineSilentBid(Integer id);
 }

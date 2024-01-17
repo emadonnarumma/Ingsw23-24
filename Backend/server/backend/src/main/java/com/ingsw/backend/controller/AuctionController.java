@@ -85,6 +85,14 @@ public class AuctionController {
         
         return ResponseEntity.noContent().build();
     }
+    
+    @PostMapping("/buyNow/{auctionId}")
+    public ResponseEntity<Boolean> buyNow(@PathVariable Integer auctionId) {
+        
+    	Boolean result = auctionService.buyDownwardAuctionNow(auctionId);
+        
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }
 

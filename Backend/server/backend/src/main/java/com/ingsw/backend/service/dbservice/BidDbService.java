@@ -2,18 +2,22 @@ package com.ingsw.backend.service.dbservice;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ingsw.backend.enumeration.AuctionStatus;
 import com.ingsw.backend.enumeration.BidStatus;
+import com.ingsw.backend.model.Bid;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.ReverseAuction;
 import com.ingsw.backend.model.ReverseBid;
 import com.ingsw.backend.model.Seller;
 import com.ingsw.backend.model.SilentAuction;
 import com.ingsw.backend.model.SilentBid;
+import com.ingsw.backend.repository.AuctionRepository;
 import com.ingsw.backend.repository.BidRepository;
 import com.ingsw.backend.service.BidService;
 
@@ -21,10 +25,13 @@ import com.ingsw.backend.service.BidService;
 public class BidDbService implements BidService {
 	
 	private final BidRepository bidRepository;
+	
+	private final AuctionRepository auctionRepository;
 
 
-	public BidDbService(BidRepository bidRepository) {
+	public BidDbService(BidRepository bidRepository, AuctionRepository auctionRepository) {
 		this.bidRepository = bidRepository;
+		this.auctionRepository = auctionRepository;
 	}
 
 	@Override
@@ -69,6 +76,18 @@ public class BidDbService implements BidService {
 	@Override
 	public ReverseBid addReverseBid(ReverseBid reverseBid) {
 		
+		List<ReverseBid> oldReverseBids = reverseBid.getReverseAuction().getReceivedBids();
+		
+		for (ReverseBid oldBid: oldReverseBids) {
+			
+			if (!oldBid.equals(reverseBid)) {
+				
+				oldBid.setStatus(BidStatus.DECLINED);
+			}			
+		}
+		
+		bidRepository.saveAll(oldReverseBids);
+		
 		return bidRepository.save(reverseBid);
 	}
 
@@ -85,5 +104,66 @@ public class BidDbService implements BidService {
 			
 			bidRepository.save(bid);
 		}
+	}
+
+	@Override
+	public Boolean acceptSilentBid(Integer id) {
+		
+		Optional<Bid> optionalBid = bidRepository.findById(id);
+		
+		if (optionalBid.isEmpty() || !(optionalBid.get() instanceof SilentBid)){
+		
+			return false;
+		} 
+		
+		SilentBid acceptedBid = (SilentBid) optionalBid.get();
+		
+		acceptedBid.setStatus(BidStatus.ACCEPTED);
+		
+		SilentAuction auction = acceptedBid.getSilentAuction();
+		
+		auction.setStatus(AuctionStatus.SUCCESSFUL);
+		
+		
+		List<SilentBid> receivedBids = auction.getReceivedBids();
+		
+		for (SilentBid receivedBid: receivedBids) {
+			
+			if (!receivedBid.equals(acceptedBid)) {
+			
+				receivedBid.setStatus(BidStatus.DECLINED);
+				
+			}
+		}
+		
+		
+		bidRepository.save(acceptedBid);
+		
+		bidRepository.saveAll(receivedBids);
+		
+		
+		auctionRepository.save(auction);
+		
+		return true;
+		
+	}
+
+	@Override
+	public Boolean declineSilentBid(Integer id) {
+		
+		Optional<Bid> optionalBid = bidRepository.findById(id);
+		
+		if (optionalBid.isEmpty() || !(optionalBid.get() instanceof SilentBid)){
+		
+			return false;
+		} 
+		
+		SilentBid declinedBid = (SilentBid) optionalBid.get();
+		
+		declinedBid.setStatus(BidStatus.DECLINED);
+		
+		bidRepository.save(declinedBid);
+		
+		return true;
 	}
 }

@@ -176,4 +176,20 @@ public class BidController {
         
         return ResponseEntity.noContent().build();
     }
+    
+    @PostMapping("/acceptBid/{id}")
+    public ResponseEntity<Boolean> acceptBid(@PathVariable Integer id) {
+    	
+        Boolean result = bidService.acceptSilentBid(id);
+        
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    @PostMapping("/declineBid/{id}")
+    public ResponseEntity<Boolean> declineBid(@PathVariable Integer id) {
+    	
+        Boolean result = bidService.declineSilentBid(id);
+        
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

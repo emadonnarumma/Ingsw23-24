@@ -173,25 +173,5 @@ public class AuctionDbService implements AuctionService {
 			
 			auctionRepository.save(auction);
 		}
-	}
-
-
-	
-	
-//    receivedBids.sort(Comparator.comparing(ReverseBid::getMoneyAmount));
-//    
-//    receivedBids.get(0).setStatus(BidStatus.ACCEPTED);
-    
-//    for (int i = 1; i < receivedBids.size(); i++) {
-//    	
-//    	receivedBids.get(i).setStatus(BidStatus.DECLINED);
-//    }
-//    
-    //salva la lista di bid
-    
-//    for (ReverseBid bid: receivedBids) {
-//    	
-//    	bidRepository.save(bid);
-//    }
-//    
+	}  
 }

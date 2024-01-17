@@ -92,19 +92,7 @@ public class BidDbService implements BidService {
 	}
 
 
-	@Scheduled(fixedRate = 60000) //executed every minute
-	@Transactional
-	public void updateSilentBidStatuses() {
-	    
-		List<SilentBid> expiringBids = bidRepository.findExpiredSilentBidsByStatus(BidStatus.PENDING, new Timestamp(System.currentTimeMillis()));
-		
-		for (SilentBid bid: expiringBids) {
-			
-			bid.setStatus(BidStatus.EXPIRED);
-			
-			bidRepository.save(bid);
-		}
-	}
+
 
 	@Override
 	public Boolean acceptSilentBid(Integer id) {
@@ -165,5 +153,20 @@ public class BidDbService implements BidService {
 		bidRepository.save(declinedBid);
 		
 		return true;
+	}
+	
+	
+	@Scheduled(fixedRate = 60000) //executed every minute
+	@Transactional
+	public void updateSilentBidStatuses() {
+	    
+		List<SilentBid> expiringBids = bidRepository.findExpiredSilentBidsByStatus(BidStatus.PENDING, new Timestamp(System.currentTimeMillis()));
+		
+		for (SilentBid bid: expiringBids) {
+			
+			bid.setStatus(BidStatus.EXPIRED);
+			
+			bidRepository.save(bid);
+		}
 	}
 }

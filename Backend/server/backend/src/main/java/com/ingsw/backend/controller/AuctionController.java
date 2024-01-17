@@ -94,6 +94,13 @@ public class AuctionController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/{auctionId}/remainingSeconds")
+    public ResponseEntity<Long> getRemainingSeconds(@PathVariable Integer auctionId) {
+        
+    	Long remainingSeconds = auctionService.getRemainingSecondsForAuction(auctionId);
+        
+        return new ResponseEntity<>(remainingSeconds, HttpStatus.OK);
+    }
 }
 
 

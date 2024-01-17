@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.model.User;
 import com.ingsw.backend.repository.UserRepository;
 import com.ingsw.backend.service.UserService;
@@ -38,4 +39,39 @@ public class UserDbService implements UserService{
 		
 		return userRepository.existsByEmail(email);
 	}
+	
+	@Override
+	public Optional<User> updateRegion(String email, Region newRegion) {
+	    
+		Optional<User> optionalUser = userRepository.findByEmail(email);
+	    
+		if (optionalUser.isPresent()) {
+	        
+			User user = optionalUser.get();
+	        
+	        user.setRegion(newRegion);
+	    
+	        userRepository.save(user);
+	    }
+	    
+		return optionalUser;
+	}
+
+	@Override
+	public Optional<User> updateBio(String email, String newBio) {
+	    
+		Optional<User> optionalUser = userRepository.findByEmail(email);
+	    
+	    if (optionalUser.isPresent()) {
+	        
+	    	User user = optionalUser.get();
+	        
+	    	user.setBio(newBio);
+	        
+	    	userRepository.save(user);
+	    }
+	    
+	    return optionalUser;
+	}
+
 }

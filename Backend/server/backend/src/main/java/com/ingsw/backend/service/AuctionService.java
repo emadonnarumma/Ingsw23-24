@@ -22,7 +22,8 @@ public interface AuctionService {
 
 	public Optional<Auction> findById(Integer auctionId);
 	
-	
 	public Boolean buyDownwardAuctionNow(Integer auctionId);
+	
+	public Long getRemainingSecondsForAuction(Integer auctionId);
 
 }

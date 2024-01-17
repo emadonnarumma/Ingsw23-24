@@ -1,6 +1,8 @@
 package com.ingsw.backend.service.dbservice;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -102,7 +104,33 @@ public class AuctionDbService implements AuctionService {
 		return true;
 	}
 
-	
+	@Override
+	public Long getRemainingSecondsForAuction(Integer auctionId) {
+		
+		Optional<Auction> optionalAuction = auctionRepository.findById(auctionId);
+		
+		if (optionalAuction.isEmpty() || optionalAuction.get() instanceof DownwardAuction){
+			
+			return 0L;
+		}
+		
+		Auction auction = optionalAuction.get();
+	    Timestamp expirationDate;
+		
+	    if (auction instanceof SilentAuction) {
+	    	
+	        expirationDate = ((SilentAuction) auction).getExpirationDate();
+	        
+	    } else{
+	    	
+	        expirationDate = ((ReverseAuction) auction).getExpirationDate();
+	    }
+	    
+	    long remainingSeconds = remainingSeconds(expirationDate);
+	    
+	    return remainingSeconds > 0 ? remainingSeconds : 0L;
+		
+	}  
 	
 	@Scheduled(fixedRate = 60000) //executed every minute
 	@Transactional
@@ -173,5 +201,15 @@ public class AuctionDbService implements AuctionService {
 			
 			auctionRepository.save(auction);
 		}
-	}  
+	}
+
+	
+	private long remainingSeconds(Timestamp expirationDate) {
+	    
+	    LocalDateTime now = LocalDateTime.now();
+	    
+	    LocalDateTime expirationTime = expirationDate.toLocalDateTime();
+	    
+	    return ChronoUnit.SECONDS.between(now, expirationTime);
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.model.User;
 import com.ingsw.backend.service.UserService;
 
@@ -43,5 +44,36 @@ public class UserController {
         
         return ResponseEntity.ok(isUsed);
     }
+	
+	@PutMapping("/{email}/updateRegion")
+    public ResponseEntity<User> updateRegion(@PathVariable String email, @RequestBody Region newRegion) {
+        
+		Optional<User> optionalUser = userService.updateRegion(email, newRegion);
+        
+		if (optionalUser.isPresent()) {
+        
+			return ResponseEntity.ok(optionalUser.get());
+			
+        } else {
+        	
+        	return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{email}/updateBio")
+    public ResponseEntity<User> updateBio(@PathVariable String email, @RequestBody String newBio) {
+    	
+        Optional<User> optionalUser = userService.updateBio(email, newBio);
+        
+        if (optionalUser.isPresent()) {
+            
+        	return ResponseEntity.ok(optionalUser.get());
+            
+        } else {
+        	
+        	return ResponseEntity.notFound().build();
+        }
+    }
 }
+
 

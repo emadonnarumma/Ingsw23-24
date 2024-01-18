@@ -17,7 +17,7 @@ public class FullScreenSliderViewHolder extends SliderViewAdapter.ViewHolder {
 
     public FullScreenSliderViewHolder(View itemView) {
         super(itemView);
-        imageView = itemView.findViewById(R.id.cosa);;
+        imageView = itemView.findViewById(R.id.zoom_image_view_slider_large);;
         this.itemView = itemView;
     }
 }

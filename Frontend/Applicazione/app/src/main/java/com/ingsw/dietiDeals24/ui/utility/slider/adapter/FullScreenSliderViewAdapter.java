@@ -40,22 +40,6 @@ public class FullScreenSliderViewAdapter extends SliderViewAdapter<FullScreenSli
 
 
 
-    public void deleteItem(int position) {
-        this.images.remove(position);
-        notifyDataSetChanged();
-    }
-
-
-
-
-    public void addItem(Uri image) {
-        this.images.add(image);
-        notifyDataSetChanged();
-    }
-
-
-
-
     @Override
     public FullScreenSliderViewHolder onCreateViewHolder(ViewGroup parent) {
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_slider_large_layout_item, null);

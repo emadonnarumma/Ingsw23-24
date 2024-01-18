@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:icon="@drawable/ic_search_24dp"
         android:title="@string/bottom_nav_search" />
 
     <item
@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/navigation_create_auction"
-        android:icon="@drawable/ic_plus_black_24dp"
+        android:icon="@drawable/ic_plus_24dp"
         android:title="@string/bottom_nav_create_auction" />
 
     <item
@@ -23,6 +23,6 @@
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile_black_24dp"
+        android:icon="@drawable/ic_profile_24dp"
         android:title="@string/bottom_nav_profile" />
 </menu>

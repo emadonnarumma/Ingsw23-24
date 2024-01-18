@@ -15,7 +15,7 @@ import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
 
-public class CreateAuctionSmallSliderAdapter extends SliderViewAdapter<CreateAuctionSmallSliderViewHolder> {
+public class SmallScreenSliderAdapter extends SliderViewAdapter<CreateAuctionSmallSliderViewHolder> {
 
 
     private Context context;
@@ -24,7 +24,7 @@ public class CreateAuctionSmallSliderAdapter extends SliderViewAdapter<CreateAuc
 
 
 
-    public CreateAuctionSmallSliderAdapter(Context context) {
+    public SmallScreenSliderAdapter(Context context) {
         this.context = context;
     }
 
@@ -33,22 +33,6 @@ public class CreateAuctionSmallSliderAdapter extends SliderViewAdapter<CreateAuc
 
     public void renewItems(ArrayList<Uri> images) {
         this.images = images;
-        notifyDataSetChanged();
-    }
-
-
-
-
-    public void deleteItem(int position) {
-        this.images.remove(position);
-        notifyDataSetChanged();
-    }
-
-
-
-
-    public void addItem(Uri image) {
-        this.images.add(image);
         notifyDataSetChanged();
     }
 
@@ -67,9 +51,8 @@ public class CreateAuctionSmallSliderAdapter extends SliderViewAdapter<CreateAuc
     @Override
     public void onBindViewHolder(CreateAuctionSmallSliderViewHolder viewHolder, final int position) {
         Uri image = images.get(position);
-
         visualizeImage(viewHolder, image);
-        userClickImage(viewHolder);
+        userClickImage(viewHolder, position);
     }
 
 
@@ -93,10 +76,11 @@ public class CreateAuctionSmallSliderAdapter extends SliderViewAdapter<CreateAuc
 
 
 
-    private void userClickImage(CreateAuctionSmallSliderViewHolder viewHolder) {
+    private void userClickImage(CreateAuctionSmallSliderViewHolder viewHolder, int position) {
         viewHolder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, FullScreenSliderActivity.class);
             intent.putParcelableArrayListExtra("images", images);
+            intent.putExtra("position", position);
             context.startActivity(intent);
         });
     }

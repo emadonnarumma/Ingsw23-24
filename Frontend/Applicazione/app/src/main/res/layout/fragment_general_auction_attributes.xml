@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment">
-
-
+    tools:context=".ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment"
+    android:id="@+id/general_auction_attributes_layout">
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -14,56 +13,64 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/title_edit_text_general_auction_attributes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Titolo"/>
+            android:hint="Titolo" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_general_auction_attributes"
-        app:cardCornerRadius="6dp"
-        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/title_layout_general_auction_attributes"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_margin="16dp"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_layout_general_auction_attributes">
 
         <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/image_slider_view_small"
+            android:id="@+id/slider_view_small"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             app:sliderIndicatorGravity="center_horizontal|bottom"
             app:sliderIndicatorMargin="15dp"
             app:sliderIndicatorOrientation="horizontal"
             app:sliderIndicatorPadding="3dp"
-            app:sliderIndicatorRadius="2dp"
             app:sliderIndicatorSelectedColor="@color/white"
-            app:sliderIndicatorUnselectedColor="@color/green"
-            app:sliderScrollTimeInSec="1"
-            app:sliderStartAutoCycle="true" />
+            app:sliderIndicatorUnselectedColor="@color/green" />
     </androidx.cardview.widget.CardView>
-
-
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_image_button_general_auction_attributes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+
+        android:backgroundTint="@color/green"
         android:clickable="true"
-        android:src="@drawable/ic_plus_black_24dp"
+        android:src="@drawable/ic_plus_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/card_view_general_auction_attributes"
+        app:layout_constraintEnd_toEndOf="@id/card_view_general_auction_attributes" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_image_button_general_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:src="@drawable/ic_delete_cross24dp"
+        android:backgroundTint="@color/red"
 
         app:layout_constraintEnd_toEndOf="@id/card_view_general_auction_attributes"
-        app:layout_constraintBottom_toBottomOf="@id/card_view_general_auction_attributes"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp" />
+        app:layout_constraintTop_toTopOf="@id/card_view_general_auction_attributes" />
 </androidx.constraintlayout.widget.ConstraintLayout>

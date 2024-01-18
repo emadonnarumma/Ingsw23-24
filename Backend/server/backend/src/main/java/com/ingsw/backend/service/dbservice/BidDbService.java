@@ -155,6 +155,27 @@ public class BidDbService implements BidService {
 		return true;
 	}
 	
+	@Override
+	public Boolean isSilentBidWithdrawable(Integer id) {
+		
+		Optional<Bid> optionalBid = bidRepository.findById(id);
+		
+		if (optionalBid.isEmpty() || !(optionalBid.get() instanceof SilentBid)){
+		
+			return false;
+		} 
+		
+	    SilentBid bid = (SilentBid) optionalBid.get();
+	    
+	    long currentTime = System.currentTimeMillis();
+	    
+	    long bidElapsedTime = currentTime - bid.getTimestamp().getTime();
+	    
+	    long withdrawalTimeMillis = bid.getSilentAuction().getWithdrawalTime() * 1000;
+	    
+	    return (bidElapsedTime <= withdrawalTimeMillis);
+	    
+	}
 	
 	@Scheduled(fixedRate = 60000) //executed every minute
 	@Transactional

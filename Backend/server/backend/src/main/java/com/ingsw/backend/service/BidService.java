@@ -28,4 +28,7 @@ public interface BidService {
 	public Boolean acceptSilentBid(Integer id);
 	
 	public Boolean declineSilentBid(Integer id);
+	
+	
+	public Boolean isSilentBidWithdrawable(Integer id);
 }

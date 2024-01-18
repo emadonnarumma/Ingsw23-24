@@ -194,7 +194,7 @@ public class BidController {
     }
     
     @GetMapping("/{id}/isWithdrawable")
-    public ResponseEntity<Boolean> isBidWithdrawable(@PathVariable Integer id) {
+    public ResponseEntity<Boolean> isSilentBidWithdrawable(@PathVariable Integer id) {
         
     	Boolean isWithdrawable = bidService.isSilentBidWithdrawable(id);
         

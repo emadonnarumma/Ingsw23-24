@@ -24,6 +24,12 @@
 
     <string name="region_phrase">Seleziona una regione</string>
 
+    <string name="search_hint">Cerca</string>
+
+    <string name="wear_phrase">Usura</string>
+
+    <string name="category_phrase">Categoria</string>
+
     <string-array name="italian_regions">
         <item>Non specificare</item>
         <item>Abruzzo</item>
@@ -49,4 +55,5 @@
     </string-array>
     <string name="title_activity_main">MainActivity</string>
     <string name="auction_description_phrase">Aggiungi una descrizione dell\'asta</string>
+    <string name="auction_type_phrase">Seleziona il tipo di asta</string>
 </resources>

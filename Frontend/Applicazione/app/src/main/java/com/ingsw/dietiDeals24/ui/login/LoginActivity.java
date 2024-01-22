@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void userPressLoginButton() {
         loginButton.setOnClickListener(v -> {
-            LogInController.loggedUser = new User(Role.SELLER, "tes", "tes@tes.com", "tes", "tes", Region.ABRUZZO);
+            LogInController.loggedUser = new User(Role.BUYER, "tes", "tes@tes.com", "tes", "tes", Region.ABRUZZO);
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
 

@@ -15,6 +15,8 @@ public class HomeActivity extends AppCompatActivity {
     private NavigationBarView navigationBarView;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,8 @@ public class HomeActivity extends AppCompatActivity {
         navigationBarView = findViewById(R.id.bottom_navigation);
         setNavigatioBarView();
     }
+
+
 
 
     private void setNavigatioBarView() {

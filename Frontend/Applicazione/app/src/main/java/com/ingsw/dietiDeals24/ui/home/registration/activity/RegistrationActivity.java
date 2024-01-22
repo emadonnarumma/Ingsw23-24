@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.registration;
+package com.ingsw.dietiDeals24.ui.home.registration.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import com.ingsw.dietiDeals24.ui.utility.stepper.RegistrationStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
-public class RegistrationActivity extends AppCompatActivity implements StepperLayout.StepperListener {
+public class RegistrationActivity extends AppCompatActivity {
     private StepperLayout stepperLayout;
 
     @Override
@@ -24,31 +24,6 @@ public class RegistrationActivity extends AppCompatActivity implements StepperLa
         //TODO: jonny - implementare la verifica dei dati inseriti dall'utente
         //stepperLayout.setNextButtonVerificationFailed(false);
         //stepperLayout.setCompleteButtonVerificationFailed(false);
-
-    }
-
-    @Override
-    public void onCompleted(View completeButton) {
-
-    }
-
-    @Override
-    public void onError(VerificationError verificationError) {
-
-    }
-
-    @Override
-    public void onStepSelected(int newStepPosition) {
-        if (newStepPosition == 2) { // Se sei nel terzo frammento (l'indice inizia da 0)
-            stepperLayout.setCompleteButtonEnabled(false);
-        } else {
-            stepperLayout.setCompleteButtonEnabled(true);
-        }
-    }
-
-
-    @Override
-    public void onReturn() {
 
     }
 }

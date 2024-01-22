@@ -24,12 +24,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class FullScreenSliderActivity extends AppCompatActivity {
-
-
     private View layout;
     private ArrayList<Uri> images;
     private SliderView sliderView;
     private Toolbar toolbar;
+
 
 
 
@@ -58,6 +57,7 @@ public class FullScreenSliderActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
     }
+
 
 
 

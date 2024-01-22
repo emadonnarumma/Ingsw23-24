@@ -28,20 +28,14 @@ import java.util.List;
 public class GeneralAuctionAttributesFragment extends Fragment {
 
 
+
+
     private Auction newAuction = CreateAuctionController.newAuction;
     private ActivityResultLauncher<String[]> resultLauncher;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
     private SliderView sliderView;
     private FloatingActionButton addButton, deleteButton;
     private SmallScreenSliderAdapter smallScreenSliderAdapter;
-
-
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
 
 

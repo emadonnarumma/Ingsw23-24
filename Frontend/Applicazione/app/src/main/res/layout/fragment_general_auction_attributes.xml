@@ -8,6 +8,8 @@
     android:id="@+id/general_auction_attributes_layout">
 
 
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/title_layout_general_auction_attributes"
         android:layout_width="370dp"
@@ -23,6 +25,8 @@
             android:layout_height="wrap_content"
             android:hint="Titolo" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
     <androidx.cardview.widget.CardView
@@ -47,6 +51,8 @@
     </androidx.cardview.widget.CardView>
 
 
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_image_button_general_auction_attributes"
         android:layout_width="wrap_content"
@@ -61,6 +67,8 @@
         app:layout_constraintEnd_toEndOf="@id/card_view_general_auction_attributes" />
 
 
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/delete_image_button_general_auction_attributes"
         android:layout_width="wrap_content"
@@ -73,4 +81,52 @@
 
         app:layout_constraintEnd_toEndOf="@id/card_view_general_auction_attributes"
         app:layout_constraintTop_toTopOf="@id/card_view_general_auction_attributes" />
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/auction_description_edit_text_general_auction_attributes"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view_general_auction_attributes"
+        app:counterEnabled="true"
+        app:counterMaxLength="500">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/bio_edit_text_registration"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="@string/auction_description_phrase"
+        android:inputType="textMultiLine"
+        android:maxLength="500" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+        android:id="@+id/region_spinner_registration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:smsp_hint="@string/region_phrase"
+        app:smsp_hintColor="@color/black"
+        app:smsp_itemColor="@color/green"
+        app:smsp_itemListColor="@color/black"
+        app:smsp_selectedItemListColor="@color/green"
+        app:smsp_itemListHintBackgroundColor="#808080"
+        app:smsp_itemListHintColor="#FFFFFF"
+        app:smsp_multilineError="false"
+        app:smsp_isSearchable="true"
+        app:smsp_searchHint="Cerca"
+        app:smsp_searchHeaderText="@string/region_phrase"
+        app:smsp_searchHeaderBackgroundColor="@color/green"
+        app:smsp_isOutlined="true"
+
+        app:layout_constraintTop_toBottomOf="@id/auction_description_edit_text_general_auction_attributes"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

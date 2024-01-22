@@ -1,7 +1,6 @@
 package com.ingsw.dietiDeals24.enumeration;
 
 public enum Region {
-
     CAMPANIA,
     LAZIO,
     LOMBARDIA,
@@ -21,5 +20,5 @@ public enum Region {
     MOLISE,
     VALLE_D_AOSTA,
     TRENTINO_ALTO_ADIGE,
-    LIGURIA
+    LIGURIA;
 }

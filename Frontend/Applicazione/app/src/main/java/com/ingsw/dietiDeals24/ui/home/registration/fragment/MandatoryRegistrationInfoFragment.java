@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.registration;
+package com.ingsw.dietiDeals24.ui.home.registration.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,17 +24,7 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
     private EditText userNameEditText, emailEditText, passwordEditText;
     private User registeringUser = RegistrationController.user;
 
-    public static MandatoryRegistrationInfoFragment newInstance() {
-        return new MandatoryRegistrationInfoFragment();
-    }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
 
 
     @Nullable
@@ -45,11 +35,15 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
     }
 
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findTheViews();
     }
+
+
 
 
     @Override
@@ -60,10 +54,13 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
 
 
 
+
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
 
     }
+
+
 
 
     @Override
@@ -73,11 +70,15 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
     }
 
 
+
+
     @Nullable
     @Override
     public VerificationError verifyStep() {
         return null;
     }
+
+
 
 
     @Override

@@ -19,8 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LogInController implements IPHolder {
     public static User loggedUser;
 
-    private LogInController() {
-    }
+    private LogInController() {}
 
     public static Future<Boolean> login(String email, String password) throws IOException {
 
@@ -37,7 +36,6 @@ public class LogInController implements IPHolder {
         return executorService.submit(() -> {
             try {
                 Response<TokenHolder> response = call.execute();
-                int status = response.code();
                 TokenHolder tokenHolder = response.body();
                 return tokenHolder != null;
             } catch (IOException e) {

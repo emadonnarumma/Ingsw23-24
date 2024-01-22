@@ -13,7 +13,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.enumeration.Region;
 import com.ingsw.dietiDeals24.enumeration.Role;
 import com.ingsw.dietiDeals24.model.User;
-import com.ingsw.dietiDeals24.ui.registration.RegistrationActivity;
+import com.ingsw.dietiDeals24.ui.home.registration.activity.RegistrationActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;

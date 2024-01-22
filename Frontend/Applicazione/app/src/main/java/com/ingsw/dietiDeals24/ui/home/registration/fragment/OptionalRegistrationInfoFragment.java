@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.registration;
+package com.ingsw.dietiDeals24.ui.home.registration.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,13 +10,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.enumeration.Region;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.RegionStringConverter;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
@@ -28,21 +27,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Future;
 
-public class OptionalInfoRegistrationFragment extends Fragment implements BlockingStep {
-
+public class OptionalRegistrationInfoFragment extends Fragment implements BlockingStep {
     private SmartMaterialSpinner<String> regionSmartSpinner;
     private EditText bioEditText;
     private User registeringUser = RegistrationController.user;
 
-    public static OptionalInfoRegistrationFragment newInstance() {
-        return new OptionalInfoRegistrationFragment();
-    }
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_optional_info_registration, container, false);
+        return inflater.inflate(R.layout.fragment_optional_registration_info, container, false);
     }
+
+
 
 
     @Override
@@ -54,9 +53,12 @@ public class OptionalInfoRegistrationFragment extends Fragment implements Blocki
 
 
 
+
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
     }
+
+
 
 
     @Override
@@ -68,10 +70,22 @@ public class OptionalInfoRegistrationFragment extends Fragment implements Blocki
     }
 
 
+
+
+    private void setRegisteringUserValues() {
+        registeringUser.setRegion(Enum.valueOf(Region.class, regionSmartSpinner.getSelectedItem()));
+        registeringUser.setBio(bioEditText.getText().toString());
+    }
+
+
+
+
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
         callback.goToPrevStep();
     }
+
+
 
 
     @Nullable
@@ -81,10 +95,14 @@ public class OptionalInfoRegistrationFragment extends Fragment implements Blocki
     }
 
 
+
+
     @Override
     public void onSelected() {
 
     }
+
+
 
 
     @Override
@@ -93,10 +111,13 @@ public class OptionalInfoRegistrationFragment extends Fragment implements Blocki
     }
 
 
+
+
     @NonNull
     private Thread getRegistrationThread() {
         return new Thread(() ->
         {
+
             boolean registrationSuccessFull = tryToRegister();
 
             if (registrationSuccessFull) {
@@ -106,10 +127,13 @@ public class OptionalInfoRegistrationFragment extends Fragment implements Blocki
                 requireActivity().runOnUiThread(() -> ToastManager.showToast(
                         getContext(), "Registrazione fallita"));
             }
+
         });
     }
 
 
+
+    //TODO: handle the exception
     private static boolean tryToRegister() {
         Future<Boolean> future = RegistrationController.register();
         boolean regisrationSuccessfull;
@@ -122,31 +146,21 @@ public class OptionalInfoRegistrationFragment extends Fragment implements Blocki
     }
 
 
+
+
     private void findTheViews() {
         regionSmartSpinner = requireView().findViewById(R.id.region_spinner_registration);
         bioEditText = requireView().findViewById(R.id.bio_edit_text_registration);
     }
 
 
+
+
     private void setTheSpinnerListener() {
-        List<String> regionList = Arrays.asList(getResources().getStringArray(R.array.italian_regions));
+        List<String> regionList = Arrays.asList(
+                getResources().getStringArray(R.array.italian_regions)
+        );
 
         regionSmartSpinner.setItem(regionList);
-
-        regionSmartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-    }
-
-
-    private void setRegisteringUserValues() {
-        registeringUser.setRegion(RegionStringConverter.convert(regionSmartSpinner.getSelectedItem()));
-        registeringUser.setBio(bioEditText.getText().toString());
     }
 }

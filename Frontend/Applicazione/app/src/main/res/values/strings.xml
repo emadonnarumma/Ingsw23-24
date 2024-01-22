@@ -48,4 +48,5 @@
         <item>Veneto</item>
     </string-array>
     <string name="title_activity_main">MainActivity</string>
+    <string name="auction_description_phrase">Aggiungi una descrizione dell\'asta</string>
 </resources>

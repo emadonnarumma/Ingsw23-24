@@ -20,12 +20,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer>{
 	
 	public List<Auction> findAllByTitleContainingIgnoreCase(String keyword);
 	
-	public List<Auction> findAllByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);
-
-//	public List<SilentAuction> findByStatusAndExpirationDateBefore(AuctionStatus status, Timestamp currentTimestamp);
-//
-//	public List<ReverseAuction> findByStatusAndExpirationDateBefore(AuctionStatus status, Timestamp currentTimestamp);
-//	
+	public List<Auction> findAllByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);	
 	
 	public List<SilentAuction> findSilentByStatusAndExpirationDateBefore(AuctionStatus status, Timestamp currentTimestamp);
 

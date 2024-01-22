@@ -26,15 +26,6 @@ public class AuthenticationService {
 
 	public AuthenticationResponse register(RegisterRequest request) {
 		
-//		var user = User.builder()
-//				.bio(request.getBio())
-//				.email(request.getEmail())
-//				.password(passwordEncoder.encode(request.getPassword()))
-//				.name(request.getName())
-//				.region(request.getRegion())
-//				.role(request.getRole())
-//				.build();
-		
 		User user;
 		
 		if (request.getRole() == Role.BUYER) {

@@ -30,6 +30,12 @@
 
     <string name="category_phrase">Categoria</string>
 
+    <string name="title_activity_main">MainActivity</string>
+    <string name="auction_description_phrase">Aggiungi una descrizione dell\'asta</string>
+    <string name="auction_type_phrase">Seleziona il tipo di asta</string>
+    <string name="reverse_phrase">Inversa</string>
+    <string name="home_appbar">Home AppBar</string>
+
     <string-array name="italian_regions">
         <item>Non specificare</item>
         <item>Abruzzo</item>
@@ -53,7 +59,32 @@
         <item>Valle d\'Aosta</item>
         <item>Veneto</item>
     </string-array>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="auction_description_phrase">Aggiungi una descrizione dell\'asta</string>
-    <string name="auction_type_phrase">Seleziona il tipo di asta</string>
+    
+    <string-array name="wears">
+        <item>Non specificare</item>
+        <item>Nuovo</item>
+        <item>Ottime condizioni</item>
+        <item>Buone condizioni</item>
+        <item>Pessime condizioni</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Archeologia e storia naturale</item>
+        <item>Arte</item>
+        <item>Arte asiatica e tribale</item>
+        <item>Auto d\'epoca, moto d\'epoca e automobilia</item>
+        <item>Collezionismo militare e documenti storici</item>
+        <item>Decorazioni d\'interni</item>
+        <item>Giochi e modellismo</item>
+        <item>Gioielli e pietre preziose</item>
+        <item>Carte da collezione e videogiochi</item>
+        <item>Libri e fumetti</item>
+        <item>Moda</item>
+        <item>Monete e francobolli</item>
+        <item>Musica e fotocamere</item>
+        <item>Orologi da polso</item>
+        <item>Sport</item>
+        <item>Vini e liquori</item>
+        <item>Servizi</item>
+    </string-array>
 </resources>

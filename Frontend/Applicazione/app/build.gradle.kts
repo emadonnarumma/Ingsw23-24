@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation("com.wdullaer:materialdatetimepicker:4.2.3")
+
     implementation("com.jsibbold:zoomage:1.3.1")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")

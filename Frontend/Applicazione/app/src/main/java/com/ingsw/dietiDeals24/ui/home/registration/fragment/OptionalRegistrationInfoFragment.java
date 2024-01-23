@@ -157,10 +157,10 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
 
 
     private void setTheSpinnerListener() {
-        List<String> regionList = Arrays.asList(
-                getResources().getStringArray(R.array.italian_regions)
+        regionSmartSpinner.setItem(
+                Arrays.asList(
+                        getResources().getStringArray(R.array.italian_regions)
+                )
         );
-
-        regionSmartSpinner.setItem(regionList);
     }
 }

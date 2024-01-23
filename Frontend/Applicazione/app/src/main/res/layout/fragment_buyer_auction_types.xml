@@ -11,7 +11,7 @@
         android:id="@+id/reverse_auction_type_button_buyer_auction_types"
         android:layout_width="wrap_content"
         android:layout_height="350dp"
-        android:background="@drawable/rounded_corners"
+        android:background="@drawable/rounded_corners_brown"
         android:src="@drawable/reverse_arrow"
         android:adjustViewBounds="true"
 

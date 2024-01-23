@@ -1,17 +1,12 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Spanned;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +14,10 @@ import android.widget.EditText;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-public class ReverseAuctionAttributesFragment extends Fragment {
-    private EditText priceEditText;
+public class ReverseAuctionAttributesFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+    private EditText priceEditText, dateEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -29,10 +25,24 @@ public class ReverseAuctionAttributesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_reverse_auction_attributes, container, false);
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setupPriceEditText(view);
+
+        dateEditText = view.findViewById(R.id.date_edit_text_reverse_auction_attributes);
+        dateEditText.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                    ReverseAuctionAttributesFragment.this,
+                    2021,
+                    0,
+                    1
+            );
+            datePickerDialog.show(getParentFragmentManager(), "datePicker");
+        });
+    }
+
+    private void setupPriceEditText(@NonNull View view) {
         priceEditText = view.findViewById(R.id.price_edit_text_reverse_auction_attributes);
         priceEditText.setFilters(new InputFilter[] { new DecimalInputFilter() });
         priceEditText.setOnFocusChangeListener((v, hasFocus) -> {
@@ -43,6 +53,10 @@ public class ReverseAuctionAttributesFragment extends Fragment {
                 priceEditText.setText(sb.toString());
             }
         });
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
     }
 }

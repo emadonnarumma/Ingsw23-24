@@ -3,4 +3,17 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="corner_radius">6dp</dimen>
+
+    <!-- default text sizes -->
+    <dimen name="title_text_large">45sp</dimen>
+    <dimen name="title_text_medium">30sp</dimen>
+    <dimen name="title_text_small">20sp</dimen>
+    <dimen name="button_text_size">14sp</dimen>
+    <dimen name="text_medium">15sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+
+    <!-- Dimen related to the Profile -->
+    <dimen name="username_height_profile">80dp</dimen>
+
 </resources>

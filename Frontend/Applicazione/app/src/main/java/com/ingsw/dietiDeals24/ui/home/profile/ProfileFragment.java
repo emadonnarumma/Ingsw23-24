@@ -34,6 +34,15 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         sellerSwitch = view.findViewById(R.id.seller_switch_profile);
         sellerSwitchTextView = view.findViewById(R.id.seller_switch_text_profile);
+
+        if(sellerSwitch.isChecked()) {
+            sellerSwitchTextView.setTranslationX(16);
+            sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
+        } else {
+            sellerSwitchTextView.setTranslationX(8);
+            sellerSwitchTextView.setTextColor(getResources().getColor(R.color.grey));
+        }
+
         sellerSwitch.setOnClickListener(v -> {
             if (sellerSwitch.isChecked()) {
                 sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));

@@ -8,34 +8,70 @@
     tools:context=".ui.home.createAuction.fragments.specificAuctionAttributes.ReverseAuctionAttributesFragment">
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/price_layout_reverse_auction_attributes"
-        android:layout_width="370dp"
+    <TextView
+        android:id="@+id/initial_price_hint_text_view_reverse_auction_attributes"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/verdana_bold"
+        android:text="@string/initial_price_phrase"
+        android:textSize="20sp"
 
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/price_edit_text_reverse_auction_attributes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="Prezzo iniziale" />
-    </com.google.android.material.textfield.TextInputLayout>
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:id="@+id/initial_price_layout_reverse_auction_attributes"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="30sp"
+        app:layout_constraintTop_toTopOf="@id/initial_price_hint_text_view_reverse_auction_attributes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/date_hint_text_view_reverse_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="@font/verdana_bold"
+        android:text="@string/date_picker_phrase"
+
+        android:layout_marginTop="120dp"
+        app:layout_constraintTop_toBottomOf="@id/initial_price_layout_reverse_auction_attributes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+    <TextView
         android:id="@+id/date_edit_text_reverse_auction_attributes"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:background="@drawable/rounded_corners_grey"
+        android:layout_width="280dp"
+        android:layout_height="150dp"
+        android:background="@drawable/rounded_corners_green"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:gravity="center"
+        android:drawablePadding="10dp"
 
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="@id/price_layout_reverse_auction_attributes"
-        app:layout_constraintEnd_toEndOf="@id/price_layout_reverse_auction_attributes"
-        app:layout_constraintTop_toBottomOf="@id/price_layout_reverse_auction_attributes" />
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="@id/date_hint_text_view_reverse_auction_attributes"
+        app:layout_constraintEnd_toEndOf="@id/date_hint_text_view_reverse_auction_attributes"
+        app:layout_constraintTop_toBottomOf="@id/date_hint_text_view_reverse_auction_attributes"
+        app:drawableEndCompat="@drawable/ic_calendar_24dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:fontFamily="@font/verdana_bold"
+        android:text="@string/create_reverse_auction_phrase"
+
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintTop_toBottomOf="@id/date_edit_text_reverse_auction_attributes"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

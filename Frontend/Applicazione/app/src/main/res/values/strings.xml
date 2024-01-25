@@ -35,6 +35,9 @@
     <string name="auction_type_phrase">Seleziona il tipo di asta</string>
     <string name="reverse_phrase">Inversa</string>
     <string name="home_appbar">Home AppBar</string>
+    <string name="date_picker_phrase">Seleziona la data di scadenza</string>
+    <string name="initial_price_phrase">Inserisci il prezzo iniziale</string>
+    <string name="create_reverse_auction_phrase">Crea asta inversa</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>
@@ -61,7 +64,7 @@
     </string-array>
     
     <string-array name="wears">
-        <item>Non specificare</item>
+        <item>Non specificato</item>
         <item>Nuovo</item>
         <item>Ottime condizioni</item>
         <item>Buone condizioni</item>

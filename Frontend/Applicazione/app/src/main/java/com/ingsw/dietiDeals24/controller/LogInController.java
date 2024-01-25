@@ -1,45 +1,30 @@
 package com.ingsw.dietiDeals24.controller;
 
-import com.ingsw.dietiDeals24.network.IPHolder;
+import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.login.LoginDao;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.login.LogInRequest;
 import com.ingsw.dietiDeals24.model.User;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class LogInController implements IPHolder {
+public class LogInController implements RetroFitHolder {
     public static User loggedUser;
 
     private LogInController() {}
 
-    public static Future<Boolean> login(String email, String password) throws IOException {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IP)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+    public static CompletableFuture<Boolean> login(String email, String password) {
 
         LoginDao loginDao = retrofit.create(LoginDao.class);
-        Call<TokenHolder> call = loginDao.login(new LogInRequest(email, password));
+        LogInRequest request = new LogInRequest(email, password);
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-        return executorService.submit(() -> {
+        return CompletableFuture.supplyAsync(() -> {
             try {
-                Response<TokenHolder> response = call.execute();
-                TokenHolder tokenHolder = response.body();
+                TokenHolder tokenHolder = loginDao.login(request).execute().body();
                 return tokenHolder != null;
             } catch (IOException e) {
-                throw e;
+                return false;
             }
         });
     }

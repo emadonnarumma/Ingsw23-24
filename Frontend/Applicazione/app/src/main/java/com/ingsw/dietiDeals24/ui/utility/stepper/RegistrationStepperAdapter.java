@@ -7,8 +7,8 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
-import com.ingsw.dietiDeals24.ui.home.registration.fragment.MandatoryRegistrationInfoFragment;
-import com.ingsw.dietiDeals24.ui.home.registration.fragment.OptionalRegistrationInfoFragment;
+import com.ingsw.dietiDeals24.ui.registration.fragment.MandatoryRegistrationInfoFragment;
+import com.ingsw.dietiDeals24.ui.registration.fragment.OptionalRegistrationInfoFragment;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 import com.stepstone.stepper.viewmodel.StepViewModel;

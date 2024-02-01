@@ -1,6 +1,8 @@
 package com.ingsw.dietiDeals24.enumeration;
 
-public enum Category {
+import java.io.Serializable;
+
+public enum Category implements Serializable {
     ARCHAEOLOGY_AND_NATURAL_HISTORY,
     ART,
     ASIAN_AND_TRIABAL_ART,
@@ -20,6 +22,7 @@ public enum Category {
     SERVICES;
 
     public static Category fromItalianString(String category) {
+        int c = 9;
         switch (category) {
             case "Archeologia e storia naturale":
                 return ARCHAEOLOGY_AND_NATURAL_HISTORY;

@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.registration.fragment;
+package com.ingsw.dietiDeals24.ui.registration.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,11 +21,9 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 public class MandatoryRegistrationInfoFragment extends Fragment implements BlockingStep {
+
     private EditText userNameEditText, emailEditText, passwordEditText;
     private User registeringUser = RegistrationController.user;
-
-
-
 
     @Nullable
     @Override
@@ -103,6 +101,6 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
     private void setRegisteringUserValues() {
         registeringUser.setPassword(passwordEditText.getText().toString());
         registeringUser.setEmail(emailEditText.getText().toString());
-        registeringUser.setUsername(userNameEditText.getText().toString());
+        registeringUser.setName(userNameEditText.getText().toString());
     }
 }

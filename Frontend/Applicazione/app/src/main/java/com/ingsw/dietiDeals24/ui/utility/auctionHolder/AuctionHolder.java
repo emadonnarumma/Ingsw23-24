@@ -1,34 +1,27 @@
-package com.ingsw.dietiDeals24.model;
+package com.ingsw.dietiDeals24.ui.utility.auctionHolder;
 
-import com.ingsw.dietiDeals24.enumeration.AuctionStatus;
-import com.ingsw.dietiDeals24.enumeration.AuctionType;
+import android.net.Uri;
+
 import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Wear;
 
 import java.util.List;
 
-public class Auction {
-
-    private Integer id;
-    private AuctionType type;
-    private List<Image> images;
+public class AuctionHolder {
     private String title;
+    private List<Uri> images;
     private String description;
     private Wear wear;
-    private AuctionStatus status;
     private Category category;
-    private User owner;
 
-    public Auction() {}
+    public AuctionHolder() {}
 
-    public Auction(User owner, String title, String description, Wear wear, Category category, AuctionStatus status, AuctionType auctionType) {
-        this.owner = owner;
+    public AuctionHolder(String title, List<Uri> images, String description, Wear wear, Category category) {
         this.title = title;
+        this.images = images;
         this.description = description;
         this.wear = wear;
         this.category = category;
-        this.status = status;
-        this.type = auctionType;
     }
 
     public String getTitle() {
@@ -39,11 +32,11 @@ public class Auction {
         this.title = title;
     }
 
-    public List<Image> getImages() {
+    public List<Uri> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<Uri> images) {
         this.images = images;
     }
 
@@ -70,14 +63,4 @@ public class Auction {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-
 }

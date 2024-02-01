@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.registration.fragment;
+package com.ingsw.dietiDeals24.ui.registration.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,6 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Future;
 
 public class OptionalRegistrationInfoFragment extends Fragment implements BlockingStep {
@@ -73,7 +72,7 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
 
 
     private void setRegisteringUserValues() {
-        registeringUser.setRegion(Enum.valueOf(Region.class, regionSmartSpinner.getSelectedItem()));
+        registeringUser.setRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem()));
         registeringUser.setBio(bioEditText.getText().toString());
     }
 

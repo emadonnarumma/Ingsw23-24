@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class LogInController implements RetroFitHolder {
-    public static User loggedUser;
 
-    private LogInController() {}
+    private LogInController() {
+    }
 
     public static CompletableFuture<Boolean> login(String email, String password) {
 
@@ -21,8 +21,9 @@ public class LogInController implements RetroFitHolder {
 
         return CompletableFuture.supplyAsync(() -> {
             try {
-                TokenHolder tokenHolder = loginDao.login(request).execute().body();
-                return tokenHolder != null;
+                TokenHolder.instance = loginDao.login(request).execute().body();
+                UserHolder.user = loginDao.getUser(email, TokenHolder.getAuthToken()).execute().body();
+                return true;
             } catch (IOException e) {
                 return false;
             }

@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,19 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.LogInController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Role;
 import com.ingsw.dietiDeals24.enumeration.Wear;
-import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
+import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -40,12 +38,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GeneralAuctionAttributesFragment extends Fragment {
-    private GeneralAuctionAttributesViewModel viewModel;
-    private TextView titleTextView, descriptionTextView;
+    
+    private KeyboardFocusManager keyboardFocusManager;
     private ActivityResultLauncher<String[]> resultLauncher;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
+    
+    private GeneralAuctionAttributesViewModel viewModel;
+    private TextView titleTextView, descriptionTextView;
     private SliderView sliderView;
+    
     private FloatingActionButton addButton, deleteButton, nextStepButton;
+    
     private SmallScreenSliderAdapter smallScreenSliderAdapter;
     private SmartMaterialSpinner<String> wearSmartSpinner, categorySmartSpinner;
 
@@ -65,12 +68,27 @@ public class GeneralAuctionAttributesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        restoreData();
+        setupActionBar();
+        setupButtons(view);
+        setupSlider(view);
+        setupTextViews(view);
+        setupSpinners(view);
+        setupKeyboardFocusManager(view);
+    }
+
+    private void setupKeyboardFocusManager(View view) {
+        keyboardFocusManager = new KeyboardFocusManager(this, view);
+        keyboardFocusManager.loseFocusWhenKeyboardClose();
+        keyboardFocusManager.closeKeyboardWhenUserClickOutside();
+    }
+
+    private void restoreData() {
         viewModel.getNewAuction().observe(getViewLifecycleOwner(), auction -> {
             if (auction != null) {
                 titleTextView.setText(auction.getTitle());
                 descriptionTextView.setText(auction.getDescription());
 
-                // Add null checks before calling ordinal() method
                 if (auction.getWear() != null) {
                     wearSmartSpinner.setSelection(auction.getWear().ordinal());
                 }
@@ -81,11 +99,6 @@ public class GeneralAuctionAttributesFragment extends Fragment {
                 smallScreenSliderAdapter.renewItems((ArrayList<Uri>) auction.getImages());
             }
         });
-        setupButtons(view);
-        setupSlider(view);
-        setupTextViews(view);
-        setupSpinners(view);
-        setupActionBar();
     }
 
     private void setupTextViews(View view) {
@@ -203,18 +216,44 @@ public class GeneralAuctionAttributesFragment extends Fragment {
                 ContextCompat.getColor(requireContext(), R.color.white))
         );
 
+
+        
         nextStepButton.setOnClickListener(v -> {
+            Bundle bundle = setupBundleWithPassingValues();
+
+            Fragment fragment = getUserTypeFragment();
+
+            fragment.setArguments(bundle);
+
             FragmentManager fragmentManager = getParentFragmentManager();
-            if (LogInController.loggedUser.getRole().equals(Role.SELLER)) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_home, new SellerAuctionTypesFragment())
-                        .commit();
-            } else {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_home, new BuyerAuctionTypesFragment())
-                        .commit();
-            }
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container_home, fragment)
+                    .commit();
         });
+    }
+
+    @NonNull
+    private static Fragment getUserTypeFragment() {
+        Fragment fragment;
+        if (UserHolder.user.getRole().equals(Role.SELLER)) {
+            fragment = new SellerAuctionTypesFragment();
+        } else {
+            fragment = new BuyerAuctionTypesFragment();
+        }
+
+        return fragment;
+    }
+
+    @NonNull
+    private Bundle setupBundleWithPassingValues() {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", titleTextView.getText().toString());
+        bundle.putString("description", descriptionTextView.getText().toString());
+        bundle.putSerializable("wear", getWearValue());
+        bundle.putSerializable("category", getCategoryValue());
+        bundle.putParcelableArrayList("images", selectedImages);
+
+        return bundle;
     }
 
     private void updateDeleteButton() {
@@ -246,6 +285,7 @@ public class GeneralAuctionAttributesFragment extends Fragment {
         if (wearSmartSpinner.getSelectedItem() != null) {
             return Wear.fromItalianString(wearSmartSpinner.getSelectedItem());
         }
+
         return null;
     }
 
@@ -253,7 +293,26 @@ public class GeneralAuctionAttributesFragment extends Fragment {
         if (categorySmartSpinner.getSelectedItem() != null) {
             return Category.fromItalianString(categorySmartSpinner.getSelectedItem());
         }
+
         return null;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        feedTheCollector();
+    }
+
+    private void feedTheCollector() {
+        sliderView = null;
+        addButton = null;
+        deleteButton = null;
+        nextStepButton = null;
+        smallScreenSliderAdapter = null;
+        wearSmartSpinner = null;
+        categorySmartSpinner = null;
+        keyboardFocusManager = null;
+        titleTextView = null;
+        descriptionTextView = null;
+    }
 }

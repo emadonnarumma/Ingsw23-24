@@ -19,14 +19,6 @@ public class DecimalInputFilter implements InputFilter {
             }
         }
 
-        if (dest.toString().isEmpty() && source.toString().isEmpty()) {
-            return "0,0€";
-        } else if (dest.toString().equals("0,0€") && !source.toString().isEmpty()) {
-            return source.toString() + "€";
-        } else if (!dest.toString().endsWith("€")) {
-            return source.toString() + "€";
-        }
-
         return null;
     }
 }

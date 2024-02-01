@@ -1,14 +1,12 @@
-package com.ingsw.dietiDeals24.ui.home.registration.activity;
+package com.ingsw.dietiDeals24.ui.registration.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.utility.stepper.RegistrationStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
 
 public class RegistrationActivity extends AppCompatActivity {
     private StepperLayout stepperLayout;

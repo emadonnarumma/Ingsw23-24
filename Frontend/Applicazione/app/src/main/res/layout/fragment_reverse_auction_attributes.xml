@@ -23,8 +23,13 @@
 
     <EditText
         android:id="@+id/initial_price_layout_reverse_auction_attributes"
-        android:layout_width="200dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
+        android:hint="@string/zero_price"
+        android:fontFamily="@font/verdana"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:inputType="numberDecimal"
 
         android:layout_marginTop="30sp"
         app:layout_constraintTop_toTopOf="@id/initial_price_hint_text_view_reverse_auction_attributes"
@@ -64,6 +69,7 @@
         app:drawableEndCompat="@drawable/ic_calendar_24dp" />
 
     <Button
+        android:id="@+id/create_reverse_auction_button_reverse_auction_attributes"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:fontFamily="@font/verdana_bold"

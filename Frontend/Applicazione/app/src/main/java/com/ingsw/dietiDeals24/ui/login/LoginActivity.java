@@ -10,10 +10,7 @@ import android.widget.TextView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.enumeration.Region;
-import com.ingsw.dietiDeals24.enumeration.Role;
-import com.ingsw.dietiDeals24.model.User;
-import com.ingsw.dietiDeals24.ui.home.registration.activity.RegistrationActivity;
+import com.ingsw.dietiDeals24.ui.registration.activity.RegistrationActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
@@ -22,6 +19,7 @@ import java.io.IOException;
 import java.util.concurrent.Future;
 
 public class LoginActivity extends AppCompatActivity {
+
     TextView registrationTextView;
     EditText emailEditText, passwordEditText;
     CircularProgressButton loginButton;
@@ -52,16 +50,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void userPressLoginButton() {
         loginButton.setOnClickListener(v -> {
-            LogInController.loggedUser = new User(Role.BUYER, "tes", "tes@tes.com", "tes", "tes", Region.ABRUZZO);
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(intent);
 
-            /*String email = emailEditText.getText().toString();
+            String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
             loginButton.startAnimation();
             Thread thread = getLoginThread(email, password);
-            thread.start();*/
+            thread.start();
         });
     }
 

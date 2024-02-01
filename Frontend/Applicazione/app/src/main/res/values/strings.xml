@@ -38,6 +38,7 @@
     <string name="date_picker_phrase">Seleziona la data di scadenza</string>
     <string name="initial_price_phrase">Inserisci il prezzo iniziale</string>
     <string name="create_reverse_auction_phrase">Crea asta inversa</string>
+    <string name="zero_price">0.0€</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

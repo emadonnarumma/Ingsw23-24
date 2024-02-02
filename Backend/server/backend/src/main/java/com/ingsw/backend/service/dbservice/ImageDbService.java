@@ -25,10 +25,11 @@ public class ImageDbService implements ImageService {
 		return imageRepository.findAllByAuction(auction);
 	}
 
+
+
 	@Override
-	public List<Image> addImages(List<Image> images) {
-		
-		return imageRepository.saveAll(images);
+	public Image addImage(Image image) {
+		return imageRepository.save(image);
 	}
 
 	@Override

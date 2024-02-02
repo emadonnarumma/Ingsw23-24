@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,11 +56,21 @@ public class ImageController {
 
 
     @PostMapping
-    public ResponseEntity<List<Image>> addImages(@Valid @RequestBody List<Image> images) {
+    public ResponseEntity<Image> addImages(@Valid @RequestBody Image image) {
+
+
+		Optional<Auction> auction = auctionService.findById(image.getAuction().getIdAuction());
+
+		if (auction.isEmpty()) {
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		image.setAuction(auction.get());
+
+    	Image savedImage = imageService.addImage(image);
         
-    	List<Image> savedImages = imageService.addImages(images);
-        
-    	return ResponseEntity.ok(savedImages);
+    	return ResponseEntity.ok(savedImage);
     }
 
 

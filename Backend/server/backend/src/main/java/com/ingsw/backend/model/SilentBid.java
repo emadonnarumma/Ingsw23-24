@@ -27,7 +27,7 @@ public class SilentBid extends Bid {
     private Buyer buyer;
     
     @ManyToOne
-    @JoinColumn(name = "auction_id", referencedColumnName = "id")
+    @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
     @JsonBackReference("silentAuction-silentBid")
     private SilentAuction silentAuction;
 

@@ -10,12 +10,16 @@ import android.widget.TextView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.registration.activity.RegistrationActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class LoginActivity extends AppCompatActivity {
@@ -64,38 +68,43 @@ public class LoginActivity extends AppCompatActivity {
     @NonNull
     private Thread getLoginThread(String email, String password) {
         return new Thread(() -> {
-            boolean isLoggedIn;
-
             try {
-                isLoggedIn = tryToLogin(email, password);
+                tryToLogin(email, password);
 
-                if (isLoggedIn) {
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(intent);
-                } else {
-                    runOnUiThread(() -> loginButton.revertAnimation());
-                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
-                }
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
 
-            } catch (IOException e) {
+            } catch (AuthenticationException e) {
+            
+                runOnUiThread(() -> loginButton.revertAnimation());
+                runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
+
+            } catch (ConnectionException e) {
+
                 runOnUiThread(() -> loginButton.revertAnimation());
                 runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Errore di connessione"));
+
             }
 
         });
     }
 
 
-    private boolean tryToLogin(String email, String password) throws IOException {
-        boolean isLoggedIn;
-
+    private void tryToLogin(String email, String password) throws AuthenticationException, ConnectionException {
         try {
-            Future<Boolean> future = LogInController.login(email, password);
-            isLoggedIn = future.get();
-        } catch (Exception e) {
-            throw new IOException();
-        }
+            LogInController.login(email, password).get();
+        } catch (ExecutionException e) {
+            if (e.getCause() instanceof AuthenticationException) {
 
-        return isLoggedIn;
+                throw new AuthenticationException("Credenziali errate");
+
+            } else if (e.getCause() instanceof ConnectionException) {
+
+                throw new ConnectionException("Errore di connessione");
+
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Interruzione non prevista");
+        }
     }
 }

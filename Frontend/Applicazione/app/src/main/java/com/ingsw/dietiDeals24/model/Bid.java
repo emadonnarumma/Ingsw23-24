@@ -5,7 +5,7 @@ import com.ingsw.dietiDeals24.enumeration.BidStatus;
 import java.sql.Timestamp;
 
 public class Bid {
-    private Integer id;
+    private Integer idBid;
     private Double moneyAmount;
     private BidStatus status;
     private Timestamp timestamp;
@@ -16,12 +16,12 @@ public class Bid {
         this.timestamp = timestamp;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdBid() {
+        return idBid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdBid(Integer idBid) {
+        this.idBid = idBid;
     }
 
     public Double getMoneyAmount() {

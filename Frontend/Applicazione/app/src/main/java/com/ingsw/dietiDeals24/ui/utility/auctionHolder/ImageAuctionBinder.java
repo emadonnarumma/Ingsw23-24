@@ -9,7 +9,6 @@ public class ImageAuctionBinder {
 
     public static void bind(List<Image> auctionImages, Auction auction) {
         bindAuctionToImages(auctionImages, auction);
-        bindImagesToAuction(auctionImages, auction);
     }
 
     private static void bindAuctionToImages(List<Image> auctionImages, Auction auction) {

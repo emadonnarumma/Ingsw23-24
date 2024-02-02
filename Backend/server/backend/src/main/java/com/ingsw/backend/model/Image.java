@@ -18,14 +18,13 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idImage;
 
-    @Lob
-    @Column(columnDefinition = "BYTEA")
-    private byte[] data;
+    @Column(columnDefinition = "TEXT")
+    private String base64Data;
 
     @ManyToOne
-    @JoinColumn(name = "auction_id", referencedColumnName = "id")
+    @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
     @JsonBackReference("auction-image")
     private Auction auction;
 

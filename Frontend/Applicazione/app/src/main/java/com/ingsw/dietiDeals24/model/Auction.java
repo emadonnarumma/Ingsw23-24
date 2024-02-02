@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Auction {
 
-    private Integer id;
+    private Integer idAuction;
     private AuctionType type;
     private List<Image> images;
     private String title;
@@ -79,5 +79,27 @@ public class Auction {
         this.owner = owner;
     }
 
+    public Integer getIdAuction() {
+        return idAuction;
+    }
 
+    public void setIdAuction(Integer idAuction) {
+        this.idAuction = idAuction;
+    }
+
+    public AuctionType getType() {
+        return type;
+    }
+
+    public void setType(AuctionType type) {
+        this.type = type;
+    }
+
+    public AuctionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AuctionStatus status) {
+        this.status = status;
+    }
 }

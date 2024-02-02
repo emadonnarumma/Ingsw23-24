@@ -12,5 +12,5 @@ import retrofit2.http.POST;
 public interface InsertImagesDao {
 
     @POST("image")
-    public Call<List<Image>> insertImage(@Body List<Image> images, @Header("Authorization") String token);
+    Call<Image> insertImage(@Body Image image, @Header("Authorization") String token);
 }

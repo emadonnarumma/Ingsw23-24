@@ -10,6 +10,7 @@ import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.createAuction.CreateAuctionDao;
 import com.ingsw.dietiDeals24.network.createAuction.InsertImagesDao;
+import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageAuctionBinder;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,19 +18,17 @@ import java.util.concurrent.CompletableFuture;
 
 public class CreateAuctionController implements RetroFitHolder {
 
-    private CreateAuctionController() {}
+    private CreateAuctionController() {
+    }
 
-    public static CompletableFuture<Boolean> createAuction(Auction newAuction) {
+    public static CompletableFuture<Boolean> createAuction(Auction newAuction, List<Image> images) {
         CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
         return CompletableFuture.supplyAsync(() -> {
             try {
-                List<Image> images = newAuction.getImages();
-                newAuction.setImages(null);
-
-                createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
+                Auction auction = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
                         .execute().body();
+                addImagesIfPresent(images, auction);
 
-                insertImages(images);
                 return true;
             } catch (IOException e) {
                 return false;
@@ -37,11 +36,20 @@ public class CreateAuctionController implements RetroFitHolder {
         });
     }
 
+    private static void addImagesIfPresent(List<Image> images, Auction auction) {
+        if (!images.isEmpty()) {
+            ImageAuctionBinder.bind(images, auction);
+            insertImages(images);
+        }
+    }
+
     public static CompletableFuture<Boolean> insertImages(List<Image> images) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 InsertImagesDao insertImagesDao = retrofit.create(InsertImagesDao.class);
-                insertImagesDao.insertImage(images, TokenHolder.getAuthToken()).execute();
+                for (Image image : images) {
+                    Image returnImage = insertImagesDao.insertImage(image, TokenHolder.getAuthToken()).execute().body();
+                }
                 return true;
             } catch (IOException e) {
                 return false;

@@ -1,7 +1,7 @@
 package com.ingsw.dietiDeals24.model;
 
 public class BankAccount {
-    private Integer id;
+    private Integer idBankAccount;
     private Seller seller;
     private String iban;
     private String iva;
@@ -12,12 +12,12 @@ public class BankAccount {
         this.iva = iva;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdBankAccount() {
+        return idBankAccount;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdBankAccount(Integer idBankAccount) {
+        this.idBankAccount = idBankAccount;
     }
 
     public Seller getSeller() {

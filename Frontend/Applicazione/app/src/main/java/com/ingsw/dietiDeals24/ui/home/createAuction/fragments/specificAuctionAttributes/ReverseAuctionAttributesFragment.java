@@ -101,8 +101,7 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
                     expirationDate
             );
 
-            ImageAuctionBinder.bind(images, newReverseAuction);
-            CreateAuctionController.createAuction(newReverseAuction);
+            CreateAuctionController.createAuction(newReverseAuction, images);
         });
     }
 

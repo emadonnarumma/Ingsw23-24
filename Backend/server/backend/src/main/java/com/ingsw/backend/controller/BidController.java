@@ -123,7 +123,7 @@ public class BidController {
 		
         silentBid.setBuyer((Buyer) owner.get());
         
-        Optional<Auction> auction = auctionService.findById(silentBid.getSilentAuction().getId());
+        Optional<Auction> auction = auctionService.findById(silentBid.getSilentAuction().getIdAuction());
         
 		if (auction.isEmpty() || !(auction.get() instanceof SilentAuction)) {
 			
@@ -149,7 +149,7 @@ public class BidController {
 		
 		reverseBid.setSeller((Seller) owner.get());
         
-        Optional<Auction> auction = auctionService.findById(reverseBid.getReverseAuction().getId());
+        Optional<Auction> auction = auctionService.findById(reverseBid.getReverseAuction().getIdAuction());
         
 		if (auction.isEmpty() || !(auction.get() instanceof ReverseAuction)) {
 			

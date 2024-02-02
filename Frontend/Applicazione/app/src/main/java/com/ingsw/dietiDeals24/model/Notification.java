@@ -2,20 +2,20 @@ package com.ingsw.dietiDeals24.model;
 
 public class Notification {
 
-    private Integer id;
+    private Integer idNotification;
     private String message;
 
-    public Notification(Integer id, String message) {
-        this.id = id;
+    public Notification(Integer idNotification, String message) {
+        this.idNotification = idNotification;
         this.message = message;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdNotification() {
+        return idNotification;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdNotification(Integer idNotification) {
+        this.idNotification = idNotification;
     }
 
     public String getMessage() {

@@ -37,12 +37,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		  @JsonSubTypes.Type(value = DownwardAuction.class, name = "DOWNWARD"),
 		  @JsonSubTypes.Type(value = ReverseAuction.class, name = "REVERSE")
 				})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAuction")
 public abstract class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idAuction;
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)

@@ -8,8 +8,8 @@ import com.ingsw.backend.model.Image;
 public interface ImageService {
 	
 	public List<Image> getAllImagesByAuction(Auction auction);
-	
-	public List<Image> addImages(List<Image> images);
+
+	public Image addImage(Image image);
 	
 	public Boolean delete(Integer id);
 

@@ -11,10 +11,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface LoginDao {
-
     @POST("auth/authenticate")
     Call<TokenHolder> login(@Body LogInRequest logInRequest);
-
-    @GET("user/{email}")
-    Call<User> getUser(@Path("email") String email, @Header("Authorization") String token);
 }

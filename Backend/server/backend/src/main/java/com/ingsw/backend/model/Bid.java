@@ -31,7 +31,7 @@ public abstract class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idBid;
 
     @Column(nullable = false)
     private Double moneyAmount;

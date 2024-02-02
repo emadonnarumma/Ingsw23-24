@@ -20,7 +20,7 @@ public class BankAccount {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idBankAccount;
 
     @OneToOne
     @JoinColumn(name = "seller_email", referencedColumnName = "email")

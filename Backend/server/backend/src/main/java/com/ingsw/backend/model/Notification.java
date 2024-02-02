@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Notification {
 
     @Id
-    private Integer id;
+    private Integer idNotifications;
 
     @Column(nullable = false)
     private String message;

@@ -56,4 +56,8 @@ public class CreateAuctionController implements RetroFitHolder {
             }
         });
     }
+
+    public static boolean isValidDecrementAmount(double initialPrice, double decrementAmount) {
+        return decrementAmount <= initialPrice * 0.15;
+    }
 }

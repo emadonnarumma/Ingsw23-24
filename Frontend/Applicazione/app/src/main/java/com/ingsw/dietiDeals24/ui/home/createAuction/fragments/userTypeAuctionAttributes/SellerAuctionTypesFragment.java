@@ -4,24 +4,68 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.model.Auction;
-import com.stepstone.stepper.BlockingStep;
-import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.DownwardAuctionAttributesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.SilentAuctionAttributesFragment;
 
 public class SellerAuctionTypesFragment extends Fragment {
 
+    private ImageView silentAuctionButton, downwardAuctionButton;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_seller_auction_types, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupButtons(view);
+        if (getActivity() instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+        }
+    }
+
+    private void setupButtons(View view) {
+        setupDownwardAuctionButton(view);
+        setupSilentAuctionButton(view);
+    }
+
+    private void setupSilentAuctionButton(View view) {
+        silentAuctionButton = view.findViewById(R.id.silent_auction_type_button_seller_auction_types);
+        silentAuctionButton.setOnClickListener(v ->
+                getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container_home, new SilentAuctionAttributesFragment())
+                .commit()
+        );
+    }
+
+    private void setupDownwardAuctionButton(View view) {
+        downwardAuctionButton = view.findViewById(R.id.downaward_auction_type_button_seller_auction_types);
+        downwardAuctionButton.setOnClickListener(v ->
+                getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container_home, new DownwardAuctionAttributesFragment())
+                .commit()
+        );
     }
 }

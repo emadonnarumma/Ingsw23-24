@@ -1,13 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <ImageView
+        android:id="@+id/downaward_auction_type_button_seller_auction_types"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:background="@drawable/rounded_corners_cyan"
+        android:src="@drawable/down_chart_arrow"
+        android:adjustViewBounds="true"
 
-</FrameLayout>
+        android:layout_marginTop="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title_text_view_seller_auction_types" />
+
+    <TextView
+        android:id="@+id/downward_text_view_seller_auction_types"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/downward_phrase"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:fontFamily="@font/verdana_bold"
+        android:textColor="#FFFFFF"
+        android:shadowColor="#000000"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="2"
+
+        app:layout_constraintBottom_toBottomOf="@id/downaward_auction_type_button_seller_auction_types"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/title_text_view_seller_auction_types"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auction_type_phrase"
+        android:fontFamily="@font/verdana_bold"
+        android:textSize="25sp"
+
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/silent_auction_type_button_seller_auction_types"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/rounded_corners_purple"
+        android:src="@drawable/closed_mouth"
+
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/downaward_auction_type_button_seller_auction_types" />
+
+    <TextView
+        android:id="@+id/silent_text_view_seller_auction_types"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/silent_phrase"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:fontFamily="@font/verdana_bold"
+        android:textColor="#FFFFFF"
+        android:shadowColor="#000000"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="2"
+
+        app:layout_constraintBottom_toBottomOf="@id/silent_auction_type_button_seller_auction_types"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

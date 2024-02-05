@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,10 @@ import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
-import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageAuctionBinder;
+import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageConverter;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -42,19 +44,22 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
 
     private Button createAuctionButton;
 
+    private GeneralAuctionAttributesViewModel viewModel;
+
+    private AuctionHolder genericAuctionAttributesHolder;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bundle = getArguments();
+        viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
+        genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_reverse_auction_attributes, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_reverse_auction_attributes, container, false);
     }
 
     @Override
@@ -74,11 +79,11 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
 
         createAuctionButton.setOnClickListener(v -> {
 
-            String title = bundle.getString("title");
-            String description = bundle.getString("description");
-            Category category = (Category) bundle.getSerializable("category");
-            Wear wear = (Wear) bundle.getSerializable("wear");
-            List<Uri> uriImages = bundle.getParcelableArrayList("images");
+            String title = genericAuctionAttributesHolder.getTitle();
+            String description = genericAuctionAttributesHolder.getDescription();
+            Category category = genericAuctionAttributesHolder.getCategory();
+            Wear wear = genericAuctionAttributesHolder.getWear();
+            List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
             String initialPrice = deleteMoneySimbol(priceEditText.getText().toString());
             String expirationDate = dateTextView.getText().toString();
 
@@ -106,7 +111,10 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
     }
 
     private String deleteMoneySimbol(String string) {
-        return string.substring(0, string.length() - 1);
+        if (string.endsWith("€"))
+            return string.substring(0, string.length() - 1);
+
+        return string;
     }
 
     private void setupKeyboardFocusManager(View view) {
@@ -149,7 +157,7 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
     }
 
     private void setupPriceEditText(@NonNull View view) {
-        priceEditText = view.findViewById(R.id.initial_price_layout_reverse_auction_attributes);
+        priceEditText = view.findViewById(R.id.initial_price_edit_text_reverse_auction_attributes);
         priceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
         priceEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -160,16 +168,5 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
                 }
             }
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        feedTheCollector();
-    }
-
-    private void feedTheCollector() {
-        priceEditText = null;
-        dateTextView = null;
     }
 }

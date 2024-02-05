@@ -5,18 +5,19 @@ import android.net.Uri;
 import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Wear;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuctionHolder {
     private String title;
-    private List<Uri> images;
+    private ArrayList<Uri> images;
     private String description;
     private Wear wear;
     private Category category;
 
     public AuctionHolder() {}
 
-    public AuctionHolder(String title, List<Uri> images, String description, Wear wear, Category category) {
+    public AuctionHolder(String title, ArrayList<Uri> images, String description, Wear wear, Category category) {
         this.title = title;
         this.images = images;
         this.description = description;
@@ -32,11 +33,11 @@ public class AuctionHolder {
         this.title = title;
     }
 
-    public List<Uri> getImages() {
+    public ArrayList<Uri> getImages() {
         return images;
     }
 
-    public void setImages(List<Uri> images) {
+    public void setImages(ArrayList<Uri> images) {
         this.images = images;
     }
 

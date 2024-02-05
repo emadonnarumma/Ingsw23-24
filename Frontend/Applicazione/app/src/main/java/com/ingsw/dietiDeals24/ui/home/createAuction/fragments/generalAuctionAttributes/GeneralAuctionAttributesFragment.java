@@ -38,17 +38,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GeneralAuctionAttributesFragment extends Fragment {
-    
+
     private KeyboardFocusManager keyboardFocusManager;
     private ActivityResultLauncher<String[]> resultLauncher;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
-    
+
     private GeneralAuctionAttributesViewModel viewModel;
     private TextView titleTextView, descriptionTextView;
     private SliderView sliderView;
-    
+
     private FloatingActionButton addButton, deleteButton, nextStepButton;
-    
+
     private SmallScreenSliderAdapter smallScreenSliderAdapter;
     private SmartMaterialSpinner<String> wearSmartSpinner, categorySmartSpinner;
 
@@ -68,13 +68,50 @@ public class GeneralAuctionAttributesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setupViews(view);
+        setupKeyboardFocusManager(view);
         restoreData();
+    }
+
+    private void setupViews(@NonNull View view) {
         setupActionBar();
         setupButtons(view);
         setupSlider(view);
         setupTextViews(view);
         setupSpinners(view);
-        setupKeyboardFocusManager(view);
+    }
+
+    private void setupButtons(@NonNull View view) {
+        setupAddImagesButton(view);
+        setupDeleteButton(view);
+        setupNextButton(view);
+    }
+
+    private void setupSlider(@NonNull View view) {
+        sliderView = view.findViewById(R.id.slider_view_small);
+        smallScreenSliderAdapter = new SmallScreenSliderAdapter(getContext());
+        sliderView.setSliderAdapter(smallScreenSliderAdapter);
+        updateDeleteButton();
+    }
+
+
+    private void setupSpinners(View view) {
+        setupCategorySpinner(view);
+        setupWearSpinner(view);
+    }
+
+    private void setupTextViews(View view) {
+        setupTitleTextView(view);
+        setupDescriptionTextView(view);
+    }
+
+    private void setupActionBar() {
+        if (getActivity() instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            }
+        }
     }
 
     private void setupKeyboardFocusManager(View view) {
@@ -92,82 +129,34 @@ public class GeneralAuctionAttributesFragment extends Fragment {
                 if (auction.getWear() != null) {
                     wearSmartSpinner.setSelection(auction.getWear().ordinal());
                 }
+
                 if (auction.getCategory() != null) {
                     categorySmartSpinner.setSelection(auction.getCategory().ordinal());
                 }
 
+                selectedImages = auction.getImages();
                 smallScreenSliderAdapter.renewItems((ArrayList<Uri>) auction.getImages());
+                updateDeleteButton();
             }
         });
-    }
-
-    private void setupTextViews(View view) {
-        setupTitleTextView(view);
-        setupDescriptionTextView(view);
     }
 
     private void setupDescriptionTextView(View view) {
         descriptionTextView = view.findViewById(R.id.description_edit_text_general_auction_attributes);
-        descriptionTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Wear wearValue = getWearValue();
-                Category categoryValue = getCategoryValue();
-                if (wearValue != null && categoryValue != null) {
-                    updateViewModel();
-                }
-            }
-        });
     }
 
     private void setupTitleTextView(View view) {
         titleTextView = view.findViewById(R.id.title_edit_text_general_auction_attributes);
     }
 
-    private void setupActionBar() {
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(false);
-            }
-        }
-    }
-
-    private void setupSlider(@NonNull View view) {
-        sliderView = view.findViewById(R.id.slider_view_small);
-        smallScreenSliderAdapter = new SmallScreenSliderAdapter(getContext());
-        sliderView.setSliderAdapter(smallScreenSliderAdapter);
-        updateDeleteButton();
-    }
-
-    private void setupButtons(@NonNull View view) {
-        setupAddImagesButton(view);
-        setupDeleteButton(view);
-        setupNextButton(view);
-    }
-
-    private void setupSpinners(View view) {
-        setupCategorySpinner(view);
-        setupRegionSpinner(view);
-    }
-
-    private void setupRegionSpinner(View view) {
+    private void setupWearSpinner(View view) {
         wearSmartSpinner = view.findViewById(R.id.wear_spinner_general_auction_attributes);
         wearSmartSpinner.setItem(
                 Arrays.asList(
                         getResources().getStringArray(R.array.wears)
                 )
         );
+
     }
 
     private void setupCategorySpinner(View view) {
@@ -188,8 +177,6 @@ public class GeneralAuctionAttributesFragment extends Fragment {
             if (uris != null && !uris.isEmpty()) {
                 selectedImages.addAll(uris);
                 smallScreenSliderAdapter.renewItems(selectedImages);
-                viewModel.setImages(selectedImages);
-                updateViewModel();
                 updateDeleteButton();
             }
         });
@@ -216,18 +203,9 @@ public class GeneralAuctionAttributesFragment extends Fragment {
                 ContextCompat.getColor(requireContext(), R.color.white))
         );
 
-
-        
         nextStepButton.setOnClickListener(v -> {
-            Bundle bundle = setupBundleWithPassingValues();
-
-            Fragment fragment = getUserTypeFragment();
-
-            fragment.setArguments(bundle);
-
-            FragmentManager fragmentManager = getParentFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_home, fragment)
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_home, getUserTypeFragment())
                     .commit();
         });
     }
@@ -242,18 +220,6 @@ public class GeneralAuctionAttributesFragment extends Fragment {
         }
 
         return fragment;
-    }
-
-    @NonNull
-    private Bundle setupBundleWithPassingValues() {
-        Bundle bundle = new Bundle();
-        bundle.putString("title", titleTextView.getText().toString());
-        bundle.putString("description", descriptionTextView.getText().toString());
-        bundle.putSerializable("wear", getWearValue());
-        bundle.putSerializable("category", getCategoryValue());
-        bundle.putParcelableArrayList("images", selectedImages);
-
-        return bundle;
     }
 
     private void updateDeleteButton() {
@@ -277,7 +243,8 @@ public class GeneralAuctionAttributesFragment extends Fragment {
                 titleTextView.getText().toString(),
                 descriptionTextView.getText().toString(),
                 getWearValue(),
-                getCategoryValue()
+                getCategoryValue(),
+                selectedImages
         );
     }
 
@@ -295,24 +262,5 @@ public class GeneralAuctionAttributesFragment extends Fragment {
         }
 
         return null;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        feedTheCollector();
-    }
-
-    private void feedTheCollector() {
-        sliderView = null;
-        addButton = null;
-        deleteButton = null;
-        nextStepButton = null;
-        smallScreenSliderAdapter = null;
-        wearSmartSpinner = null;
-        categorySmartSpinner = null;
-        keyboardFocusManager = null;
-        titleTextView = null;
-        descriptionTextView = null;
     }
 }

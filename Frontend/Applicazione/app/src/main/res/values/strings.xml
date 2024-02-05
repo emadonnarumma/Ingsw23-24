@@ -40,6 +40,10 @@
     <string name="initial_price_phrase">Inserisci il prezzo iniziale</string>
     <string name="create_reverse_auction_phrase">Crea asta inversa</string>
     <string name="zero_price">0.0€</string>
+    <string name="downward_phrase">Al ribasso</string>
+    <string name="silent_phrase">Silenziosa</string>
+    <string name="secret_minimum_price_phrase">Inserisci il prezzo minimo\n(Segreto)</string>
+    <string name="decrement_amount_phrase">Inserisci l\'importo del decremento\n</string>
 
     <!-- Profile -->
     <string name="edit_profile_button_phrase">Modifica profilo</string>

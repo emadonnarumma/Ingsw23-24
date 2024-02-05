@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes;
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,21 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.ReverseAuctionAttributesFragment;
-
-import java.util.ArrayList;
 
 public class BuyerAuctionTypesFragment extends Fragment {
 
-    private ImageView reverseButton;
-    private Bundle bundle;
+    private ImageView reverseAuctionButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bundle = getArguments();
     }
 
     @Override
@@ -51,29 +44,12 @@ public class BuyerAuctionTypesFragment extends Fragment {
     }
 
     private void setupReverseButton(@NonNull View view) {
-        reverseButton = view.findViewById(R.id.reverse_auction_type_button_buyer_auction_types);
-
-        reverseButton.setOnClickListener(v -> {
-            bundle.putCharSequence("type", "Reverse Auction");
-
-            ReverseAuctionAttributesFragment fragment = new ReverseAuctionAttributesFragment();
-            fragment.setArguments(bundle);
-
+        reverseAuctionButton = view.findViewById(R.id.reverse_auction_type_button_buyer_auction_types);
+        reverseAuctionButton.setOnClickListener(v -> {
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container_home, fragment)
+                    .replace(R.id.fragment_container_home, new ReverseAuctionAttributesFragment())
                     .commit();
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        feedTheCollector();
-    }
-
-    private void feedTheCollector() {
-        reverseButton = null;
-        bundle = null;
     }
 }

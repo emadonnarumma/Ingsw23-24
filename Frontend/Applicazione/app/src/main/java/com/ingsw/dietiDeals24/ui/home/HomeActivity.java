@@ -12,8 +12,11 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.DownwardAuctionAttributesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.ReverseAuctionAttributesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.SilentAuctionAttributesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.search.SearchFragment;
@@ -26,7 +29,9 @@ public class HomeActivity extends AppCompatActivity {
         public void handleOnBackPressed() {
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_home);
 
-            if (currentFragment instanceof BuyerAuctionTypesFragment) {
+            if (currentFragment instanceof BuyerAuctionTypesFragment
+                    || currentFragment instanceof SellerAuctionTypesFragment) {
+
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_home, new GeneralAuctionAttributesFragment())
                         .commit();
@@ -34,6 +39,13 @@ public class HomeActivity extends AppCompatActivity {
             } else if (currentFragment instanceof ReverseAuctionAttributesFragment) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_home, new BuyerAuctionTypesFragment())
+                        .commit();
+
+            } else if (currentFragment instanceof SilentAuctionAttributesFragment
+                    || currentFragment instanceof DownwardAuctionAttributesFragment) {
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_home, new SellerAuctionTypesFragment())
                         .commit();
 
             } else {

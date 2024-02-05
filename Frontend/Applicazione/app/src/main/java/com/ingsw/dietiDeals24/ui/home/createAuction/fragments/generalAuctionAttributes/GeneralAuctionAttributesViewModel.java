@@ -9,6 +9,7 @@ import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralAuctionAttributesViewModel extends ViewModel {
@@ -22,14 +23,8 @@ public class GeneralAuctionAttributesViewModel extends ViewModel {
 
     public void generalAuctionAttributesChanged(String title,
                                                 String description,
-                                                Wear wear, Category category) {
+                                                Wear wear, Category category, ArrayList<Uri> images) {
 
         newAuction.postValue(new AuctionHolder(title, images, description, wear, category));
     }
-
-    public void setImages(List<Uri> images) {
-
-        this.images = images;
-    }
-
 }

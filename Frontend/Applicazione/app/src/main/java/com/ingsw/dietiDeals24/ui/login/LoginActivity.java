@@ -69,42 +69,52 @@ public class LoginActivity extends AppCompatActivity {
     private Thread getLoginThread(String email, String password) {
         return new Thread(() -> {
             try {
-                tryToLogin(email, password);
 
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
+                LogInController.login(email, password).get();
+                goToHomeActivity();
 
-            } catch (AuthenticationException e) {
-            
-                runOnUiThread(() -> loginButton.revertAnimation());
-                runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
+            } catch (ExecutionException e) {
 
-            } catch (ConnectionException e) {
+                if (e.getCause() instanceof AuthenticationException) {
+                    runOnUiThread(() -> loginButton.revertAnimation());
+                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
 
-                runOnUiThread(() -> loginButton.revertAnimation());
-                runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Errore di connessione"));
+                } else if (e.getCause() instanceof ConnectionException) {
+                    runOnUiThread(() -> loginButton.revertAnimation());
+                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Errore di connessione"));
+                }
+
+            } catch (InterruptedException e) {
+
+                throw new RuntimeException("Interruzione non prevista");
 
             }
 
         });
     }
 
+    private void goToHomeActivity() {
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
+    }
 
-    private void tryToLogin(String email, String password) throws AuthenticationException, ConnectionException {
-        try {
-            LogInController.login(email, password).get();
-        } catch (ExecutionException e) {
-            if (e.getCause() instanceof AuthenticationException) {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        runOnUiThread(() -> loginButton.revertAnimation());
+    }
 
-                throw new AuthenticationException("Credenziali errate");
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        feedTheCollector();
+    }
 
-            } else if (e.getCause() instanceof ConnectionException) {
-
-                throw new ConnectionException("Errore di connessione");
-
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Interruzione non prevista");
-        }
+    private void feedTheCollector() {
+        loginButton.dispose();
+        loginButton = null;
+        emailEditText = null;
+        passwordEditText = null;
+        registrationTextView = null;
     }
 }

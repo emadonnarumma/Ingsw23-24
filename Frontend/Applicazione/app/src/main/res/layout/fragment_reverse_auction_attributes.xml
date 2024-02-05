@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/initial_price_layout_reverse_auction_attributes"
+        android:id="@+id/initial_price_edit_text_reverse_auction_attributes"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:hint="@string/zero_price"
@@ -45,7 +45,7 @@
         android:text="@string/date_picker_phrase"
 
         android:layout_marginTop="120dp"
-        app:layout_constraintTop_toBottomOf="@id/initial_price_layout_reverse_auction_attributes"
+        app:layout_constraintTop_toBottomOf="@id/initial_price_edit_text_reverse_auction_attributes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

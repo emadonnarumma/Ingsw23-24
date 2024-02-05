@@ -4,6 +4,7 @@
     <string name="password_input">Password</string>
     <string name="username_input">Nome utente</string>
 
+    <!-- Login -->
     <string name="login_phrase">Accedi</string>
     <string name="registration_phrase">Non sei ancora registrato?</string>
     <string name="or_phrase">OPPURE</string>
@@ -39,6 +40,16 @@
     <string name="initial_price_phrase">Inserisci il prezzo iniziale</string>
     <string name="create_reverse_auction_phrase">Crea asta inversa</string>
     <string name="zero_price">0.0€</string>
+
+    <!-- Profile -->
+    <string name="edit_profile_button_phrase">Modifica profilo</string>
+    <string name="logout_button_phrase">Disconnettiti</string>
+    <string name="edit_profile_title">Modifica Profilo</string>
+    <string name="edit_region_phrase">Modifica regione</string>
+    <string name="edit_bio_phrase">Modifica bio</string>
+    <string name="edit_external_links_phrase">Modifica link esterni</string>
+    <string name="unlock_seller_account_phrase">Sblocca modalità venditore</string>
+    <string name="edit_bank_information_phrase">Modifica informazioni bancarie</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

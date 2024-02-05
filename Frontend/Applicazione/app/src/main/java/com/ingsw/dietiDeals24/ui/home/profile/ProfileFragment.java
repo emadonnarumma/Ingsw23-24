@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.view.animation.Animation;
@@ -13,12 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.ui.home.search.SearchFragment;
 
 public class ProfileFragment extends Fragment {
+    private TextView usernameTextView;
     private Switch sellerSwitch;
     private TextView sellerSwitchTextView;
-
+    private TextView userBioTextView;
+    private ImageView iconLinkImageView;
+    private TextView linkTextView;
+    private TextView andNMoreLinksTextView;
+    private TextView userRegionTextView;
+    private CircularProgressButton editProfileButton;
+    private CircularProgressButton logoutButton;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -27,22 +38,62 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        usernameTextView = view.findViewById(R.id.username_text_profile);
         sellerSwitch = view.findViewById(R.id.seller_switch_profile);
         sellerSwitchTextView = view.findViewById(R.id.seller_switch_text_profile);
+        userBioTextView = view.findViewById(R.id.user_bio_profile);
+        iconLinkImageView = view.findViewById(R.id.icon_link_profile);
+        linkTextView = view.findViewById(R.id.link_profile);
+        andNMoreLinksTextView = view.findViewById(R.id.and_n_more_links_profile);
+        userRegionTextView = view.findViewById(R.id.user_region_profile);
+        editProfileButton = view.findViewById(R.id.edit_profile_button_profile);
+        logoutButton = view.findViewById(R.id.logout_button_profile);
 
-        if(sellerSwitch.isChecked()) {
+        showUserData();
+        putAnimationOnSellerSwitch();
+
+        editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
+
+    }
+
+    /**
+     * Puts the user data in the text views of the profile fragment
+     */
+    private void showUserData() {
+        if (ProfileController.getUser() == null)
+            return;
+
+        String username = ProfileController.getUser().getName();
+        String userBio = ProfileController.getUser().getBio();
+        String userRegion = " " + ProfileController.getUser().getRegion().toString() + " ";
+        usernameTextView.setText(username);
+        userBioTextView.setText(userBio);
+        userRegionTextView.setText(userRegion);
+
+        if(ProfileController.getUser().hasExternalLinks()) {
+            String link = ProfileController.getUser().getExternalLinks().get(0).getTitle();
+            String andNMoreLinks = "and " + (ProfileController.getUser().getExternalLinks().size() - 1) + " more";
+            linkTextView.setText(link);
+            andNMoreLinksTextView.setText(andNMoreLinks);
+        } else {
+            iconLinkImageView.setVisibility(View.GONE);
+        }
+
+        if (ProfileController.getUser().isSeller()) {
+            sellerSwitch.setChecked(true);
             sellerSwitchTextView.setTranslationX(16);
             sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
         } else {
+            sellerSwitch.setChecked(false);
             sellerSwitchTextView.setTranslationX(8);
             sellerSwitchTextView.setTextColor(getResources().getColor(R.color.grey));
         }
+    }
 
+    private void putAnimationOnSellerSwitch() {
         sellerSwitch.setOnClickListener(v -> {
             if (sellerSwitch.isChecked()) {
                 sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
@@ -64,8 +115,11 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-
-
+    private void goToEditProfileFragment() {
+        //TODO: BACK BUTTON
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                new EditProfileFragment()).commit();
+    }
 
     @Override
     public void onDestroyView() {

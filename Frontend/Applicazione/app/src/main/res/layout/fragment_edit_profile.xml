@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
+    tools:context=".ui.home.profile.EditProfileFragment">
+
+    <TextView
+        android:id="@+id/title_of_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_profile_title"
+        android:textSize="@dimen/title_text_small"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <!-- TODO: rendilo trasparente sto sfaccimmoso -->
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size_big"
+        android:layout_marginVertical="8dp"
+        android:src="@drawable/trasparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_of_edit_profile" />
+
+    <ImageView
+        android:id="@+id/icon_of_ITALY_edit_profile"
+        android:layout_width="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_big"
+        android:layout_marginVertical="8dp"
+        android:src="@drawable/ic_italy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_of_edit_profile" />
+
+    <TextView
+        android:id="@+id/edit_region_text_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_region_phrase"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintStart_toEndOf="@id/icon_of_ITALY_edit_profile"
+        app:layout_constraintTop_toTopOf="@id/icon_of_ITALY_edit_profile"
+        app:layout_constraintBottom_toBottomOf="@id/icon_of_ITALY_edit_profile" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

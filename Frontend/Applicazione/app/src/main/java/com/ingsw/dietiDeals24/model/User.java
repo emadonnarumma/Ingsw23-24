@@ -83,4 +83,12 @@ public class User {
     public void setExternalLinks(List<ExternalLink> externalLinks) {
         this.externalLinks = externalLinks;
     }
+
+    public boolean isSeller() {
+        return role == Role.SELLER;
+    }
+
+    public boolean hasExternalLinks() {
+        return !externalLinks.isEmpty();
+    }
 }

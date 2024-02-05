@@ -30,31 +30,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+            <ImageView
+                android:id="@+id/profile_image_icon_profile"
+                android:layout_width="@dimen/username_height_profile"
+                android:layout_height="@dimen/username_height_profile"
+                android:background="@drawable/ic_profile_24dp"
+                android:backgroundTint="@color/green"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="@dimen/username_height_profile"
-                    android:layout_height="@dimen/username_height_profile"
-                    android:background="@drawable/ic_profile_24dp"
-                    android:backgroundTint="@color/green" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/verdana"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/title_text_large"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/username_text_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/verdana"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/title_text_large"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/title_text_large"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/profile_image_icon_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -89,7 +87,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/user_description_profile"
+        android:id="@+id/user_bio_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -108,7 +106,7 @@
         android:layout_marginVertical="8dp"
         android:src="@drawable/ic_link"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_description_profile" />
+        app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
 
     <TextView
         android:id="@+id/link_profile"
@@ -119,10 +117,10 @@
         android:fontFamily="@font/verdana"
         android:textSize="@dimen/text_medium"
         app:layout_constraintStart_toEndOf="@id/icon_link_profile"
-        app:layout_constraintTop_toBottomOf="@id/user_description_profile" />
+        app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
 
     <TextView
-        android:id="@+id/and_more_links_profile"
+        android:id="@+id/and_n_more_links_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
@@ -130,7 +128,7 @@
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/link_profile"
-        app:layout_constraintTop_toBottomOf="@id/user_description_profile" />
+        app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
 
 
 
@@ -138,8 +136,8 @@
 
     <ImageView
         android:id="@+id/icon_of_ITALY_profile"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_big"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
         android:src="@drawable/ic_italy"
@@ -148,20 +146,20 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
         app:cardCornerRadius="@dimen/corner_radius"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
         app:layout_constraintStart_toEndOf="@id/icon_of_ITALY_profile"
-        app:layout_constraintTop_toBottomOf="@id/link_profile" >
+        app:layout_constraintTop_toTopOf="@id/icon_of_ITALY_profile"
+        app:layout_constraintBottom_toBottomOf="@id/icon_of_ITALY_profile" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" >
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:background="@color/grey"
                 app:layout_constraintStart_toStartOf="@id/user_region_profile"
                 app:layout_constraintTop_toTopOf="@id/user_region_profile"
@@ -177,9 +175,66 @@
                 android:textSize="@dimen/title_text_small"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+
+
+
+    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/edit_profile_button_profile"
+        android:layout_width="200dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/edit_profile_button_phrase"
+        android:textColor="@color/white"
+        android:layout_marginVertical="8dp"
+        app:spinning_bar_padding="10dp"
+        app:initialCornerAngle="50dp"
+        app:spinning_bar_color="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/logout_button_profile" />
+
+    <ImageView
+        android:id="@+id/icon_edit_profile_button_profile"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_margin="8dp"
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="@id/edit_profile_button_profile"
+        app:layout_constraintTop_toTopOf="@id/edit_profile_button_profile"
+        app:layout_constraintBottom_toBottomOf="@id/edit_profile_button_profile" />
+
+    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/logout_button_profile"
+        android:layout_width="200dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/logout_button_phrase"
+        android:textColor="@color/white"
+        android:layout_marginVertical="8dp"
+        app:spinning_bar_padding="10dp"
+        app:initialCornerAngle="50dp"
+        app:spinning_bar_color="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/icon_logout_button_profile"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_margin="8dp"
+        android:elevation="2dp"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintBottom_toBottomOf="@id/logout_button_profile"
+        app:layout_constraintEnd_toEndOf="@id/logout_button_profile"
+        app:layout_constraintTop_toTopOf="@id/logout_button_profile" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

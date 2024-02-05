@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.enumeration;
 
+import androidx.annotation.Nullable;
+
 public enum Region {
     CAMPANIA,
     LAZIO,
@@ -21,6 +23,74 @@ public enum Region {
     VALLE_D_AOSTA,
     TRENTINO_ALTO_ADIGE,
     LIGURIA;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case CAMPANIA:
+                return "Campania";
+
+            case LAZIO:
+                return "Lazio";
+
+            case LOMBARDIA:
+                return "Lombardia";
+
+            case VENETO:
+                return "Veneto";
+
+            case EMILIA_ROMAGNA:
+                return "Emilia Romagna";
+
+            case PIEMONTE:
+                return "Piemonte";
+
+            case PUGLIA:
+                return "Puglia";
+
+            case TOSCANA:
+                return "Toscana";
+
+            case CALABRIA:
+                return "Calabria";
+
+            case SARDEGNA:
+                return "Sardegna";
+
+            case SICILIA:
+                return "Sicilia";
+
+            case MARCHE:
+                return "Marche";
+
+            case ABRUZZO:
+                return "Abruzzo";
+
+            case FRIULI_VENEZIA_GIULIA:
+                return "Friuli Venezia Giulia";
+
+            case UMBRIA:
+                return "Umbria";
+
+            case BASILICATA:
+                return "Basilicata";
+
+            case MOLISE:
+                return "Molise";
+
+            case VALLE_D_AOSTA:
+                return "Valle d'Aosta";
+
+            case TRENTINO_ALTO_ADIGE:
+                return "Trentino Alto Adige";
+
+            case LIGURIA:
+                return "Liguria";
+
+            default:
+                return null;
+        }
+    }
 
     public static Region fromItalianString(String region) {
         switch (region) {

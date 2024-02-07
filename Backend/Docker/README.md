@@ -7,6 +7,8 @@
 
 3. Rinominare il database:
     docker rename docker-db-1 dietidealsdb
+   O in generale:
+    docker rename <old_container_name> <new_container_name>
 
 Per far partire il container già creato:
     docker start dietidealsdb

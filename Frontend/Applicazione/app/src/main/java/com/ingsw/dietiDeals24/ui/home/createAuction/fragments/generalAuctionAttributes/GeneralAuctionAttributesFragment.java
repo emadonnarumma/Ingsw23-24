@@ -1,10 +1,13 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +18,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
@@ -34,13 +38,21 @@ import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class GeneralAuctionAttributesFragment extends Fragment {
 
+    private Uri currentPhotoUri;
+
     private KeyboardFocusManager keyboardFocusManager;
-    private ActivityResultLauncher<String[]> resultLauncher;
+    private ActivityResultLauncher<Uri> takePictureLauncher;
+    private ActivityResultLauncher<String[]> selectPictureLauncher;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
 
     private GeneralAuctionAttributesViewModel viewModel;
@@ -57,6 +69,29 @@ public class GeneralAuctionAttributesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
         setMenuVisibility(true);
+        createTakePictureLauncher();
+        createSelectPictureLauncher();
+    }
+
+    private void createSelectPictureLauncher() {
+        selectPictureLauncher = registerForActivityResult(new ActivityResultContracts.OpenMultipleDocuments(), uris -> {
+            if (uris != null && !uris.isEmpty()) {
+                selectedImages.addAll(uris);
+                smallScreenSliderAdapter.renewItems(selectedImages);
+                updateDeleteButton();
+            }
+        });
+    }
+
+    private void createTakePictureLauncher() {
+        takePictureLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), isSuccess -> {
+            if (isSuccess) {
+                selectedImages.add(currentPhotoUri);
+                smallScreenSliderAdapter.renewItems(selectedImages);
+                updateDeleteButton();
+            }
+            requireContext().revokeUriPermission(currentPhotoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        });
     }
 
     @Override
@@ -93,7 +128,6 @@ public class GeneralAuctionAttributesFragment extends Fragment {
         sliderView.setSliderAdapter(smallScreenSliderAdapter);
         updateDeleteButton();
     }
-
 
     private void setupSpinners(View view) {
         setupCategorySpinner(view);
@@ -171,15 +205,54 @@ public class GeneralAuctionAttributesFragment extends Fragment {
     private void setupAddImagesButton(@NonNull View view) {
         addButton = view.findViewById(R.id.add_image_button_general_auction_attributes);
         addButton.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.white)));
-        addButton.setOnClickListener(v -> resultLauncher.launch(new String[]{"image/*"}));
+        addButton.setOnClickListener(v -> showImageSourceDialog());
+    }
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.OpenMultipleDocuments(), uris -> {
-            if (uris != null && !uris.isEmpty()) {
-                selectedImages.addAll(uris);
-                smallScreenSliderAdapter.renewItems(selectedImages);
-                updateDeleteButton();
-            }
-        });
+    private void showImageSourceDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Scegli l'origine dell'immagine")
+                .setPositiveButton("Fotocamera", (dialog, which) -> {
+                    Uri imageUri = getOutputMediaFileUri();
+                    if (imageUri != null) {
+                        currentPhotoUri = imageUri;
+                        List<ResolveInfo> cameraActivities = requireContext().getPackageManager().queryIntentActivities(
+                                new Intent(MediaStore.ACTION_IMAGE_CAPTURE), PackageManager.MATCH_DEFAULT_ONLY
+
+                        );
+
+                        for (ResolveInfo activity : cameraActivities) {
+                            requireContext().grantUriPermission(activity.activityInfo.packageName,
+                                    imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        }
+
+                        takePictureLauncher.launch(imageUri);
+
+                    } else {
+                        throw new RuntimeException("Impossibile creare il file");
+                    }
+
+                })
+                .setNegativeButton("Galleria", (dialog, which) -> {
+                    selectPictureLauncher.launch(new String[]{"image/*"});
+                })
+                .show();
+    }
+
+    private Uri getOutputMediaFileUri() {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            return null;
+        }
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "DietiDeals24");
+
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
+            return null;
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+
+        return FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", mediaFile);
     }
 
     private void setupDeleteButton(@NonNull View view) {

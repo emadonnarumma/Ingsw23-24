@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation("com.wx.wheelview:wheelview:1.3.3")
+
     implementation("com.wdullaer:materialdatetimepicker:4.2.3")
 
     implementation("com.jsibbold:zoomage:1.3.1")

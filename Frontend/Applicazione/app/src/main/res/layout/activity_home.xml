@@ -16,7 +16,7 @@
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/grey">
+            android:background="@color/gray">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -59,7 +59,7 @@
         android:id="@+id/bottom_navigation_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
+        android:background="@color/gray"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/home_bottom_nav_menu"
 

@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
-import com.ingsw.dietiDeals24.ui.home.search.SearchFragment;
 
 public class ProfileFragment extends Fragment {
     private TextView usernameTextView;
@@ -89,7 +88,7 @@ public class ProfileFragment extends Fragment {
         } else {
             sellerSwitch.setChecked(false);
             sellerSwitchTextView.setTranslationX(8);
-            sellerSwitchTextView.setTextColor(getResources().getColor(R.color.grey));
+            sellerSwitchTextView.setTextColor(getResources().getColor(R.color.gray));
         }
     }
 
@@ -104,7 +103,7 @@ public class ProfileFragment extends Fragment {
                 // Start the animation on the TextView
                 sellerSwitchTextView.startAnimation(animation);
             } else {
-                sellerSwitchTextView.setTextColor(getResources().getColor(R.color.grey));
+                sellerSwitchTextView.setTextColor(getResources().getColor(R.color.gray));
 
                 // Load the animation from the XML file
                 Animation animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.switch_button_off);

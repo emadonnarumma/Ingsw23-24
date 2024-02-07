@@ -33,6 +33,7 @@ public class SecurityConfig {
 	                )
 	                .authorizeHttpRequests(authorize -> authorize
 	                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+							.requestMatchers(HttpMethod.GET, "/user/check-email/{email}").permitAll()
 	                        .anyRequest().authenticated()
 	                )
 	                .authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

@@ -85,11 +85,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
             } catch (InterruptedException e) {
-
                 throw new RuntimeException("Interruzione non prevista");
-
             }
-
         });
     }
 

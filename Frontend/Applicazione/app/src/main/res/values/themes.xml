@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/green</item>
 
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/grey</item>
+        <item name="colorPrimaryDark">@color/gray</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
@@ -14,6 +14,9 @@
 
         <!-- You can also set colorControlNormal, colorControlActivated
              colorControlHighlight, and colorSwitchThumbNormal. -->
+
+        <!-- Set the background color for all windows in the app. -->
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="Theme.DietiDeals24" parent="Base.Theme.DietiDeals24" />

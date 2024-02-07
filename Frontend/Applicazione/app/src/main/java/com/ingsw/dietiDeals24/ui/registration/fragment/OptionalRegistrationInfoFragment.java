@@ -15,6 +15,8 @@ import android.widget.EditText;
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.enumeration.Region;
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
@@ -24,6 +26,7 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class OptionalRegistrationInfoFragment extends Fragment implements BlockingStep {
@@ -32,15 +35,11 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     private User registeringUser = RegistrationController.user;
 
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_optional_registration_info, container, false);
     }
-
-
 
 
     @Override
@@ -51,13 +50,9 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     }
 
 
-
-
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
     }
-
-
 
 
     @Override
@@ -69,22 +64,16 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     }
 
 
-
-
     private void setRegisteringUserValues() {
         registeringUser.setRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem()));
         registeringUser.setBio(bioEditText.getText().toString());
     }
 
 
-
-
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
         callback.goToPrevStep();
     }
-
-
 
 
     @Nullable
@@ -94,14 +83,10 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     }
 
 
-
-
     @Override
     public void onSelected() {
 
     }
-
-
 
 
     @Override
@@ -110,49 +95,38 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     }
 
 
-
-
     @NonNull
     private Thread getRegistrationThread() {
-        return new Thread(() ->
-        {
+        return new Thread(() -> {
+            try {
 
-            boolean registrationSuccessFull = tryToRegister();
+                RegistrationController.register().get();
+                goToHomeActivity();
 
-            if (registrationSuccessFull) {
-                Intent intent = new Intent(getContext(), HomeActivity.class);
-                startActivity(intent);
-            } else {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(
-                        getContext(), "Registrazione fallita"));
+            } catch(ExecutionException e){
+
+                if (e.getCause() instanceof AuthenticationException) {
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Email già in uso"));
+
+                } else if (e.getCause() instanceof ConnectionException) {
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Errore di connessione"));
+                }
+
+            } catch(InterruptedException e){
+                throw new RuntimeException("Interruzione non prevista");
             }
-
         });
     }
 
-
-
-    //TODO: handle the exception
-    private static boolean tryToRegister() {
-        Future<Boolean> future = RegistrationController.register();
-        boolean regisrationSuccessfull;
-        try {
-            regisrationSuccessfull = future.get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return regisrationSuccessfull;
+    private void goToHomeActivity() {
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        startActivity(intent);
     }
-
-
-
 
     private void findTheViews() {
         regionSmartSpinner = requireView().findViewById(R.id.region_spinner_registration);
         bioEditText = requireView().findViewById(R.id.bio_edit_text_registration);
     }
-
-
 
 
     private void setTheSpinnerListener() {

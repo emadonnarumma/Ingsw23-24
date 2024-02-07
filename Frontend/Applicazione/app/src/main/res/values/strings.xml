@@ -11,7 +11,7 @@
     <string name="registration_link"><u>Registrati</u></string>
 
     <string name="bottom_nav_search">Cerca</string>
-    <string name="bottom_nav_create_auction">Vendi</string>
+    <string name="bottom_nav_create_auction">Crea asta</string>
     <string name="bottom_nav_profile">Profilo</string>
     <string name="bottom_nav_my_bids">Le tue offerte</string>
     <string name="bottom_nav_my_auctions">Le tue aste</string>
@@ -37,13 +37,13 @@
     <string name="reverse_phrase">Inversa</string>
     <string name="home_appbar">Home AppBar</string>
     <string name="date_picker_phrase">Seleziona la data di scadenza</string>
-    <string name="initial_price_phrase">Inserisci il prezzo iniziale</string>
+    <string name="initial_price_phrase">Prezzo iniziale</string>
     <string name="create_reverse_auction_phrase">Crea asta inversa</string>
     <string name="zero_price">0.0€</string>
     <string name="downward_phrase">Al ribasso</string>
     <string name="silent_phrase">Silenziosa</string>
-    <string name="secret_minimum_price_phrase">Inserisci il prezzo minimo\n(Segreto)</string>
-    <string name="decrement_amount_phrase">Inserisci l\'importo del decremento\n</string>
+    <string name="secret_minimum_price_phrase">Prezzo minimo (Segreto)</string>
+    <string name="decrement_amount_phrase">Importo del decremento</string>
 
     <!-- Profile -->
     <string name="edit_profile_button_phrase">Modifica profilo</string>

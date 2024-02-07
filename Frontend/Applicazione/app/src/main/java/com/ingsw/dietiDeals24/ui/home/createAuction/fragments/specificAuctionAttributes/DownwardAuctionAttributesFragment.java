@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,12 +19,19 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttr
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
+import com.wx.wheelview.adapter.ArrayWheelAdapter;
+import com.wx.wheelview.widget.WheelView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DownwardAuctionAttributesFragment extends Fragment {
 
     private EditText initialPriceEditText, minimumPriceEditText, decrementAmountEditText;
+    private WheelView<String> unitWheelView, numberWheelView;
+    private WheelView.WheelViewStyle wheelViewStyle;
 
-    private Bundle bundle;
+    private List<String> hourList, minuteList, dayList, monthList, unitList;
 
     private KeyboardFocusManager keyboardFocusManager;
 
@@ -36,6 +44,44 @@ public class DownwardAuctionAttributesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
+        setupLists();
+        setupWheelViewStyle();
+    }
+
+    private void setupWheelViewStyle() {
+        wheelViewStyle = new WheelView.WheelViewStyle();
+        wheelViewStyle.selectedTextColor = getResources().getColor(R.color.blue);
+        wheelViewStyle.textColor = getResources().getColor(R.color.gray);
+        wheelViewStyle.backgroundColor = getResources().getColor(R.color.white);
+        wheelViewStyle.selectedTextSize = 20;
+    }
+
+    private void setupLists() {
+        unitList = new ArrayList<>();
+        unitList.add("Ore");
+        unitList.add("Minuti");
+        unitList.add("Giorni");
+        unitList.add("Mesi");
+
+        hourList = new ArrayList<>();
+        for (int i = 1; i <= 24; i++) {
+            hourList.add(String.valueOf(i));
+        }
+
+        minuteList = new ArrayList<>();
+        for (int i = 1; i <= 60; i++) {
+            minuteList.add(String.valueOf(i));
+        }
+
+        dayList = new ArrayList<>();
+        for (int i = 1; i <= 31; i++) {
+            dayList.add(String.valueOf(i));
+        }
+
+        monthList = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            monthList.add(String.valueOf(i));
+        }
     }
 
     @Override
@@ -48,16 +94,54 @@ public class DownwardAuctionAttributesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setupNumberWheelView(view);
+        setupUnitWheelView(view);
         setupMinPriceEditText(view);
         setupDecrementAmountEditText(view);
         setupInitialPriceEditText(view);
         setupKeyboardFocusManager(view);
     }
 
+    private void setupUnitWheelView(@NonNull View view) {
+        unitWheelView = view.findViewById(R.id.unit_wheel_view_downward_auction_attributes);
+        unitWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
+        unitWheelView.setSkin(WheelView.Skin.Holo);
+        unitWheelView.setWheelData(unitList);
+        unitWheelView.setStyle(wheelViewStyle);
+
+        unitWheelView.setOnWheelItemSelectedListener((position, item) -> {
+            switch (item) {
+                case "Ore":
+                    numberWheelView.setWheelData(hourList);
+                    break;
+
+                case "Minuti":
+                    numberWheelView.setWheelData(minuteList);
+                    break;
+
+                case "Giorni":
+                    numberWheelView.setWheelData(dayList);
+                    break;
+
+                case "Mesi":
+                    numberWheelView.setWheelData(monthList);
+                    break;
+            }
+        });
+    }
+
+    private void setupNumberWheelView(@NonNull View view) {
+        numberWheelView = view.findViewById(R.id.number_wheel_view_downward_auction_attributes);
+        numberWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
+        numberWheelView.setSkin(WheelView.Skin.Holo);
+        numberWheelView.setStyle(wheelViewStyle);
+        numberWheelView.setWheelData(hourList);
+    }
+
     private void setupMinPriceEditText(@NonNull View view) {
         minimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
-        decrementAmountEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        decrementAmountEditText.setOnFocusChangeListener((v, hasFocus) -> {
+        minimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        minimumPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 String price = decrementAmountEditText.getText().toString();
                 setEuroToEndIfNotPresent(price, decrementAmountEditText);
@@ -74,10 +158,10 @@ public class DownwardAuctionAttributesFragment extends Fragment {
                 if (CreateAuctionController.isValidDecrementAmount(Double.parseDouble(deleteMoneySimbol(initialPriceEditText.getText().toString())), Double.parseDouble(deleteMoneySimbol(price)))) {
                     setEuroToEndIfNotPresent(price, decrementAmountEditText);
                 } else {
-                    decrementAmountEditText.setError("invalid decrement amount");
+                    decrementAmountEditText.setError("Valore non valido");
                     setEuroToEndIfNotPresent(price, decrementAmountEditText);
                 }
-                }
+            }
         });
     }
 

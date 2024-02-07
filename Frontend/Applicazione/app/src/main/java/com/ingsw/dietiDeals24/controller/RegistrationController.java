@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.controller;
 
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.model.User;
@@ -10,6 +12,8 @@ import com.ingsw.dietiDeals24.network.registration.RegistrationRequest;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
+import retrofit2.Response;
+
 public class RegistrationController implements RetroFitHolder {
     public static User user = new User();
 
@@ -19,16 +23,41 @@ public class RegistrationController implements RetroFitHolder {
         RegistrationDao registrationDao = retrofit.create(RegistrationDao.class);
         CurrentUserDao currentUserDao = retrofit.create(CurrentUserDao.class);
         RegistrationRequest registrationRequest =  new RegistrationRequest(user.getName(), user.getEmail(), user.getPassword(), user.getBio(), user.getRegion());
-
         return CompletableFuture.supplyAsync(() -> {
             try {
-                TokenHolder.instance = registrationDao.register(registrationRequest).execute().body();
-                UserHolder.user = currentUserDao.getUser(
-                        user.getEmail(), TokenHolder.getAuthToken()
-                ).execute().body();
-                return true;
+                Response<TokenHolder> response = registrationDao.register(registrationRequest).execute();
+
+                if (response.isSuccessful()) {
+                    TokenHolder.instance = response.body();
+                    UserHolder.user = currentUserDao.getUser(user.getEmail(), TokenHolder.getAuthToken()).execute().body();
+                    return true;
+
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("L'email è già in uso");
+                }
+
             } catch (IOException e) {
-                return false;
+                throw new ConnectionException("Errore di connessione");
+            }
+            return false;
+        });
+    }
+
+    public static CompletableFuture<Boolean> emailAlreadyExists(String email) {
+        RegistrationDao registrationDao = retrofit.create(RegistrationDao.class);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Response<Boolean> response = registrationDao.emailAlreadyExists(email).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+
+                } else {
+                    throw new RuntimeException("Errore inaspettato");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
             }
         });
     }

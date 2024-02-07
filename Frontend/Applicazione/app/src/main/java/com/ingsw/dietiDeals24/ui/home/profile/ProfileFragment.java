@@ -116,7 +116,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void goToEditProfileFragment() {
-        //TODO: BACK BUTTON
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new EditProfileFragment()).commit();
     }

@@ -1,0 +1,12 @@
+{
+  "bio" : "Mario Mario Mario Mario Mario Mario Mario De Filippo e la sua disponibilità per il prossimo anno scolastico per il prossimo anno scolastico per il prossimo ",
+  "email" : "mario@mario.mario",
+  "name" : "Mario",
+  "password" : "mario",
+  "region" : "FRIULI_VENEZIA_GIULIA",
+  "role" : "SELLER"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}

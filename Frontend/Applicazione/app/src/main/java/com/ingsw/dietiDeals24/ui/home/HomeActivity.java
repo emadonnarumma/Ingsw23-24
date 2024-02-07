@@ -18,6 +18,7 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAtt
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.search.SearchFragment;
 
@@ -48,7 +49,12 @@ public class HomeActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container_home, new SellerAuctionTypesFragment())
                         .commit();
 
-            } else {
+            } else if (currentFragment instanceof EditProfileFragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_home, new ProfileFragment())
+                        .commit();
+                }
+            else {
                 callback.setEnabled(false);
                 onBackPressed();
                 callback.setEnabled(true);

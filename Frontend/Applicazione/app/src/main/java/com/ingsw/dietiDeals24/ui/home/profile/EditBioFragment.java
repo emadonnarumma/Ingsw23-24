@@ -25,12 +25,6 @@ public class EditBioFragment extends Fragment {
         setBackButtonEnabled(true);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        setBackButtonEnabled(false);
-    }
-
     private void setBackButtonEnabled(boolean enabled) {
         if (getActivity() instanceof AppCompatActivity) {
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();

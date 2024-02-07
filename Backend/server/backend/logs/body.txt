@@ -1,0 +1,12 @@
+{
+  "bio" : "So bell",
+  "email" : "cassandraborrelli6@gmail.com",
+  "name" : "gabbibba",
+  "password" : "gabbibbo",
+  "region" : "FRIULI_VENEZIA_GIULIA",
+  "role" : "SELLER"
+}
+{
+  "email" : "cassandraborrelli6@gmail.com",
+  "password" : "gabbibbo"
+}

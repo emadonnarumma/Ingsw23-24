@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
@@ -40,6 +42,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setBackButtonEnabled(false);
+
         usernameTextView = view.findViewById(R.id.username_text_profile);
         sellerSwitch = view.findViewById(R.id.seller_switch_profile);
         sellerSwitchTextView = view.findViewById(R.id.seller_switch_text_profile);
@@ -56,6 +60,15 @@ public class ProfileFragment extends Fragment {
 
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
 
+    }
+
+    private void setBackButtonEnabled(boolean enabled) {
+        if (getActivity() instanceof AppCompatActivity) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(enabled);
+            }
+        }
     }
 
     /**
@@ -117,10 +130,5 @@ public class ProfileFragment extends Fragment {
     private void goToEditProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new EditProfileFragment()).commit();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 }

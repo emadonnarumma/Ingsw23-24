@@ -27,7 +27,4 @@ public class DownwardAuction extends Auction {
     private Long decrementTime;
 
     private Timestamp nextDecrement;
-
-
-
 }

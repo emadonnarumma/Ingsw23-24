@@ -7,9 +7,6 @@
     tools:context=".ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment"
     android:id="@+id/general_auction_attributes_layout">
 
-
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/title_layout_general_auction_attributes"
         android:layout_width="370dp"

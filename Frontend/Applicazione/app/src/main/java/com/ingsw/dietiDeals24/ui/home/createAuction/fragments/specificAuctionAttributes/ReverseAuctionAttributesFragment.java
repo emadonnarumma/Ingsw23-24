@@ -36,7 +36,6 @@ import java.util.List;
 
 public class ReverseAuctionAttributesFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    private Bundle bundle;
     private KeyboardFocusManager keyboardFocusManager;
 
     private EditText priceEditText;
@@ -124,7 +123,7 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
     }
 
     private void setupDatePicker(View view) {
-        dateTextView = view.findViewById(R.id.date_edit_text_reverse_auction_attributes);
+        dateTextView = view.findViewById(R.id.date_text_reverse_auction_attributes);
         dateTextView.setFocusable(false);
         dateTextView.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(

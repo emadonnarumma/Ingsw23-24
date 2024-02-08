@@ -1,6 +1,6 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,26 +12,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.enumeration.AuctionStatus;
+import com.ingsw.dietiDeals24.enumeration.Category;
+import com.ingsw.dietiDeals24.enumeration.Wear;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
+import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageConverter;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DownwardAuctionAttributesFragment extends Fragment {
 
+    private TextView decrementTimeTextView;
     private EditText initialPriceEditText, minimumPriceEditText, decrementAmountEditText;
-    private WheelView<String> unitWheelView, numberWheelView;
+    private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
     private WheelView.WheelViewStyle wheelViewStyle;
 
-    private List<String> hourList, minuteList, dayList, monthList, unitList;
+    private List<String> hourList, minuteList, dayList, monthList;
+
+    private CircularProgressButton createAuctionButton;
 
     private KeyboardFocusManager keyboardFocusManager;
 
@@ -57,29 +73,24 @@ public class DownwardAuctionAttributesFragment extends Fragment {
     }
 
     private void setupLists() {
-        unitList = new ArrayList<>();
-        unitList.add("Ore");
-        unitList.add("Minuti");
-        unitList.add("Giorni");
-        unitList.add("Mesi");
-
         hourList = new ArrayList<>();
-        for (int i = 1; i <= 24; i++) {
+        for (int i = 0; i <= 24; i++) {
             hourList.add(String.valueOf(i));
+
         }
 
         minuteList = new ArrayList<>();
-        for (int i = 1; i <= 60; i++) {
+        for (int i = 0; i <= 60; i++) {
             minuteList.add(String.valueOf(i));
         }
 
         dayList = new ArrayList<>();
-        for (int i = 1; i <= 31; i++) {
+        for (int i = 0; i <= 31; i++) {
             dayList.add(String.valueOf(i));
         }
 
         monthList = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 0; i <= 12; i++) {
             monthList.add(String.valueOf(i));
         }
     }
@@ -94,75 +105,83 @@ public class DownwardAuctionAttributesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupNumberWheelView(view);
-        setupUnitWheelView(view);
+        setupWheelViews(view);
+        setupEditTexts(view);
+        setupKeyboardFocusManager(view);
+        setupDecrementTimeTextView(view);
+        setupCreateAuctionButton(view);
+    }
+
+
+    private void setupEditTexts(View view) {
         setupMinPriceEditText(view);
         setupDecrementAmountEditText(view);
         setupInitialPriceEditText(view);
-        setupKeyboardFocusManager(view);
     }
 
-    private void setupUnitWheelView(@NonNull View view) {
-        unitWheelView = view.findViewById(R.id.unit_wheel_view_downward_auction_attributes);
-        unitWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
-        unitWheelView.setSkin(WheelView.Skin.Holo);
-        unitWheelView.setWheelData(unitList);
-        unitWheelView.setStyle(wheelViewStyle);
-
-        unitWheelView.setOnWheelItemSelectedListener((position, item) -> {
-            switch (item) {
-                case "Ore":
-                    numberWheelView.setWheelData(hourList);
-                    break;
-
-                case "Minuti":
-                    numberWheelView.setWheelData(minuteList);
-                    break;
-
-                case "Giorni":
-                    numberWheelView.setWheelData(dayList);
-                    break;
-
-                case "Mesi":
-                    numberWheelView.setWheelData(monthList);
-                    break;
-            }
-        });
+    private void setupWheelViews(View view) {
+        setupMinutesWheelView(view);
+        setupHoursWheel(view);
+        setupDaysWheelView(view);
+        setupMonthsWheelView(view);
     }
 
-    private void setupNumberWheelView(@NonNull View view) {
-        numberWheelView = view.findViewById(R.id.number_wheel_view_downward_auction_attributes);
-        numberWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
-        numberWheelView.setSkin(WheelView.Skin.Holo);
-        numberWheelView.setStyle(wheelViewStyle);
-        numberWheelView.setWheelData(hourList);
+    private void setupMinutesWheelView(@NonNull View view) {
+        minutesWheelView = view.findViewById(R.id.minutes_wheel_view_downward_auction_attributes);
+        minutesWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
+        minutesWheelView.setSkin(WheelView.Skin.Holo);
+        minutesWheelView.setStyle(wheelViewStyle);
+        minutesWheelView.setWheelData(minuteList);
+        minutesWheelView.setExtraText("Minuto/i", getResources().getColor(R.color.blue), 40, 100);
+        minutesWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
     }
 
-    private void setupMinPriceEditText(@NonNull View view) {
-        minimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
-        minimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        minimumPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                String price = decrementAmountEditText.getText().toString();
-                setEuroToEndIfNotPresent(price, decrementAmountEditText);
-            }
-        });
+    private void setupHoursWheel(@NonNull View view) {
+        hoursWheelView = view.findViewById(R.id.hours_wheel_view_downward_auction_attributes);
+        hoursWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
+        hoursWheelView.setSkin(WheelView.Skin.Holo);
+        hoursWheelView.setStyle(wheelViewStyle);
+        hoursWheelView.setWheelData(hourList);
+        hoursWheelView.setExtraText("Ora/e", getResources().getColor(R.color.blue), 40, 100);
+        hoursWheelView.setSelection(1);
+        hoursWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
     }
 
-    private void setupDecrementAmountEditText(@NonNull View view) {
-        decrementAmountEditText = view.findViewById(R.id.decrement_amount_edit_text_downward_auction_attributes);
-        decrementAmountEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        decrementAmountEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                String price = decrementAmountEditText.getText().toString();
-                if (CreateAuctionController.isValidDecrementAmount(Double.parseDouble(deleteMoneySimbol(initialPriceEditText.getText().toString())), Double.parseDouble(deleteMoneySimbol(price)))) {
-                    setEuroToEndIfNotPresent(price, decrementAmountEditText);
-                } else {
-                    decrementAmountEditText.setError("Valore non valido");
-                    setEuroToEndIfNotPresent(price, decrementAmountEditText);
-                }
-            }
-        });
+    private void setupDaysWheelView(View view) {
+        daysWheelView = view.findViewById(R.id.days_wheel_view_downward_auction_attributes);
+        daysWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
+        daysWheelView.setSkin(WheelView.Skin.Holo);
+        daysWheelView.setStyle(wheelViewStyle);
+        daysWheelView.setWheelData(dayList);
+        daysWheelView.setExtraText("Giorno/i", getResources().getColor(R.color.blue), 40, 100);
+        daysWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
+    }
+
+    private void setupMonthsWheelView(View view) {
+        monthsWheelView = view.findViewById(R.id.months_wheel_view_downward_auction_attributes);
+        monthsWheelView.setWheelAdapter(new ArrayWheelAdapter(getContext()));
+        monthsWheelView.setSkin(WheelView.Skin.Holo);
+        monthsWheelView.setStyle(wheelViewStyle);
+        monthsWheelView.setWheelData(monthList);
+        monthsWheelView.setExtraText("Mese/i", getResources().getColor(R.color.blue), 40, 100);
+        monthsWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
+    }
+
+    private void updateDecrementTimeTextView() {
+        String decrementTime = "Decremento ogni: ";
+        if (!monthsWheelView.getSelectionItem().equals("0")) {
+            decrementTime += monthsWheelView.getSelectionItem() + "M ";
+        }
+        if (!daysWheelView.getSelectionItem().equals("0")) {
+            decrementTime += daysWheelView.getSelectionItem() + "G ";
+        }
+        if (!hoursWheelView.getSelectionItem().equals("0")) {
+            decrementTime += hoursWheelView.getSelectionItem() + "H ";
+        }
+        if (!minutesWheelView.getSelectionItem().equals("0")) {
+            decrementTime += minutesWheelView.getSelectionItem() + "Min";
+        }
+        decrementTimeTextView.setText(decrementTime);
     }
 
     private void setupInitialPriceEditText(@NonNull View view) {
@@ -173,14 +192,191 @@ public class DownwardAuctionAttributesFragment extends Fragment {
                 String price = initialPriceEditText.getText().toString();
                 setEuroToEndIfNotPresent(price, initialPriceEditText);
                 if (!price.equals("") && decrementAmountEditText.getText() != null) {
+
+                    minimumPriceEditText.setEnabled(true);
                     decrementAmountEditText.setEnabled(true);
+
                 } else {
+                    minimumPriceEditText.setText("");
+                    minimumPriceEditText.setEnabled(false);
+
                     decrementAmountEditText.setText("");
                     decrementAmountEditText.setEnabled(false);
+                }
+            } else {
+                if (!initialPriceEditText.getText().toString().equals("")) {
+                    initialPriceEditText.setText(deleteEuroSimbol(initialPriceEditText.getText().toString()));
                 }
             }
         });
         decrementAmountEditText.setEnabled(false);
+    }
+
+    private void setupMinPriceEditText(@NonNull View view) {
+        minimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
+        minimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        minimumPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+
+                String minPrice = minimumPriceEditText.getText().toString();
+                String initialPrice = initialPriceEditText.getText().toString();
+
+                if (!minPrice.equals("") && !initialPrice.equals("")) {
+
+                    double minPriceValue = Double.parseDouble(deleteEuroSimbol(minPrice));
+                    double initialPriceValue = Double.parseDouble(deleteEuroSimbol(initialPrice));
+
+                    if (minPriceValue > initialPriceValue) {
+                        setEuroToEndIfNotPresent(minPrice, minimumPriceEditText);
+                        minimumPriceEditText.setError("Il prezzo minimo non può essere maggiore del prezzo iniziale");
+                        return;
+                    }
+                }
+                setEuroToEndIfNotPresent(minPrice, minimumPriceEditText);
+            } else {
+                if (!minimumPriceEditText.getText().toString().equals("")) {
+                    minimumPriceEditText.setText(deleteEuroSimbol(minimumPriceEditText.getText().toString()));
+                }
+            }
+        });
+    }
+
+    private void setupDecrementAmountEditText(@NonNull View view) {
+        decrementAmountEditText = view.findViewById(R.id.decrement_amount_edit_text_downward_auction_attributes);
+        decrementAmountEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        decrementAmountEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String price = decrementAmountEditText.getText().toString();
+                if (CreateAuctionController.isValidDecrementAmount(Double.parseDouble(deleteEuroSimbol(initialPriceEditText.getText().toString())), Double.parseDouble(deleteEuroSimbol(price)))) {
+                    setEuroToEndIfNotPresent(price, decrementAmountEditText);
+                } else {
+                    decrementAmountEditText.setError("Valore non valido");
+                    setEuroToEndIfNotPresent(price, decrementAmountEditText);
+                }
+            } else {
+                if (!decrementAmountEditText.getText().toString().equals("")) {
+                    decrementAmountEditText.setText(deleteEuroSimbol(decrementAmountEditText.getText().toString()));
+                }
+            }
+        });
+    }
+
+
+    private void setupCreateAuctionButton(View view) {
+
+        createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
+        createAuctionButton.setOnClickListener(v -> {
+
+            if (fieldsEmpty()) {
+                Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String title = genericAuctionAttributesHolder.getTitle();
+            String description = genericAuctionAttributesHolder.getDescription();
+            Category category = genericAuctionAttributesHolder.getCategory();
+            Wear wear = genericAuctionAttributesHolder.getWear();
+            List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
+            double initialPrice = Double.parseDouble(deleteEuroSimbol(initialPriceEditText.getText().toString()));
+            double secretMinimumPrice = Double.parseDouble(deleteEuroSimbol(minimumPriceEditText.getText().toString()));
+            double decrementAmount = Double.parseDouble(deleteEuroSimbol(decrementAmountEditText.getText().toString()));
+
+            if (!auctionIsSetWell(initialPrice, secretMinimumPrice, decrementAmount)) {
+                return;
+            }
+
+            List<Image> images;
+            try {
+                images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
+            } catch (IOException e) {
+                throw new RuntimeException("Error while converting images to byte array");
+            }
+
+            DownwardAuction newDownwardAuction = new DownwardAuction(
+                    UserHolder.user,
+                    title,
+                    description,
+                    wear,
+                    category,
+                    AuctionStatus.IN_PROGRESS,
+                    initialPrice,
+                    secretMinimumPrice,
+                    decrementAmount,
+                    getDecrementTime(),
+                    calculateNextDecrement()
+            );
+
+            createAuctionButton.startAnimation();
+            CreateAuctionController.createAuction(newDownwardAuction, images);
+            createAuctionButton.revertAnimation();
+        });
+    }
+
+    private boolean auctionIsSetWell(double initialPrice, double secretMinimumPrice, double decrementAmount) {
+        if (decrementAmountEditText.getError() != null) {
+
+            Toast.makeText(getContext(), "Valore di decremento non valido", Toast.LENGTH_SHORT).show();
+            return false;
+
+        } else if (minimumPriceEditText.getError() != null) {
+
+            Toast.makeText(getContext(), "Valore minimo non valido", Toast.LENGTH_SHORT).show();
+            return false;
+
+        } else {
+            return !auctionDurationLessThen30Minutes(initialPrice, secretMinimumPrice, decrementAmount);
+        }
+    }
+
+    private boolean fieldsEmpty() {
+        if (initialPriceEditText.getText() != null && minimumPriceEditText.getText() != null && decrementAmountEditText.getText() != null) {
+            return initialPriceEditText.getText().toString().equals("") ||
+                    minimumPriceEditText.getText().toString().equals("") ||
+                    decrementAmountEditText.getText().toString().equals("");
+        }
+
+        return false;
+    }
+
+    private boolean auctionDurationLessThen30Minutes(double initialPrice, double secretMinimumPrice, double decrementAmount) {
+        double totalTime = (initialPrice - secretMinimumPrice) / decrementAmount * getDecrementTime() / 60.0;
+        if (totalTime < 30) {
+            Toast.makeText(getContext(), "L'asta non può terminare in meno di 30 minuti", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private long getDecrementTime() {
+        long months = Integer.parseInt(monthsWheelView.getSelectionItem());
+        long days = Integer.parseInt(daysWheelView.getSelectionItem());
+        long hours = Integer.parseInt(hoursWheelView.getSelectionItem());
+        int minutes = Integer.parseInt(minutesWheelView.getSelectionItem());
+
+        long totalSeconds = 0;
+
+        totalSeconds += (long) months * 30 * 24 * 60 * 60;
+        totalSeconds += (long) days * 24 * 60 * 60;
+        totalSeconds += (long) hours * 60 * 60;
+        totalSeconds += minutes * 60L;
+
+        return totalSeconds;
+    }
+
+    private Timestamp calculateNextDecrement() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, (int) getDecrementTime());
+        return new Timestamp(calendar.getTimeInMillis());
+    }
+
+    private void setupDecrementTimeTextView(@NonNull View view) {
+        decrementTimeTextView = view.findViewById(R.id.decrement_time_text_view_downward_auction_attributes);
+    }
+
+    private void setupKeyboardFocusManager(View view) {
+        keyboardFocusManager = new KeyboardFocusManager(this, view);
+        keyboardFocusManager.closeKeyboardWhenUserClickOutside();
+        keyboardFocusManager.loseFocusWhenKeyboardClose();
     }
 
     private void setEuroToEndIfNotPresent(String price, EditText decrementAmountEditText) {
@@ -190,14 +386,7 @@ public class DownwardAuctionAttributesFragment extends Fragment {
         }
     }
 
-
-    private void setupKeyboardFocusManager(View view) {
-        keyboardFocusManager = new KeyboardFocusManager(this, view);
-        keyboardFocusManager.closeKeyboardWhenUserClickOutside();
-        keyboardFocusManager.loseFocusWhenKeyboardClose();
-    }
-
-    private String deleteMoneySimbol(String string) {
+    private String deleteEuroSimbol(String string) {
         if (string.endsWith("€"))
             return string.substring(0, string.length() - 1);
 

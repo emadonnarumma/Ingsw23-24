@@ -140,9 +140,44 @@
 
 
 
-    <!-- Edit Bank Informations -->
+    <!-- TODO: Add the other buttons here -->
+
+
+
+
+    <!-- Edit Bank Account -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/edit_bank_information_button_edit_profile"
+        android:id="@+id/edit_bank_account_button_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size_big"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_external_links_button_edit_profile">
+
+        <ImageView
+            android:id="@+id/icon_of_edit_bank_account_edit_profile"
+            android:layout_width="@dimen/icon_size_big"
+            android:layout_height="@dimen/icon_size_big"
+            android:src="@drawable/ic_bank_account"
+            app:tint="@color/green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/edit_bank_account_text_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/edit_bank_account_phrase"
+            android:textSize="@dimen/title_text_small"
+            app:layout_constraintBottom_toBottomOf="@id/icon_of_edit_bank_account_edit_profile"
+            app:layout_constraintStart_toEndOf="@id/icon_of_edit_bank_account_edit_profile"
+            app:layout_constraintTop_toTopOf="@id/icon_of_edit_bank_account_edit_profile" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/unlock_seller_mode_button_edit_profile"
         android:layout_width="match_parent"
         android:layout_height="@dimen/icon_size_big"
         android:layout_marginTop="8dp"
@@ -150,24 +185,24 @@
         app:layout_constraintTop_toBottomOf="@id/edit_external_links_button_edit_profile">
 
         <ImageView
-            android:id="@+id/icon_of_edit_bank_information_edit_profile"
+            android:id="@+id/icon_of_unlock_seller_mode_edit_profile"
             android:layout_width="@dimen/icon_size_big"
             android:layout_height="@dimen/icon_size_big"
-            android:src="@drawable/ic_bank_informations"
+            android:src="@drawable/ic_seller_mode"
             app:tint="@color/green"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/edit_bank_information_text_edit_profile"
+            android:id="@+id/unlock_seller_mode_text_edit_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@string/edit_bank_information_phrase"
+            android:text="@string/unlock_seller_mode_phrase"
             android:textSize="@dimen/title_text_small"
-            app:layout_constraintBottom_toBottomOf="@id/icon_of_edit_bank_information_edit_profile"
-            app:layout_constraintStart_toEndOf="@id/icon_of_edit_bank_information_edit_profile"
-            app:layout_constraintTop_toTopOf="@id/icon_of_edit_bank_information_edit_profile" />
+            app:layout_constraintBottom_toBottomOf="@id/icon_of_unlock_seller_mode_edit_profile"
+            app:layout_constraintStart_toEndOf="@id/icon_of_unlock_seller_mode_edit_profile"
+            app:layout_constraintTop_toTopOf="@id/icon_of_unlock_seller_mode_edit_profile" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
@@ -175,7 +210,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/edit_bank_information_button_edit_profile" />
+        app:layout_constraintTop_toBottomOf="@id/unlock_seller_mode_button_edit_profile" />
 
 
 

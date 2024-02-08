@@ -52,6 +52,7 @@
     <string name="edit_region_phrase">Modifica regione</string>
     <string name="edit_bio_phrase">Modifica bio</string>
     <string name="edit_external_links_phrase">Modifica link esterni</string>
+
     <string name="unlock_seller_account_phrase">Sblocca modalità venditore</string>
     <string name="edit_bank_information_phrase">Modifica informazioni bancarie</string>
     <string name="decrement_phrase">Decremento ogni:</string>

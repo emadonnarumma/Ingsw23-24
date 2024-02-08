@@ -2,3 +2,23 @@
   "email" : "napoleone@gmail.com",
   "password" : "napoleone"
 }
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}

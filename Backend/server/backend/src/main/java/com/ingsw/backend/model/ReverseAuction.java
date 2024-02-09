@@ -1,5 +1,6 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -23,6 +26,7 @@ public class ReverseAuction extends Auction {
 
     private Double startingPrice;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", locale = "it_IT", timezone = "Europe/Rome")
     private Timestamp expirationDate;
     
     @OneToMany(mappedBy = "reverseAuction", fetch = FetchType.EAGER)

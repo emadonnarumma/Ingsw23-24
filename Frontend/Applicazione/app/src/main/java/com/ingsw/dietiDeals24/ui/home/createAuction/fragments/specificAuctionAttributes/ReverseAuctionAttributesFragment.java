@@ -24,6 +24,7 @@ import com.ingsw.dietiDeals24.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
+import com.ingsw.dietiDeals24.ui.utility.DateFormatter;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
@@ -31,8 +32,12 @@ import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageConverter;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ReverseAuctionAttributesFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
@@ -84,9 +89,10 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
             Wear wear = genericAuctionAttributesHolder.getWear();
             List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
             String initialPrice = deleteMoneySimbol(priceEditText.getText().toString());
-            String expirationDate = dateTextView.getText().toString();
+            String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
 
             List<Image> images;
+
             try {
                 images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
             } catch (IOException e) {

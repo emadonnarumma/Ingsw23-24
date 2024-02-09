@@ -1,4 +1,189 @@
 {
+  "bio" : "viva la france ",
+  "email" : "napoleone@gmail.com",
+  "name" : "napoleone",
+  "password" : "napoleone",
+  "region" : "SARDEGNA",
+  "role" : "SELLER"
+}
+{
+  "bio" : "mario",
+  "email" : "mario@mario.mario",
+  "name" : "mario",
+  "password" : "mario",
+  "region" : "CAMPANIA",
+  "role" : "BUYER"
+}
+{
+  "expirationDate" : "24-2-2024 00:00:00",
+  "initialPrice" : 30.0,
+  "category" : "ENTERTAINMENT_CARDS_AND_VIDEOGAMES",
+  "description" : "D",
+  "owner" : {
+    "bio" : "mario",
+    "email" : "mario@mario.mario",
+    "externalLinks" : [ ],
+    "name" : "mario",
+    "password" : "$2a$10$CKanh5MuNI8ttNwcc1Bxu.lMWbekwJO8/tUYpmTfjWLXMf/Ka3lFC",
+    "region" : "CAMPANIA",
+    "role" : "BUYER"
+  },
+  "status" : "IN_PROGRESS",
+  "title" : "T",
+  "type" : "REVERSE",
+  "wear" : "VERY_GOOD_CONDITION"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "currentPrice" : 200.0,
+  "decrementAmount" : 1.0,
+  "decrementTime" : 3600,
+  "nextDecrement" : "09-02-2024 16:10:07",
+  "secretMinimumPrice" : 1.0,
+  "category" : "TOYS_AND_MODELS",
+  "description" : "D",
+  "owner" : {
+    "bio" : "viva la france ",
+    "email" : "napoleone@gmail.com",
+    "externalLinks" : [ ],
+    "name" : "napoleone",
+    "password" : "$2a$10$zqoxhZnVYoziyLqWo0Xc1.0LswEBOCZjwJOjAp8KQHY6t3hoeC5HG",
+    "region" : "SARDEGNA",
+    "role" : "SELLER"
+  },
+  "status" : "IN_PROGRESS",
+  "title" : "T",
+  "type" : "DOWNWARD",
+  "wear" : "BAD_CONDITION"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "currentPrice" : 300.0,
+  "decrementAmount" : 1.0,
+  "decrementTime" : 3600,
+  "nextDecrement" : "09-02-2024 16:12:29",
+  "secretMinimumPrice" : 1.0,
+  "category" : "JEWELRY_AND_PRECIOUS_STONES",
+  "description" : "D",
+  "owner" : {
+    "bio" : "viva la france ",
+    "email" : "napoleone@gmail.com",
+    "externalLinks" : [ ],
+    "name" : "napoleone",
+    "password" : "$2a$10$zqoxhZnVYoziyLqWo0Xc1.0LswEBOCZjwJOjAp8KQHY6t3hoeC5HG",
+    "region" : "SARDEGNA",
+    "role" : "SELLER"
+  },
+  "status" : "IN_PROGRESS",
+  "title" : "T",
+  "type" : "DOWNWARD",
+  "wear" : "GOOD_CONDITION"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "expirationDate" : "24-2-2024 00:00:00",
+  "withdrawalTime" : 3600,
+  "category" : "TOYS_AND_MODELS",
+  "description" : "D",
+  "owner" : {
+    "bio" : "viva la france ",
+    "email" : "napoleone@gmail.com",
+    "externalLinks" : [ ],
+    "name" : "napoleone",
+    "password" : "$2a$10$zqoxhZnVYoziyLqWo0Xc1.0LswEBOCZjwJOjAp8KQHY6t3hoeC5HG",
+    "region" : "SARDEGNA",
+    "role" : "SELLER"
+  },
+  "status" : "IN_PROGRESS",
+  "title" : "T",
+  "type" : "SILENT",
+  "wear" : "GOOD_CONDITION"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
+  "expirationDate" : "16-2-2024 00:00:00",
+  "withdrawalTime" : 3600,
+  "category" : "TOYS_AND_MODELS",
+  "description" : "D",
+  "owner" : {
+    "bio" : "viva la france ",
+    "email" : "napoleone@gmail.com",
+    "externalLinks" : [ ],
+    "name" : "napoleone",
+    "password" : "$2a$10$zqoxhZnVYoziyLqWo0Xc1.0LswEBOCZjwJOjAp8KQHY6t3hoeC5HG",
+    "region" : "SARDEGNA",
+    "role" : "SELLER"
+  },
+  "status" : "IN_PROGRESS",
+  "title" : "T",
+  "type" : "SILENT",
+  "wear" : "GOOD_CONDITION"
+}
+{
+  "email" : "napoleone@gmail.com",
+  "password" : "napoleone"
+}
+{
   "email" : "napoleone@gmail.com",
   "password" : "napoleone"
 }

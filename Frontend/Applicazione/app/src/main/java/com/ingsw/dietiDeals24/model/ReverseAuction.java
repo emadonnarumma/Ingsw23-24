@@ -6,6 +6,7 @@ import com.ingsw.dietiDeals24.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Wear;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class ReverseAuction extends Auction {

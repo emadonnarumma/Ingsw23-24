@@ -8,18 +8,18 @@ import java.util.List;
 public class Seller extends User {
 
     private BankAccount bankAccount;
-    private List<SilentAuction> silentAucions;
+    private List<SilentAuction> silentAuctions;
     private List<DownwardAuction> downwardAuctions;
     private List<ReverseBid> bids;
 
     public Seller(Role role, String name, String email, String password, String bio,
                   Region region, List<ExternalLink> externalLinks, BankAccount bankAccount,
-                  List<SilentAuction> silentAucions, List<DownwardAuction> downwardAuctions,
+                  List<SilentAuction> silentAuctions, List<DownwardAuction> downwardAuctions,
                   List<ReverseBid> bids) {
 
         super(role, name, email, password, bio, region, externalLinks);
         this.bankAccount = bankAccount;
-        this.silentAucions = silentAucions;
+        this.silentAuctions = silentAuctions;
         this.downwardAuctions = downwardAuctions;
         this.bids = bids;
     }
@@ -32,12 +32,12 @@ public class Seller extends User {
         this.bankAccount = bankAccount;
     }
 
-    public List<SilentAuction> getSilentAucions() {
-        return silentAucions;
+    public List<SilentAuction> getSilentAuctions() {
+        return silentAuctions;
     }
 
-    public void setSilentAucions(List<SilentAuction> silentAucions) {
-        this.silentAucions = silentAucions;
+    public void setSilentAuctions(List<SilentAuction> silentAuctions) {
+        this.silentAuctions = silentAuctions;
     }
 
     public List<DownwardAuction> getDownwardAuctions() {

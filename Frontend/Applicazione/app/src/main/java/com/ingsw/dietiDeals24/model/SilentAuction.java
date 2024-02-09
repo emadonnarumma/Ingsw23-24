@@ -10,14 +10,14 @@ import java.util.List;
 
 public class SilentAuction extends Auction {
 
-    private Timestamp expirationDate;
+    private String expirationDate;
     private Long withdrawalTime;
     private List<SilentBid> receivedBids;
 
 
     public SilentAuction(User owner, String title, String description,
                          Wear wear, Category category, AuctionStatus status,
-                         Timestamp expirationDate, Long withdrawalTime, List<SilentBid> receivedBids) {
+                         String expirationDate, Long withdrawalTime, List<SilentBid> receivedBids) {
 
         super(owner, title, description, wear, category, status, AuctionType.SILENT);
         this.expirationDate = expirationDate;
@@ -25,11 +25,11 @@ public class SilentAuction extends Auction {
         this.receivedBids = receivedBids;
     }
 
-    public Timestamp getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Timestamp expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 

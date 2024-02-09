@@ -1,5 +1,6 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +27,6 @@ public class DownwardAuction extends Auction {
 
     private Long decrementTime;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", locale = "it_IT", timezone = "Europe/Rome")
     private Timestamp nextDecrement;
 }

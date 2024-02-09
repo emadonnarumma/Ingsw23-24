@@ -4,22 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:layout_marginVertical="@dimen/activity_horizontal_margin"
     tools:context=".ui.home.profile.ProfileFragment">
 
-
-
-
     <TextView
-        android:id="@+id/textMyAuction"
-        android:layout_width="match_parent"
+        android:id="@+id/personal_auction_text_view_my_auctions"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Aste personali"
+
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="@dimen/corner_radius"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintTop_toBottomOf="@id/personal_auction_text_view_my_auctions"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_my_auctions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/ms_material_grey_400"/>
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

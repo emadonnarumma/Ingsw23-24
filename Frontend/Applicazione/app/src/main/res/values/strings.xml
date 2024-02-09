@@ -59,6 +59,8 @@
     <string name="create_downward_auction_phrase">Crea asta al ribasso</string>
     <string name="edit_bank_account_phrase">Modifica account bancario</string>
     <string name="unlock_seller_mode_phrase">Sblocca la modalità venditore</string>
+    <string name="withdrawal_time_phrase">Offerte ritirabili entro:</string>
+    <string name="create_silent_auction_phrase">Crea asta silenziosa</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

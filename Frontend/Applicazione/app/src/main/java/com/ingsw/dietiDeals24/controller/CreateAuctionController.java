@@ -5,7 +5,10 @@ import android.net.Uri;
 import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
+import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.createAuction.CreateAuctionDao;
@@ -21,7 +24,37 @@ public class CreateAuctionController implements RetroFitHolder {
     private CreateAuctionController() {
     }
 
-    public static CompletableFuture<Boolean> createAuction(Auction newAuction, List<Image> images) {
+    public static CompletableFuture<Boolean> createAuction(ReverseAuction newAuction, List<Image> images) {
+        CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Auction auction = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
+                        .execute().body();
+                addImagesIfPresent(images, auction);
+
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        });
+    }
+
+    public static CompletableFuture<Boolean> createAuction(SilentAuction newAuction, List<Image> images) {
+        CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Auction auction = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
+                        .execute().body();
+                addImagesIfPresent(images, auction);
+
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        });
+    }
+
+    public static CompletableFuture<Boolean> createAuction(DownwardAuction newAuction, List<Image> images) {
         CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
         return CompletableFuture.supplyAsync(() -> {
             try {

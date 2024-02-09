@@ -6,7 +6,6 @@ import com.ingsw.dietiDeals24.enumeration.Category;
 import com.ingsw.dietiDeals24.enumeration.Wear;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 public class DownwardAuction extends Auction {
 
@@ -14,12 +13,12 @@ public class DownwardAuction extends Auction {
     private Double currentPrice;
     private Double decrementAmount;
     private Long decrementTime;
-    private Timestamp nextDecrement;
+    private String nextDecrement;
 
     public DownwardAuction(User owner, String title, String description,
                            Wear wear, Category category, AuctionStatus status,
                            Double secretMinimumPrice, Double currentPrice, Double decrementAmount,
-                           Long decrementTime, Timestamp nextDecrement) {
+                           Long decrementTime, String nextDecrement) {
 
         super(owner, title, description, wear, category, status, AuctionType.DOWNWARD);
         this.secretMinimumPrice = secretMinimumPrice;
@@ -61,11 +60,11 @@ public class DownwardAuction extends Auction {
         this.decrementTime = decrementTime;
     }
 
-    public Timestamp getNextDecrement() {
+    public String getNextDecrement() {
         return nextDecrement;
     }
 
-    public void setNextDecrement(Timestamp nextDecrement) {
+    public void setNextDecrement(String nextDecrement) {
         this.nextDecrement = nextDecrement;
     }
 }

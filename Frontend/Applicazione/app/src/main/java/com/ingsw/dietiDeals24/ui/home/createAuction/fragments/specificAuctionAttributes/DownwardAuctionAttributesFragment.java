@@ -42,6 +42,7 @@ public class DownwardAuctionAttributesFragment extends Fragment {
 
     private TextView decrementTimeTextView;
     private EditText initialPriceEditText, minimumPriceEditText, decrementAmountEditText;
+
     private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
     private WheelView.WheelViewStyle wheelViewStyle;
 
@@ -209,6 +210,7 @@ public class DownwardAuctionAttributesFragment extends Fragment {
                 }
             }
         });
+
         decrementAmountEditText.setEnabled(false);
     }
 
@@ -263,7 +265,6 @@ public class DownwardAuctionAttributesFragment extends Fragment {
 
 
     private void setupCreateAuctionButton(View view) {
-
         createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
         createAuctionButton.setOnClickListener(v -> {
 
@@ -299,8 +300,8 @@ public class DownwardAuctionAttributesFragment extends Fragment {
                     wear,
                     category,
                     AuctionStatus.IN_PROGRESS,
-                    initialPrice,
                     secretMinimumPrice,
+                    initialPrice,
                     decrementAmount,
                     getDecrementTime(),
                     calculateNextDecrement()
@@ -363,10 +364,23 @@ public class DownwardAuctionAttributesFragment extends Fragment {
         return totalSeconds;
     }
 
-    private Timestamp calculateNextDecrement() {
+    private String calculateNextDecrement() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, (int) getDecrementTime());
-        return new Timestamp(calendar.getTimeInMillis());
+        Timestamp nextDecrementDate = new Timestamp(calendar.getTimeInMillis());
+
+        return formatTimestamp(nextDecrementDate.toString());
+    }
+
+    public String formatTimestamp(String timestamp) {
+        String[] parts = timestamp.split(" ");
+        String datePart = parts[0];
+        String timePart = parts[1].substring(0, 8); // remove milliseconds
+
+        String[] dateParts = datePart.split("-");
+        String formattedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+
+        return formattedDate + " " + timePart;
     }
 
     private void setupDecrementTimeTextView(@NonNull View view) {

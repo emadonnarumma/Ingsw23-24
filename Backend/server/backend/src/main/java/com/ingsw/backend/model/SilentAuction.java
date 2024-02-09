@@ -1,5 +1,6 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @DiscriminatorValue("SILENT")
 public class SilentAuction extends Auction {
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", locale = "it_IT", timezone = "Europe/Rome")
     private Timestamp expirationDate;
 
     private Long withdrawalTime;
@@ -28,7 +30,4 @@ public class SilentAuction extends Auction {
     @OneToMany(mappedBy = "silentAuction", fetch = FetchType.EAGER)
     @JsonManagedReference("silentAuction-silentBid")
     private List<SilentBid> receivedBids;
-
-
-
 }

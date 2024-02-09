@@ -83,7 +83,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.wx.wheelview.widget.WheelView
-        android:id="@+id/minutes_wheel_view_downward_auction_attributes"
+        android:id="@+id/hours_wheel_view_downward_auction_attributes"
         android:layout_width="150dp"
         android:layout_height="40dp"
 
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@id/decrement_time_text_view_downward_auction_attributes" />
 
     <com.wx.wheelview.widget.WheelView
-        android:id="@+id/hours_wheel_view_downward_auction_attributes"
+        android:id="@+id/minutes_wheel_view_downward_auction_attributes"
         android:layout_width="150dp"
         android:layout_height="40dp"
 
@@ -103,33 +103,33 @@
         android:layout_width="150dp"
         android:layout_height="40dp"
 
-        app:layout_constraintStart_toStartOf="@id/minutes_wheel_view_downward_auction_attributes"
-        app:layout_constraintTop_toBottomOf="@id/minutes_wheel_view_downward_auction_attributes" />
+        app:layout_constraintStart_toStartOf="@id/hours_wheel_view_downward_auction_attributes"
+        app:layout_constraintTop_toBottomOf="@id/hours_wheel_view_downward_auction_attributes" />
 
     <com.wx.wheelview.widget.WheelView
         android:id="@+id/months_wheel_view_downward_auction_attributes"
         android:layout_width="150dp"
         android:layout_height="40dp"
 
-        app:layout_constraintEnd_toEndOf="@id/hours_wheel_view_downward_auction_attributes"
-        app:layout_constraintTop_toBottomOf="@id/hours_wheel_view_downward_auction_attributes" />
+        app:layout_constraintEnd_toEndOf="@id/minutes_wheel_view_downward_auction_attributes"
+        app:layout_constraintTop_toBottomOf="@id/minutes_wheel_view_downward_auction_attributes" />
 
 
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/create_auction_button_downward_auction_attributes"
         android:layout_width="200dp"
         android:layout_height="66dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@color/green"
         android:text="@string/create_downward_auction_phrase"
         android:textColor="@color/white"
-        app:spinning_bar_padding="10dp"
         app:initialCornerAngle="50dp"
-        app:spinning_bar_color="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/months_wheel_view_downward_auction_attributes"
+        app:layout_constraintTop_toBottomOf="@id/months_wheel_view_downward_auction_attributes"
 
         app:layout_goneMarginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@id/months_wheel_view_downward_auction_attributes"
-        app:layout_constraintTop_toBottomOf="@id/months_wheel_view_downward_auction_attributes" />
+        app:spinning_bar_color="@color/white"
+        app:spinning_bar_padding="10dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

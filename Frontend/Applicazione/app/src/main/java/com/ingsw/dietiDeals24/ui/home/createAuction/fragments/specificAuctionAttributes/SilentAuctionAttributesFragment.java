@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,12 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.CreateAuctionController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.enumeration.AuctionStatus;
+import com.ingsw.dietiDeals24.enumeration.Category;
+import com.ingsw.dietiDeals24.enumeration.Wear;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.Image;
+import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
+import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageConverter;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -26,13 +38,15 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class SilentAuctionAttributesFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    private TextView dateTextView;
+    private TextView dateTextView, withdrawalTimeTextView;
     private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
 
     private WheelView.WheelViewStyle wheelViewStyle;
@@ -42,6 +56,8 @@ public class SilentAuctionAttributesFragment extends Fragment implements DatePic
     private GeneralAuctionAttributesViewModel viewModel;
 
     private AuctionHolder genericAuctionAttributesHolder;
+
+    private CircularProgressButton createAuctionButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +109,8 @@ public class SilentAuctionAttributesFragment extends Fragment implements DatePic
         super.onViewCreated(view, savedInstanceState);
         setupDatePicker(view);
         setupWheelViews(view);
+        setupWithdrawalTimeTextView(view);
+        setupCreateAuctionButton(view);
     }
 
     private void setupWheelViews(View view) {
@@ -143,6 +161,74 @@ public class SilentAuctionAttributesFragment extends Fragment implements DatePic
         monthsWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
     }
 
+    private void setupWithdrawalTimeTextView(View view) {
+        withdrawalTimeTextView = view.findViewById(R.id.withdrawal_time_text_view_silent_auction_attributes);
+    }
+
+    private void setupCreateAuctionButton(View view) {
+        createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
+        createAuctionButton.setOnClickListener(v -> {
+
+            if (fieldsEmpty()) {
+                Toast.makeText(getContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String title = genericAuctionAttributesHolder.getTitle();
+            String description = genericAuctionAttributesHolder.getDescription();
+            Category category = genericAuctionAttributesHolder.getCategory();
+            Wear wear = genericAuctionAttributesHolder.getWear();
+            String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
+
+            List<Image> images;
+            try {
+                images = ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
+            } catch (IOException e) {
+                throw new RuntimeException("Error while converting images to byte array");
+            }
+
+            SilentAuction newSilentAuction = new SilentAuction(
+                    UserHolder.user,
+                    title,
+                    description,
+                    wear,
+                    category,
+                    AuctionStatus.IN_PROGRESS,
+                    expirationDate,
+                    getWithDrawalTime(),
+                    null
+            );
+
+            createAuctionButton.startAnimation();
+            CreateAuctionController.createAuction(newSilentAuction, images);
+            createAuctionButton.revertAnimation();
+        });
+    }
+
+    private long getWithDrawalTime() {
+        long months = Integer.parseInt(monthsWheelView.getSelectionItem());
+        long days = Integer.parseInt(daysWheelView.getSelectionItem());
+        long hours = Integer.parseInt(hoursWheelView.getSelectionItem());
+        int minutes = Integer.parseInt(minutesWheelView.getSelectionItem());
+
+        long totalSeconds = 0;
+
+        totalSeconds += (long) months * 30 * 24 * 60 * 60;
+        totalSeconds += (long) days * 24 * 60 * 60;
+        totalSeconds += (long) hours * 60 * 60;
+        totalSeconds += minutes * 60L;
+
+        return totalSeconds;
+    }
+
+    private boolean fieldsEmpty() {
+        if (dateTextView.getText() != null) {
+            return dateTextView.getText().toString().equals("");
+        }
+
+        return false;
+    }
+
     private void updateDecrementTimeTextView() {
         String decrementTime = "Decremento ogni: ";
         if (!monthsWheelView.getSelectionItem().equals("0")) {
@@ -157,6 +243,7 @@ public class SilentAuctionAttributesFragment extends Fragment implements DatePic
         if (!minutesWheelView.getSelectionItem().equals("0")) {
             decrementTime += minutesWheelView.getSelectionItem() + "Min";
         }
+        withdrawalTimeTextView.setText(decrementTime);
     }
 
     private void setupDatePicker(View view) {

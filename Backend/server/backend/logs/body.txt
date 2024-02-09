@@ -207,3 +207,47 @@
   "email" : "napoleone@gmail.com",
   "password" : "napoleone"
 }
+{
+  "bio" : "mario",
+  "email" : "mario@mario.mario",
+  "name" : "Mario",
+  "password" : "mario",
+  "region" : "CAMPANIA",
+  "role" : "SELLER"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}
+{
+  "email" : "mario@mario.mario",
+  "password" : "mario"
+}

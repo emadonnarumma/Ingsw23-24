@@ -43,8 +43,8 @@
 
     <ImageView
         android:id="@+id/done_button_edit_region"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/icon_size_large"
+        android:layout_height="@dimen/icon_size_large"
         android:layout_marginTop="32dp"
         android:src="@drawable/ic_done_button"
         android:scaleType="fitXY"

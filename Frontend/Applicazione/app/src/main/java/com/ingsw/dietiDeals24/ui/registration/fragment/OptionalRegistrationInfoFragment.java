@@ -27,7 +27,6 @@ import com.stepstone.stepper.VerificationError;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class OptionalRegistrationInfoFragment extends Fragment implements BlockingStep {
     private SmartMaterialSpinner<String> regionSmartSpinner;
@@ -46,7 +45,7 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findTheViews();
-        setTheSpinnerListener();
+        initRegionSmartSpinner();
     }
 
 
@@ -129,7 +128,7 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     }
 
 
-    private void setTheSpinnerListener() {
+    private void initRegionSmartSpinner() {
         regionSmartSpinner.setItem(
                 Arrays.asList(
                         getResources().getStringArray(R.array.italian_regions)

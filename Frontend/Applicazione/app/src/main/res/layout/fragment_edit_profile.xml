@@ -25,15 +25,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit_region_button_edit_profile"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_medium"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_of_edit_profile">
 
         <ImageView
             android:id="@+id/icon_of_ITALY_edit_profile"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:layout_width="@dimen/icon_size_medium"
+            android:layout_height="@dimen/icon_size_medium"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_italy"
             app:tint="@color/green"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,15 +65,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit_bio_button_edit_profile"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_medium"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_region_button_edit_profile">
 
         <ImageView
             android:id="@+id/icon_of_edit_bio_edit_profile"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:layout_width="@dimen/icon_size_medium"
+            android:layout_height="@dimen/icon_size_medium"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_edit"
             app:tint="@color/green"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,15 +106,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit_external_links_button_edit_profile"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_medium"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_bio_button_edit_profile">
 
         <ImageView
             android:id="@+id/icon_of_edit_external_links_edit_profile"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:layout_width="@dimen/icon_size_medium"
+            android:layout_height="@dimen/icon_size_medium"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_link"
             app:tint="@color/green"
             app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +152,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit_bank_account_button_edit_profile"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_medium"
         android:layout_marginTop="8dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
@@ -157,8 +160,9 @@
 
         <ImageView
             android:id="@+id/icon_of_edit_bank_account_edit_profile"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:layout_width="@dimen/icon_size_medium"
+            android:layout_height="@dimen/icon_size_medium"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_bank_account"
             app:tint="@color/green"
             app:layout_constraintStart_toStartOf="parent"
@@ -179,15 +183,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/unlock_seller_mode_button_edit_profile"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/icon_size_big"
+        android:layout_height="@dimen/icon_size_medium"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_external_links_button_edit_profile">
 
         <ImageView
             android:id="@+id/icon_of_unlock_seller_mode_edit_profile"
-            android:layout_width="@dimen/icon_size_big"
-            android:layout_height="@dimen/icon_size_big"
+            android:layout_width="@dimen/icon_size_medium"
+            android:layout_height="@dimen/icon_size_medium"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_seller_mode"
             app:tint="@color/green"
             app:layout_constraintStart_toStartOf="parent"

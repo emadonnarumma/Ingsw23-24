@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-    android:layout_marginVertical="@dimen/activity_vertical_margin"
     tools:context=".ui.home.profile.EditExternalLinksFragment">
 
     <TextView
@@ -20,15 +18,39 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/add_external_link_button_edit_external_links"
+        android:layout_width="@dimen/icon_size_large"
+        android:layout_height="@dimen/icon_size_large"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:src="@drawable/ic_plus_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_of_edit_external_links"
+        app:tint="@color/green" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/external_links_recycler_view_edit_external_links"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="16dp"
+        android:scrollbars="vertical"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/done_button_edit_external_links"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_external_link_button_edit_external_links" />
+
+    <ImageView
         android:id="@+id/done_button_edit_external_links"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_done_button"
+        android:layout_width="@dimen/icon_size_large"
+        android:layout_height="@dimen/icon_size_large"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:scaleType="fitXY"
-        app:tint="@color/green"
+        android:src="@drawable/ic_done_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-        <!-- app:layout_constraintTop_toBottomOf="@id/add_external_link_button_edit_external_links" /> -->
+        app:tint="@color/green" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

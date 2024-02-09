@@ -30,7 +30,7 @@ public class ProfileController {
     }
 
     public static void logout() {
-        //TODO
+        UserHolder.user = null;
     }
 
     public static void switchAccountType() {

@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.home.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 
 public class ProfileFragment extends Fragment {
     private TextView usernameTextView;
@@ -59,6 +61,7 @@ public class ProfileFragment extends Fragment {
         putAnimationOnSellerSwitch();
 
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
+        logoutButton.setOnClickListener(v -> logout());
 
     }
 
@@ -130,5 +133,11 @@ public class ProfileFragment extends Fragment {
     private void goToEditProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new EditProfileFragment()).commit();
+    }
+
+    private void logout() {
+        ProfileController.logout();
+        Intent intent = new Intent(requireActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 }

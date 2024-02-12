@@ -4,6 +4,9 @@
     <string name="password_input">Password</string>
     <string name="username_input">Nome utente</string>
 
+    <string name="in_progress_phrase">IN CORSO</string>
+    <string name="sucessfull_phrase">VENDUTA</string>
+    <string name="failed_phrase">FALLITA</string>
     <!-- Login -->
     <string name="login_phrase">Accedi</string>
     <string name="registration_phrase">Non sei ancora registrato?</string>

@@ -5,11 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public interface RetroFitHolder {
     Retrofit retrofit = new Retrofit.Builder()
-<<<<<<< Updated upstream
-            .baseUrl("http://192.168.175.185:8080/")
-=======
-            .baseUrl("http://192.168.0.121:8080/")
->>>>>>> Stashed changes
+            .baseUrl("http://192.168.4.185:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }

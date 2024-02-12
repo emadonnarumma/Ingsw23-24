@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
-import com.ingsw.dietiDeals24.enumeration.Region;
+import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 
 import java.util.Arrays;

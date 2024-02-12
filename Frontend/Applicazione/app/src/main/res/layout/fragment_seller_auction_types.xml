@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@id/downaward_auction_type_button_seller_auction_types" />
 
     <TextView
-        android:id="@+id/silent_text_view_seller_auction_types"
+        android:id="@+id/auction_status_text_view_item_silent_auction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/silent_phrase"
@@ -81,5 +81,4 @@
         app:layout_constraintBottom_toBottomOf="@id/silent_auction_type_button_seller_auction_types"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

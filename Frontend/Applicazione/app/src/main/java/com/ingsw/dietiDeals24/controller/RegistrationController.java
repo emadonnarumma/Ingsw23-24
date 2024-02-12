@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.controller;
 
+import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
@@ -29,9 +30,16 @@ public class RegistrationController implements RetroFitHolder {
 
                 if (response.isSuccessful()) {
                     TokenHolder.instance = response.body();
-                    UserHolder.user = currentUserDao.getUser(user.getEmail(), TokenHolder.getAuthToken()).execute().body();
-                    return true;
 
+                    String email = user.getEmail();
+                    Role role = currentUserDao.getRole(email, "Bearer " + TokenHolder.getAuthToken()).execute().body();
+                    if (role == Role.BUYER) {
+                        UserHolder.user = currentUserDao.getBuyerByEmail(email, "Bearer " + TokenHolder.getAuthToken()).execute().body();
+                    } else if (role == Role.SELLER) {
+                        UserHolder.user = currentUserDao.getSellerByEmail(email, "Bearer " + TokenHolder.getAuthToken()).execute().body();
+                    }
+
+                    return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("L'email è già in uso");
                 }

@@ -2,6 +2,9 @@ package com.ingsw.backend.controller;
 
 import java.util.Optional;
 
+import com.ingsw.backend.enumeration.Role;
+import com.ingsw.backend.model.Buyer;
+import com.ingsw.backend.model.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -23,19 +26,42 @@ public class UserController {
 	@Autowired
 	@Qualifier("mainUserService")
 	private UserService userService;
-	
-	@GetMapping("/{email}")
-	public ResponseEntity<User> getByEmail(@PathVariable String email) {
 
+	@GetMapping("/{email}/gigi")
+	public ResponseEntity<Role> getRoleByEmail(@PathVariable String email) {
 		Optional<User> user = userService.getUser(email);
+
+		if (user.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok(user.get().getRole());
+	}
+
+	@GetMapping("/{email}/seller")
+	public ResponseEntity<Seller> getSellerByEmail(@PathVariable String email) {
+
+		Optional<Seller> user = userService.getSeller(email);
 		
 		if (user.isEmpty()) {
-			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
 		return ResponseEntity.ok(user.get());
 	}
+
+	@GetMapping("/{email}/buyer")
+	public ResponseEntity<Buyer> getBuyerByEmail(@PathVariable String email) {
+
+		Optional<Buyer> user = userService.getBuyer(email);
+
+		if (user.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok(user.get());
+	}
+
 	
 	@GetMapping("/check-email/{email}")
     public ResponseEntity<Boolean> checkIfEmailIsUsed(@PathVariable String email) {

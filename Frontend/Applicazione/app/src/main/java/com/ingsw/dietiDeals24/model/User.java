@@ -1,7 +1,7 @@
 package com.ingsw.dietiDeals24.model;
 
-import com.ingsw.dietiDeals24.enumeration.Region;
-import com.ingsw.dietiDeals24.enumeration.Role;
+import com.ingsw.dietiDeals24.model.enumeration.Region;
+import com.ingsw.dietiDeals24.model.enumeration.Role;
 
 import java.util.List;
 

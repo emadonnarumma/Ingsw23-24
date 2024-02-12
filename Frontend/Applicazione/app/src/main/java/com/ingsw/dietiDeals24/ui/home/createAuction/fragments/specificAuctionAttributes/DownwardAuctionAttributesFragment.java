@@ -19,9 +19,9 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.enumeration.AuctionStatus;
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
+import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
+import com.ingsw.dietiDeals24.model.enumeration.Category;
+import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;

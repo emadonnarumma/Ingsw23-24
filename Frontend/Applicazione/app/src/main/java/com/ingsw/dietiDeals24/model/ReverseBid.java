@@ -1,7 +1,7 @@
 package com.ingsw.dietiDeals24.model;
 
 
-import com.ingsw.dietiDeals24.enumeration.BidStatus;
+import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
 
 import java.sql.Timestamp;
 

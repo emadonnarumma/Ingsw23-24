@@ -1,6 +1,6 @@
 package com.ingsw.dietiDeals24.controller;
 
-import com.ingsw.dietiDeals24.enumeration.Region;
+import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 
 public class ProfileController {

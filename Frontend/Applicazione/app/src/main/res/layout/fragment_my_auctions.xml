@@ -12,6 +12,8 @@
         android:id="@+id/personal_auction_text_view_my_auctions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="@font/verdana_bold"
         android:text="Aste personali"
 
         app:layout_constraintTop_toTopOf="parent"

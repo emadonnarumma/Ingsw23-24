@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.enumeration.Region;
+import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;

@@ -16,7 +16,7 @@ public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
     public ReverseAuctionViewHolder(@NonNull View itemView) {
         super(itemView);
         containerTextView = itemView.findViewById(R.id.container_text_view_item_reverse_auction);
-        categoryTextView = itemView.findViewById(R.id.catogory_text_view_item_reverse_auction);
+        categoryTextView = itemView.findViewById(R.id.category_text_view_item_reverse_auction);
     }
 
     public void bind(ReverseAuction silentAuction) {

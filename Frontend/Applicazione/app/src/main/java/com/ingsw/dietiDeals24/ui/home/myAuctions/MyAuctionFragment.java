@@ -14,17 +14,11 @@ import android.view.ViewGroup;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.enumeration.AuctionStatus;
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
-import com.ingsw.dietiDeals24.model.Auction;
-import com.ingsw.dietiDeals24.model.SilentAuction;
-import com.ingsw.dietiDeals24.ui.home.myBids.MyBidsFragment;
+import com.ingsw.dietiDeals24.model.Buyer;
+import com.ingsw.dietiDeals24.model.Seller;
 import com.ingsw.dietiDeals24.ui.utility.recyclerView.myAuction.AuctionAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class MyAuctionFragment extends Fragment {
     RecyclerView recyclerView;
@@ -49,20 +43,19 @@ public class MyAuctionFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        List<Auction> auctionList = new ArrayList<>();
-        auctionList.add(new SilentAuction(
-                UserHolder.user,
-                "Title",
-                "Description",
-                Wear.BAD_CONDITION,
-                Category.ART,
-                AuctionStatus.IN_PROGRESS,
-                "23/10/2000",
-                10000000L,
-                new ArrayList<>()
-        ));
+        AuctionAdapter adapter;
+        if (UserHolder.user.getClass() == Seller.class) {
+           Seller seller = (Seller) UserHolder.user;
+           adapter = new AuctionAdapter(seller.getSilentAuctions(),
+                   seller.getDownwardAuctions(),
+                   new ArrayList<>());
+        } else {
+            Buyer buyer = (Buyer) UserHolder.user;
+            adapter = new AuctionAdapter(new ArrayList<>(),
+                    new ArrayList<>(),
+                    buyer.getReverseAuctions());
+        }
 
-        AuctionAdapter adapter = new AuctionAdapter(auctionList);
         recyclerView.setAdapter(adapter);
     }
 }

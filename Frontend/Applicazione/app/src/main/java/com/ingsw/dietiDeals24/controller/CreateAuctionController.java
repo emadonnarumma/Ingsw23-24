@@ -1,9 +1,5 @@
 package com.ingsw.dietiDeals24.controller;
 
-import android.net.Uri;
-
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;

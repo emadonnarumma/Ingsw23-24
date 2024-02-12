@@ -5,8 +5,8 @@ import android.net.Uri;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
+import com.ingsw.dietiDeals24.model.enumeration.Category;
+import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
 
 import java.util.ArrayList;

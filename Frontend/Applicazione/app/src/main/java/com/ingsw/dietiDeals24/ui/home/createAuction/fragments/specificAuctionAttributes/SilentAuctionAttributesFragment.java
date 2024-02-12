@@ -1,7 +1,6 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,26 +18,19 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.enumeration.AuctionStatus;
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
-import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
+import com.ingsw.dietiDeals24.model.enumeration.Category;
+import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
-import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageConverter;
-import com.stepstone.stepper.BlockingStep;
-import com.stepstone.stepper.StepperLayout;
-import com.stepstone.stepper.VerificationError;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

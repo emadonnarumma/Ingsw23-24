@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
-import com.ingsw.dietiDeals24.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 
 public class EditBioFragment extends Fragment {

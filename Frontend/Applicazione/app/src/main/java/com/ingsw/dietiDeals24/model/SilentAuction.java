@@ -1,11 +1,10 @@
 package com.ingsw.dietiDeals24.model;
 
-import com.ingsw.dietiDeals24.enumeration.AuctionStatus;
-import com.ingsw.dietiDeals24.enumeration.AuctionType;
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
+import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
+import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
+import com.ingsw.dietiDeals24.model.enumeration.Category;
+import com.ingsw.dietiDeals24.model.enumeration.Wear;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public class SilentAuction extends Auction {

@@ -2,11 +2,10 @@ package com.ingsw.dietiDeals24.ui.utility.auctionHolder;
 
 import android.net.Uri;
 
-import com.ingsw.dietiDeals24.enumeration.Category;
-import com.ingsw.dietiDeals24.enumeration.Wear;
+import com.ingsw.dietiDeals24.model.enumeration.Category;
+import com.ingsw.dietiDeals24.model.enumeration.Wear;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AuctionHolder {
     private String title;

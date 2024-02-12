@@ -13,6 +13,7 @@ import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -21,15 +22,21 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int TYPE_DOWNWARD = 2;
     private static final int TYPE_REVERSE = 3;
 
-    private List<Auction> auctionList;
+    private List<Auction> auctions;
 
-    public AuctionAdapter(List<Auction> auctionList) {
-        this.auctionList = auctionList;
+    public AuctionAdapter(List<SilentAuction> silentAuctions,
+                          List<DownwardAuction> downwardAuctions,
+                          List<ReverseAuction> reverseAuctions) {
+
+        auctions = new ArrayList<>();
+        auctions.addAll(silentAuctions);
+        auctions.addAll(downwardAuctions);
+        auctions.addAll(reverseAuctions);
     }
 
     @Override
     public int getItemViewType(int position) {
-        Auction auction = auctionList.get(position);
+        Auction auction = auctions.get(position);
         if (auction instanceof SilentAuction) {
             return TYPE_SILENT;
         } else if (auction instanceof DownwardAuction) {
@@ -59,7 +66,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Auction auction = auctionList.get(position);
+        Auction auction = auctions.get(position);
         if (holder instanceof SilentAuctionViewHolder) {
             ((SilentAuctionViewHolder) holder).bind((SilentAuction) auction);
         } else if (holder instanceof DownwardAuctionViewHolder) {
@@ -71,6 +78,6 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return auctionList.size();
+        return auctions.size();
     }
 }

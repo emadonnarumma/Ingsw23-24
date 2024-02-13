@@ -8,24 +8,24 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 
 public class ReverseAuction extends Auction {
 
-    private double initialPrice;
+    private double currentPrice;
     private String expirationDate;
 
     public ReverseAuction(User owner, String title, String description,
                           Wear wear, Category category, AuctionStatus status,
-                          double initialPrice, String expirationDate) {
+                          double currentPrice, String expirationDate) {
 
         super(owner, title, description, wear, category, status, AuctionType.REVERSE);
-        this.initialPrice = initialPrice;
+        this.currentPrice = currentPrice;
         this.expirationDate = expirationDate;
     }
 
-    public double getInitialPrice() {
-        return initialPrice;
+    public double getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setInitialPrice(double initialPrice) {
-        this.initialPrice = initialPrice;
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public String getExpirationDate() {

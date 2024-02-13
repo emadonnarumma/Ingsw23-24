@@ -11,28 +11,34 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.model.Buyer;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
-import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
-import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageConverter;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
+import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.ImageConverter;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ReverseAuctionAttributesFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
@@ -41,7 +47,7 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
     private EditText priceEditText;
     private TextView dateTextView;
 
-    private Button createAuctionButton;
+    private CircularProgressButton createAuctionButton;
 
     private GeneralAuctionAttributesViewModel viewModel;
 
@@ -73,7 +79,7 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
 
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(
-                R.id.create_reverse_auction_button_reverse_auction_attributes
+                R.id.create_auction_button_reverse_auction_attributes
         );
 
         createAuctionButton.setOnClickListener(v -> {
@@ -106,7 +112,33 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
                     expirationDate
             );
 
-            CreateAuctionController.createAuction(newReverseAuction, images);
+            createAuctionButton.startAnimation();
+
+            try {
+                CreateAuctionController.createAuction(newReverseAuction, images).get();
+
+                ((Buyer) UserHolder.user).getReverseAuctions().add(newReverseAuction);
+
+                getParentFragmentManager().beginTransaction().replace(
+                        R.id.fragment_container_home,
+                        new MyAuctionFragment()
+                ).commit();
+
+                createAuctionButton.revertAnimation();
+
+            } catch (ExecutionException e) {
+
+                if (e.getCause() instanceof AuthenticationException) {
+                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
+                } else if (e.getCause() instanceof ConnectionException) {
+                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
+                }
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 

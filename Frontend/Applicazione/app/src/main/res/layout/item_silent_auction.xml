@@ -125,6 +125,7 @@
         app:layout_constraintTop_toBottomOf="@id/title_text_view_item_silent_auction"
         app:layout_constraintStart_toStartOf="@id/title_text_view_item_silent_auction"
         app:layout_constraintEnd_toEndOf="@id/container_text_view_item_silent_auction"/>
+
     <ImageView
         android:id="@+id/expiration_date_icon_item_silent_auction"
         android:layout_width="20dp"
@@ -150,7 +151,7 @@
         android:id="@+id/expiration_date_hint_text_view_item_silent_auction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scade il:"
+        android:text="@string/expiration_date_hint_phrase"
         android:fontFamily="@font/verdana"
         android:textColor="@color/white"
 

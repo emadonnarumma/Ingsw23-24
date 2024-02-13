@@ -7,29 +7,42 @@
     <string name="in_progress_phrase">IN CORSO</string>
     <string name="sucessfull_phrase">VENDUTA</string>
     <string name="failed_phrase">FALLITA</string>
+
     <!-- Login -->
     <string name="login_phrase">Accedi</string>
     <string name="registration_phrase">Non sei ancora registrato?</string>
     <string name="or_phrase">OPPURE</string>
     <string name="registration_link"><u>Registrati</u></string>
 
+    <!-- Home -->
     <string name="bottom_nav_search">Cerca</string>
     <string name="bottom_nav_create_auction">Crea asta</string>
     <string name="bottom_nav_profile">Profilo</string>
     <string name="bottom_nav_my_bids">Le tue offerte</string>
     <string name="bottom_nav_my_auctions">Le tue aste</string>
 
+    <!-- Registration -->
     <string name="title_mandatory_information">Informazioni obbligatorie</string>
     <string name="title_optional_information">Informazioni opzionali</string>
     <string name="title_bank_information">Informazioni bancarie</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_password_input">Conferma password</string>
-
     <string name="region_phrase">Seleziona una regione</string>
+
+    <!-- Profile -->
+    <string name="edit_profile_button_phrase">Modifica profilo</string>
+    <string name="logout_button_phrase">Disconnettiti</string>
+    <string name="edit_profile_title">Modifica Profilo</string>
+    <string name="edit_region_phrase">Modifica regione</string>
+    <string name="edit_bio_phrase">Modifica bio</string>
+    <string name="edit_external_links_phrase">Modifica link esterni</string>
+    <string name="unlock_seller_mode_phrase">Sblocca la modalità venditore</string>
+    <string name="edit_bank_account_phrase">Modifica account bancario</string>
+    <string name="add_external_link_phrase">Aggiungi link esterno</string>
 
     <string name="search_hint">Cerca</string>
 
+    <!-- Crea asta -->
     <string name="wear_phrase">Usura</string>
 
     <string name="category_phrase">Categoria</string>
@@ -48,20 +61,8 @@
     <string name="secret_minimum_price_phrase">Prezzo minimo (Segreto)</string>
     <string name="decrement_amount_phrase">Importo del decremento</string>
 
-    <!-- Profile -->
-    <string name="edit_profile_button_phrase">Modifica profilo</string>
-    <string name="logout_button_phrase">Disconnettiti</string>
-    <string name="edit_profile_title">Modifica Profilo</string>
-    <string name="edit_region_phrase">Modifica regione</string>
-    <string name="edit_bio_phrase">Modifica bio</string>
-    <string name="edit_external_links_phrase">Modifica link esterni</string>
-
-    <string name="unlock_seller_account_phrase">Sblocca modalità venditore</string>
-    <string name="edit_bank_information_phrase">Modifica informazioni bancarie</string>
     <string name="decrement_phrase">Decremento ogni:</string>
     <string name="create_downward_auction_phrase">Crea asta al ribasso</string>
-    <string name="edit_bank_account_phrase">Modifica account bancario</string>
-    <string name="unlock_seller_mode_phrase">Sblocca la modalità venditore</string>
     <string name="withdrawal_time_phrase">Offerte ritirabili entro:</string>
     <string name="create_silent_auction_phrase">Crea asta silenziosa</string>
 

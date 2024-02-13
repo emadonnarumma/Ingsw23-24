@@ -64,6 +64,7 @@
     <string name="unlock_seller_mode_phrase">Sblocca la modalità venditore</string>
     <string name="withdrawal_time_phrase">Offerte ritirabili entro:</string>
     <string name="create_silent_auction_phrase">Crea asta silenziosa</string>
+    <string name="expiration_date_hint_phrase">Scade il:</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

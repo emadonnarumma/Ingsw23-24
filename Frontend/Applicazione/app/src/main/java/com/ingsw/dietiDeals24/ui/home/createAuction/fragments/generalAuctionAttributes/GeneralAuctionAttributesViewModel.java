@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
-import com.ingsw.dietiDeals24.ui.utility.auctionHolder.AuctionHolder;
+import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 
 import java.util.ArrayList;
 import java.util.List;

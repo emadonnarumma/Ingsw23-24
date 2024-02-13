@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.ui.utility.stepper.RegistrationStepperAdapter;
+import com.ingsw.dietiDeals24.ui.registration.stepper.RegistrationStepperAdapter;
 import com.stepstone.stepper.StepperLayout;
 
 public class RegistrationActivity extends AppCompatActivity {

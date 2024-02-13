@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.controller;
 
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
@@ -9,11 +11,13 @@ import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.createAuction.CreateAuctionDao;
 import com.ingsw.dietiDeals24.network.createAuction.InsertImagesDao;
-import com.ingsw.dietiDeals24.ui.utility.auctionHolder.ImageAuctionBinder;
+import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.ImageAuctionBinder;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import retrofit2.Response;
 
 public class CreateAuctionController implements RetroFitHolder {
 
@@ -39,14 +43,21 @@ public class CreateAuctionController implements RetroFitHolder {
         CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Auction auction = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
-                        .execute().body();
-                addImagesIfPresent(images, auction);
+                Response<SilentAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
+                        .execute();
 
-                return true;
+                if (response.isSuccessful()) {
+                    SilentAuction auction = response.body();
+                    addImagesIfPresent(images, auction);
+                    return true;
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
             } catch (IOException e) {
-                return false;
+                throw new ConnectionException("Errore di connessione");
             }
+            return false;
         });
     }
 

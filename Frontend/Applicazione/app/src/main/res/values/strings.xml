@@ -39,6 +39,9 @@
     <string name="unlock_seller_mode_phrase">Sblocca la modalità venditore</string>
     <string name="edit_bank_account_phrase">Modifica account bancario</string>
     <string name="add_external_link_phrase">Aggiungi link esterno</string>
+    <string name="edit_url_phrase">Modifica URL</string>
+    <string name="edit_url_title_phrase">Modifica titolo</string>
+    <string name="edit_external_link_phrase">Modifica link esterno</string>
 
     <string name="search_hint">Cerca</string>
 

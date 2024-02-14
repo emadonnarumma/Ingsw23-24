@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.myAuctions.recyclerView;
+package com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions;
 
 import android.net.Uri;
 import android.util.Base64;

@@ -26,9 +26,8 @@ import java.util.ArrayList;
 
 public class SilentAuctionViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView containerTextView, titleTextView,
-            descriptionTextView, auctionTypeTextView,
-            categoryTextView, auctionStatusTextView, expirationDateTextView;
+    private TextView containerTextView, titleTextView, auctionTypeTextView,
+            auctionStatusTextView, expirationDateTextView;
 
     private ImageView auctionTypeIconImageView, auctionStatusIconImageView, expirationDateIconImageView;
 
@@ -40,9 +39,7 @@ public class SilentAuctionViewHolder extends RecyclerView.ViewHolder {
     public SilentAuctionViewHolder(@NonNull View itemView) {
         super(itemView);
         containerTextView = itemView.findViewById(R.id.container_text_view_item_silent_auction);
-        categoryTextView = itemView.findViewById(R.id.category_text_view_item_silent_auction);
         titleTextView = itemView.findViewById(R.id.title_text_view_item_silent_auction);
-        descriptionTextView = itemView.findViewById(R.id.description_text_view_item_silent_auction);
         auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_silent_auction);
         auctionStatusTextView = itemView.findViewById(R.id.auction_status_text_view_item_silent_auction);
         expirationDateTextView = itemView.findViewById(R.id.expiration_date_text_view_item_silent_auction);
@@ -55,8 +52,6 @@ public class SilentAuctionViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(SilentAuction silentAuction) {
         titleTextView.setText(silentAuction.getTitle());
-        descriptionTextView.setText(silentAuction.getDescription());
-        categoryTextView.setText(Category.toItalianString(silentAuction.getCategory()));
         auctionTypeTextView.setText(AuctionType.toItalianString(silentAuction.getType()));
 
         AuctionStatus status = silentAuction.getStatus();

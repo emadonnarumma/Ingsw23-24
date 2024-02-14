@@ -26,8 +26,8 @@ import java.util.ArrayList;
 
 public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
     private TextView containerTextView, titleTextView,
-            descriptionTextView, auctionTypeTextView, currentBidTextView,
-            categoryTextView, auctionStatusTextView, expirationDateTextView;
+            auctionTypeTextView, currentBidTextView,
+            auctionStatusTextView, expirationDateTextView;
 
     private ImageView auctionTypeIconImageView, auctionStatusIconImageView, expirationDateIconImageView;
 
@@ -39,9 +39,7 @@ public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
     public ReverseAuctionViewHolder(@NonNull View itemView) {
         super(itemView);
         containerTextView = itemView.findViewById(R.id.container_text_view_item_reverse_auction);
-        categoryTextView = itemView.findViewById(R.id.category_text_view_item_reverse_auction);
         titleTextView = itemView.findViewById(R.id.title_text_view_item_reverse_auction);
-        descriptionTextView = itemView.findViewById(R.id.description_text_view_item_reverse_auction);
         auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_reverse_auction);
         auctionStatusTextView = itemView.findViewById(R.id.auction_status_text_view_item_reverse_auction);
         expirationDateTextView = itemView.findViewById(R.id.expiration_date_text_view_item_reverse_auction);
@@ -55,8 +53,6 @@ public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(ReverseAuction reverseAuction) {
         titleTextView.setText(reverseAuction.getTitle());
-        descriptionTextView.setText(reverseAuction.getDescription());
-        categoryTextView.setText(Category.toItalianString(reverseAuction.getCategory()));
         auctionTypeTextView.setText(AuctionType.toItalianString(reverseAuction.getType()));
         currentBidTextView.setText(String.valueOf(reverseAuction.getCurrentPrice()) + " €");
 
@@ -101,6 +97,7 @@ public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
 
         adapter.renewItems(images);
     }
+
     public Uri base64ToUri(String base64) {
         byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
         File tempFile;

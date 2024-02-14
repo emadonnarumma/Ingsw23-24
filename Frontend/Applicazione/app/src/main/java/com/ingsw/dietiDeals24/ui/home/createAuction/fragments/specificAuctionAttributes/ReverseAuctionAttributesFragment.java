@@ -83,6 +83,7 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
         );
 
         createAuctionButton.setOnClickListener(v -> {
+            createAuctionButton.startAnimation();
 
             String title = genericAuctionAttributesHolder.getTitle();
             String description = genericAuctionAttributesHolder.getDescription();
@@ -112,11 +113,11 @@ public class ReverseAuctionAttributesFragment extends Fragment implements DatePi
                     expirationDate
             );
 
-            createAuctionButton.startAnimation();
 
             try {
                 CreateAuctionController.createAuction(newReverseAuction, images).get();
 
+                newReverseAuction.setImages(images);
                 ((Buyer) UserHolder.user).getReverseAuctions().add(newReverseAuction);
 
                 getParentFragmentManager().beginTransaction().replace(

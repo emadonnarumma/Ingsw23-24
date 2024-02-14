@@ -11,6 +11,8 @@
         android:id="@+id/title_layout_general_auction_attributes"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,6 +22,7 @@
             android:id="@+id/title_edit_text_general_auction_attributes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
             android:hint="Titolo" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:hint="@string/auction_description_phrase"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:maxLength="500" />
     </com.google.android.material.textfield.TextInputLayout>
 

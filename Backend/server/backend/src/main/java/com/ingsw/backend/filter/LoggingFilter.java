@@ -19,11 +19,11 @@ import java.nio.file.Paths;
 
 @Component
 public class LoggingFilter extends OncePerRequestFilter {
-
     private final ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        /*
         ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
 
         filterChain.doFilter(wrappedRequest, response);
@@ -49,5 +49,6 @@ public class LoggingFilter extends OncePerRequestFilter {
                 writer.write(formattedPayload + "\n");
             }
         }
+        */
     }
 }

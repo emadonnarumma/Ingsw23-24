@@ -16,7 +16,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.Buyer;
 import com.ingsw.dietiDeals24.model.Seller;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.recyclerView.AuctionAdapter;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.AuctionAdapter;
 
 import java.util.ArrayList;
 

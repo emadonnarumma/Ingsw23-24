@@ -27,6 +27,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
@@ -39,6 +40,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity implements DatePickerDialog.OnDateSetListener {
@@ -85,8 +87,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
         );
 
         createAuctionButton.setOnClickListener(v -> {
-            createAuctionButton.startAnimation();
-
             String title = genericAuctionAttributesHolder.getTitle();
             String description = genericAuctionAttributesHolder.getDescription();
             Category category = genericAuctionAttributesHolder.getCategory();
@@ -127,7 +127,9 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                         new MyAuctionFragment()
                 ).commit();
 
-                createAuctionButton.revertAnimation();
+                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
+
+                viewModel.getNewAuction().postValue(null);
 
             } catch (ExecutionException e) {
 

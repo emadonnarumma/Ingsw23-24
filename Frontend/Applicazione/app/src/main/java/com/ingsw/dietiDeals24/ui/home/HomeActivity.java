@@ -144,4 +144,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    public NavigationBarView getNavigationBarView() {
+        return navigationBarView;
+    }
 }

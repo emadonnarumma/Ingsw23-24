@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
-public class EditBankAccountFragment extends Fragment {
+public class EditBankAccountFragment extends FragmentOfHomeActivity {
 
 
     @Override
@@ -25,14 +23,5 @@ public class EditBankAccountFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setBackButtonEnabled(true);
-    }
-
-    private void setBackButtonEnabled(boolean enabled) {
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(enabled);
-            }
-        }
     }
 }

@@ -14,9 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.ReverseAuctionAttributesFragment;
 
-public class BuyerAuctionTypesFragment extends Fragment {
+public class BuyerAuctionTypesFragment extends FragmentOfHomeActivity {
 
     private ImageView reverseAuctionButton;
 
@@ -34,13 +35,9 @@ public class BuyerAuctionTypesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setBackButtonEnabled(true);
+
         setupReverseButton(view);
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
-        }
     }
 
     private void setupReverseButton(@NonNull View view) {

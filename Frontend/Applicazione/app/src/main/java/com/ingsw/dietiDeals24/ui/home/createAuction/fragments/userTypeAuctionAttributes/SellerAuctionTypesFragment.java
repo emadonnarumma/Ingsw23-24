@@ -14,10 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.DownwardAuctionAttributesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.SilentAuctionAttributesFragment;
 
-public class SellerAuctionTypesFragment extends Fragment {
+public class SellerAuctionTypesFragment extends FragmentOfHomeActivity {
 
     private ImageView silentAuctionButton, downwardAuctionButton;
 
@@ -35,13 +36,9 @@ public class SellerAuctionTypesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setBackButtonEnabled(true);
+
         setupButtons(view);
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
-        }
     }
 
     private void setupButtons(View view) {

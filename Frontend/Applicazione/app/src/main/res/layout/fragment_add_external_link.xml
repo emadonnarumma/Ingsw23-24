@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
+    tools:context=".ui.home.profile.AddExternalLinkFragment">
 
     <TextView
         android:id="@+id/title_of_edit_external_link"
@@ -19,35 +23,31 @@
         android:id="@+id/edit_title_edit_external_link"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:hint="@string/edit_url_title_phrase"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_of_edit_external_link" />
 
     <EditText
-        android:id="@+id/edit_text_edit_external_link"
+        android:id="@+id/edit_url_edit_external_link"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:hint="@string/edit_url_phrase"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_edit_external_link" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_title_edit_external_link" />
 
     <ImageView
         android:id="@+id/doneButton"
         android:layout_width="@dimen/icon_size_large"
         android:layout_height="@dimen/icon_size_large"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:src="@drawable/ic_done_button"
         app:tint="@color/green"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_url_edit_external_link"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

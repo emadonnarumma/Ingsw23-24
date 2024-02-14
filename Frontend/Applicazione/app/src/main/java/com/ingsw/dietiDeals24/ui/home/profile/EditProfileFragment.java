@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileFragment extends FragmentOfHomeActivity {
     private ConstraintLayout editRegionButton;
     private ConstraintLayout editBioButton;
     private ConstraintLayout editExternalLinksButton;
@@ -52,15 +53,6 @@ public class EditProfileFragment extends Fragment {
         editExternalLinksButton.setOnClickListener(v -> goToEditExternalLinks());
         editBankAccountButton.setOnClickListener(v -> goToEditBankAccount());
         unlockSellerModeButton.setOnClickListener(v -> onUnlockSellerModeClick());
-    }
-
-    private void setBackButtonEnabled(boolean enabled) {
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(enabled);
-            }
-        }
     }
 
     private void goToEditRegion() {

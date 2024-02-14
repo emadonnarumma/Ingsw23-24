@@ -13,8 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
-public class MyBidsFragment extends Fragment {
+public class MyBidsFragment extends FragmentOfHomeActivity {
 
     private MyBidsViewModel mViewModel;
 
@@ -29,10 +30,10 @@ public class MyBidsFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MyBidsViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setBackButtonEnabled(false);
+
     }
 
 }

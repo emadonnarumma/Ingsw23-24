@@ -20,9 +20,10 @@ import androidx.fragment.app.Fragment;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends FragmentOfHomeActivity {
     private TextView usernameTextView;
     private Switch sellerSwitch;
     private TextView sellerSwitchTextView;
@@ -63,15 +64,6 @@ public class ProfileFragment extends Fragment {
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
         logoutButton.setOnClickListener(v -> logout());
 
-    }
-
-    private void setBackButtonEnabled(boolean enabled) {
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(enabled);
-            }
-        }
     }
 
     /**

@@ -26,6 +26,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
@@ -41,7 +42,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class SilentAuctionAttributesFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity implements DatePickerDialog.OnDateSetListener {
 
     private TextView dateTextView, withdrawalTimeTextView;
     private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
@@ -59,6 +60,8 @@ public class SilentAuctionAttributesFragment extends Fragment implements DatePic
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setBackButtonEnabled(true);
+
         viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
         setupLists();

@@ -16,9 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
 
-public class EditExternalLinksFragment extends Fragment {
+public class EditExternalLinksFragment extends FragmentOfHomeActivity {
     ConstraintLayout addExternalLinkButton;
     RecyclerView externalLinksRecyclerView;
     ImageView doneButton;
@@ -42,15 +43,6 @@ public class EditExternalLinksFragment extends Fragment {
         initRecyclerView();
         //addExternalLinkButton
         doneButton.setOnClickListener(v -> goToEditProfileFragment());
-    }
-
-     private void setBackButtonEnabled(boolean enabled) {
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(enabled);
-            }
-        }
     }
 
     private void initRecyclerView() {

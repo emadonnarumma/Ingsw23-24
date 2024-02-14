@@ -16,10 +16,11 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
 import java.util.Arrays;
 
-public class EditRegionFragment extends Fragment {
+public class EditRegionFragment extends FragmentOfHomeActivity {
     private ImageView doneButton;
     private SmartMaterialSpinner<String> regionSmartSpinner;
     private User user = ProfileController.getUser();
@@ -42,15 +43,6 @@ public class EditRegionFragment extends Fragment {
         putUserRegionOnSpinner();
         doneButton.setOnClickListener(v -> onDoneButtonClick());
 
-    }
-
-    private void setBackButtonEnabled(boolean enabled) {
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(enabled);
-            }
-        }
     }
 
     private void initRegionSmartSpinner() {

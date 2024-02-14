@@ -12,8 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ingsw.dietiDeals24.databinding.FragmentSearchBinding;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends FragmentOfHomeActivity {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        setBackButtonEnabled(false);
 
     }
 

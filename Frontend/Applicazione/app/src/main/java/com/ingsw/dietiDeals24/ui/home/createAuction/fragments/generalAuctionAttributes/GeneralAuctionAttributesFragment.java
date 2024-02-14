@@ -32,6 +32,7 @@ import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
@@ -46,7 +47,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class GeneralAuctionAttributesFragment extends Fragment {
+public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private Uri currentPhotoUri;
 
@@ -67,6 +68,8 @@ public class GeneralAuctionAttributesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setBackButtonEnabled(false);
+
         viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
         setMenuVisibility(true);
         createTakePictureLauncher();

@@ -27,6 +27,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
@@ -44,7 +45,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class DownwardAuctionAttributesFragment extends Fragment {
+public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private TextView decrementTimeTextView;
     private EditText initialPriceEditText, minimumPriceEditText, decrementAmountEditText;
@@ -65,6 +66,8 @@ public class DownwardAuctionAttributesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setBackButtonEnabled(true);
+
         viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
         setupLists();

@@ -15,8 +15,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
-public class EditBioFragment extends Fragment {
+public class EditBioFragment extends FragmentOfHomeActivity {
     private ImageView doneButton;
     private TextInputEditText bioEditText;
     private User user = ProfileController.getUser();
@@ -37,15 +38,6 @@ public class EditBioFragment extends Fragment {
 
         bioEditText.setText(user.getBio());
         doneButton.setOnClickListener(v -> onDoneButtonClick());
-    }
-
-    private void setBackButtonEnabled(boolean enabled) {
-        if (getActivity() instanceof AppCompatActivity) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(enabled);
-            }
-        }
     }
 
     private void onDoneButtonClick() {

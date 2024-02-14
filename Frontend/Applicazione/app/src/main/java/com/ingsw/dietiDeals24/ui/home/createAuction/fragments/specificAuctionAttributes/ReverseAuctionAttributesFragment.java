@@ -95,14 +95,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
             String initialPrice = deleteMoneySimbol(priceEditText.getText().toString());
             String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
 
-            List<Image> images;
-
-            try {
-                images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
-            } catch (IOException e) {
-                throw new RuntimeException("Error while converting images to byte array");
-            }
-
             ReverseAuction newReverseAuction;
             newReverseAuction = new ReverseAuction(
                     UserHolder.user,
@@ -117,9 +109,9 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
 
             try {
-                CreateAuctionController.createAuction(newReverseAuction, images).get();
+                CreateAuctionController.createAuction(newReverseAuction, uriImages).get();
 
-                newReverseAuction.setImages(images);
+                newReverseAuction.setImages(ImageConverter.convertUriListToImageList(getContext(), uriImages));
                 ((Buyer) UserHolder.user).getReverseAuctions().add(newReverseAuction);
 
                 getParentFragmentManager().beginTransaction().replace(
@@ -142,6 +134,8 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                 }
 
             } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });

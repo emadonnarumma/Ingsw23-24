@@ -296,13 +296,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                 return;
             }
 
-            List<Image> images;
-            try {
-                images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
-            } catch (IOException e) {
-                throw new RuntimeException("Error while converting images to byte array");
-            }
-
             DownwardAuction newDownwardAuction = new DownwardAuction(
                     UserHolder.user,
                     title,
@@ -320,9 +313,9 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             createAuctionButton.startAnimation();
 
             try {
-                CreateAuctionController.createAuction(newDownwardAuction, images).get();
+                CreateAuctionController.createAuction(newDownwardAuction, uriImages).get();
 
-                newDownwardAuction.setImages(images);
+                newDownwardAuction.setImages(ImageConverter.convertUriListToImageList(getContext(), uriImages));
                 ((Seller) UserHolder.user).getDownwardAuctions().add(newDownwardAuction);
 
                 getParentFragmentManager().beginTransaction().replace(
@@ -345,6 +338,8 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                 }
 
             } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });

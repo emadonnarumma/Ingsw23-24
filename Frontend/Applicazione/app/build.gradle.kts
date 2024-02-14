@@ -45,6 +45,9 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+    implementation("com.google.firebase:firebase-core:21.1.1")
+
     implementation("com.wx.wheelview:wheelview:1.3.3")
 
     implementation("com.wdullaer:materialdatetimepicker:4.2.3")

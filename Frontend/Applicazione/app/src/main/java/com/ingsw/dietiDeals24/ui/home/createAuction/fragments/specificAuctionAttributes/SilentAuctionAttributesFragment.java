@@ -181,12 +181,6 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
             Wear wear = genericAuctionAttributesHolder.getWear();
             String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
 
-            List<Image> images;
-            try {
-                images = ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
-            } catch (IOException e) {
-                throw new RuntimeException("Error while converting images to byte array");
-            }
 
             SilentAuction newSilentAuction = new SilentAuction(
                     UserHolder.user,
@@ -203,9 +197,8 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
             createAuctionButton.startAnimation();
 
             try {
-                CreateAuctionController.createAuction(newSilentAuction, images).get();
-
-                newSilentAuction.setImages(images);
+                CreateAuctionController.createAuction(newSilentAuction, genericAuctionAttributesHolder.getImages()).get();
+                newSilentAuction.setImages(ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages()));
                 ((Seller) UserHolder.user).getSilentAuctions().add(newSilentAuction);
 
                 getParentFragmentManager().beginTransaction().replace(
@@ -227,7 +220,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
                 }
 
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
 

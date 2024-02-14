@@ -1,0 +1,5 @@
+scrivi il codice Java della classe <NOME_DEL_FRAGMENT_JAVA>, collegata a questo file <NOME_DEL_FRAGMENT_XML>, analoga a questa classe <EVENTUALE_FRAGMENT_JAVA_DA_CUI_PRENDERE_RIFERIMENTO> e facendo l'override a onViewCreated, avente:
+1. come attributi:
+	-
+2. come metodi:
+	-

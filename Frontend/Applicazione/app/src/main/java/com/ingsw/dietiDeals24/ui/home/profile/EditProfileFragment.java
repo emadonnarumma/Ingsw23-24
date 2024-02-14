@@ -1,19 +1,15 @@
 package com.ingsw.dietiDeals24.ui.home.profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.controller.editProfile.ProfileController;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
 public class EditProfileFragment extends FragmentOfHomeActivity {

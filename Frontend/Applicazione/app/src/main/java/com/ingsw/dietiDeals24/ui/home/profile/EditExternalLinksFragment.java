@@ -7,15 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.controller.editProfile.ProfileController;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
 
@@ -41,7 +38,7 @@ public class EditExternalLinksFragment extends FragmentOfHomeActivity {
         doneButton = view.findViewById(R.id.done_button_edit_external_links);
 
         initRecyclerView();
-        //addExternalLinkButton
+        addExternalLinkButton.setOnClickListener(v -> goToAddExternalLinkFragment());
         doneButton.setOnClickListener(v -> goToEditProfileFragment());
     }
 
@@ -54,5 +51,10 @@ public class EditExternalLinksFragment extends FragmentOfHomeActivity {
     private void goToEditProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new EditProfileFragment()).commit();
+    }
+
+    private void goToAddExternalLinkFragment() {
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                new AddExternalLinkFragment()).commit();
     }
 }

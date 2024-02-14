@@ -1,0 +1,7 @@
+scrivi il codice Java della classe AddExternalLinkFragment, collegata a questo file fragment_edit_external_link.xml, analoga a questa classe EditRegionFragment.java e facendo l'override a onViewCreated, avente:
+1. come attributi:
+	- titleEditText
+	- urlEditText
+	- doneButton
+2. come metodi:
+	- private void onDoneButtonClick()

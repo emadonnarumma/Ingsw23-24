@@ -42,6 +42,9 @@
     <string name="edit_url_phrase">Modifica URL</string>
     <string name="edit_url_title_phrase">Modifica titolo</string>
     <string name="edit_external_link_phrase">Modifica link esterno</string>
+    <string name="url_title_format_invalid">Il campo non può essere vuoto</string>
+    <string name="url_format_invalid">il formato dell\'url non è valido</string>
+    <string name="link_added">Link esterno aggiunto con successo!</string>
 
     <string name="search_hint">Cerca</string>
 

@@ -1,9 +1,32 @@
-package com.ingsw.dietiDeals24.controller;
+package com.ingsw.dietiDeals24.controller.editProfile;
 
+import android.content.res.Resources;
+
+import androidx.lifecycle.MutableLiveData;
+
+import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 
 public class ProfileController {
+    private static MutableLiveData<ExternalLinkFormState> externalLinkFormState = new MutableLiveData<>();
+
+    public static MutableLiveData<ExternalLinkFormState> getExternalLinkFormState() {
+        return externalLinkFormState;
+    }
+
+    public static void dataChanged(String title, String url, Resources resources) {
+        if (!isUrlTitleValid(title)) {
+            String titleError = resources.getString(R.string.url_title_format_invalid);
+            externalLinkFormState.setValue(new ExternalLinkFormState(titleError, null));
+        } else if (!isUrlFormatValid(url)) {
+            String urlError = resources.getString(R.string.url_format_invalid);
+            externalLinkFormState.setValue(new ExternalLinkFormState(null, urlError));
+        } else {
+            externalLinkFormState.setValue(new ExternalLinkFormState(true));
+        }
+    }
 
     public static void addLink(String title, String url) {
         //TODO
@@ -35,6 +58,10 @@ public class ProfileController {
 
     public static void switchAccountType() {
         //TODO
+    }
+
+    public static boolean isUrlTitleValid(String title) {
+        return title != null && title.trim().length() > 0;
     }
 
     public static boolean isUrlFormatValid(String url) {

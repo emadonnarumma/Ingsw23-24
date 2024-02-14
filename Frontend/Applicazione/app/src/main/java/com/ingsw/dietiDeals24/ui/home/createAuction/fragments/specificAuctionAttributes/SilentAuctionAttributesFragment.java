@@ -204,6 +204,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
             try {
                 CreateAuctionController.createAuction(newSilentAuction, images).get();
 
+                newSilentAuction.setImages(images);
                 ((Seller) UserHolder.user).getSilentAuctions().add(newSilentAuction);
 
                 getParentFragmentManager().beginTransaction().replace(

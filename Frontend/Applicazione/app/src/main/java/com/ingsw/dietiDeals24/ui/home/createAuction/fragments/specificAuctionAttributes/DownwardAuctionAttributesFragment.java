@@ -313,9 +313,9 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             createAuctionButton.startAnimation();
 
             try {
-                CreateAuctionController.createAuction(newDownwardAuction, uriImages).get();
-
-                newDownwardAuction.setImages(ImageConverter.convertUriListToImageList(getContext(), uriImages));
+                List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
+                CreateAuctionController.createAuction(newDownwardAuction, images).get();
+                newDownwardAuction.setImages(images);
                 ((Seller) UserHolder.user).getDownwardAuctions().add(newDownwardAuction);
 
                 getParentFragmentManager().beginTransaction().replace(

@@ -30,6 +30,7 @@ import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
+import com.ingsw.dietiDeals24.ui.home.search.SearchFragment;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
@@ -109,9 +110,10 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
 
             try {
-                CreateAuctionController.createAuction(newReverseAuction, uriImages).get();
+                List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
+                CreateAuctionController.createAuction(newReverseAuction, images).get();
 
-                newReverseAuction.setImages(ImageConverter.convertUriListToImageList(getContext(), uriImages));
+                newReverseAuction.setImages(images);
                 ((Buyer) UserHolder.user).getReverseAuctions().add(newReverseAuction);
 
                 getParentFragmentManager().beginTransaction().replace(
@@ -131,6 +133,9 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                 } else if (e.getCause() instanceof ConnectionException) {
                     requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
+                } else if (e.getCause() instanceof StackOverflowError) {
+                    System.out.println(e.getCause().getMessage());
+                    throw new RuntimeException(e);
                 }
 
             } catch (InterruptedException e) {

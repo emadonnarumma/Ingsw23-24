@@ -197,8 +197,9 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
             createAuctionButton.startAnimation();
 
             try {
-                CreateAuctionController.createAuction(newSilentAuction, genericAuctionAttributesHolder.getImages()).get();
-                newSilentAuction.setImages(ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages()));
+                List<Image> images = ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
+                CreateAuctionController.createAuction(newSilentAuction, images).get();
+                newSilentAuction.setImages(images);
                 ((Seller) UserHolder.user).getSilentAuctions().add(newSilentAuction);
 
                 getParentFragmentManager().beginTransaction().replace(

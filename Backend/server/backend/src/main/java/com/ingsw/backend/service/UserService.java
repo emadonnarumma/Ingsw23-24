@@ -24,4 +24,5 @@ public interface UserService {
 	public Optional<User> updateRegion(String email, Region newRegion);
 
 	public Optional<User> updateBio(String email, String newBio);
+
 }

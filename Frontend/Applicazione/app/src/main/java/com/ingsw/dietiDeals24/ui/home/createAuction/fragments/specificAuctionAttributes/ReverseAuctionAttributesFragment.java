@@ -134,7 +134,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                     requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
                 } else if (e.getCause() instanceof StackOverflowError) {
-                    System.out.println(e.getCause().getMessage());
                     throw new RuntimeException(e);
                 }
 

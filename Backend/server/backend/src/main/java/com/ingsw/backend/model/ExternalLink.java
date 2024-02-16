@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="external_links")
 public class ExternalLink {
-	
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +32,5 @@ public class ExternalLink {
 	
     @Column(nullable = false, length = 2083)
 	private String url;
-    
-    @ManyToOne
-    @JoinColumn(name = "user_email", referencedColumnName = "email")
-    @JsonBackReference("user-externalLink")
-    private User user;
+
 }

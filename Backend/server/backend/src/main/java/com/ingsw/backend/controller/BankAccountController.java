@@ -30,15 +30,6 @@ public class BankAccountController {
 
     @PostMapping
     public ResponseEntity<BankAccount> addBankAccount(@Valid @RequestBody BankAccount bankAccount) {
-        
-    	Optional<User> seller = userService.getUser(bankAccount.getSeller().getEmail());
-        
-		if (seller.isEmpty()) {
-			
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
-        bankAccount.setSeller((Seller) seller.get());
 
         BankAccount savedBankAccount= bankAccountService.addBankAccount(bankAccount);
 

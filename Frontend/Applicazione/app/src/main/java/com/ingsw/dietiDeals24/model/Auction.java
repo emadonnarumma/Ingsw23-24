@@ -2,6 +2,7 @@ package com.ingsw.dietiDeals24.model;
 
 import android.net.Uri;
 
+import com.google.gson.annotations.Expose;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
@@ -19,6 +20,8 @@ public class Auction {
     private Wear wear;
     private AuctionStatus status;
     private Category category;
+
+    @Expose
     private User owner;
 
     public Auction() {}

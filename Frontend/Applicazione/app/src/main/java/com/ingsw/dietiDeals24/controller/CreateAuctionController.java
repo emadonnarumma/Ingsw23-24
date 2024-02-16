@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import retrofit2.Response;
+
 public class CreateAuctionController implements RetroFitHolder {
 
     private CreateAuctionController() {
@@ -23,11 +25,17 @@ public class CreateAuctionController implements RetroFitHolder {
         CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Auction auction = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
-                        .execute().body();
-                addImagesIfPresent(images, auction);
+                Response<ReverseAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken())
+                        .execute();
 
-                return true;
+                if (response.isSuccessful()) {
+                    ReverseAuction auction = response.body();
+                    addImagesIfPresent(images, auction);
+                    return true;
+                } else {
+                    return false;
+                }
+
             } catch (IOException e) {
                 return false;
             }

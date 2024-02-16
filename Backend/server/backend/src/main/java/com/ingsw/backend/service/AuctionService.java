@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.ingsw.backend.enumeration.Category;
 import com.ingsw.backend.model.Auction;
+import com.ingsw.backend.model.Image;
 
 public interface AuctionService {
 	
@@ -21,9 +22,11 @@ public interface AuctionService {
 	public Boolean delete(int id);
 
 	public Optional<Auction> findById(Integer auctionId);
-	
+
 	public Boolean buyDownwardAuctionNow(Integer auctionId);
 	
 	public Long getRemainingSecondsForAuction(Integer auctionId);
+
+	public List<Image> getImagesByAuction(Auction auction);
 
 }

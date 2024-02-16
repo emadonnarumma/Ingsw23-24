@@ -27,17 +27,4 @@ public class Seller extends User {
     @JsonManagedReference("seller-bankAccount")
     private BankAccount bankAccount;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<SilentAuction> silentAuctions;
-
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<DownwardAuction> downwardAuctions;
-
-    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
-    @JsonManagedReference("seller-reverseBid")
-    private List<ReverseBid> bids;
-
-
 }

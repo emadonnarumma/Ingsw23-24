@@ -19,11 +19,12 @@ public class ImageDbService implements ImageService {
 		this.imageRepository = imageRepository;
 	}
 
-	@Override
+	/*@Override
 	public List<Image> getAllImagesByAuction(Auction auction) {
+		return auction
 		
 		return imageRepository.findAllByAuction(auction);
-	}
+	}*/
 
 
 

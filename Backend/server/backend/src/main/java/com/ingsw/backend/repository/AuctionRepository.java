@@ -3,14 +3,18 @@ package com.ingsw.backend.repository;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.ingsw.backend.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ingsw.backend.enumeration.AuctionStatus;
 import com.ingsw.backend.enumeration.Category;
+import com.ingsw.backend.model.Auction;
+import com.ingsw.backend.model.DownwardAuction;
+import com.ingsw.backend.model.ReverseAuction;
+import com.ingsw.backend.model.SilentAuction;
 
 
 public interface AuctionRepository extends JpaRepository<Auction, Integer>{
+
 	
 	public List<Auction> findAllByCategory(Category category);
 	
@@ -22,8 +26,11 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer>{
 
     public List<ReverseAuction> findReverseByStatusAndExpirationDateBefore(AuctionStatus status, Timestamp currentTimestamp);
 	
+	
+	
 	public List<DownwardAuction> findAllByStatus(AuctionStatus status);
-
-	public List<Image> findAllImagesByAuction(Auction auction);
+	
+	
+	
 	
 }

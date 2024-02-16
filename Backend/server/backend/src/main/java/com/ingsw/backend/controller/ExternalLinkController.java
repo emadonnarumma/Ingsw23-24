@@ -35,6 +35,15 @@ public class ExternalLinkController {
 
     @PostMapping
     public ResponseEntity<ExternalLink> addExternalLink(@Valid @RequestBody ExternalLink externalLink) {
+        
+    	Optional<User> user = userService.getUser(externalLink.getUser().getEmail());
+        
+		if (user.isEmpty()) {
+			
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+        externalLink.setUser(user.get());
 
         ExternalLink savedExternalLink= externalLinkService.addExternalLink(externalLink);
 

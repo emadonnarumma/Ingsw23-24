@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import com.ingsw.backend.model.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ingsw.backend.enumeration.AuctionStatus;
 import com.ingsw.backend.enumeration.BidStatus;
 import com.ingsw.backend.enumeration.Category;
+import com.ingsw.backend.model.Auction;
+import com.ingsw.backend.model.DownwardAuction;
+import com.ingsw.backend.model.ReverseAuction;
+import com.ingsw.backend.model.ReverseBid;
+import com.ingsw.backend.model.SilentAuction;
 import com.ingsw.backend.repository.AuctionRepository;
 import com.ingsw.backend.repository.BidRepository;
 import com.ingsw.backend.service.AuctionService;
@@ -126,14 +130,8 @@ public class AuctionDbService implements AuctionService {
 	    
 	    return remainingSeconds > 0 ? remainingSeconds : 0L;
 		
-	}
-
-	@Override
-	public List<Image> getImagesByAuction(Auction auction) {
-
-		return auctionRepository.findAllImagesByAuction(auction);
-	}
-
+	}  
+	
 	@Scheduled(fixedRate = 60000) //executed every minute
 	@Transactional
 	public void updateSilentAuctionsStatus() {

@@ -1,7 +1,9 @@
 package com.ingsw.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,9 +23,5 @@ public class Notification {
     @Column(nullable = false)
     private String message;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_email", referencedColumnName = "email")
-    @JsonBackReference
-    private User owner;
     //TODO: jonny per piacere completa la classe non sappiamo cosa significa getImage e controlla anche le sottoclassi
 }

@@ -111,7 +111,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
             try {
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
-                CreateAuctionController.createAuction(newReverseAuction, images).get();
+                CreateAuctionController.createAuction(newReverseAuction, images);
 
                 newReverseAuction.setImages(images);
                 ((Buyer) UserHolder.user).getReverseAuctions().add(newReverseAuction);
@@ -125,7 +125,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
                 viewModel.getNewAuction().postValue(null);
 
-            } catch (ExecutionException e) {
+            /*} catch (ExecutionException e) {
 
                 if (e.getCause() instanceof AuthenticationException) {
                     requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
@@ -134,11 +134,12 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                     requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
                 } else if (e.getCause() instanceof StackOverflowError) {
+                    System.out.println(e.getCause().getMessage());
                     throw new RuntimeException(e);
                 }
 
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException(e); */
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

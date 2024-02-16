@@ -47,7 +47,8 @@ public class ImageController {
 	    	return ResponseEntity.notFound().build();
 	    }
 	    
-	    List<Image> images = auctionService.getImagesByAuction(auction.get());
+	    
+	    List<Image> images = imageService.getAllImagesByAuction(auction.get());
 	    
 	    return ResponseEntity.ok(images);
 	}
@@ -56,6 +57,16 @@ public class ImageController {
 
     @PostMapping
     public ResponseEntity<Image> addImages(@Valid @RequestBody Image image) {
+
+
+		Optional<Auction> auction = auctionService.findById(image.getAuction().getIdAuction());
+
+		if (auction.isEmpty()) {
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		image.setAuction(auction.get());
 
     	Image savedImage = imageService.addImage(image);
         

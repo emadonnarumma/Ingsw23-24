@@ -22,6 +22,11 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBankAccount;
 
+    @OneToOne
+    @JoinColumn(name = "seller_email", referencedColumnName = "email")
+    @JsonBackReference("seller-bankAccount")
+    private Seller seller;
+
     @Length(min=27, max=27)
     @Column(nullable = false, length = 27)
     private String iban;

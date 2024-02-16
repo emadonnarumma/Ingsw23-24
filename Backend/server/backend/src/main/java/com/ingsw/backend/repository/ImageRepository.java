@@ -8,4 +8,7 @@ import com.ingsw.backend.model.Auction;
 import com.ingsw.backend.model.Image;
 
 public interface ImageRepository extends JpaRepository<Image, Integer> {
+	
+	public List<Image> findAllByAuction(Auction auction);
+	 
 }

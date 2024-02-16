@@ -22,5 +22,11 @@ public class Image {
 
     @Column(columnDefinition = "TEXT")
     private String base64Data;
+
+    @ManyToOne
+    @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
+    @JsonBackReference("auction-image")
+    private Auction auction;
+
     
 }

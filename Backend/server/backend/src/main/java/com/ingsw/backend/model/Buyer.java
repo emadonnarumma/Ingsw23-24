@@ -21,6 +21,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @DiscriminatorValue("BUYER")
-public class Buyer extends User {}
+public class Buyer extends User {
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<ReverseAuction> reverseAuctions;
+
+    @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER)
+    @JsonManagedReference("buyer-silentBid")
+    private List<SilentBid> bids;
+
+}

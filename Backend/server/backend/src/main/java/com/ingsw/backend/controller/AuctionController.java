@@ -1,5 +1,6 @@
 package com.ingsw.backend.controller;
 
+import com.ingsw.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,6 @@ import com.ingsw.backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import com.ingsw.backend.model.Auction;
-import com.ingsw.backend.model.User;
 import com.ingsw.backend.enumeration.Category;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,6 +99,21 @@ public class AuctionController {
     	Long remainingSeconds = auctionService.getRemainingSecondsForAuction(auctionId);
         
         return new ResponseEntity<>(remainingSeconds, HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}/getSilentAuctions")
+    public ResponseEntity<List<SilentAuction>> getSilentAuctionsByOwnerEmail(@PathVariable String email) {
+        return ResponseEntity.ok(auctionService.getSilentAuctionsByOwnerEmail(email));
+    }
+
+    @GetMapping("/{email}/getDownwardAuctions")
+    public ResponseEntity<List<DownwardAuction>> getDownwardAuctionsByOwnerEmail(@PathVariable String email) {
+        return ResponseEntity.ok(auctionService.getDownwardAuctionsByOwnerEmail(email));
+    }
+
+    @GetMapping("/{email}/getDownwardAuctions")
+    public ResponseEntity<List<ReverseAuction>> getReverseAuctionsByOwnerEmail(@PathVariable String email) {
+        return ResponseEntity.ok(auctionService.getReverseAuctionsByOwnerEmail(email));
     }
 }
 

@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.ingsw.backend.enumeration.Role;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.Seller;
+import com.ingsw.backend.model.SilentAuction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -65,7 +66,7 @@ public class UserController {
 	
 	@GetMapping("/check-email/{email}")
     public ResponseEntity<Boolean> checkIfEmailIsUsed(@PathVariable String email) {
-        
+
 		Boolean isUsed = userService.isEmailAlreadyUsed(email);
         
         return ResponseEntity.ok(isUsed);

@@ -316,7 +316,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
                 CreateAuctionController.createAuction(newDownwardAuction, images).get();
                 newDownwardAuction.setImages(images);
-                ((Seller) UserHolder.user).getDownwardAuctions().add(newDownwardAuction);
 
                 getParentFragmentManager().beginTransaction().replace(
                         R.id.fragment_container_home,

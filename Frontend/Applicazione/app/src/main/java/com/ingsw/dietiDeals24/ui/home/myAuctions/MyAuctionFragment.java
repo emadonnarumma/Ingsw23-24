@@ -1,24 +1,21 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions;
 
 import android.os.Bundle;
-
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.model.Buyer;
-import com.ingsw.dietiDeals24.model.Seller;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.AuctionAdapter;
-
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MyAuctionFragment extends Fragment {
     RecyclerView recyclerView;
@@ -31,7 +28,6 @@ public class MyAuctionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_my_auctions, container, false);
-
     }
 
     @Override
@@ -39,23 +35,19 @@ public class MyAuctionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.recycler_view_my_auctions);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-
-        AuctionAdapter adapter;
-        if (UserHolder.user.getClass() == Seller.class) {
-           Seller seller = (Seller) UserHolder.user;
-           adapter = new AuctionAdapter(seller.getSilentAuctions(),
-                   seller.getDownwardAuctions(),
-                   new ArrayList<>());
-        } else {
-            Buyer buyer = (Buyer) UserHolder.user;
-            adapter = new AuctionAdapter(new ArrayList<>(),
-                    new ArrayList<>(),
-                    buyer.getReverseAuctions());
+        try {
+            recyclerView.setAdapter(new AuctionAdapter(
+                    MyAuctionsController.getSilentAuctions(UserHolder.user.getEmail()).get(),
+                    MyAuctionsController.getDownwardAuctions(UserHolder.user.getEmail()).get(),
+                    MyAuctionsController.getReverseAuctions(UserHolder.user.getEmail()).get()
+            ));
+        } catch (ExecutionException e) {
+            recyclerView.setAdapter(new AuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+            requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-
-        recyclerView.setAdapter(adapter);
     }
 }

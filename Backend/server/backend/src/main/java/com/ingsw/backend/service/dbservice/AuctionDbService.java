@@ -57,19 +57,16 @@ public class AuctionDbService implements AuctionService {
 
 	@Override
 	public List<Auction> getAuctionsByTitleContainingAndCategory(String keyword, Category category) {
-		
 		return auctionRepository.findAllByTitleContainingIgnoreCaseAndCategory(keyword, category);
 	}
 
 	@Override
 	public Auction addAuction(Auction auction) {
-		
 		return auctionRepository.save(auction);
 	}
 
 	@Override
 	public Boolean delete(int id) {
-	    
 	    if (!auctionRepository.existsById(id)) {
 	        return false;
 	    }
@@ -81,13 +78,11 @@ public class AuctionDbService implements AuctionService {
 
 	@Override
 	public Optional<Auction> findById(Integer auctionId) {
-		
 		return auctionRepository.findById(auctionId);
 	}
 	
 	@Override
 	public Boolean buyDownwardAuctionNow(Integer auctionId) {
-		
 		Optional<Auction> optionalAuction = auctionRepository.findById(auctionId);
 		
 		if (optionalAuction.isEmpty() || !(optionalAuction.get() instanceof DownwardAuction)){
@@ -130,8 +125,23 @@ public class AuctionDbService implements AuctionService {
 	    
 	    return remainingSeconds > 0 ? remainingSeconds : 0L;
 		
-	}  
-	
+	}
+
+	@Override
+	public List<SilentAuction> getSilentAuctionsByOwnerEmail(String email) {
+		return auctionRepository.findSilentByOwnerEmail(email);
+	}
+
+	@Override
+	public List<DownwardAuction> getDownwardAuctionsByOwnerEmail(String email) {
+		return auctionRepository.findDownwardByOwnerEmail(email);
+	}
+
+	@Override
+	public List<ReverseAuction> getReverseAuctionsByOwnerEmail(String email) {
+		return auctionRepository.findReverseByOwnerEmail(email);
+	}
+
 	@Scheduled(fixedRate = 60000) //executed every minute
 	@Transactional
 	public void updateSilentAuctionsStatus() {

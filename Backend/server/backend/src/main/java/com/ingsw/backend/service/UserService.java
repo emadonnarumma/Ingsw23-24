@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.Seller;
+import com.ingsw.backend.model.SilentAuction;
 import com.ingsw.backend.model.User;
 
 public interface UserService {

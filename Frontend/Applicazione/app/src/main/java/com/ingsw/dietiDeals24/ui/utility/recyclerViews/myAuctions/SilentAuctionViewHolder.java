@@ -76,8 +76,10 @@ public class SilentAuctionViewHolder extends RecyclerView.ViewHolder {
         }
 
         expirationDateTextView.setText(silentAuction.getExpirationDate().substring(0, 10));
-        bindImages(silentAuction);
 
+        if (silentAuction.getImages() != null) {
+            bindImages(silentAuction);
+        }
     }
 
     private void bindImages(SilentAuction silentAuction) {

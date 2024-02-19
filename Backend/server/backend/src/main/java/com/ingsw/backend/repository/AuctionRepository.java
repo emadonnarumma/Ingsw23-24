@@ -14,23 +14,15 @@ import com.ingsw.backend.model.SilentAuction;
 
 
 public interface AuctionRepository extends JpaRepository<Auction, Integer>{
+	public List<ReverseAuction> findReverseByOwnerEmail(String email);
+	public List<SilentAuction> findSilentByOwnerEmail(String email);
+	public List<DownwardAuction> findDownwardByOwnerEmail(String email);
 
-	
 	public List<Auction> findAllByCategory(Category category);
-	
 	public List<Auction> findAllByTitleContainingIgnoreCase(String keyword);
-	
-	public List<Auction> findAllByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);	
-	
-	public List<SilentAuction> findSilentByStatusAndExpirationDateBefore(AuctionStatus status, Timestamp currentTimestamp);
+	public List<Auction> findAllByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);
 
+	public List<SilentAuction> findSilentByStatusAndExpirationDateBefore(AuctionStatus status, Timestamp currentTimestamp);
     public List<ReverseAuction> findReverseByStatusAndExpirationDateBefore(AuctionStatus status, Timestamp currentTimestamp);
-	
-	
-	
 	public List<DownwardAuction> findAllByStatus(AuctionStatus status);
-	
-	
-	
-	
 }

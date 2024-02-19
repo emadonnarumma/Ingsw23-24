@@ -20,16 +20,15 @@ public class LogInController implements RetroFitHolder {
     }
 
     public static CompletableFuture<Boolean> login(String email, String password) {
-
-        LoginDao loginDao = retrofit.create(LoginDao.class);
-        CurrentUserDao currentUserDao = retrofit.create(CurrentUserDao.class);
-        LogInRequest request = new LogInRequest(email, password);
-
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Response<TokenHolder> response = loginDao.login(request).execute();
-                if (response.isSuccessful()) {
+                LoginDao loginDao = retrofit.create(LoginDao.class);
+                CurrentUserDao currentUserDao = retrofit.create(CurrentUserDao.class);
 
+                LogInRequest request = new LogInRequest(email, password);
+                Response<TokenHolder> response = loginDao.login(request).execute();
+
+                if (response.isSuccessful()) {
                     TokenHolder.instance = response.body();
                     Role role = currentUserDao.getRole(email, TokenHolder.getAuthToken()).execute().body();
                     if (role == Role.BUYER) {
@@ -37,11 +36,11 @@ public class LogInController implements RetroFitHolder {
                     } else if (role == Role.SELLER) {
                         UserHolder.user = currentUserDao.getSellerByEmail(email, TokenHolder.getAuthToken()).execute().body();
                     }
-
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Credenziali errate");
                 }
+
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }

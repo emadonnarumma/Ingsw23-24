@@ -111,10 +111,8 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
             try {
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
-                CreateAuctionController.createAuction(newReverseAuction, images);
-
+                CreateAuctionController.createAuction(newReverseAuction, images).get();
                 newReverseAuction.setImages(images);
-                ((Buyer) UserHolder.user).getReverseAuctions().add(newReverseAuction);
 
                 getParentFragmentManager().beginTransaction().replace(
                         R.id.fragment_container_home,
@@ -125,7 +123,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
                 viewModel.getNewAuction().postValue(null);
 
-            /*} catch (ExecutionException e) {
+            } catch (ExecutionException e) {
 
                 if (e.getCause() instanceof AuthenticationException) {
                     requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
@@ -138,9 +136,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                     throw new RuntimeException(e);
                 }
 
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e); */
-            } catch (IOException e) {
+            } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
         });

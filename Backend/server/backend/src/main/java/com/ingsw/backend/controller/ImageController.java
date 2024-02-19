@@ -37,7 +37,7 @@ public class ImageController {
 	@Qualifier("mainImageService")
 	private ImageService imageService;
 
-	@GetMapping("/auction/{auctionId}")
+	@GetMapping("/{auctionId}/getAllAuctionImages")
 	public ResponseEntity<List<Image>> getAllImagesByAuction(@PathVariable Integer auctionId) {
 	    
 	    Optional<Auction> auction = auctionService.findById(auctionId);
@@ -53,11 +53,8 @@ public class ImageController {
 	    return ResponseEntity.ok(images);
 	}
 
-
-
     @PostMapping
     public ResponseEntity<Image> addImages(@Valid @RequestBody Image image) {
-
 
 		Optional<Auction> auction = auctionService.findById(image.getAuction().getIdAuction());
 

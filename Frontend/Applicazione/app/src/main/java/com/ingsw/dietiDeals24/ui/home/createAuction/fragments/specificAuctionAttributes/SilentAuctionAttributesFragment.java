@@ -200,14 +200,13 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
                 CreateAuctionController.createAuction(newSilentAuction, images).get();
                 newSilentAuction.setImages(images);
-                ((Seller) UserHolder.user).getSilentAuctions().add(newSilentAuction);
 
-                getParentFragmentManager().beginTransaction().replace(
-                        R.id.fragment_container_home,
-                        new MyAuctionFragment()
-                ).commit();
-
-                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
+//                getParentFragmentManager().beginTransaction().replace(
+//                        R.id.fragment_container_home,
+//                        new MyAuctionFragment()
+//                ).commit();
+//
+//                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
 
                 createAuctionButton.revertAnimation();
 

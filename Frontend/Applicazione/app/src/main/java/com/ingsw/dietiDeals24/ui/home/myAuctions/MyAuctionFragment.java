@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MyAuctionFragment extends Fragment {
     RecyclerView recyclerView;
+    ProgressBar progressBar;
 
     public static MyAuctionFragment newInstance() {
         return new MyAuctionFragment();
@@ -43,10 +45,10 @@ public class MyAuctionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.recycler_view_my_auctions);
+        progressBar = view.findViewById(R.id.progress_bar_my_auctions);
 
-        ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Caricamento...");
-        progressDialog.show();
+        recyclerView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         Thread updateAuctions = new Thread(() -> {
             try {
@@ -54,16 +56,20 @@ public class MyAuctionFragment extends Fragment {
                 List<DownwardAuction> downwardAuctions = MyAuctionsController.getDownwardAuctions(UserHolder.user.getEmail()).get();
                 List<ReverseAuction> reverseAuctions = MyAuctionsController.getReverseAuctions(UserHolder.user.getEmail()).get();
 
-                requireActivity().runOnUiThread(() -> {
-                    recyclerView.setAdapter(new AuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions));
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    progressDialog.dismiss();
-                });
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> {
+                        recyclerView.setAdapter(new AuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    });
+                }
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> {
                     recyclerView.setAdapter(new AuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
                     ToastManager.showToast(getContext(), e.getCause().getMessage());
-                    progressDialog.dismiss();
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 });
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

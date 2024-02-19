@@ -20,7 +20,7 @@ public class ImageConverter {
     private static String convertUriToBase64String(Context context, Uri uri) throws IOException {
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        Bitmap compressedBitmap = compressBitmap(bitmap, 1);
+        Bitmap compressedBitmap = compressBitmap(bitmap, 50);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         compressedBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);

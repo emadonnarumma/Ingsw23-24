@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -20,7 +20,6 @@ import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
-import com.ingsw.dietiDeals24.model.Seller;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
@@ -200,15 +199,15 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
                 CreateAuctionController.createAuction(newSilentAuction, images).get();
                 newSilentAuction.setImages(images);
-
-//                getParentFragmentManager().beginTransaction().replace(
-//                        R.id.fragment_container_home,
-//                        new MyAuctionFragment()
-//                ).commit();
-//
-//                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
-
                 createAuctionButton.revertAnimation();
+                viewModel.setNewAuction(new MutableLiveData<>());
+
+                getParentFragmentManager().beginTransaction().replace(
+                        R.id.fragment_container_home,
+                        new MyAuctionFragment()
+                ).commit();
+
+                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
 
             } catch (ExecutionException e) {
 

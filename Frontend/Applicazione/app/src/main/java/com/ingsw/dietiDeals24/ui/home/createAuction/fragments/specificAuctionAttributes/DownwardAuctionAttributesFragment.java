@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
+import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
@@ -316,6 +318,8 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
                 CreateAuctionController.createAuction(newDownwardAuction, images).get();
                 newDownwardAuction.setImages(images);
+                viewModel.setNewAuction(new MutableLiveData<>());
+                createAuctionButton.revertAnimation();
 
                 getParentFragmentManager().beginTransaction().replace(
                         R.id.fragment_container_home,
@@ -323,8 +327,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                 ).commit();
 
                 ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
-
-                createAuctionButton.revertAnimation();
 
             } catch (ExecutionException e) {
 

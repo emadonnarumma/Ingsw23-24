@@ -102,7 +102,6 @@ public class CreateAuctionController implements RetroFitHolder {
                 InsertImagesDao insertImagesDao = retrofit.create(InsertImagesDao.class);
                 for (Image image : images) {
                     Response<Image> response = insertImagesDao.insertImage(image, TokenHolder.getAuthToken()).execute();
-                    int x = 9;
                 }
                 return true;
             } catch (IOException e) {

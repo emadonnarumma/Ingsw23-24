@@ -12,12 +12,13 @@ import com.ingsw.dietiDeals24.network.myAuctions.MyAuctionsDao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Response;
 
 public class MyAuctionsController implements RetroFitHolder {
-
     public static CompletableFuture<List<SilentAuction>> getSilentAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
             try {

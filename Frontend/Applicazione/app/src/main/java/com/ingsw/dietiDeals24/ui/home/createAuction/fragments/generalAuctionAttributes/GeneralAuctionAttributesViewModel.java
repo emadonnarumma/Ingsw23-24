@@ -16,9 +16,11 @@ public class GeneralAuctionAttributesViewModel extends ViewModel {
     private MutableLiveData<AuctionHolder> newAuction = new MutableLiveData<>();
     private List<Uri> images;
 
-
     public MutableLiveData<AuctionHolder> getNewAuction() {
         return newAuction;
+    }
+    public void setNewAuction(MutableLiveData<AuctionHolder> newAuction) {
+        this.newAuction = newAuction;
     }
 
     public void generalAuctionAttributesChanged(String title,

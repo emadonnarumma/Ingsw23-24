@@ -14,6 +14,8 @@ import com.ingsw.backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import com.ingsw.backend.model.Auction;
+import com.ingsw.backend.model.User;
 import com.ingsw.backend.enumeration.Category;
 import org.springframework.web.bind.annotation.*;
 
@@ -111,7 +113,7 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.getDownwardAuctionsByOwnerEmail(email));
     }
 
-    @GetMapping("/{email}/getDownwardAuctions")
+    @GetMapping("/{email}/getReverseAuctions")
     public ResponseEntity<List<ReverseAuction>> getReverseAuctionsByOwnerEmail(@PathVariable String email) {
         return ResponseEntity.ok(auctionService.getReverseAuctionsByOwnerEmail(email));
     }

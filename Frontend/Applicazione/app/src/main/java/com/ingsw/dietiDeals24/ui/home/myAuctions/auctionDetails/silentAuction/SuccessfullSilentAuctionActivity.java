@@ -2,21 +2,17 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 
+import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
-import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.ImageConverter;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
@@ -53,7 +49,7 @@ public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
 
         ArrayList<Uri> images = new ArrayList<>();
         for (int i = 0; i < silentAuction.getImages().size(); i++) {
-            images.add(ImageConverter.base64ToUri(silentAuction.getImages().get(i).getBase64Data(), getApplicationContext()));
+            images.add(ImageController.base64ToUri(silentAuction.getImages().get(i).getBase64Data(), getApplicationContext()));
         }
 
         adapter.renewItems(images);

@@ -44,7 +44,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 		  @JsonSubTypes.Type(value = Buyer.class, name = "BUYER")
 		  
 		})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "email")
 public abstract class User implements UserDetails{
 
 	@Column(nullable = false)

@@ -1,6 +1,9 @@
 package com.ingsw.dietiDeals24.controller;
 
+import android.util.Log;
+
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
@@ -8,6 +11,7 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.myAuctions.MyAuctionsDao;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,11 +32,13 @@ public class MyAuctionsController implements RetroFitHolder {
                 Response<List<SilentAuction>> response = myAuctionsDao.getSilentAuctions(email, TokenHolder.getAuthToken()).execute();
                 List<SilentAuction> auctions = response.body();
                 for (SilentAuction auction : auctions) {
-                    auction.setImages(myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute().body());
+                    Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                    if(imagesResponse.isSuccessful())
+                        auction.setImages(imagesResponse.body());
                 }
 
                 if (response.isSuccessful()) {
-                    return response.body();
+                    return auctions;
                 } else if (response.code() == 403) {
                     return new ArrayList<>();
                 }
@@ -49,9 +55,16 @@ public class MyAuctionsController implements RetroFitHolder {
             try {
                 MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
                 Response<List<ReverseAuction>> response = myAuctionsDao.getReverseAuctions(email, TokenHolder.getAuthToken()).execute();
+                List<ReverseAuction> auctions = response.body();
+                for (ReverseAuction auction : auctions) {
+                    Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                    if(imagesResponse.isSuccessful())
+                        auction.setImages(imagesResponse.body());                }
 
                 if (response.isSuccessful()) {
-                    return response.body();
+                    return auctions;
+                } else if (response.code() == 403) {
+                    return new ArrayList<>();
                 }
 
             } catch (IOException e) {
@@ -66,9 +79,17 @@ public class MyAuctionsController implements RetroFitHolder {
             try {
                 MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
                 Response<List<DownwardAuction>> response = myAuctionsDao.getDownwardAuctions(email, TokenHolder.getAuthToken()).execute();
+                List<DownwardAuction> auctions = response.body();
+                for (DownwardAuction auction : auctions) {
+                    Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                    if(imagesResponse.isSuccessful())
+                        auction.setImages(imagesResponse.body());
+                }
 
                 if (response.isSuccessful()) {
-                    return response.body();
+                    return auctions;
+                } else if (response.code() == 403) {
+                    return new ArrayList<>();
                 }
 
             } catch (IOException e) {

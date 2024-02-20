@@ -21,16 +21,6 @@ import java.util.List;
 public class ImageController {
     private ImageController() {}
 
-    public static void bind(List<Image> auctionImages, Auction auction) {
-        bindAuctionToImages(auctionImages, auction);
-    }
-
-    private static void bindAuctionToImages(List<Image> auctionImages, Auction auction) {
-        for (Image image : auctionImages) {
-            image.setAuction(auction);
-        }
-    }
-
     private static String convertUriToBase64String(Context context, Uri uri) throws IOException {
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
@@ -53,7 +43,7 @@ public class ImageController {
         List<Image> imageList = new ArrayList<>();
         for (Uri uri : uriList) {
             String base64Data = convertUriToBase64String(context, uri);
-            Image image = new Image(null, base64Data, null);
+            Image image = new Image(null, base64Data);
             imageList.add(image);
         }
         return imageList;

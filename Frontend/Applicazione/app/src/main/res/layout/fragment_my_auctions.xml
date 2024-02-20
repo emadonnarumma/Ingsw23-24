@@ -8,6 +8,16 @@
     android:layout_marginVertical="@dimen/activity_horizontal_margin"
     tools:context=".ui.home.profile.ProfileFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_my_auctions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/personal_auction_text_view_my_auctions"
         android:layout_width="wrap_content"
@@ -21,6 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_my_auctions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="@android:color/transparent"

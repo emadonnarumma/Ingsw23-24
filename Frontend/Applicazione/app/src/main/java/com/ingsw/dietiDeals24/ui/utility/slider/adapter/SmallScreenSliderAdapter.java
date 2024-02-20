@@ -17,13 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SmallScreenSliderAdapter extends SliderViewAdapter<CreateAuctionSmallSliderViewHolder> {
-
-
     private Context context;
     private ArrayList<Uri> images = new ArrayList<>();
-
-
-
 
     public SmallScreenSliderAdapter(Context context) {
         this.context = context;

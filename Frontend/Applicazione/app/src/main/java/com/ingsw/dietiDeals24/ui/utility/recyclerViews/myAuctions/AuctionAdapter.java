@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,16 @@ import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction.FailedDownwardAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction.InProgressDownwardAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction.SuccessfullDownwardAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.FailedReverseAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.InProgressReverseAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.SuccessfullReverseAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.FailedSilentAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.InProgressSilentAuction;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.SuccessfullSilentAuctionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +85,48 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else if (holder instanceof ReverseAuctionViewHolder) {
             ((ReverseAuctionViewHolder) holder).bind((ReverseAuction) auction);
         }
+
+        holder.itemView.setOnClickListener(v -> startAuctionActivity(holder, auction, v));
+    }
+
+    private void startAuctionActivity(RecyclerView.ViewHolder holder, Auction auction, View v) {
+        Class<?> activityClass = null;
+        if (holder instanceof SilentAuctionViewHolder) {
+            activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
+                    SuccessfullSilentAuctionActivity.class,
+                    FailedSilentAuctionActivity.class,
+                    InProgressSilentAuction.class);
+        } else if (holder instanceof DownwardAuctionViewHolder) {
+            activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
+                    SuccessfullDownwardAuctionActivity.class,
+                    FailedDownwardAuctionActivity.class,
+                    InProgressDownwardAuctionActivity.class);
+        } else if (holder instanceof ReverseAuctionViewHolder) {
+            activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
+                    SuccessfullReverseAuctionActivity.class,
+                    FailedReverseAuctionActivity.class,
+                    InProgressReverseAuctionActivity.class);
+        }
+
+        if (activityClass != null) {
+            Intent intent = new Intent(v.getContext(), activityClass);
+            intent.putExtra("auction", auction);
+            v.getContext().startActivity(intent);
+        }
+    }
+
+    private Class<?> getActivityClassForAuctionStatus(AuctionStatus status,
+                                                      Class<?> successfulClass,
+                                                      Class<?> failedClass,
+                                                      Class<?> inProgressClass) {
+        if (status == AuctionStatus.SUCCESSFUL) {
+            return successfulClass;
+        } else if (status == AuctionStatus.FAILED) {
+            return failedClass;
+        } else if (status == AuctionStatus.IN_PROGRESS) {
+            return inProgressClass;
+        }
+        return null;
     }
 
     @Override

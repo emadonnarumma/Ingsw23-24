@@ -127,7 +127,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         minutesWheelView.setStyle(wheelViewStyle);
         minutesWheelView.setWheelData(minuteList);
         minutesWheelView.setExtraText("Minuto/i", getResources().getColor(R.color.blue), 40, 100);
-        minutesWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
+        minutesWheelView.setOnWheelItemSelectedListener((position, data) -> updateWithdrawalTimeTextView());
     }
 
     private void setupHoursWheel(@NonNull View view) {
@@ -138,7 +138,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         hoursWheelView.setWheelData(hourList);
         hoursWheelView.setExtraText("Ora/e", getResources().getColor(R.color.blue), 40, 100);
         hoursWheelView.setSelection(1);
-        hoursWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
+        hoursWheelView.setOnWheelItemSelectedListener((position, data) -> updateWithdrawalTimeTextView());
     }
 
     private void setupDaysWheelView(View view) {
@@ -148,7 +148,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         daysWheelView.setStyle(wheelViewStyle);
         daysWheelView.setWheelData(dayList);
         daysWheelView.setExtraText("Giorno/i", getResources().getColor(R.color.blue), 40, 100);
-        daysWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
+        daysWheelView.setOnWheelItemSelectedListener((position, data) -> updateWithdrawalTimeTextView());
     }
 
     private void setupMonthsWheelView(View view) {
@@ -158,7 +158,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         monthsWheelView.setStyle(wheelViewStyle);
         monthsWheelView.setWheelData(monthList);
         monthsWheelView.setExtraText("Mese/i", getResources().getColor(R.color.blue), 40, 100);
-        monthsWheelView.setOnWheelItemSelectedListener((position, data) -> updateDecrementTimeTextView());
+        monthsWheelView.setOnWheelItemSelectedListener((position, data) -> updateWithdrawalTimeTextView());
     }
 
     private void setupWithdrawalTimeTextView(View view) {
@@ -249,8 +249,8 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         return false;
     }
 
-    private void updateDecrementTimeTextView() {
-        String decrementTime = "Decremento ogni: ";
+    private void updateWithdrawalTimeTextView() {
+        String decrementTime = "Offerte ritirabili entro: ";
         if (!monthsWheelView.getSelectionItem().equals("0")) {
             decrementTime += monthsWheelView.getSelectionItem() + "M ";
         }

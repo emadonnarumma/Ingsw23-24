@@ -25,4 +25,5 @@ public class Image {
     public void setBase64Data(String base64Data) {
         this.base64Data = base64Data;
     }
+
 }

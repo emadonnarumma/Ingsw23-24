@@ -53,10 +53,10 @@ public class ImageController {
 	    return ResponseEntity.ok(images);
 	}
 
-    @PostMapping
-    public ResponseEntity<Image> addImages(@Valid @RequestBody Image image) {
+    @PostMapping("/{auctionId}")
+    public ResponseEntity<Image> addImage(@Valid @RequestBody Image image, @PathVariable Integer auctionId) {
 
-		Optional<Auction> auction = auctionService.findById(image.getAuction().getIdAuction());
+		Optional<Auction> auction = auctionService.findById(auctionId);
 
 		if (auction.isEmpty()) {
 

@@ -1,6 +1,7 @@
 package com.ingsw.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class ReverseAuction extends Auction {
     private Timestamp expirationDate;
     
     @OneToMany(mappedBy = "reverseAuction", fetch = FetchType.EAGER)
-    @JsonManagedReference("reverseAuction-reverseBid")
+    @JsonIgnore
     private List<ReverseBid> receivedBids;
 
 

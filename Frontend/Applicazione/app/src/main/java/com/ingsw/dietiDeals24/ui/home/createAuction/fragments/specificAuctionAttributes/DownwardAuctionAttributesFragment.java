@@ -316,8 +316,8 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
             try {
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
-                CreateAuctionController.createAuction(newDownwardAuction, images).get();
                 newDownwardAuction.setImages(images);
+                CreateAuctionController.createAuction(newDownwardAuction).get();
                 viewModel.setNewAuction(new MutableLiveData<>());
                 createAuctionButton.revertAnimation();
 

@@ -44,9 +44,7 @@ public abstract class Auction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAuction;
 
-    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("auction-image")
+    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Image> images;
 
     @Column(nullable = false)
@@ -66,7 +64,6 @@ public abstract class Auction {
     
     @ManyToOne
     @JoinColumn(name = "owner_email", referencedColumnName = "email")
-    @JsonBackReference
     private User owner;
 
 }

@@ -5,12 +5,10 @@ public class ExternalLink {
     private Integer idExternalLink;
     private String title;
     private String url;
-    private User user;
 
-    public ExternalLink(String title, String url, User user) {
+    public ExternalLink(String title, String url) {
         this.title = title;
         this.url = url;
-        this.user = user;
     }
 
     public Integer getIdExternalLink() {
@@ -35,13 +33,5 @@ public class ExternalLink {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

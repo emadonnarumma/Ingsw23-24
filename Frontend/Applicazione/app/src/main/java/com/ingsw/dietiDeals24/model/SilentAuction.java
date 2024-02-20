@@ -11,17 +11,15 @@ public class SilentAuction extends Auction {
 
     private String expirationDate;
     private Long withdrawalTime;
-    private List<SilentBid> receivedBids;
 
 
     public SilentAuction(User owner, String title, String description,
                          Wear wear, Category category, AuctionStatus status,
-                         String expirationDate, Long withdrawalTime, List<SilentBid> receivedBids) {
+                         String expirationDate, Long withdrawalTime) {
 
         super(owner, title, description, wear, category, status, AuctionType.SILENT);
         this.expirationDate = expirationDate;
         this.withdrawalTime = withdrawalTime;
-        this.receivedBids = receivedBids;
     }
 
     public String getExpirationDate() {
@@ -38,13 +36,5 @@ public class SilentAuction extends Auction {
 
     public void setWithdrawalTime(Long withdrawalTime) {
         this.withdrawalTime = withdrawalTime;
-    }
-
-    public List<SilentBid> getReceivedBids() {
-        return receivedBids;
-    }
-
-    public void setReceivedBids(List<SilentBid> receivedBids) {
-        this.receivedBids = receivedBids;
     }
 }

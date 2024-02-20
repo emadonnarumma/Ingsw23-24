@@ -11,7 +11,6 @@ import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.createAuction.CreateAuctionDao;
 import com.ingsw.dietiDeals24.network.createAuction.InsertImagesDao;
-import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.ImageAuctionBinder;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,16 +23,15 @@ public class CreateAuctionController implements RetroFitHolder {
     private CreateAuctionController() {
     }
 
-    public static CompletableFuture<Boolean> createAuction(ReverseAuction newAuction, List<Image> images) {
+    public static CompletableFuture<Boolean> createAuction(ReverseAuction newAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
                 Response<ReverseAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    ReverseAuction auction = response.body();
-                    ImageAuctionBinder.bind(images, auction);
-                    addImagesIfPresent(images, auction);
+                    //ReverseAuction auction = response.body();
+                    //addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -46,16 +44,15 @@ public class CreateAuctionController implements RetroFitHolder {
         });
     }
 
-    public static CompletableFuture<Boolean> createAuction(SilentAuction newAuction, List<Image> images) {
+    public static CompletableFuture<Boolean> createAuction(SilentAuction newAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
                 Response<SilentAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    SilentAuction auction = response.body();
-                    ImageAuctionBinder.bind(images, auction);
-                    addImagesIfPresent(images, auction);
+                    //SilentAuction auction = response.body();
+                    //addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -68,16 +65,15 @@ public class CreateAuctionController implements RetroFitHolder {
         });
     }
 
-    public static CompletableFuture<Boolean> createAuction(DownwardAuction newAuction, List<Image> images) {
+    public static CompletableFuture<Boolean> createAuction(DownwardAuction newAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);
                 Response<DownwardAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    DownwardAuction auction = response.body();
-                    ImageAuctionBinder.bind(images, auction);
-                    addImagesIfPresent(images, auction);
+                    //DownwardAuction auction = response.body();
+                    //addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -90,7 +86,7 @@ public class CreateAuctionController implements RetroFitHolder {
         });
     }
 
-    private static void addImagesIfPresent(List<Image> images, Auction auction) {
+    /*private static void addImagesIfPresent(List<Image> images, Auction auction) {
         if (!images.isEmpty()) {
             insertImages(images);
         }
@@ -108,7 +104,7 @@ public class CreateAuctionController implements RetroFitHolder {
                 return false;
             }
         });
-    }
+    }*/
 
     public static boolean isValidDecrementAmount(double initialPrice, double decrementAmount) {
         return decrementAmount <= initialPrice * 0.15;

@@ -1,6 +1,7 @@
 package com.ingsw.backend.controller;
 
 import com.ingsw.backend.model.*;
+import com.ingsw.backend.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,10 @@ public class AuctionController {
 	@Autowired
 	@Qualifier("mainUserService")
 	private UserService userService;
+
+    @Autowired
+    @Qualifier("mainImageService")
+    private ImageService imageService;
 	
 	
 	@GetMapping
@@ -69,6 +74,11 @@ public class AuctionController {
         auction.setOwner(owner.get());
 
         Auction savedAuction = auctionService.addAuction(auction);
+
+        for(Image image : auction.getImages()) {
+            image.setAuction(auction);
+            imageService.addImage(image);
+        }
 
         return new ResponseEntity<>(savedAuction, HttpStatus.CREATED);
     }

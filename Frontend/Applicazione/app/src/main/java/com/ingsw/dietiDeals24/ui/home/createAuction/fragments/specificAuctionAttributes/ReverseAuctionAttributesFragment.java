@@ -113,8 +113,8 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
             try {
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), uriImages);
-                CreateAuctionController.createAuction(newReverseAuction, images).get();
                 newReverseAuction.setImages(images);
+                CreateAuctionController.createAuction(newReverseAuction).get();
                 createAuctionButton.revertAnimation();
                 viewModel.setNewAuction(new MutableLiveData<>());
 

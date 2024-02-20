@@ -70,7 +70,6 @@ public abstract class User implements UserDetails{
 	private Role role;
 	
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonManagedReference("user-externalLink")
     private List<ExternalLink> externalLinks;
 
 	@Override

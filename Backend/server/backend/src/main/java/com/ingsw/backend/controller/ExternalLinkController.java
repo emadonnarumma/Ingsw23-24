@@ -33,10 +33,10 @@ public class ExternalLinkController {
 	@Qualifier("mainUserService")
 	private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<ExternalLink> addExternalLink(@Valid @RequestBody ExternalLink externalLink) {
+    @PostMapping("/{email}")
+    public ResponseEntity<ExternalLink> addExternalLink(@Valid @RequestBody ExternalLink externalLink, @PathVariable String email) {
         
-    	Optional<User> user = userService.getUser(externalLink.getUser().getEmail());
+    	Optional<User> user = userService.getUser(email);
         
 		if (user.isEmpty()) {
 			

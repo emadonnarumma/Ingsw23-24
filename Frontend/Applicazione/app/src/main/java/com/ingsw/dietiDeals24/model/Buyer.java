@@ -7,20 +7,9 @@ import java.util.List;
 
 public class Buyer extends User {
 
-    List<ReverseAuction> reverseAuctions;
-
     public Buyer(Role role, String name, String email, String password, String bio, Region region,
-                 List<ExternalLink> externalLinks, List<ReverseAuction> reverseAuctions) {
+                 List<ExternalLink> externalLinks) {
 
         super(role, name, email, password, bio, region, externalLinks);
-        this.reverseAuctions = reverseAuctions;
-    }
-
-    public List<ReverseAuction> getReverseAuctions() {
-        return reverseAuctions;
-    }
-
-    public void setReverseAuctions(List<ReverseAuction> reverseAuctions) {
-        this.reverseAuctions = reverseAuctions;
     }
 }

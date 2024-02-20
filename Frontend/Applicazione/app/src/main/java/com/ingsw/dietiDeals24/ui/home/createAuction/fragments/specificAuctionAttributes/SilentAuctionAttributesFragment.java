@@ -189,16 +189,15 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
                     category,
                     AuctionStatus.IN_PROGRESS,
                     expirationDate,
-                    getWithDrawalTime(),
-                    null
+                    getWithDrawalTime()
             );
 
             createAuctionButton.startAnimation();
 
             try {
                 List<Image> images = ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
-                CreateAuctionController.createAuction(newSilentAuction, images).get();
                 newSilentAuction.setImages(images);
+                CreateAuctionController.createAuction(newSilentAuction).get();
                 createAuctionButton.revertAnimation();
                 viewModel.setNewAuction(new MutableLiveData<>());
 

@@ -39,7 +39,7 @@ public class ImageConverter {
         List<Image> imageList = new ArrayList<>();
         for (Uri uri : uriList) {
             String base64Data = convertUriToBase64String(context, uri);
-            Image image = new Image(null, base64Data, null);
+            Image image = new Image(null, base64Data);
             imageList.add(image);
         }
         return imageList;

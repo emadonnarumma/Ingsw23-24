@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
+import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
@@ -31,7 +32,6 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttr
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
-import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.ImageConverter;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
@@ -189,16 +189,15 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
                     category,
                     AuctionStatus.IN_PROGRESS,
                     expirationDate,
-                    getWithDrawalTime(),
-                    null
+                    getWithDrawalTime()
             );
 
             createAuctionButton.startAnimation();
 
             try {
-                List<Image> images = ImageConverter.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
-                CreateAuctionController.createAuction(newSilentAuction, images).get();
+                List<Image> images = ImageController.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
                 newSilentAuction.setImages(images);
+                CreateAuctionController.createAuction(newSilentAuction).get();
                 createAuctionButton.revertAnimation();
                 viewModel.setNewAuction(new MutableLiveData<>());
 

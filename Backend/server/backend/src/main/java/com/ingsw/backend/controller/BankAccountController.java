@@ -28,10 +28,10 @@ public class BankAccountController {
 	@Qualifier("mainUserService")
 	private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<BankAccount> addBankAccount(@Valid @RequestBody BankAccount bankAccount) {
+    @PostMapping("/{email}")
+    public ResponseEntity<BankAccount> addBankAccount(@Valid @RequestBody BankAccount bankAccount, @PathVariable String email) {
         
-    	Optional<User> seller = userService.getUser(bankAccount.getSeller().getEmail());
+    	Optional<User> seller = userService.getUser(email);
         
 		if (seller.isEmpty()) {
 			

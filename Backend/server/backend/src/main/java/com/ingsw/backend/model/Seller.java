@@ -1,5 +1,6 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,19 +25,18 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Seller extends User {
 
     @OneToOne(mappedBy = "seller")
-    @JsonManagedReference("seller-bankAccount")
     private BankAccount bankAccount;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonIgnore
     private List<SilentAuction> silentAuctions;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonIgnore
     private List<DownwardAuction> downwardAuctions;
 
     @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
-    @JsonManagedReference("seller-reverseBid")
+    @JsonIgnore
     private List<ReverseBid> bids;
 
 

@@ -37,16 +37,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		  @JsonSubTypes.Type(value = DownwardAuction.class, name = "DOWNWARD"),
 		  @JsonSubTypes.Type(value = ReverseAuction.class, name = "REVERSE")
 				})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAuction")
 public abstract class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAuction;
 
-    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("auction-image")
+    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Image> images;
 
     @Column(nullable = false)
@@ -66,7 +63,6 @@ public abstract class Auction {
     
     @ManyToOne
     @JoinColumn(name = "owner_email", referencedColumnName = "email")
-    @JsonBackReference
     private User owner;
 
 }

@@ -1,5 +1,6 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,11 +28,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Buyer extends User {
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonIgnore
     private List<ReverseAuction> reverseAuctions;
 
     @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER)
-    @JsonManagedReference("buyer-silentBid")
+    @JsonIgnore
     private List<SilentBid> bids;
 
 }

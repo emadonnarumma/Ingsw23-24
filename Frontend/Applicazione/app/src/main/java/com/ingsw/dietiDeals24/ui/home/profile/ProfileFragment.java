@@ -87,36 +87,38 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         }
 
         if (ProfileController.getUser().isSeller()) {
-            sellerSwitch.setChecked(true);
-            sellerSwitchTextView.setTranslationX(16);
-            sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
-        } else {
-            sellerSwitch.setChecked(false);
-            sellerSwitchTextView.setTranslationX(8);
-            sellerSwitchTextView.setTextColor(getResources().getColor(R.color.gray));
+            sellerSwitch.performClick();
+            startSellerAnimation();
         }
     }
 
     private void putAnimationOnSellerSwitch() {
         sellerSwitch.setOnClickListener(v -> {
-            if (sellerSwitch.isChecked()) {
-                sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
-
-                // Load the animation from the XML file
-                Animation animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.switch_button_on);
-
-                // Start the animation on the TextView
-                sellerSwitchTextView.startAnimation(animation);
-            } else {
-                sellerSwitchTextView.setTextColor(getResources().getColor(R.color.gray));
-
-                // Load the animation from the XML file
-                Animation animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.switch_button_off);
-
-                // Start the animation on the TextView
-                sellerSwitchTextView.startAnimation(animation);
-            }
+            if (sellerSwitch.isChecked())
+                startSellerAnimation();
+            else
+                startNotSellerAnimation();
         });
+    }
+
+    private void startSellerAnimation() {
+        sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
+
+        // Load the animation from the XML file
+        Animation animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.switch_button_on);
+
+        // Start the animation on the TextView
+        sellerSwitchTextView.startAnimation(animation);
+    }
+
+    private void startNotSellerAnimation() {
+        sellerSwitchTextView.setTextColor(getResources().getColor(R.color.gray));
+
+        // Load the animation from the XML file
+        Animation animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.switch_button_off);
+
+        // Start the animation on the TextView
+        sellerSwitchTextView.startAnimation(animation);
     }
 
     private void goToEditProfileFragment() {

@@ -2,6 +2,8 @@ package com.ingsw.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +27,7 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
-    @JsonBackReference("auction-image")
+    @JsonIgnore
     private Auction auction;
 
     

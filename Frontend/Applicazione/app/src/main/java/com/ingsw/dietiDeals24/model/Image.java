@@ -4,12 +4,10 @@ public class Image {
 
     private Integer idImage;
     private String base64Data;
-    private Auction auction;
 
-    public Image(Integer idImage, String base64Data, Auction auction) {
+    public Image(Integer idImage, String base64Data) {
         this.idImage = idImage;
         this.base64Data = base64Data;
-        this.auction = auction;
     }
 
     public Integer getIdImage() {
@@ -18,14 +16,6 @@ public class Image {
 
     public void setIdImage(Integer idImage) {
         this.idImage = idImage;
-    }
-
-    public Auction getAuction() {
-        return auction;
-    }
-
-    public void setAuction(Auction auction) {
-        this.auction = auction;
     }
 
     public String getBase64Data() {

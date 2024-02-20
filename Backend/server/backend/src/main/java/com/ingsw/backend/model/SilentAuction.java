@@ -1,6 +1,7 @@
 package com.ingsw.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,6 @@ public class SilentAuction extends Auction {
     private Long withdrawalTime;
 
     @OneToMany(mappedBy = "silentAuction", fetch = FetchType.EAGER)
-    @JsonManagedReference("silentAuction-silentBid")
+    @JsonIgnore
     private List<SilentBid> receivedBids;
 }

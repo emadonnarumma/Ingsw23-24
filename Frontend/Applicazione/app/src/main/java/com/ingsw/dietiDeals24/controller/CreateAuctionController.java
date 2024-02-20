@@ -11,7 +11,6 @@ import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.createAuction.CreateAuctionDao;
 import com.ingsw.dietiDeals24.network.createAuction.InsertImagesDao;
-import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.ImageAuctionBinder;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +31,7 @@ public class CreateAuctionController implements RetroFitHolder {
 
                 if (response.isSuccessful()) {
                     ReverseAuction auction = response.body();
-                    ImageAuctionBinder.bind(images, auction);
+                    ImageController.bind(images, auction);
                     addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
@@ -54,7 +53,7 @@ public class CreateAuctionController implements RetroFitHolder {
 
                 if (response.isSuccessful()) {
                     SilentAuction auction = response.body();
-                    ImageAuctionBinder.bind(images, auction);
+                    ImageController.bind(images, auction);
                     addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
@@ -76,7 +75,7 @@ public class CreateAuctionController implements RetroFitHolder {
 
                 if (response.isSuccessful()) {
                     DownwardAuction auction = response.body();
-                    ImageAuctionBinder.bind(images, auction);
+                    ImageController.bind(images, auction);
                     addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {

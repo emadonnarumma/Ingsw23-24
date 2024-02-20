@@ -19,6 +19,8 @@ import java.util.concurrent.ExecutionException;
 import retrofit2.Response;
 
 public class MyAuctionsController implements RetroFitHolder {
+   private MyAuctionsController() {}
+
     public static CompletableFuture<List<SilentAuction>> getSilentAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
             try {

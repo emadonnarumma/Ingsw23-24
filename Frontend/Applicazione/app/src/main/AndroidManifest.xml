@@ -23,7 +23,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.myAuctions.AuctionDetailsActivity"
+            android:name=".ui.home.myAuctions.auctionDetails.AuctionDetailsActivity"
             android:exported="false" />
 
         <provider

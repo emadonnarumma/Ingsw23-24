@@ -28,4 +28,21 @@ public enum Wear {
                 return null;
         }
     }
+
+    public static String toItalianString(Wear wear) {
+        switch (wear) {
+            case NEW:
+                return "Nuovo";
+            case VERY_GOOD_CONDITION:
+                return "Ottime condizioni";
+            case GOOD_CONDITION:
+                return "Buone condizioni";
+            case BAD_CONDITION:
+                return "Pessime condizioni";
+            case NOT_SPECIFIED:
+                return "Non specificato";
+            default:
+                return null;
+        }
+    }
 }

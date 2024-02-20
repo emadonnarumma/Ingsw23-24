@@ -1,9 +1,21 @@
 package com.ingsw.dietiDeals24.controller;
 
+import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 
 public class MyAuctionDetailsController implements RetroFitHolder {
+    private static Auction auction;
+
+    public static Auction getAuction() {
+        return auction;
+    }
+
+    public static void setAuction(Auction auction) {
+        MyAuctionDetailsController.auction = auction;
+    }
+
+
     private MyAuctionDetailsController() {
     }
 
@@ -35,6 +47,6 @@ public class MyAuctionDetailsController implements RetroFitHolder {
             formattedTime += minutes + "Min";
         }
 
-        return "I compratori avevano : " + formattedTime + " per ritirare le offerte";
+        return "I compratori hanno : " + formattedTime + " per ritirare le offerte";
     }
 }

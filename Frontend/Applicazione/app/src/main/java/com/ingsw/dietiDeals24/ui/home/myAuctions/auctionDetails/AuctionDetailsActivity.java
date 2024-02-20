@@ -1,14 +1,22 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ScrollView;
 import androidx.cardview.widget.CardView;
+
+import com.ingsw.dietiDeals24.controller.ImageController;
+import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 import com.ingsw.dietiDeals24.R;
+
+import java.util.ArrayList;
 
 public abstract class AuctionDetailsActivity extends AppCompatActivity {
 
@@ -55,5 +63,17 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
         questionMarkButtonAuctionDetails = findViewById(R.id.iquestion_mark_button_auction_details);
         greenButton = findViewById(R.id.green_button);
         redButton = findViewById(R.id.red_button);
+    }
+
+    protected void bindImages(Auction auction) {
+        SmallScreenSliderAdapter adapter = new SmallScreenSliderAdapter(getApplicationContext());
+        sliderViewAuctionDetails.setSliderAdapter(adapter);
+
+        ArrayList<Uri> images = new ArrayList<>();
+        for (int i = 0; i < auction.getImages().size(); i++) {
+            images.add(ImageController.base64ToUri(auction.getImages().get(i).getBase64Data(), getApplicationContext()));
+        }
+
+        adapter.renewItems(images);
     }
 }

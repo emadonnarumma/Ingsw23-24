@@ -9,14 +9,17 @@
     <ScrollView
         android:id="@+id/scroll_view_auction_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        android:background="@color/cyan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/green_button">
 
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="650dp"
-            android:background="@color/cyan"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
@@ -129,6 +132,7 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
 
+                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wear_text_view_auction_details" />
@@ -137,7 +141,7 @@
                 android:id="@+id/price_text_view_auction_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/verdana_bold"
                 android:text="Prezzo corrente: 20 €"
                 android:textColor="@color/white"
@@ -191,32 +195,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/specific_information_2_text_view_auction_details" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <Button
+    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/green_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/button_height"
         android:background="@drawable/square_shape_green"
         android:text="@string/login_phrase"
         android:textColor="@color/white"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scroll_view_auction_details"
         app:layout_constraintWidth_percent="0.5" />
 
-    <Button
+    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/red_button"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/square_shape_red"
+        android:layout_height="@dimen/button_height"
         android:text="@string/login_phrase"
         android:textColor="@color/white"
+        android:background="@drawable/square_shape_red"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scroll_view_auction_details"
         app:layout_constraintWidth_percent="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

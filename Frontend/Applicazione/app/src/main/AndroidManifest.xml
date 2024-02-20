@@ -49,6 +49,42 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.myAuctions.auctionDetails.downwardAuction.SuccessfullDownwardAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.downwardAuction.FailedDownwardAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.downwardAuction.InProgressDownwardAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.silentAuction.SuccessfullSilentAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.silentAuction.FailedSilentAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.silentAuction.InProgressSilentAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.reverseAuction.SuccessfullReverseAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.reverseAuction.FailedReverseAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myAuctions.auctionDetails.reverseAuction.InProgressReverseAuctionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait">

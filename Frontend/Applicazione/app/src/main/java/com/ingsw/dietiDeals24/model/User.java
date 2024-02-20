@@ -3,9 +3,10 @@ package com.ingsw.dietiDeals24.model;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
     private Role role;
     private String name;

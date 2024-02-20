@@ -6,7 +6,9 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 
-public class ReverseAuction extends Auction {
+import java.io.Serializable;
+
+public class ReverseAuction extends Auction implements Serializable {
 
     private double currentPrice;
     private String expirationDate;

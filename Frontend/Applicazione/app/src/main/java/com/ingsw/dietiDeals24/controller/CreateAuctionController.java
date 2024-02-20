@@ -30,8 +30,6 @@ public class CreateAuctionController implements RetroFitHolder {
                 Response<ReverseAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    //ReverseAuction auction = response.body();
-                    //addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -51,8 +49,6 @@ public class CreateAuctionController implements RetroFitHolder {
                 Response<SilentAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    //SilentAuction auction = response.body();
-                    //addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -72,8 +68,6 @@ public class CreateAuctionController implements RetroFitHolder {
                 Response<DownwardAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    //DownwardAuction auction = response.body();
-                    //addImagesIfPresent(images, auction);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -85,26 +79,6 @@ public class CreateAuctionController implements RetroFitHolder {
             return false;
         });
     }
-
-    /*private static void addImagesIfPresent(List<Image> images, Auction auction) {
-        if (!images.isEmpty()) {
-            insertImages(images);
-        }
-    }
-
-    public static CompletableFuture<Boolean> insertImages(List<Image> images) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                InsertImagesDao insertImagesDao = retrofit.create(InsertImagesDao.class);
-                for (Image image : images) {
-                    Response<Image> response = insertImagesDao.insertImage(image, TokenHolder.getAuthToken()).execute();
-                }
-                return true;
-            } catch (IOException e) {
-                return false;
-            }
-        });
-    }*/
 
     public static boolean isValidDecrementAmount(double initialPrice, double decrementAmount) {
         return decrementAmount <= initialPrice * 0.15;

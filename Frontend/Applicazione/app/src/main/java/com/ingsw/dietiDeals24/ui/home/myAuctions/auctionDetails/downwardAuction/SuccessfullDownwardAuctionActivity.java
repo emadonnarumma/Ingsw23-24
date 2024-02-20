@@ -5,10 +5,6 @@ import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsAc
 
 public class SuccessfullDownwardAuctionActivity extends AuctionDetailsActivity {
 
-        public SuccessfullDownwardAuctionActivity(DownwardAuction auction) {
-
-        }
-
         @Override
         protected void onResume() {
             super.onResume();

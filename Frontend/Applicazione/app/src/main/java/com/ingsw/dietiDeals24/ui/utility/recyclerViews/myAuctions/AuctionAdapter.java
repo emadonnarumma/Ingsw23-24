@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
@@ -21,7 +22,7 @@ import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.F
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.InProgressReverseAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.SuccessfullReverseAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.FailedSilentAuctionActivity;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.InProgressSilentAuction;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.InProgressSilentAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.SuccessfullSilentAuctionActivity;
 
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
                     SuccessfullSilentAuctionActivity.class,
                     FailedSilentAuctionActivity.class,
-                    InProgressSilentAuction.class);
+                    InProgressSilentAuctionActivity.class);
         } else if (holder instanceof DownwardAuctionViewHolder) {
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
                     SuccessfullDownwardAuctionActivity.class,
@@ -110,7 +111,7 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (activityClass != null) {
             Intent intent = new Intent(v.getContext(), activityClass);
-            intent.putExtra("auction", auction);
+            MyAuctionDetailsController.setAuction(auction);
             v.getContext().startActivity(intent);
         }
     }

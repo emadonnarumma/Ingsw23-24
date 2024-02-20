@@ -79,6 +79,7 @@ public class SmallScreenSliderAdapter extends SliderViewAdapter<CreateAuctionSma
             Intent intent = new Intent(context, FullScreenSliderActivity.class);
             intent.putParcelableArrayListExtra("images", images);
             intent.putExtra("position", position);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
     }

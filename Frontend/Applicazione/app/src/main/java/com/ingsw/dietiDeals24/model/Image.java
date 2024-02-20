@@ -1,6 +1,8 @@
 package com.ingsw.dietiDeals24.model;
 
-public class Image {
+import java.io.Serializable;
+
+public class Image implements Serializable {
 
     private Integer idImage;
     private String base64Data;

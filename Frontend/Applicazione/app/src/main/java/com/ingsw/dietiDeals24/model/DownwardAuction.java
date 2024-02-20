@@ -5,7 +5,9 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 
-public class DownwardAuction extends Auction {
+import java.io.Serializable;
+
+public class DownwardAuction extends Auction implements Serializable {
 
     private Double secretMinimumPrice;
     private Double currentPrice;

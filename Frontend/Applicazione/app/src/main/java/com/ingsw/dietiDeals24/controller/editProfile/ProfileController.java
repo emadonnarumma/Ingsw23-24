@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 
 public class ProfileController {
     private static MutableLiveData<ExternalLinkFormState> externalLinkFormState = new MutableLiveData<>();
+    private static ExternalLink selectedExternalLink;
 
     public static MutableLiveData<ExternalLinkFormState> getExternalLinkFormState() {
         return externalLinkFormState;
@@ -84,5 +86,13 @@ public class ProfileController {
 
     public static User getUser() {
         return UserHolder.user;
+    }
+
+    public static ExternalLink getSelectedExternalLink() {
+        return selectedExternalLink;
+    }
+
+    public static void setSelectedExternalLink(ExternalLink selectedExternalLink) {
+        ProfileController.selectedExternalLink = selectedExternalLink;
     }
 }

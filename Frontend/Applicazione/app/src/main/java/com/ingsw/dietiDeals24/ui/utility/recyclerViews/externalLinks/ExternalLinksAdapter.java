@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
@@ -15,11 +16,11 @@ import java.util.List;
 
 public class ExternalLinksAdapter extends RecyclerView.Adapter<ExternalLinkHolder> {
     private static List<ExternalLink> externalLinks;
-    private Context context;
+    private Fragment fragment;
 
-    public ExternalLinksAdapter(@NonNull List<ExternalLink> externalLinks, Context context) {
+    public ExternalLinksAdapter(@NonNull List<ExternalLink> externalLinks, Fragment fragment) {
         this.externalLinks = externalLinks;
-        this.context = context;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -32,8 +33,7 @@ public class ExternalLinksAdapter extends RecyclerView.Adapter<ExternalLinkHolde
     @Override
     public void onBindViewHolder(@NonNull ExternalLinkHolder holder, int position) {
         ExternalLink externalLink = externalLinks.get(position);
-        holder.titleTextView.setText(externalLink.getTitle());
-        holder.urlTextView.setText(externalLink.getUrl());
+        holder.bind(externalLink, fragment);
     }
 
     @Override

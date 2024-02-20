@@ -44,7 +44,7 @@ public class EditExternalLinksFragment extends FragmentOfHomeActivity {
 
     private void initRecyclerView() {
         externalLinksRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        adapter = new ExternalLinksAdapter(ProfileController.getUser().getExternalLinks(), requireActivity());
+        adapter = new ExternalLinksAdapter(ProfileController.getUser().getExternalLinks(), this);
         externalLinksRecyclerView.setAdapter(adapter);
     }
 

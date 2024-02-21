@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation("jp.hamcheesedev:outlinedtextview:0.1.0")
+
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-core:21.1.1")
 

@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.registration.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
@@ -32,6 +34,7 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     private SmartMaterialSpinner<String> regionSmartSpinner;
     private EditText bioEditText;
     private User registeringUser = RegistrationController.user;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -97,18 +100,21 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     @NonNull
     private Thread getRegistrationThread() {
         return new Thread(() -> {
+            requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
             try {
 
                 RegistrationController.register().get();
                 goToHomeActivity();
+                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
 
             } catch(ExecutionException e){
 
                 if (e.getCause() instanceof AuthenticationException) {
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Email già in uso"));
-
+                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
                 } else if (e.getCause() instanceof ConnectionException) {
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Errore di connessione"));
+                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
                 }
 
             } catch(InterruptedException e){
@@ -123,6 +129,8 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     }
 
     private void findTheViews() {
+        progressBar = requireView().findViewById(R.id.progress_bar_registration_optional_info);
+        progressBar.setVisibility(View.GONE);
         regionSmartSpinner = requireView().findViewById(R.id.region_spinner_registration);
         bioEditText = requireView().findViewById(R.id.bio_edit_text_registration);
     }

@@ -63,16 +63,14 @@ public class AuctionController {
     
     @PostMapping
     public ResponseEntity<Auction> addAuction(@Valid @RequestBody Auction auction) {
-
         Optional<User> owner = userService.getUser(auction.getOwner().getEmail());
         
 		if (owner.isEmpty()) {
-			
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
-        auction.setOwner(owner.get());
 
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        auction.setOwner(owner.get());
         Auction savedAuction = auctionService.addAuction(auction);
 
         for(Image image : auction.getImages()) {
@@ -86,30 +84,34 @@ public class AuctionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-    	
     	Boolean isDeleted = auctionService.delete(id);
-        
+
     	if (!isDeleted) {
     		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
         }
-        
+
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/relaunch")
+    public ResponseEntity<Auction> relaunchAuction(@Valid @RequestBody Auction auction) {
+        Boolean isDeleted = auctionService.delete(auction.getIdAuction());
+        if (!isDeleted) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return addAuction(auction);
+        }
     }
     
     @PostMapping("/buyNow/{auctionId}")
     public ResponseEntity<Boolean> buyNow(@PathVariable Integer auctionId) {
-        
     	Boolean result = auctionService.buyDownwardAuctionNow(auctionId);
-        
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{auctionId}/remainingSeconds")
     public ResponseEntity<Long> getRemainingSeconds(@PathVariable Integer auctionId) {
-        
     	Long remainingSeconds = auctionService.getRemainingSecondsForAuction(auctionId);
-        
         return new ResponseEntity<>(remainingSeconds, HttpStatus.OK);
     }
 

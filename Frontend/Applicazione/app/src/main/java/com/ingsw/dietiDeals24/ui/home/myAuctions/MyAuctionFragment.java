@@ -41,16 +41,23 @@ public class MyAuctionFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        updateAuctions();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         recyclerView = view.findViewById(R.id.recycler_view_my_auctions);
         progressBar = view.findViewById(R.id.progress_bar_my_auctions);
+    }
 
-        recyclerView.setVisibility(View.GONE);
+    private void updateAuctions() {
         progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
 
-        Thread updateAuctions = new Thread(() -> {
+        new Thread(() -> {
             try {
                 List<SilentAuction> silentAuctions = MyAuctionsController.getSilentAuctions(UserHolder.user.getEmail()).get();
                 List<DownwardAuction> downwardAuctions = MyAuctionsController.getDownwardAuctions(UserHolder.user.getEmail()).get();
@@ -74,8 +81,7 @@ public class MyAuctionFragment extends Fragment {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        });
-
-        updateAuctions.start();
+        }).start();
     }
+
 }

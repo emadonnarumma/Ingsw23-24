@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.R;
@@ -75,7 +76,7 @@ public class SilentAuctionViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
 
-        expirationDateTextView.setText(silentAuction.getExpirationDate().substring(0, 10));
+        expirationDateTextView.setText(MyAuctionsController.getFormattedExpirationDate(silentAuction));
 
         if (silentAuction.getImages() != null) {
             bindImages(silentAuction);

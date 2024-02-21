@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,12 +19,14 @@ import com.ingsw.dietiDeals24.R;
 
 import java.util.ArrayList;
 
-public abstract class AuctionDetailsActivity extends AppCompatActivity {
+import jp.hamcheesedev.outlinedtextview.CompatOutlinedTextView;
 
+public abstract class AuctionDetailsActivity extends AppCompatActivity {
     protected ScrollView scrollViewAuctionDetails;
     protected Button greenButton, redButton;
     protected ImageButton questionMarkButtonAuctionDetails;
-    protected TextView auctionTypeTextViewAuctionDetails, categoryTextViewAuctionDetails, titleTextViewAuctionDetails, auctionStatusTextViewAuctionDetails, wearTextViewAuctionDetails, descriptionTextViewAuctionDetails, priceTextViewAuctionDetails, specificInformation1TextViewAuctionDetails, specificInformation2TextViewAuctionDetails, specificInformation3TextViewAuctionDetails;
+    protected TextView auctionTypeTextViewAuctionDetails, categoryTextViewAuctionDetails, titleTextViewAuctionDetails, wearTextViewAuctionDetails, descriptionTextViewAuctionDetails, priceTextViewAuctionDetails, specificInformation1TextViewAuctionDetails, specificInformation2TextViewAuctionDetails, specificInformation3TextViewAuctionDetails;
+    protected CompatOutlinedTextView auctionStatusTextViewAuctionDetails;
     protected CardView cardViewAuctionDetails;
     protected SliderView sliderViewAuctionDetails;
 
@@ -35,6 +38,8 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
         setupButtons();
         setupTextViews();
         setupSliderView();
+        setSupportActionBar(findViewById(R.id.toolbar_auction_details));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupSliderView() {
@@ -75,5 +80,14 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
         }
 
         adapter.renewItems(images);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

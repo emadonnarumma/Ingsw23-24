@@ -19,5 +19,6 @@
 
     <!-- Dimen related to the Profile -->
     <dimen name="username_height_profile">80dp</dimen>
+    <dimen name="text_size_large">30sp</dimen>
 
 </resources>

@@ -23,79 +23,125 @@ import java.util.concurrent.ExecutionException;
 import retrofit2.Response;
 
 public class MyAuctionsController implements RetroFitHolder {
-   private MyAuctionsController() {}
+    private static List<SilentAuction> silentAuctions = new ArrayList<>();
+    private static List<ReverseAuction> reverseAuctions = new ArrayList<>();
+    private static List<DownwardAuction> downwardAuctions = new ArrayList<>();
+    private static boolean updated = false;
+
+    public static void setUpdated(boolean updated) {
+        MyAuctionsController.updated = updated;
+    }
+
+    protected MyAuctionsController() {
+    }
 
     public static CompletableFuture<List<SilentAuction>> getSilentAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
-            try {
-                MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
-                Response<List<SilentAuction>> response = myAuctionsDao.getSilentAuctions(email, TokenHolder.getAuthToken()).execute();
-                List<SilentAuction> auctions = response.body();
-                for (SilentAuction auction : auctions) {
-                    Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
-                    if(imagesResponse.isSuccessful())
-                        auction.setImages(imagesResponse.body());
-                }
+            if (!updated) {
+                try {
+                    MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
+                    Response<List<SilentAuction>> response = myAuctionsDao.getSilentAuctions(email, TokenHolder.getAuthToken()).execute();
+                    List<SilentAuction> auctions = response.body();
+                    for (SilentAuction auction : auctions) {
+                        Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                        if (imagesResponse.isSuccessful())
+                            auction.setImages(imagesResponse.body());
+                    }
 
-                if (response.isSuccessful()) {
-                    return auctions;
-                } else if (response.code() == 403) {
-                    return new ArrayList<>();
-                }
+                    if (response.isSuccessful()) {
+                        silentAuctions = auctions;
+                        updated = true;
+                        return silentAuctions;
+                    } else if (response.code() == 403) {
+                        return new ArrayList<>();
+                    }
 
-            } catch (IOException e) {
-                throw new ConnectionException("Errore di connessione");
+                } catch (IOException e) {
+                    throw new ConnectionException("Errore di connessione");
+                }
+                return new ArrayList<>();
+            } else {
+                return silentAuctions;
             }
-            return new ArrayList<>();
         });
     }
 
     public static CompletableFuture<List<ReverseAuction>> getReverseAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
-            try {
-                MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
-                Response<List<ReverseAuction>> response = myAuctionsDao.getReverseAuctions(email, TokenHolder.getAuthToken()).execute();
-                List<ReverseAuction> auctions = response.body();
-                for (ReverseAuction auction : auctions) {
-                    Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
-                    if(imagesResponse.isSuccessful())
-                        auction.setImages(imagesResponse.body());                }
+            if (!updated) {
+                try {
+                    MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
+                    Response<List<ReverseAuction>> response = myAuctionsDao.getReverseAuctions(email, TokenHolder.getAuthToken()).execute();
+                    List<ReverseAuction> auctions = response.body();
+                    for (ReverseAuction auction : auctions) {
+                        Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                        if (imagesResponse.isSuccessful())
+                            auction.setImages(imagesResponse.body());
+                    }
 
-                if (response.isSuccessful()) {
-                    return auctions;
-                } else if (response.code() == 403) {
-                    return new ArrayList<>();
+                    if (response.isSuccessful()) {
+                        updated = true;
+                        reverseAuctions = auctions;
+                        return reverseAuctions;
+                    } else if (response.code() == 403) {
+                        return new ArrayList<>();
+                    }
+
+                } catch (IOException e) {
+                    throw new ConnectionException("Errore di connessione");
                 }
-
-            } catch (IOException e) {
-                throw new ConnectionException("Errore di connessione");
+                return new ArrayList<>();
+            } else {
+                return reverseAuctions;
             }
-            return new ArrayList<>();
         });
     }
 
     public static CompletableFuture<List<DownwardAuction>> getDownwardAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
-            try {
-                MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
-                Response<List<DownwardAuction>> response = myAuctionsDao.getDownwardAuctions(email, TokenHolder.getAuthToken()).execute();
-                List<DownwardAuction> auctions = response.body();
-                for (DownwardAuction auction : auctions) {
-                    Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
-                    if(imagesResponse.isSuccessful())
-                        auction.setImages(imagesResponse.body());
-                }
+            if (!updated) {
+                try {
+                    MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
+                    Response<List<DownwardAuction>> response = myAuctionsDao.getDownwardAuctions(email, TokenHolder.getAuthToken()).execute();
+                    List<DownwardAuction> auctions = response.body();
 
-                if (response.isSuccessful()) {
-                    return auctions;
-                } else if (response.code() == 403) {
-                    return new ArrayList<>();
-                }
+                    for (DownwardAuction auction : auctions) {
+                        Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                        if (imagesResponse.isSuccessful())
+                            auction.setImages(imagesResponse.body());
+                    }
 
-            } catch (IOException e) {
-                throw new ConnectionException("Errore di connessione");
+                    if (response.isSuccessful()) {
+                        updated = true;
+                        downwardAuctions = auctions;
+                        return downwardAuctions;
+                    } else if (response.code() == 403) {
+                        return new ArrayList<>();
+                    }
+
+                } catch (IOException e) {
+                    throw new ConnectionException("Errore di connessione");
+                }
+                return new ArrayList<>();
+            } else {
+                return downwardAuctions;
             }
-            return new ArrayList<>();
         });
+    }
+
+    public static String getFormattedExpirationDate(SilentAuction auction) {
+        String expirationDateString = auction.getExpirationDate();
+        String year = expirationDateString.substring(6, 10);
+        String month = expirationDateString.substring(3, 5);
+        String day = expirationDateString.substring(0, 2);
+        return day + "/" + month + "/" + year;
+    }
+
+    public static String getFormattedExpirationDate(ReverseAuction auction) {
+        String expirationDateString = auction.getExpirationDate();
+        String year = expirationDateString.substring(6, 10);
+        String month = expirationDateString.substring(3, 5);
+        String day = expirationDateString.substring(0, 2);
+        return day + "/" + month + "/" + year;
     }
 }

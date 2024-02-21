@@ -10,24 +10,24 @@ import java.io.Serializable;
 
 public class ReverseAuction extends Auction implements Serializable {
 
-    private double currentPrice;
+    private double startingPrice;
     private String expirationDate;
 
     public ReverseAuction(User owner, String title, String description,
                           Wear wear, Category category, AuctionStatus status,
-                          double currentPrice, String expirationDate) {
+                          double startingPrice, String expirationDate) {
 
         super(owner, title, description, wear, category, status, AuctionType.REVERSE);
-        this.currentPrice = currentPrice;
+        this.startingPrice = startingPrice;
         this.expirationDate = expirationDate;
     }
 
-    public double getCurrentPrice() {
-        return currentPrice;
+    public double getStartingPrice() {
+        return startingPrice;
     }
 
-    public void setCurrentPrice(double currentPrice) {
-        this.currentPrice = currentPrice;
+    public void setStartingPrice(double startingPrice) {
+        this.startingPrice = startingPrice;
     }
 
     public String getExpirationDate() {

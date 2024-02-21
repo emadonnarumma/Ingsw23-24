@@ -1,7 +1,7 @@
 package com.ingsw.backend.enumeration;
 
 public enum AuctionStatus {
-    SUCCESSFUL,
+    SUCCESSFUL ,
     IN_PROGRESS,
     FAILED
 }

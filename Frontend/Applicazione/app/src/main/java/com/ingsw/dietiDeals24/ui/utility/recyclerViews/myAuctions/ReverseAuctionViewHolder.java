@@ -12,10 +12,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
-import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -54,7 +54,7 @@ public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
     public void bind(ReverseAuction reverseAuction) {
         titleTextView.setText(reverseAuction.getTitle());
         auctionTypeTextView.setText(AuctionType.toItalianString(reverseAuction.getType()));
-        currentBidTextView.setText(String.valueOf(reverseAuction.getCurrentPrice()) + " €");
+        currentBidTextView.setText(String.valueOf(reverseAuction.getStartingPrice()) + " €");
 
         AuctionStatus status = reverseAuction.getStatus();
         switch (status) {
@@ -77,7 +77,7 @@ public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
 
-        expirationDateTextView.setText(reverseAuction.getExpirationDate().substring(0, 10));
+        expirationDateTextView.setText(MyAuctionsController.getFormattedExpirationDate(reverseAuction));
         bindImages(reverseAuction);
     }
 

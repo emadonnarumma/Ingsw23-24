@@ -54,6 +54,9 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<SilentAuction>> getSilentAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
+            if (!UserHolder.user.isSeller()) {
+                return new ArrayList<>();
+            }
             if (!updatedSilent) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
@@ -85,6 +88,9 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<ReverseAuction>> getReverseAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
+            if (UserHolder.user.isSeller()) {
+                return new ArrayList<>();
+            }
             if (!updatedReverse) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
@@ -116,6 +122,9 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<DownwardAuction>> getDownwardAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
+            if (!UserHolder.user.isSeller()) {
+                return new ArrayList<>();
+            }
             if (!updatedDownward) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);

@@ -30,7 +30,7 @@ public class CreateAuctionController implements RetroFitHolder {
                 Response<ReverseAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdated(false);
+                    MyAuctionsController.setUpdatedReverse(false);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -50,7 +50,7 @@ public class CreateAuctionController implements RetroFitHolder {
                 Response<SilentAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdated(false);
+                    MyAuctionsController.setUpdatedSilent(false);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -70,7 +70,7 @@ public class CreateAuctionController implements RetroFitHolder {
                 Response<DownwardAuction> response = createAuctionDao.createAuction(newAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdated(false);
+                    MyAuctionsController.setUpdatedDownward(false);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");

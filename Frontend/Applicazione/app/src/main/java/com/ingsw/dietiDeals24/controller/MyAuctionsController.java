@@ -26,10 +26,27 @@ public class MyAuctionsController implements RetroFitHolder {
     private static List<SilentAuction> silentAuctions = new ArrayList<>();
     private static List<ReverseAuction> reverseAuctions = new ArrayList<>();
     private static List<DownwardAuction> downwardAuctions = new ArrayList<>();
-    private static boolean updated = false;
+    private static boolean updatedSilent = false;
+    private static boolean updatedDownward = false;
+    private static boolean updatedReverse = false;
 
-    public static void setUpdated(boolean updated) {
-        MyAuctionsController.updated = updated;
+    public static void setUpdatedSilent(boolean updatedSilent) {
+        MyAuctionsController.updatedSilent = updatedSilent;
+    }
+
+    public static void setUpdatedDownward(boolean updatedDownward) {
+        MyAuctionsController.updatedDownward = updatedDownward;
+    }
+
+    public static void setUpdatedReverse(boolean updatedReverse) {
+        MyAuctionsController.updatedReverse = updatedReverse;
+    }
+
+
+    protected static void setUpdatedAll(boolean b) {
+        updatedSilent = b;
+        updatedDownward = b;
+        updatedReverse = b;
     }
 
     protected MyAuctionsController() {
@@ -37,7 +54,7 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<SilentAuction>> getSilentAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
-            if (!updated) {
+            if (!updatedSilent) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
                     Response<List<SilentAuction>> response = myAuctionsDao.getSilentAuctions(email, TokenHolder.getAuthToken()).execute();
@@ -50,7 +67,7 @@ public class MyAuctionsController implements RetroFitHolder {
 
                     if (response.isSuccessful()) {
                         silentAuctions = auctions;
-                        updated = true;
+                        updatedSilent = true;
                         return silentAuctions;
                     } else if (response.code() == 403) {
                         return new ArrayList<>();
@@ -68,7 +85,7 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<ReverseAuction>> getReverseAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
-            if (!updated) {
+            if (!updatedReverse) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
                     Response<List<ReverseAuction>> response = myAuctionsDao.getReverseAuctions(email, TokenHolder.getAuthToken()).execute();
@@ -80,7 +97,7 @@ public class MyAuctionsController implements RetroFitHolder {
                     }
 
                     if (response.isSuccessful()) {
-                        updated = true;
+                        updatedDownward = true;
                         reverseAuctions = auctions;
                         return reverseAuctions;
                     } else if (response.code() == 403) {
@@ -99,7 +116,7 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<DownwardAuction>> getDownwardAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
-            if (!updated) {
+            if (!updatedDownward) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
                     Response<List<DownwardAuction>> response = myAuctionsDao.getDownwardAuctions(email, TokenHolder.getAuthToken()).execute();
@@ -112,7 +129,7 @@ public class MyAuctionsController implements RetroFitHolder {
                     }
 
                     if (response.isSuccessful()) {
-                        updated = true;
+                        updatedDownward = true;
                         downwardAuctions = auctions;
                         return downwardAuctions;
                     } else if (response.code() == 403) {

@@ -43,7 +43,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
                 Response<Void> response = myAuctiondDetailsDao.deleteAuction(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdated(false);
+                    MyAuctionsController.setUpdatedAll(false);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");
@@ -63,7 +63,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
                 Response<Void> response = myAuctiondDetailsDao.relaunchAuction(auction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdated(false);
+                    MyAuctionsController.setUpdatedAll(false);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");

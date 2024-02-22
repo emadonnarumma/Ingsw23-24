@@ -32,11 +32,11 @@ public class RegistrationController implements RetroFitHolder {
                     TokenHolder.instance = response.body();
 
                     String email = user.getEmail();
-                    Role role = currentUserDao.getRole(email, "Bearer " + TokenHolder.getAuthToken()).execute().body();
+                    Role role = currentUserDao.getRole(email, TokenHolder.getAuthToken()).execute().body();
                     if (role == Role.BUYER) {
-                        UserHolder.user = currentUserDao.getBuyerByEmail(email, "Bearer " + TokenHolder.getAuthToken()).execute().body();
+                        UserHolder.user = currentUserDao.getBuyerByEmail(email, TokenHolder.getAuthToken()).execute().body();
                     } else if (role == Role.SELLER) {
-                        UserHolder.user = currentUserDao.getSellerByEmail(email, "Bearer " + TokenHolder.getAuthToken()).execute().body();
+                        UserHolder.user = currentUserDao.getSellerByEmail(email, TokenHolder.getAuthToken()).execute().body();
                     }
 
                     return true;

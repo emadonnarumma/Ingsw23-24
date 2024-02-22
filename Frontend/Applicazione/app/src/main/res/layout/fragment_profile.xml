@@ -41,10 +41,11 @@
 
             <TextView
                 android:id="@+id/username_text_profile"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/verdana"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
+                android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="@dimen/title_text_large"
                 android:autoSizeTextType="uniform"
@@ -52,7 +53,9 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/profile_image_icon_profile"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="RtlCompat" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -87,17 +90,29 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/user_bio_profile"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/user_bio_layout_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/verdana"
-        android:textSize="@dimen/text_medium"
+        android:layout_height="200dp"
+
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seller_switch_layout_profile" />
+        app:layout_constraintTop_toBottomOf="@id/seller_switch_layout_profile"
+        app:counterEnabled="false">
+
+
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/user_bio_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:editable="false"
+            android:inputType="none"
+            android:maxLength="200"
+            tools:ignore="Deprecated" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/icon_link_profile"
@@ -107,7 +122,7 @@
         android:layout_marginVertical="8dp"
         android:src="@drawable/ic_link"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
+        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_profile" />
 
     <TextView
         android:id="@+id/link_profile"
@@ -118,7 +133,7 @@
         android:fontFamily="@font/verdana"
         android:textSize="@dimen/text_medium"
         app:layout_constraintStart_toEndOf="@id/icon_link_profile"
-        app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
+        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_profile" />
 
     <TextView
         android:id="@+id/and_n_more_links_profile"
@@ -129,7 +144,7 @@
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/link_profile"
-        app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
+        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_profile" />
 
 
 
@@ -142,6 +157,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
         android:src="@drawable/ic_italy"
+        app:tint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/link_profile" />
 

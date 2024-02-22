@@ -54,6 +54,9 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<SilentAuction>> getSilentAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
+            if (!UserHolder.user.isSeller()) {
+                return new ArrayList<>();
+            }
             if (!updatedSilent) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
@@ -66,8 +69,8 @@ public class MyAuctionsController implements RetroFitHolder {
                     }
 
                     if (response.isSuccessful()) {
-                        silentAuctions = auctions;
                         updatedSilent = true;
+                        silentAuctions = auctions;
                         return silentAuctions;
                     } else if (response.code() == 403) {
                         return new ArrayList<>();
@@ -85,6 +88,9 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<ReverseAuction>> getReverseAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
+            if (UserHolder.user.isSeller()) {
+                return new ArrayList<>();
+            }
             if (!updatedReverse) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
@@ -97,7 +103,7 @@ public class MyAuctionsController implements RetroFitHolder {
                     }
 
                     if (response.isSuccessful()) {
-                        updatedDownward = true;
+                        updatedReverse = true;
                         reverseAuctions = auctions;
                         return reverseAuctions;
                     } else if (response.code() == 403) {
@@ -116,6 +122,9 @@ public class MyAuctionsController implements RetroFitHolder {
 
     public static CompletableFuture<List<DownwardAuction>> getDownwardAuctions(String email) {
         return CompletableFuture.supplyAsync(() -> {
+            if (!UserHolder.user.isSeller()) {
+                return new ArrayList<>();
+            }
             if (!updatedDownward) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);

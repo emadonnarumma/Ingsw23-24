@@ -69,8 +69,8 @@ public class MyAuctionsController implements RetroFitHolder {
                     }
 
                     if (response.isSuccessful()) {
-                        silentAuctions = auctions;
                         updatedSilent = true;
+                        silentAuctions = auctions;
                         return silentAuctions;
                     } else if (response.code() == 403) {
                         return new ArrayList<>();
@@ -103,7 +103,7 @@ public class MyAuctionsController implements RetroFitHolder {
                     }
 
                     if (response.isSuccessful()) {
-                        updatedDownward = true;
+                        updatedReverse = true;
                         reverseAuctions = auctions;
                         return reverseAuctions;
                     } else if (response.code() == 403) {

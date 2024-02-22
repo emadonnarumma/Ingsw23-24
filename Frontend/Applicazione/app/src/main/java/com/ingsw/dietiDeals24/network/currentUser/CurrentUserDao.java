@@ -10,7 +10,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Path;
 
 public interface CurrentUserDao {
-    @GET("user/{email}/gigi")
+    @GET("user/{email}/role")
     Call<Role> getRole(@Path("email") String email, @Header("Authorization") String token);
 
     @GET("user/{email}/buyer")

@@ -28,7 +28,7 @@ public class UserController {
 	@Qualifier("mainUserService")
 	private UserService userService;
 
-	@GetMapping("/{email}/gigi")
+	@GetMapping("/{email}/role")
 	public ResponseEntity<Role> getRoleByEmail(@PathVariable String email) {
 		Optional<User> user = userService.getUser(email);
 

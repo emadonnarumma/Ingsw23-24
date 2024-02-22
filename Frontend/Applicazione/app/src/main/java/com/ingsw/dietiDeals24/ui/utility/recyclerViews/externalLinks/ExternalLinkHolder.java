@@ -33,10 +33,14 @@ public class ExternalLinkHolder extends RecyclerView.ViewHolder {
         titleTextView.setText(externalLink.getTitle());
         urlTextView.setText(externalLink.getUrl());
         editButton.setOnClickListener(v -> {
-            ProfileController.setSelectedExternalLink(externalLink);
+            ProfileController.setSelectedLink(externalLink);
             fragment.getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                     new EditExternalLinkFragment()).commit();
         });
-        //TODO:
+        deleteButton.setOnClickListener(v -> {
+            ProfileController.deleteLink(externalLink);
+            fragment.getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                    new EditExternalLinksFragment()).commit();
+        });
     }
 }

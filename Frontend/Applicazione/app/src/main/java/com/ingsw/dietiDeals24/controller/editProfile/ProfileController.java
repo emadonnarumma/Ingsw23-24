@@ -12,7 +12,7 @@ import com.ingsw.dietiDeals24.model.User;
 
 public class ProfileController {
     private static MutableLiveData<ExternalLinkFormState> externalLinkFormState = new MutableLiveData<>();
-    private static ExternalLink selectedExternalLink;
+    private static ExternalLink selectedLink;
 
     public static MutableLiveData<ExternalLinkFormState> getExternalLinkFormState() {
         return externalLinkFormState;
@@ -38,8 +38,16 @@ public class ProfileController {
         //TODO
     }
 
-    public static void deleteLink(String title, String url) {
+    public static void deleteLink(ExternalLink externalLink) {
         //TODO
+    }
+
+    public static void setSelectedLink(ExternalLink selectedLink) {
+        ProfileController.selectedLink = selectedLink;
+    }
+
+    public static ExternalLink getSelectedLink() {
+        return selectedLink;
     }
 
     public static void updateBio(String bio) {
@@ -86,13 +94,5 @@ public class ProfileController {
 
     public static User getUser() {
         return UserHolder.user;
-    }
-
-    public static ExternalLink getSelectedExternalLink() {
-        return selectedExternalLink;
-    }
-
-    public static void setSelectedExternalLink(ExternalLink selectedExternalLink) {
-        ProfileController.selectedExternalLink = selectedExternalLink;
     }
 }

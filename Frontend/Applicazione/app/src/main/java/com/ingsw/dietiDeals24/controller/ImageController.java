@@ -3,8 +3,13 @@ package com.ingsw.dietiDeals24.controller;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Base64;
+
+import androidx.core.content.FileProvider;
 
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.Image;
@@ -24,6 +29,7 @@ public class ImageController {
     private static String convertUriToBase64String(Context context, Uri uri) throws IOException {
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        bitmap = rotateImageIfRequired(context, bitmap, uri);
         Bitmap compressedBitmap = compressBitmap(bitmap, 50);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -31,6 +37,34 @@ public class ImageController {
 
         byte[] data = outputStream.toByteArray();
         return Base64.encodeToString(data, Base64.DEFAULT);
+    }
+
+    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
+        InputStream input = context.getContentResolver().openInputStream(selectedImage);
+        ExifInterface ei;
+        if (Build.VERSION.SDK_INT > 23)
+            ei = new ExifInterface(input);
+        else
+            ei = new ExifInterface(selectedImage.getPath());
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
     }
 
     private static Bitmap compressBitmap(Bitmap original, int quality) {
@@ -63,5 +97,16 @@ public class ImageController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static List<Uri> convertImageListToUriList(List<Image> imageList, Context context) {
+        List<Uri> uriList = new ArrayList<>();
+        for (Image image : imageList) {
+            Uri uri = base64ToUri(image.getBase64Data(), context);
+            if (uri != null) {
+                uriList.add(uri);
+            }
+        }
+        return uriList;
     }
 }

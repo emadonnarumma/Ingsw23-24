@@ -62,7 +62,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         super.onCreate(savedInstanceState);
         setBackButtonEnabled(true);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
+        viewModel = GeneralAuctionAttributesViewModel.getInstance();
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
         setupLists();
         setupWheelViewStyle();

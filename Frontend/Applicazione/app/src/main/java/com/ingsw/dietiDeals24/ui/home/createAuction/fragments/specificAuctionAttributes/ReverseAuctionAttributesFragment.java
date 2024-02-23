@@ -57,7 +57,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
+        viewModel = GeneralAuctionAttributesViewModel.getInstance();
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
     }
 

@@ -13,12 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralAuctionAttributesViewModel extends ViewModel {
+    private static GeneralAuctionAttributesViewModel instance;
     private MutableLiveData<AuctionHolder> newAuction = new MutableLiveData<>();
-    private List<Uri> images;
+
+    private static class GeneralAuctionViewModelHolder {
+        private static final GeneralAuctionAttributesViewModel INSTANCE = new GeneralAuctionAttributesViewModel();
+    }
+
+    private GeneralAuctionAttributesViewModel() {}
+
+    public static synchronized GeneralAuctionAttributesViewModel getInstance() {
+        return GeneralAuctionViewModelHolder.INSTANCE;
+    }
 
     public MutableLiveData<AuctionHolder> getNewAuction() {
         return newAuction;
     }
+
     public void setNewAuction(MutableLiveData<AuctionHolder> newAuction) {
         this.newAuction = newAuction;
     }

@@ -70,7 +70,7 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         super.onCreate(savedInstanceState);
         setBackButtonEnabled(false);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(GeneralAuctionAttributesViewModel.class);
+        viewModel = GeneralAuctionAttributesViewModel.getInstance();
         setMenuVisibility(true);
         createTakePictureLauncher();
         createSelectPictureLauncher();

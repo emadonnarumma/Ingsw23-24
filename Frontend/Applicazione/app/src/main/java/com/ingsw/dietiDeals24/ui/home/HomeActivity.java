@@ -94,6 +94,13 @@ public class HomeActivity extends AppCompatActivity {
         setActionBar();
         getOnBackPressedDispatcher().addCallback(this, callback);
         setNavigatioBarView(findViewById(R.id.bottom_navigation_home));
+
+        String openFragment = getIntent().getStringExtra("openSilent");
+        if ("SilentAuctionAttributesFragment".equals(openFragment)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_home, new GeneralAuctionAttributesFragment())
+                    .commit();
+        }
     }
 
     private void setActionBar() {

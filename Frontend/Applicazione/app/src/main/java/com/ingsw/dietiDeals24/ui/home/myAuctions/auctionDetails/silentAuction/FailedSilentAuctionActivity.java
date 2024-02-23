@@ -1,21 +1,35 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.CreateAuctionController;
+import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
+import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
+import com.ingsw.dietiDeals24.ui.home.HomeActivity;
+import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.SilentAuctionAttributesFragment;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
@@ -50,7 +64,8 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
         auctionStatusTextViewAuctionDetails.setStrokeColor(R.color.white);
 
         specificInformation1TextViewAuctionDetails.setText("scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextViewAuctionDetails.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));;
+        specificInformation2TextViewAuctionDetails.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));
+        ;
         setRedButton();
         setGreenButton();
     }
@@ -63,15 +78,29 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
                     .setTitle("Conferma")
                     .setMessage("Sei sicuro di voler rilanciare l'asta?")
                     .setPositiveButton("Si", (dialog, which) -> {
+                        GeneralAuctionAttributesViewModel viewModel = GeneralAuctionAttributesViewModel.getInstance();
+                        AuctionHolder auctionHolder = new AuctionHolder(
+                                auction.getTitle(),
+                                new ArrayList<>(ImageController.convertImageListToUriList(auction.getImages(), getApplicationContext())),
+                                auction.getDescription(),
+                                auction.getWear(),
+                                auction.getCategory()
+                        );
+
+                        viewModel.setNewAuction(new MutableLiveData<>(auctionHolder));
+
                         try {
-                            auction.setStatus(AuctionStatus.IN_PROGRESS);
-                            MyAuctionDetailsController.relaunchAuction(auction).get();
-                            finish();
+                            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
                         } catch (ExecutionException e) {
                             ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
+
+                        Intent intent = new Intent(this, HomeActivity.class);
+                        intent.putExtra("openSilent", "SilentAuctionAttributesFragment");
+                        startActivity(intent);
+                        finish();
                     })
                     .setNegativeButton("No", null)
                     .show();

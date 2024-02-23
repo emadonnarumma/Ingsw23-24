@@ -12,7 +12,7 @@ public enum AuctionStatus {
             case IN_PROGRESS:
                 return "IN CORSO";
             case FAILED:
-                return "FALLITO";
+                return "FALLITA";
             default:
                 return null;
         }

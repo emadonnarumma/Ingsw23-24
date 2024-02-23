@@ -28,8 +28,13 @@ public class RegistrationController implements RetroFitHolder {
             try {
                 Response<TokenHolder> response = registrationDao.register(registrationRequest).execute();
 
-                if (response.isSuccessful()) {
-                    TokenHolder.instance = response.body();
+                if (response.isSuccessful() && response.body() != null) {
+//                    TokenHolder.instance = response.body();
+
+                    TokenHolder tokenHolder = TokenHolder.getInstance();
+
+
+                    tokenHolder.setToken(response.body().getToken());
 
                     String email = user.getEmail();
                     Role role = currentUserDao.getRole(email, TokenHolder.getAuthToken()).execute().body();

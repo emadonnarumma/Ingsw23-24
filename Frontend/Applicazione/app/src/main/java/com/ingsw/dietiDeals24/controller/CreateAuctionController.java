@@ -2,18 +2,14 @@ package com.ingsw.dietiDeals24.controller;
 
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
-import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
-import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.createAuction.CreateAuctionDao;
-import com.ingsw.dietiDeals24.network.createAuction.InsertImagesDao;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Response;

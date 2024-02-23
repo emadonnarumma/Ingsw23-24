@@ -3,7 +3,6 @@ package com.ingsw.dietiDeals24.controller;
 import android.util.Log;
 
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
-import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
@@ -11,14 +10,11 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.myAuctions.MyAuctionsDao;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import retrofit2.Response;
 

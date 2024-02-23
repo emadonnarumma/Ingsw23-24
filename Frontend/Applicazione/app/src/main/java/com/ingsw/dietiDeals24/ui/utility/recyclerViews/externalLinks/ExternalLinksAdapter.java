@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

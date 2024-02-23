@@ -2,7 +2,6 @@ package com.ingsw.backend.repository;
 
 import java.util.Optional;
 
-import com.ingsw.backend.model.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ingsw.backend.model.User;

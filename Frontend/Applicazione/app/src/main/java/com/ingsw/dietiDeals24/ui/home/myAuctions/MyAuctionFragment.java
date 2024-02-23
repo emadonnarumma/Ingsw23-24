@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

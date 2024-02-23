@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data

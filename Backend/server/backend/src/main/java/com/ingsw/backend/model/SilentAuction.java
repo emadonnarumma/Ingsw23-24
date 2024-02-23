@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

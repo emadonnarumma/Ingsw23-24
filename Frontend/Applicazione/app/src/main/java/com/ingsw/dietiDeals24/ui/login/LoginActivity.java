@@ -17,16 +17,15 @@ import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
 
-import java.io.IOException;
-import java.net.ConnectException;
+
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView registrationTextView;
-    EditText emailEditText, passwordEditText;
-    CircularProgressButton loginButton;
+    private TextView registrationTextView;
+    private EditText emailEditText, passwordEditText;
+    private CircularProgressButton loginButton;
 
 
     @Override

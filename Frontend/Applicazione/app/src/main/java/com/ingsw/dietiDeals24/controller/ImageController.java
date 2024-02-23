@@ -9,9 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Base64;
 
-import androidx.core.content.FileProvider;
-
-import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.Image;
 
 import java.io.ByteArrayInputStream;

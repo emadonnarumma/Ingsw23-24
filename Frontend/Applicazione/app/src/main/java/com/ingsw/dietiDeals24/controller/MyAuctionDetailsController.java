@@ -4,20 +4,12 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
-import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
-import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.currentUser.CurrentUserDao;
-import com.ingsw.dietiDeals24.network.login.LogInRequest;
-import com.ingsw.dietiDeals24.network.login.LoginDao;
 import com.ingsw.dietiDeals24.network.myAuctions.MyAuctiondDetailsDao;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Response;

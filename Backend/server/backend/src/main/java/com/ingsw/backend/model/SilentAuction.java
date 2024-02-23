@@ -27,7 +27,7 @@ public class SilentAuction extends Auction {
 
     private Long withdrawalTime;
 
-    @OneToMany(mappedBy = "silentAuction", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "silentAuction", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private List<SilentBid> receivedBids;
 }

@@ -64,7 +64,7 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
         greenButton.setText("VISUALIZZA LE OFFERTE");
         greenButton.setOnClickListener(v -> {
             try {
-                bidsRecyclerView.setAdapter(new AuctionBidAdapter(MyAuctionDetailsController.getAllSilentBidsBySilentAuctionId(auction.getIdAuction()).get());
+                bidsRecyclerView.setAdapter(new AuctionBidAdapter(MyAuctionDetailsController.getAllSilentBidsBySilentAuctionId(auction.getIdAuction()).get()));
                 bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressSilentAuctionActivity.this));
                 bottomSheetDialog.show();
 

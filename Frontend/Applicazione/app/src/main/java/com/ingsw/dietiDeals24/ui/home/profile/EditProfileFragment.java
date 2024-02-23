@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.editProfile.ProfileController;
+import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
 public class EditProfileFragment extends FragmentOfHomeActivity {

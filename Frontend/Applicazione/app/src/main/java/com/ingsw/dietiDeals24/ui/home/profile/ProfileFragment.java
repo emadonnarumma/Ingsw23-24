@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.editProfile.ProfileController;
+import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 

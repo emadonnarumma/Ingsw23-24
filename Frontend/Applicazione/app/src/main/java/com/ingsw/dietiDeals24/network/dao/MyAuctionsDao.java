@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.network.myAuctions;
+package com.ingsw.dietiDeals24.network.dao;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;

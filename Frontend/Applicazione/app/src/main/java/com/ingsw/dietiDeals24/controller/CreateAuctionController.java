@@ -7,7 +7,7 @@ import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.createAuction.CreateAuctionDao;
+import com.ingsw.dietiDeals24.network.dao.CreateAuctionDao;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;

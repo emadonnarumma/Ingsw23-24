@@ -1,5 +1,6 @@
-package com.ingsw.dietiDeals24.network.registration;
+package com.ingsw.dietiDeals24.network.dao;
 
+import com.ingsw.dietiDeals24.model.RegistrationRequest;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 
 import retrofit2.Call;

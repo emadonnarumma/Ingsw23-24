@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.network.login;
+package com.ingsw.dietiDeals24.model;
 
 public class LogInRequest {
     private final String email;

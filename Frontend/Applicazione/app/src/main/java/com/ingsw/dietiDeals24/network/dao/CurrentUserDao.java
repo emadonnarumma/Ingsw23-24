@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.network.currentUser;
+package com.ingsw.dietiDeals24.network.dao;
 
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.model.Buyer;

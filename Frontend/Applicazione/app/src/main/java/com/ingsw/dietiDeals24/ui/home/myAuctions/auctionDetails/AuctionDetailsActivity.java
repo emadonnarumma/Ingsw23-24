@@ -10,7 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ScrollView;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
@@ -29,6 +31,8 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
     protected CompatOutlinedTextView auctionStatusTextViewAuctionDetails;
     protected CardView cardViewAuctionDetails;
     protected SliderView sliderViewAuctionDetails;
+    protected BottomSheetDialog bottomSheetDialog;
+    protected RecyclerView bidsRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,23 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
         setupButtons();
         setupTextViews();
         setupSliderView();
+        setupActionBar();
+        setupBottomSheetDialog();
+        setupRecyclerView();
+    }
+
+    private void setupActionBar() {
         setSupportActionBar(findViewById(R.id.toolbar_auction_details));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupRecyclerView() {
+        bidsRecyclerView = bottomSheetDialog.findViewById(R.id.recyclerView);
+    }
+
+    private void setupBottomSheetDialog() {
+        bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_layout);
     }
 
     private void setupSliderView() {

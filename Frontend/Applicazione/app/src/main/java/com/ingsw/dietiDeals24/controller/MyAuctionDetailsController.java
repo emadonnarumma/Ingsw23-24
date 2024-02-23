@@ -5,11 +5,13 @@ import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.myAuctions.MyAuctiondDetailsDao;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Response;
@@ -48,15 +50,14 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         });
     }
 
-    public static CompletableFuture<Boolean> relaunchAuction(Auction auction) {
+    public static CompletableFuture<List<SilentBid>> getAllSilentBidsBySilentAuctionId(Integer auctionId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<Void> response = myAuctiondDetailsDao.relaunchAuction(auction, TokenHolder.getAuthToken()).execute();
+                Response<List<SilentBid>> response = myAuctiondDetailsDao.getAllSilentBidsBySilentAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdatedAll(false);
-                    return true;
+                    return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");
                 }
@@ -64,7 +65,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-            return false;
+            return null;
         });
     }
 
@@ -130,4 +131,37 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         return "Tempo del prossimo decremento  : " + formattedTime ;
     }
 
+    public static String getRemainingWithdrawalTimeText(SilentBid silentBid) {
+        long currentTimestamp = System.currentTimeMillis() / 1000L;
+        long bidTimestamp = silentBid.getTimestamp().getTime() / 1000L;
+        long withdrawalTime = silentBid.getSilentAuction().getWithdrawalTime();
+        long remainingSeconds = bidTimestamp + withdrawalTime - currentTimestamp;
+
+        long months = remainingSeconds / (30 * 24 * 60 * 60);
+        remainingSeconds %= 30 * 24 * 60 * 60;
+
+        long days = remainingSeconds / (24 * 60 * 60);
+        remainingSeconds %= 24 * 60 * 60;
+
+        long hours = remainingSeconds / (60 * 60);
+        remainingSeconds %= 60 * 60;
+
+        long minutes = remainingSeconds / 60;
+
+        String formattedTime = "";
+        if (months > 0) {
+            formattedTime += months + " months ";
+        }
+        if (days > 0) {
+            formattedTime += days + " days ";
+        }
+        if (hours > 0) {
+            formattedTime += hours + " hours ";
+        }
+        if (minutes > 0) {
+            formattedTime += minutes + " minutes";
+        }
+
+        return "L'utente ha : " + formattedTime + " per ritirare l'offerta";
+    }
 }

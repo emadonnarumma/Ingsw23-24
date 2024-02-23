@@ -26,7 +26,7 @@ public class ReverseAuction extends Auction {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", locale = "it_IT", timezone = "Europe/Rome")
     private Timestamp expirationDate;
     
-    @OneToMany(mappedBy = "reverseAuction", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "reverseAuction", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private List<ReverseBid> receivedBids;
 

@@ -6,9 +6,11 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
@@ -16,6 +18,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
 
 import java.util.concurrent.ExecutionException;
 
@@ -59,6 +62,18 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
     private void setButtons() {
         setRedButton();
         greenButton.setText("VISUALIZZA LE OFFERTE");
+        greenButton.setOnClickListener(v -> {
+            try {
+                bidsRecyclerView.setAdapter(new AuctionBidAdapter(MyAuctionDetailsController.getAllSilentBidsBySilentAuctionId(auction.getIdAuction()).get()));
+                bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressSilentAuctionActivity.this));
+                bottomSheetDialog.show();
+
+            } catch (ExecutionException e) {
+                ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void setRedButton() {

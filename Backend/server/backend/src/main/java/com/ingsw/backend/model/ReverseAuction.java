@@ -11,10 +11,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Base64;
 
-import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.Image;
 
 import java.io.ByteArrayInputStream;

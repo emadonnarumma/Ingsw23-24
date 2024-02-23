@@ -1,26 +1,20 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.ingsw.dietiDeals24.R;
 
-import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
-import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
-import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 
-import java.util.ArrayList;
 
 public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
 

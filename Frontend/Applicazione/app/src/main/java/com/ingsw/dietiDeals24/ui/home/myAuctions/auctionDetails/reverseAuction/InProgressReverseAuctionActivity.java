@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 

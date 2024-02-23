@@ -4,14 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.ingsw.dietiDeals24.databinding.FragmentSearchBinding;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
 public class SearchFragment extends FragmentOfHomeActivity {

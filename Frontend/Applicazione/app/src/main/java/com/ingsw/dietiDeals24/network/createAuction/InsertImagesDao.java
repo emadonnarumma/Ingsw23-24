@@ -2,7 +2,6 @@ package com.ingsw.dietiDeals24.network.createAuction;
 
 import com.ingsw.dietiDeals24.model.Image;
 
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

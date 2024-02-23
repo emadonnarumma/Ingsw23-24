@@ -1,6 +1,5 @@
 package com.ingsw.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

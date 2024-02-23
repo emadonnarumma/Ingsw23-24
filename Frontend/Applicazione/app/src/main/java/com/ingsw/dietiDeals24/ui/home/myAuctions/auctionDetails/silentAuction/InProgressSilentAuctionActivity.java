@@ -2,7 +2,6 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -10,8 +9,6 @@ import androidx.core.content.ContextCompat;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
-import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
-import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;

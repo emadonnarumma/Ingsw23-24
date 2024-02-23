@@ -16,7 +16,6 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
-import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 

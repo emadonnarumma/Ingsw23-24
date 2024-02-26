@@ -68,6 +68,25 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         });
     }
 
+    public static CompletableFuture<Boolean> acceptBid(int id) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<Boolean> response = myAuctiondDetailsDao.acceptBid(id, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Errore di autenticazione");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return false;
+        });
+    }
+
     public static String getWithdrawalTimeText(SilentAuction auction) {
         long totalSeconds = auction.getWithdrawalTime();
 

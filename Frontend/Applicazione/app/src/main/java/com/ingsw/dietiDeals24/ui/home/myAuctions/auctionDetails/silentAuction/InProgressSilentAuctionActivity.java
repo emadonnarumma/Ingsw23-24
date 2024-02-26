@@ -71,6 +71,10 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
 
     private void setButtons() {
         setRedButton();
+        setGreenButton();
+    }
+
+    private void setGreenButton() {
         greenButton.setText("VISUALIZZA LE OFFERTE");
         greenButton.setOnClickListener(v -> {
 

@@ -19,4 +19,7 @@ public interface MyAuctiondDetailsDao {
 
     @GET("bid/silent/{auctionId}")
     Call<List<SilentBid>> getAllSilentBidsBySilentAuctionId(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);
+
+    @POST("bid/acceptBid/{id}")
+    Call<Boolean> acceptBid(@Path("id") Integer id, @Header("Authorization") String authToken);
 }

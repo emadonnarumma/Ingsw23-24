@@ -4,10 +4,10 @@ import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
-import com.ingsw.dietiDeals24.network.currentUser.CurrentUserDao;
-import com.ingsw.dietiDeals24.network.login.LoginDao;
+import com.ingsw.dietiDeals24.network.dao.CurrentUserDao;
+import com.ingsw.dietiDeals24.network.dao.LoginDao;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.login.LogInRequest;
+import com.ingsw.dietiDeals24.model.LogInRequest;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;

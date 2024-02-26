@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.editProfile.ProfileController;
+import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;

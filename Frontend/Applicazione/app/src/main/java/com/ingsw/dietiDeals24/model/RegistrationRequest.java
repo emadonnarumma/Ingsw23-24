@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.network.registration;
+package com.ingsw.dietiDeals24.model;
 
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.enumeration.Role;

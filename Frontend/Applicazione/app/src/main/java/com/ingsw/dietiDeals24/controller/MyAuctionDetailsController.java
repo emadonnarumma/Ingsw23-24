@@ -8,7 +8,7 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.myAuctions.MyAuctiondDetailsDao;
+import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
 
 import java.io.IOException;
 import java.util.List;

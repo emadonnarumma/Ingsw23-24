@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.controller.editProfile;
+package com.ingsw.dietiDeals24.controller.formstate;
 
 public class ExternalLinkFormState {
     private String titleError;

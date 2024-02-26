@@ -94,6 +94,8 @@ public class HomeActivity extends AppCompatActivity {
         setActionBar();
         getOnBackPressedDispatcher().addCallback(this, callback);
         setNavigatioBarView(findViewById(R.id.bottom_navigation_home));
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                new SearchFragment()).commit();
 
         String openFragment = getIntent().getStringExtra("openSilent");
         if ("SilentAuctionAttributesFragment".equals(openFragment)) {

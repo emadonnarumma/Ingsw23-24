@@ -6,9 +6,9 @@ import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.model.User;
-import com.ingsw.dietiDeals24.network.currentUser.CurrentUserDao;
-import com.ingsw.dietiDeals24.network.registration.RegistrationDao;
-import com.ingsw.dietiDeals24.network.registration.RegistrationRequest;
+import com.ingsw.dietiDeals24.network.dao.CurrentUserDao;
+import com.ingsw.dietiDeals24.network.dao.RegistrationDao;
+import com.ingsw.dietiDeals24.model.RegistrationRequest;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;

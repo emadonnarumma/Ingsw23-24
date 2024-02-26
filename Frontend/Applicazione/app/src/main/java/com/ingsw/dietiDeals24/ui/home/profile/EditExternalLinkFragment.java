@@ -8,15 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.editProfile.ProfileController;
+import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 public class EditExternalLinkFragment extends FragmentOfHomeActivity {
+    private TextView titleScreen;
     private EditText titleEditText;
     private EditText urlEditText;
     private ImageView doneButton;
@@ -51,15 +53,23 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
         super.onViewCreated(view, savedInstanceState);
         setBackButtonEnabled(true);
 
+        titleScreen = view.findViewById(R.id.title_of_edit_external_link);
         titleEditText = view.findViewById(R.id.edit_title_edit_external_link);
         urlEditText = view.findViewById(R.id.edit_url_edit_external_link);
         doneButton = view.findViewById(R.id.doneButton);
 
+        initEditTexts();
+        titleScreen.setText(R.string.edit_external_link_phrase);
         titleEditText.addTextChangedListener(externalLinkTextWatcher);
         urlEditText.addTextChangedListener(externalLinkTextWatcher);
         observeExternalLinkFormState();
 
         doneButton.setOnClickListener(v -> onDoneButtonClick());
+    }
+
+    private void initEditTexts() {
+        titleEditText.setText(ProfileController.getSelectedLink().getTitle());
+        urlEditText.setText(ProfileController.getSelectedLink().getUrl());
     }
 
     private void observeExternalLinkFormState() {

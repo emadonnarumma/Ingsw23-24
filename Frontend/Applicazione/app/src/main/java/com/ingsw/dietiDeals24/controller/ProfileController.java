@@ -1,11 +1,11 @@
-package com.ingsw.dietiDeals24.controller.editProfile;
+package com.ingsw.dietiDeals24.controller;
 
 import android.content.res.Resources;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.controller.formstate.ExternalLinkFormState;
 import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;

@@ -222,4 +222,76 @@ public class AuctionDbService implements AuctionService {
 	    
 	    return ChronoUnit.SECONDS.between(now, expirationTime);
 	}
+
+	@Override
+	public List<SilentAuction> getAllSilentAuctions() {
+		
+		return auctionRepository.findAllSilent();
+	}
+
+	@Override
+	public List<ReverseAuction> getAllReverseAuctions() {
+		
+		return auctionRepository.findAllReverse();
+	}
+
+	@Override
+	public List<DownwardAuction> getAllDownwardAuctions() {
+		
+		return auctionRepository.findAllDownward();
+	}
+
+	@Override
+	public List<SilentAuction> getSilentAuctionsByCategory(Category category) {
+		
+		return auctionRepository.findAllSilentByCategory(category);
+	}
+
+	@Override
+	public List<SilentAuction> getSilentAuctionsByTitleContaining(String keyword) {
+	
+		return auctionRepository.findAllSilentByTitleContainingIgnoreCase(keyword);
+	}
+
+	@Override
+	public List<SilentAuction> getSilentAuctionsByTitleContainingAndCategory(String keyword, Category category) {
+		
+		return auctionRepository.findAllSilentByTitleContainingIgnoreCaseAndCategory(keyword, category);
+	}
+
+	@Override
+	public List<DownwardAuction> getDownwardAuctionsByCategory(Category category) {
+		
+		return auctionRepository.findAllDownwardByCategory(category);
+	}
+
+	@Override
+	public List<DownwardAuction> getDownwardAuctionsByTitleContaining(String keyword) {
+		
+		return auctionRepository.findAllDownwardByTitleContainingIgnoreCase(keyword);
+	}
+
+	@Override
+	public List<DownwardAuction> getDownwardAuctionsByTitleContainingAndCategory(String keyword, Category category) {
+		
+		return auctionRepository.findAllDownwardByTitleContainingIgnoreCaseAndCategory(keyword, category);
+	}
+
+	@Override
+	public List<ReverseAuction> getReverseAuctionsByCategory(Category category) {
+		
+		return auctionRepository.findAllReverseByCategory(category);
+	}
+
+	@Override
+	public List<ReverseAuction> getReverseAuctionsByTitleContaining(String keyword) {
+		
+		return auctionRepository.findAllReverseByTitleContainingIgnoreCase(keyword);
+	}
+
+	@Override
+	public List<ReverseAuction> getReverseAuctionsByTitleContainingAndCategory(String keyword, Category category) {
+		
+		return auctionRepository.findAllReverseByTitleContainingIgnoreCaseAndCategory(keyword, category);
+	}
 }

@@ -19,19 +19,16 @@ import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.AuctionAdapter;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MyAuctionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MyAuctionFragment extends Fragment {
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
-    public static MyAuctionFragment newInstance() {
-        return new MyAuctionFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -64,7 +61,7 @@ public class MyAuctionFragment extends Fragment {
 
                 if (isAdded()) {
                     requireActivity().runOnUiThread(() -> {
-                        recyclerView.setAdapter(new AuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions));
+                        recyclerView.setAdapter(new MyAuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions));
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
@@ -72,7 +69,7 @@ public class MyAuctionFragment extends Fragment {
                 }
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> {
-                    recyclerView.setAdapter(new AuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+                    recyclerView.setAdapter(new MyAuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
                     ToastManager.showToast(getContext(), e.getCause().getMessage());
                     progressBar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);

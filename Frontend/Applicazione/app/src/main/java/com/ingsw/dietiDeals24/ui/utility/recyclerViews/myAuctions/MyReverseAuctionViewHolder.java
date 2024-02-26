@@ -24,7 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
+public class MyReverseAuctionViewHolder extends RecyclerView.ViewHolder {
     private TextView containerTextView, titleTextView,
             auctionTypeTextView, currentBidTextView,
             auctionStatusTextView, expirationDateTextView;
@@ -36,7 +36,7 @@ public class ReverseAuctionViewHolder extends RecyclerView.ViewHolder {
     private CardView cardView;
 
 
-    public ReverseAuctionViewHolder(@NonNull View itemView) {
+    public MyReverseAuctionViewHolder(@NonNull View itemView) {
         super(itemView);
         containerTextView = itemView.findViewById(R.id.container_text_view_item_reverse_auction);
         titleTextView = itemView.findViewById(R.id.title_text_view_item_reverse_auction);

@@ -28,7 +28,7 @@ import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.Su
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyAuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_SILENT = 1;
     private static final int TYPE_DOWNWARD = 2;
@@ -36,9 +36,9 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private List<Auction> auctions;
 
-    public AuctionAdapter(List<SilentAuction> silentAuctions,
-                          List<DownwardAuction> downwardAuctions,
-                          List<ReverseAuction> reverseAuctions) {
+    public MyAuctionAdapter(List<SilentAuction> silentAuctions,
+                            List<DownwardAuction> downwardAuctions,
+                            List<ReverseAuction> reverseAuctions) {
 
         auctions = new ArrayList<>();
         auctions.addAll(silentAuctions);
@@ -65,13 +65,13 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View view;
         if (viewType == TYPE_SILENT) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_silent_auction, parent, false);
-            return new SilentAuctionViewHolder(view);
+            return new MySilentAuctionViewHolder(view);
         } else if (viewType == TYPE_DOWNWARD) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_downward_auction, parent, false);
-            return new DownwardAuctionViewHolder(view);
+            return new MyDownwardAuctionViewHolder(view);
         } else if (viewType == TYPE_REVERSE) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_reverse_auction, parent, false);
-            return new ReverseAuctionViewHolder(view);
+            return new MyReverseAuctionViewHolder(view);
         }
         return null;
     }
@@ -79,12 +79,12 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Auction auction = auctions.get(position);
-        if (holder instanceof SilentAuctionViewHolder) {
-            ((SilentAuctionViewHolder) holder).bind((SilentAuction) auction);
-        } else if (holder instanceof DownwardAuctionViewHolder) {
-            ((DownwardAuctionViewHolder) holder).bind((DownwardAuction) auction);
-        } else if (holder instanceof ReverseAuctionViewHolder) {
-            ((ReverseAuctionViewHolder) holder).bind((ReverseAuction) auction);
+        if (holder instanceof MySilentAuctionViewHolder) {
+            ((MySilentAuctionViewHolder) holder).bind((SilentAuction) auction);
+        } else if (holder instanceof MyDownwardAuctionViewHolder) {
+            ((MyDownwardAuctionViewHolder) holder).bind((DownwardAuction) auction);
+        } else if (holder instanceof MyReverseAuctionViewHolder) {
+            ((MyReverseAuctionViewHolder) holder).bind((ReverseAuction) auction);
         }
 
         holder.itemView.setOnClickListener(v -> startAuctionActivity(holder, auction, v));
@@ -92,17 +92,17 @@ public class AuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void startAuctionActivity(RecyclerView.ViewHolder holder, Auction auction, View v) {
         Class<?> activityClass = null;
-        if (holder instanceof SilentAuctionViewHolder) {
+        if (holder instanceof MySilentAuctionViewHolder) {
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
                     SuccessfullSilentAuctionActivity.class,
                     FailedSilentAuctionActivity.class,
                     InProgressSilentAuctionActivity.class);
-        } else if (holder instanceof DownwardAuctionViewHolder) {
+        } else if (holder instanceof MyDownwardAuctionViewHolder) {
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
                     SuccessfullDownwardAuctionActivity.class,
                     FailedDownwardAuctionActivity.class,
                     InProgressDownwardAuctionActivity.class);
-        } else if (holder instanceof ReverseAuctionViewHolder) {
+        } else if (holder instanceof MyReverseAuctionViewHolder) {
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
                     SuccessfullReverseAuctionActivity.class,
                     FailedReverseAuctionActivity.class,

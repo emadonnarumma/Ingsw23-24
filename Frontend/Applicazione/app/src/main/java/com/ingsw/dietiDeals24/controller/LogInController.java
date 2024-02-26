@@ -29,18 +29,16 @@ public class LogInController implements RetroFitHolder {
                 Response<TokenHolder> response = loginDao.login(request).execute();
 
                 if (response.isSuccessful() && response.body() != null) {
-
                     TokenHolder tokenHolder = TokenHolder.getInstance();
-
                     tokenHolder.setToken(response.body().getToken());
-
-//                    TokenHolder.instance = response.body();
-
                     Role role = currentUserDao.getRole(email, TokenHolder.getAuthToken()).execute().body();
                     if (role == Role.BUYER) {
                         UserHolder.user = currentUserDao.getBuyerByEmail(email, TokenHolder.getAuthToken()).execute().body();
+                        MyAuctionsController.getReverseAuctions(email);
                     } else if (role == Role.SELLER) {
                         UserHolder.user = currentUserDao.getSellerByEmail(email, TokenHolder.getAuthToken()).execute().body();
+                        MyAuctionsController.getDownwardAuctions(email);
+                        MyAuctionsController.getSilentAuctions(email);
                     }
                     return true;
                 } else if (response.code() == 403) {

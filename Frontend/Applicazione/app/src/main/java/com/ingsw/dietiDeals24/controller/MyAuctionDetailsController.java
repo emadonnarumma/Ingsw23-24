@@ -27,7 +27,6 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         MyAuctionDetailsController.auction = auction;
     }
 
-
     private MyAuctionDetailsController() {}
 
     public static CompletableFuture<Boolean> deleteAuction(Integer idAuction) {
@@ -150,16 +149,16 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
 
         String formattedTime = "";
         if (months > 0) {
-            formattedTime += months + " months ";
+            formattedTime += months + "M ";
         }
         if (days > 0) {
-            formattedTime += days + " days ";
+            formattedTime += days + "G ";
         }
         if (hours > 0) {
-            formattedTime += hours + " hours ";
+            formattedTime += hours + "H ";
         }
         if (minutes > 0) {
-            formattedTime += minutes + " minutes";
+            formattedTime += minutes + "Min";
         }
 
         return "L'utente ha : " + formattedTime + " per ritirare l'offerta";

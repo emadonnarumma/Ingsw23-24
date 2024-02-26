@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.myAuctions.auctionDetails.AuctionDetailsActivity">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_auction_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_auction_details"
@@ -27,31 +28,33 @@
                 <ImageView
                     android:layout_width="300dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/dieti_deals_24_logo_small"
-
                     android:layout_marginEnd="60dp"
-                    app:layout_constraintStart_toStartOf="parent"
+
+                    android:src="@drawable/dieti_deals_24_logo_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
+
         android:id="@+id/scroll_view_auction_details"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/cyan"
         android:fadeScrollbars="false"
         android:scrollIndicators="end"
         android:scrollbarThumbVertical="@drawable/custom_scrollbar"
-        android:background="@color/cyan"
 
-        app:layout_constraintTop_toBottomOf="@id/appbar_auction_details"
+        app:layout_constraintBottom_toTopOf="@id/green_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/green_button">
+        app:layout_constraintTop_toBottomOf="@id/appbar_auction_details">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,6 +65,7 @@
 
             app:layout_constraintTop_toTopOf="parent"
             tools:context=".ui.home.myAuctions.auctionDetails.AuctionDetailsActivity">
+
 
             <TextView
                 android:id="@+id/auction_type_text_view_auction_details"
@@ -120,12 +124,12 @@
                 android:fontFamily="@font/verdana_bold"
                 android:text="Stato asta"
                 android:textSize="25sp"
-                app:strokeColor="@color/black"
-                app:strokeWidth="10dp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_text_view_auction_details" />
+
+                app:layout_constraintTop_toBottomOf="@id/title_text_view_auction_details"
+                app:strokeColor="@color/black"
+                app:strokeWidth="10dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_auction_details"
@@ -155,10 +159,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/verdana_bold"
-                android:textSize="@dimen/text_size_large"
                 android:text="Ottime condizioni"
-
                 android:textColor="@color/white"
+
+                android:textSize="@dimen/text_size_large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_view_auction_details" />
@@ -167,12 +171,12 @@
                 android:id="@+id/description_text_view_auction_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/verdana"
                 android:text="Descrizione"
                 android:textColor="@color/white"
-                android:textSize="20sp"
 
-                android:layout_marginTop="30dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wear_text_view_auction_details" />
@@ -185,8 +189,8 @@
                 android:fontFamily="@font/verdana_bold"
                 android:text="Prezzo corrente: 20 €"
                 android:textAlignment="center"
-                android:textSize="@dimen/text_size_large"
                 android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -199,8 +203,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Decremento ogni: 2h"
                 android:textAlignment="center"
-                android:textSize="@dimen/text_size_large"
                 android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -232,6 +236,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/specific_information_2_text_view_auction_details" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -247,16 +252,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
+
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/red_button"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_height"
+        android:background="@drawable/square_shape_red"
         android:text="@string/login_phrase"
         android:textColor="@color/white"
-        android:background="@drawable/square_shape_red"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
+    <FrameLayout
+        android:id="@+id/overlay_auction_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_auction_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ScrollView;
 import androidx.cardview.widget.CardView;
@@ -33,18 +36,28 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
     protected SliderView sliderViewAuctionDetails;
     protected BottomSheetDialog bottomSheetDialog;
     protected RecyclerView bidsRecyclerView;
+    protected ProgressBar progressBar;
+    protected TextView emptyBidsTextView;
+    protected FrameLayout overlay;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auction_details);
         setupScrollView();
+        setupBottomSheetDialog();
         setupButtons();
         setupTextViews();
         setupSliderView();
         setupActionBar();
-        setupBottomSheetDialog();
         setupRecyclerView();
+        setupProgressBar();
+    }
+
+    private void setupProgressBar() {
+        progressBar = findViewById(R.id.progress_bar_auction_details);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void setupActionBar() {
@@ -81,6 +94,7 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
         specificInformation1TextViewAuctionDetails = findViewById(R.id.specific_information_1_text_view_auction_details);
         specificInformation2TextViewAuctionDetails = findViewById(R.id.specific_information_2_text_view_auction_details);
         specificInformation3TextViewAuctionDetails = findViewById(R.id.specific_information_3_text_view_auction_details);
+        emptyBidsTextView = bottomSheetDialog.findViewById(R.id.empty_bids_text_view);
     }
 
     private void setupButtons() {

@@ -2,6 +2,7 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -10,8 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
+import com.ingsw.dietiDeals24.controller.MyAuctionsController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
+import com.ingsw.dietiDeals24.model.Bid;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
@@ -19,7 +26,10 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.AuctionAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
@@ -63,16 +73,35 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
         setRedButton();
         greenButton.setText("VISUALIZZA LE OFFERTE");
         greenButton.setOnClickListener(v -> {
-            try {
-                bidsRecyclerView.setAdapter(new AuctionBidAdapter(MyAuctionDetailsController.getAllSilentBidsBySilentAuctionId(auction.getIdAuction()).get()));
-                bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressSilentAuctionActivity.this));
-                bottomSheetDialog.show();
 
-            } catch (ExecutionException e) {
-                ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            new Thread(() -> {
+                runOnUiThread(() -> {
+                    progressBar.setVisibility(View.VISIBLE);
+                });
+                try {
+                    List<SilentBid> bids = MyAuctionDetailsController.getAllSilentBidsBySilentAuctionId(auction.getIdAuction()).get();
+                    runOnUiThread(() -> {
+                        if (bids.isEmpty()) {
+                            progressBar.setVisibility(View.GONE);
+                            emptyBidsTextView.setText("Nessuna offerta disponibile");
+                            emptyBidsTextView.setVisibility(View.VISIBLE);
+                            bidsRecyclerView.setVisibility(View.GONE);
+                            bottomSheetDialog.show();
+                        } else {
+                            emptyBidsTextView.setVisibility(View.GONE);
+                            bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids));
+                            bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressSilentAuctionActivity.this));
+                            bidsRecyclerView.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            bottomSheetDialog.show();
+                        }
+                    });
+                } catch (ExecutionException e) {
+                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), e.getCause().getMessage()));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
         });
     }
 

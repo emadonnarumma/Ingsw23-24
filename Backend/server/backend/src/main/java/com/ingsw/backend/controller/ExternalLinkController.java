@@ -22,7 +22,7 @@ import com.ingsw.backend.service.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/externallink")
+@RequestMapping("/externalLink")
 public class ExternalLinkController {
 	
     @Autowired

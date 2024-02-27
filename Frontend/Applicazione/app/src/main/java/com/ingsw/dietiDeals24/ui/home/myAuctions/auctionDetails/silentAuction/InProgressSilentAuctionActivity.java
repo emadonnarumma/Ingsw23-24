@@ -56,7 +56,7 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
         descriptionTextViewAuctionDetails.setText(auction.getDescription());
         priceTextViewAuctionDetails.setVisibility(View.GONE);
         specificInformation1TextViewAuctionDetails.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextViewAuctionDetails.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));
+        specificInformation2TextViewAuctionDetails.setText("I compratori hanno: " + MyAuctionDetailsController.getWithdrawalTimeText(auction) + " per ritirare le offerte");
         setButtons();
     }
 

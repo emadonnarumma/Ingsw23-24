@@ -44,25 +44,26 @@ public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
     private void setAuctionDetails() {
         scrollViewAuctionDetails.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
         auctionTypeTextViewAuctionDetails.setText(AuctionType.toItalianString(auction.getType()));
+        auctionTypeTextViewAuctionDetails.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+
+        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
+        auctionStatusTextViewAuctionDetails.setTextColor(ContextCompat.getColor(this, R.color.green));
+        auctionStatusTextViewAuctionDetails.setStrokeColor(R.color.black);
+
         categoryTextViewAuctionDetails.setText(Category.toItalianString(auction.getCategory()));
         titleTextViewAuctionDetails.setText(auction.getTitle());
-        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
         wearTextViewAuctionDetails.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextViewAuctionDetails.setText(auction.getDescription());
-
-        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        auctionStatusTextViewAuctionDetails.setTextColor(ContextCompat.getColor(this, R.color.red));
-        auctionStatusTextViewAuctionDetails.setStrokeColor(R.color.white);
-
-        specificInformation1TextViewAuctionDetails.setText("scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextViewAuctionDetails.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));
+        priceTextViewAuctionDetails.setVisibility(View.GONE);
+        specificInformation1TextViewAuctionDetails.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
+        specificInformation2TextViewAuctionDetails.setText("I compratori avevano: " + MyAuctionDetailsController.getWithdrawalTimeText(auction) + " per ritirare le offerte");
 
         setGreenButton();
         setRedButton();
     }
 
     private void setGreenButton() {
-        greenButton.setText("Visualizza l'offerta vincente");
+        greenButton.setText("Visualizza dettagli della vendita");
     }
 
     private void setRedButton() {

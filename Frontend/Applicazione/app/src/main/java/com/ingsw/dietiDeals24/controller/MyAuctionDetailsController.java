@@ -138,7 +138,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
             formattedTime += minutes + "Min";
         }
 
-        return "I compratori hanno : " + formattedTime + " per ritirare le offerte";
+        return formattedTime;
     }
 
     public static String getNextDecrementTimeText(DownwardAuction auction) {

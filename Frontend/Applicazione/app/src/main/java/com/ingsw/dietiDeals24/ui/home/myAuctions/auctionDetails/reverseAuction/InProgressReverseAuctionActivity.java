@@ -53,7 +53,7 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
 
         wearTextViewAuctionDetails.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextViewAuctionDetails.setText(auction.getDescription());
-        priceTextViewAuctionDetails.setText("Offerta corrente: " + auction.getStartingPrice() + "€");
+        priceTextViewAuctionDetails.setText("Prezzo iniziale: " + auction.getStartingPrice() + "€");
         specificInformation1TextViewAuctionDetails.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
         specificInformation2TextViewAuctionDetails.setVisibility(View.GONE);
         setButtons();
@@ -65,7 +65,7 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
     }
 
         private void setGreenButton() {
-            greenButton.setText("VISUALIZZA LE OFFERTE");
+            greenButton.setText("VISUALIZZA OFFERTA CORRENTE");
             greenButton.setOnClickListener(v -> {
 
                 new Thread(() -> {
@@ -73,7 +73,7 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
                         progressBar.setVisibility(View.VISIBLE);
                     });
                     try {
-                        List<ReverseBid> bids = MyAuctionDetailsController.getAllReverseBidsByAuctionId(auction.getIdAuction()).get();
+                        List<ReverseBid> bids = List.of(MyAuctionDetailsController.getMinPricedReverseBidByAuctionId(auction.getIdAuction()).get());
                         runOnUiThread(() -> {
                             if (bids.isEmpty()) {
                                 progressBar.setVisibility(View.GONE);

@@ -57,7 +57,7 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
 
         specificInformation1TextViewAuctionDetails.setText("scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
         specificInformation2TextViewAuctionDetails.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));
-        ;
+
         setRedButton();
         setGreenButton();
     }

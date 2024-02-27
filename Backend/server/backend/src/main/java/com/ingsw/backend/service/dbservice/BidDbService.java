@@ -50,10 +50,9 @@ public class BidDbService implements BidService {
 	}
 
 	@Override
-	public List<ReverseBid> getAllReverseBidsByReverseAuction(ReverseAuction auction) {
-	    return bidRepository.findAllReverseBidsByReverseAuction(auction);
+	public ReverseBid getMinReverseBidByReverseAuctionId(Integer id) {
+		return bidRepository.findPendingReverseBidByAuctionId(id);
 	}
-
 
 	@Override
 	public Boolean delete(Integer id) {

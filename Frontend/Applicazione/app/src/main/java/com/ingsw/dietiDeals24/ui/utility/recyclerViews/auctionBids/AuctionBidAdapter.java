@@ -43,11 +43,13 @@ public class AuctionBidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_auction_bid, parent, false);
-        if (viewType == TYPE_SILENT)
+        if (viewType == TYPE_SILENT) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_auction_silent_bid, parent, false);
             return new SilentBidHolder(view, auctionDetailsActivity);
-        else
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_auction_reverse_bid, parent, false);
             return new ReverseBidHolder(view, auctionDetailsActivity);
+        }
     }
 
     @Override

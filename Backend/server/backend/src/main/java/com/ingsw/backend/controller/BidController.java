@@ -96,18 +96,9 @@ public class BidController {
 
    
     @GetMapping("/reverse/{auctionId}")
-    public ResponseEntity<List<ReverseBid>> getAllReverseBidsByReverseAuction(@PathVariable Integer auctionId) {
-		
-    	Optional<Auction> auction = auctionService.findById(auctionId); 
-		
-		if (auction.isEmpty() || !(auction.get() instanceof ReverseAuction)) {
-			
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-        
-		List<ReverseBid> bids = bidService.getAllReverseBidsByReverseAuction((ReverseAuction) auction.get());
-        
-		return ResponseEntity.ok(bids);
+    public ResponseEntity<ReverseBid> getMinPricedReverseBidByReverseAuction(@PathVariable Integer auctionId) {
+		ReverseBid bid = bidService.getMinReverseBidByReverseAuctionId(auctionId);
+		return ResponseEntity.ok(bid);
     }
 
 

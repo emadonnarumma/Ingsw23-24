@@ -14,6 +14,7 @@ import com.ingsw.backend.model.ReverseBid;
 import com.ingsw.backend.model.Seller;
 import com.ingsw.backend.model.SilentAuction;
 import com.ingsw.backend.model.SilentBid;
+import org.springframework.data.repository.query.Param;
 
 public interface BidRepository extends JpaRepository<Bid, Integer> {
 
@@ -26,7 +27,10 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
 	List<ReverseBid> findAllReverseBidsByReverseAuction(ReverseAuction auction);
 
 	List<SilentBid> findByStatus(BidStatus status);
-	
+
+	@Query("SELECT rb FROM ReverseBid rb WHERE rb.reverseAuction.idAuction = :auctionId AND rb.status = 'PENDING'")
+	ReverseBid findPendingReverseBidByAuctionId(@Param("auctionId") Integer auctionId);
+
 	@Query("SELECT sb FROM SilentBid sb WHERE sb.status = :status AND sb.silentAuction.expirationDate < :currentTimestamp")
     List<SilentBid> findExpiredSilentBidsByStatus(BidStatus status, Timestamp currentTimestamp);
 }

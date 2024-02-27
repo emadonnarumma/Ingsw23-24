@@ -16,9 +16,9 @@ public interface BidService {
 	public List<ReverseBid> getAllReverseBidsBySeller(Seller seller);
 	
 	public List<SilentBid> getAllSilentBidsBySilentAuction(SilentAuction auction);
-	
-	public List<ReverseBid> getAllReverseBidsByReverseAuction(ReverseAuction auction);
-	
+
+	public ReverseBid getMinReverseBidByReverseAuctionId(Integer id);
+
 	public SilentBid addSilentBid(SilentBid silentBid);
 	
 	public ReverseBid addReverseBid(ReverseBid reverseBid);

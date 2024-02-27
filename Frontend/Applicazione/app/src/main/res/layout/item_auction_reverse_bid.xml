@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
+    android:background="@color/gray">
+
+    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/profile_button_item_reverse_bid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/oval_shape_white"
+        android:drawableStart="@drawable/ic_profile_24dp"
+        android:drawableTint="@color/green"
+        android:fontFamily="@font/verdana_bold"
+        android:text="Utente"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/price_text_view_item_auction_reverse_bid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/verdana_bold"
+        android:text="100€"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_large"
+
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@id/profile_button_item_reverse_bid"
+        app:layout_constraintTop_toBottomOf="@id/profile_button_item_reverse_bid" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,11 @@
 package com.ingsw.dietiDeals24.network.dao;
 
-import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentBid;
 
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -22,7 +20,7 @@ public interface MyAuctiondDetailsDao {
     Call<List<SilentBid>> getAllSilentBidsBySilentAuctionId(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);
 
     @GET("bid/reverse/{auctionId}")
-    Call<List<ReverseBid>> getAllReverseBidsByReverseAuctionId(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);
+    Call<ReverseBid> getMinPricedReverseBidsByAuctionId(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);
 
     @POST("bid/acceptBid/{id}")
     Call<Boolean> acceptBid(@Path("id") Integer id, @Header("Authorization") String authToken);

@@ -24,11 +24,11 @@ public class SilentBidHolder extends RecyclerView.ViewHolder {
     public SilentBidHolder(@NonNull View itemView, AuctionDetailsActivity activity) {
         super(itemView);
         this.activity = activity;
-        profileButton = itemView.findViewById(R.id.profile_button_item_bid);
-        acceptButton = itemView.findViewById(R.id.accept_button_item_auction_bid);
-        declineButton = itemView.findViewById(R.id.decline_button_item_auction_bid);
-        withdrawalTimeTextView = itemView.findViewById(R.id.withdrawal_time_text_item_auction_bid);
-        priceTextView = itemView.findViewById(R.id.price_text_view_item_auction_bid);
+        profileButton = itemView.findViewById(R.id.profile_button_item_silent_bid);
+        acceptButton = itemView.findViewById(R.id.accept_button_item_auction_silent_bid);
+        declineButton = itemView.findViewById(R.id.decline_button_item_auction_silent_bid);
+        withdrawalTimeTextView = itemView.findViewById(R.id.withdrawal_time_text_item_auction_silent_bid);
+        priceTextView = itemView.findViewById(R.id.price_text_view_item_auction_silent_bid);
     }
 
     public void bind(SilentBid silentBid) {

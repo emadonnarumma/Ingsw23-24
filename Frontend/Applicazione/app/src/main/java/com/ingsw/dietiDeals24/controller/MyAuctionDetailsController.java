@@ -69,11 +69,11 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         });
     }
 
-    public static CompletableFuture<List<ReverseBid>> getAllReverseBidsByAuctionId(Integer auctionId) {
+    public static CompletableFuture<ReverseBid> getMinPricedReverseBidByAuctionId(Integer auctionId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<List<ReverseBid>> response = myAuctiondDetailsDao.getAllReverseBidsByReverseAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
+                Response<ReverseBid> response = myAuctiondDetailsDao.getMinPricedReverseBidsByAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();

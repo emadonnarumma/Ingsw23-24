@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions;
+package com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions;
 
 import android.net.Uri;
 import android.util.Base64;
@@ -24,31 +24,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MyReverseAuctionViewHolder extends RecyclerView.ViewHolder {
+public class SearchReverseAuctionViewHolder extends RecyclerView.ViewHolder {
+
     private TextView containerTextView, titleTextView,
             auctionTypeTextView, currentBidTextView,
-            auctionStatusTextView, expirationDateTextView;
+            auctionCategoryTextView, expirationDateTextView;
 
-    private ImageView auctionTypeIconImageView, auctionStatusIconImageView, expirationDateIconImageView;
+    private ImageView auctionTypeIconImageView, expirationDateIconImageView;
 
     private SliderView imagesSliderView;
 
     private CardView cardView;
 
-
-    public MyReverseAuctionViewHolder(@NonNull View itemView) {
+    public SearchReverseAuctionViewHolder(@NonNull View itemView) {
         super(itemView);
-        containerTextView = itemView.findViewById(R.id.container_text_view_item_my_reverse_auction);
-        titleTextView = itemView.findViewById(R.id.title_text_view_item_my_reverse_auction);
-        auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_my_reverse_auction);
-        auctionStatusTextView = itemView.findViewById(R.id.auction_status_text_view_item_my_reverse_auction);
-        expirationDateTextView = itemView.findViewById(R.id.expiration_date_text_view_item_my_reverse_auction);
-        currentBidTextView = itemView.findViewById(R.id.current_bid_text_view_item_my_reverse_auction);
-        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_my_reverse_auction);
-        auctionStatusIconImageView = itemView.findViewById(R.id.auction_status_icon_item_my_reverse_auction);
-        expirationDateIconImageView = itemView.findViewById(R.id.expiration_date_icon_item_my_reverse_auction);
-        imagesSliderView = itemView.findViewById(R.id.slider_item_my_reverse_auction);
-        cardView = itemView.findViewById(R.id.card_view_item_my_reverse_auction);
+
+        containerTextView = itemView.findViewById(R.id.container_text_view_item_reverse_auction);
+        titleTextView = itemView.findViewById(R.id.title_text_view_item_reverse_auction);
+        auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_reverse_auction);
+        auctionCategoryTextView = itemView.findViewById(R.id.auction_category_text_view_item_reverse_auction);
+        expirationDateTextView = itemView.findViewById(R.id.expiration_date_text_view_item_reverse_auction);
+        currentBidTextView = itemView.findViewById(R.id.current_bid_text_view_item_reverse_auction);
+        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_reverse_auction);
+        expirationDateIconImageView = itemView.findViewById(R.id.expiration_date_icon_item_reverse_auction);
+        imagesSliderView = itemView.findViewById(R.id.slider_item_reverse_auction);
+        cardView = itemView.findViewById(R.id.card_view_item_reverse_auction);
     }
 
     public void bind(ReverseAuction reverseAuction) {
@@ -56,26 +56,7 @@ public class MyReverseAuctionViewHolder extends RecyclerView.ViewHolder {
         auctionTypeTextView.setText(AuctionType.toItalianString(reverseAuction.getType()));
         currentBidTextView.setText(String.valueOf(reverseAuction.getStartingPrice()) + " €");
 
-        AuctionStatus status = reverseAuction.getStatus();
-        switch (status) {
-            case IN_PROGRESS:
-                auctionStatusTextView.setText(R.string.in_progress_phrase);
-                auctionStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_yellow));
-                break;
-
-            case SUCCESSFUL:
-                auctionStatusTextView.setText(R.string.sucessfull_phrase);
-                auctionStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_green));
-                break;
-
-            case FAILED:
-                auctionStatusTextView.setText(R.string.failed_phrase);
-                auctionStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_red));
-                break;
-
-            default:
-                break;
-        }
+        expirationDateTextView.setText(MyAuctionsController.getFormattedExpirationDate(reverseAuction));
 
         expirationDateTextView.setText(MyAuctionsController.getFormattedExpirationDate(reverseAuction));
         bindImages(reverseAuction);

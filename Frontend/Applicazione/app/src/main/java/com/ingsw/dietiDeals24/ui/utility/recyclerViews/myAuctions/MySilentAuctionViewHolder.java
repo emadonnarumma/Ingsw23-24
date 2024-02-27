@@ -38,16 +38,16 @@ public class MySilentAuctionViewHolder extends RecyclerView.ViewHolder {
 
     public MySilentAuctionViewHolder(@NonNull View itemView) {
         super(itemView);
-        containerTextView = itemView.findViewById(R.id.container_text_view_item_silent_auction);
-        titleTextView = itemView.findViewById(R.id.title_text_view_item_silent_auction);
-        auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_silent_auction);
-        auctionStatusTextView = itemView.findViewById(R.id.auction_status_text_view_item_silent_auction);
-        expirationDateTextView = itemView.findViewById(R.id.expiration_date_text_view_item_silent_auction);
-        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_silent_auction);
-        auctionStatusIconImageView = itemView.findViewById(R.id.auction_status_icon_item_silent_auction);
-        expirationDateIconImageView = itemView.findViewById(R.id.expiration_date_icon_item_silent_auction);
-        imagesSliderView = itemView.findViewById(R.id.slider_item_silent_auction);
-        cardView = itemView.findViewById(R.id.card_view_item_silent_auction);
+        containerTextView = itemView.findViewById(R.id.container_text_view_item_my_silent_auction);
+        titleTextView = itemView.findViewById(R.id.title_text_view_item_my_silent_auction);
+        auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_my_silent_auction);
+        auctionStatusTextView = itemView.findViewById(R.id.auction_status_text_view_item_my_silent_auction);
+        expirationDateTextView = itemView.findViewById(R.id.expiration_date_text_view_item_my_silent_auction);
+        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_my_silent_auction);
+        auctionStatusIconImageView = itemView.findViewById(R.id.auction_status_icon_item_my_silent_auction);
+        expirationDateIconImageView = itemView.findViewById(R.id.expiration_date_icon_item_my_silent_auction);
+        imagesSliderView = itemView.findViewById(R.id.slider_item_my_silent_auction);
+        cardView = itemView.findViewById(R.id.card_view_item_my_silent_auction);
     }
 
     public void bind(SilentAuction silentAuction) {
@@ -94,7 +94,7 @@ public class MySilentAuctionViewHolder extends RecyclerView.ViewHolder {
         adapter.renewItems(images);
     }
 
-    public Uri base64ToUri(String base64) {
+    private Uri base64ToUri(String base64) {
         byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
         File tempFile;
         try {

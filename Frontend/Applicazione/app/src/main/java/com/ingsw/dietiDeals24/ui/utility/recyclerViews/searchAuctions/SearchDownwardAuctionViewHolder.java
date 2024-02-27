@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions;
+package com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions;
 
 import android.net.Uri;
 import android.util.Base64;
@@ -15,6 +15,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
+import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -23,30 +24,29 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MyDownwardAuctionViewHolder extends RecyclerView.ViewHolder {
+public class SearchDownwardAuctionViewHolder extends RecyclerView.ViewHolder {
 
     private TextView containerTextView, titleTextView,
             auctionTypeTextView, buyNowTextView,
-            auctionStatusTextView;
+            auctionCategoryTextView;
 
-    private ImageView auctionTypeIconImageView, auctionStatusIconImageView;
+    private ImageView auctionTypeIconImageView;
 
     private SliderView imagesSliderView;
 
     private CardView cardView;
 
-
-    public MyDownwardAuctionViewHolder(@NonNull View itemView) {
+    public SearchDownwardAuctionViewHolder(@NonNull View itemView) {
         super(itemView);
-        containerTextView = itemView.findViewById(R.id.container_text_view_item_my_downward_auction);
-        titleTextView = itemView.findViewById(R.id.title_text_view_item_my_downward_auction);
-        auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_my_downward_auction);
-        auctionStatusTextView = itemView.findViewById(R.id.auction_status_text_view_item_my_downward_auction);
-        buyNowTextView = itemView.findViewById(R.id.buy_now_text_view_item_my_downward_auction);
-        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_my_downward_auction);
-        auctionStatusIconImageView = itemView.findViewById(R.id.auction_status_icon_item_my_downward_auction);
-        imagesSliderView = itemView.findViewById(R.id.slider_item_my_downward_auction);
-        cardView = itemView.findViewById(R.id.card_view_item_my_downward_auction);
+
+        containerTextView = itemView.findViewById(R.id.container_text_view_item_downward_auction);
+        titleTextView = itemView.findViewById(R.id.title_text_view_item_downward_auction);
+        auctionTypeTextView = itemView.findViewById(R.id.auction_type_text_view_item_downward_auction);
+        auctionCategoryTextView = itemView.findViewById(R.id.auction_category_text_view_item_downward_auction);
+        buyNowTextView = itemView.findViewById(R.id.buy_now_text_view_item_downward_auction);
+        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_downward_auction);
+        imagesSliderView = itemView.findViewById(R.id.slider_item_downward_auction);
+        cardView = itemView.findViewById(R.id.card_view_item_downward_auction);
     }
 
     public void bind(DownwardAuction downwardAuction) {
@@ -54,26 +54,7 @@ public class MyDownwardAuctionViewHolder extends RecyclerView.ViewHolder {
         auctionTypeTextView.setText(AuctionType.toItalianString(downwardAuction.getType()));
         buyNowTextView.setText(downwardAuction.getCurrentPrice() + " €");
 
-        AuctionStatus status = downwardAuction.getStatus();
-        switch (status) {
-            case IN_PROGRESS:
-                auctionStatusTextView.setText(R.string.in_progress_phrase);
-                auctionStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_yellow));
-                break;
-
-            case SUCCESSFUL:
-                auctionStatusTextView.setText(R.string.sucessfull_phrase);
-                auctionStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_green));
-                break;
-
-            case FAILED:
-                auctionStatusTextView.setText(R.string.failed_phrase);
-                auctionStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_red));
-                break;
-
-            default:
-                break;
-        }
+        auctionCategoryTextView.setText(Category.toItalianString(downwardAuction.getCategory()));
 
         bindImages(downwardAuction);
     }

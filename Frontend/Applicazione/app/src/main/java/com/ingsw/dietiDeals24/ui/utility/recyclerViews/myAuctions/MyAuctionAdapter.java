@@ -73,6 +73,7 @@ public class MyAuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_reverse_auction, parent, false);
             return new MyReverseAuctionViewHolder(view);
         }
+
         return null;
     }
 

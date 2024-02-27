@@ -8,13 +8,24 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class SearchFragment extends FragmentOfHomeActivity {
 
@@ -22,6 +33,8 @@ public class SearchFragment extends FragmentOfHomeActivity {
     private ProgressBar progressBar;
 
     private SmartMaterialSpinner<String> categorySmartSpinner;
+
+    private MaterialSearchBar searchBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +49,8 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
         recyclerView = view.findViewById(R.id.auctions_search);
         progressBar = view.findViewById(R.id.progress_bar_search_auctions);
+        searchBar = view.findViewById(R.id.search_bar);
+
         setupCategorySpinner(view);
 
     }
@@ -55,6 +70,32 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+
+        new Thread(() -> {
+            try {
+                List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctions().get();
+                List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctions().get();
+                List<ReverseAuction> reverseAuctions = SearchAuctionsController.getAllReverseAuctions().get();
+
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> {
+                        recyclerView.setAdapter(new SearchAuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions));
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    });
+                }
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> {
+                    recyclerView.setAdapter(new SearchAuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+                    ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                });
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     private void setupCategorySpinner(View view) {

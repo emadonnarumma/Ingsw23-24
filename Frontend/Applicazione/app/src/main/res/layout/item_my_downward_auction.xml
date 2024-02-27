@@ -7,7 +7,7 @@
     android:layout_marginVertical="8dp">
 
     <TextView
-        android:id="@+id/container_text_view_item_downward_auction"
+        android:id="@+id/container_text_view_item_my_downward_auction"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/rounded_corners_cyan"
@@ -17,17 +17,17 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_item_downward_auction"
+        android:id="@+id/card_view_item_my_downward_auction"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_margin="16dp"
 
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/container_text_view_item_downward_auction"
-        app:layout_constraintStart_toStartOf="@id/container_text_view_item_downward_auction">
+        app:layout_constraintBottom_toBottomOf="@id/container_text_view_item_my_downward_auction"
+        app:layout_constraintStart_toStartOf="@id/container_text_view_item_my_downward_auction">
 
         <com.smarteist.autoimageslider.SliderView
-            android:id="@+id/slider_item_downward_auction"
+            android:id="@+id/slider_item_my_downward_auction"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:sliderIndicatorEnabled="false"
@@ -40,17 +40,17 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/auction_type_icon_item_downward_auction"
+        android:id="@+id/auction_type_icon_item_my_downward_auction"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/down_chart_arrow"
 
-        app:layout_constraintBottom_toTopOf="@id/card_view_item_downward_auction"
-        app:layout_constraintStart_toStartOf="@id/card_view_item_downward_auction"
-        app:layout_constraintTop_toTopOf="@id/container_text_view_item_downward_auction" />
+        app:layout_constraintBottom_toTopOf="@id/card_view_item_my_downward_auction"
+        app:layout_constraintStart_toStartOf="@id/card_view_item_my_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/container_text_view_item_my_downward_auction" />
 
     <TextView
-        android:id="@+id/auction_type_text_view_item_downward_auction"
+        android:id="@+id/auction_type_text_view_item_my_downward_auction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -59,21 +59,21 @@
         android:textColor="@color/white"
 
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@id/auction_type_icon_item_downward_auction"
-        app:layout_constraintTop_toTopOf="@id/auction_type_icon_item_downward_auction" />
+        app:layout_constraintStart_toEndOf="@id/auction_type_icon_item_my_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/auction_type_icon_item_my_downward_auction" />
 
     <ImageView
-        android:id="@+id/auction_status_icon_item_downward_auction"
+        android:id="@+id/auction_status_icon_item_my_downward_auction"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginEnd="5dp"
 
         android:background="@drawable/circular_yellow"
-        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_downward_auction"
-        app:layout_constraintTop_toTopOf="@id/auction_type_text_view_item_downward_auction" />
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_my_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/auction_type_text_view_item_my_downward_auction" />
 
     <TextView
-        android:id="@+id/auction_status_text_view_item_downward_auction"
+        android:id="@+id/auction_status_text_view_item_my_downward_auction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
@@ -85,11 +85,11 @@
         android:text="In corso"
 
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@id/auction_status_icon_item_downward_auction"
-        app:layout_constraintTop_toTopOf="@id/auction_status_icon_item_downward_auction" />
+        app:layout_constraintEnd_toStartOf="@id/auction_status_icon_item_my_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/auction_status_icon_item_my_downward_auction" />
 
     <TextView
-        android:id="@+id/title_text_view_item_downward_auction"
+        android:id="@+id/title_text_view_item_my_downward_auction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -98,41 +98,41 @@
         android:text="Titolo"
 
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_downward_auction"
-        app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
-        app:layout_constraintTop_toTopOf="@id/card_view_item_downward_auction" />
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_my_downward_auction"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_my_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/card_view_item_my_downward_auction" />
 
     <ImageView
-        android:id="@+id/buy_now_icon_item_downward_auction"
+        android:id="@+id/buy_now_icon_item_my_downward_auction"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/ic_cart_shopping_24dp"
 
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
-        app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
-        app:layout_constraintTop_toBottomOf="@id/title_text_view_item_downward_auction" />
+        app:layout_constraintStart_toEndOf="@id/card_view_item_my_downward_auction"
+        app:layout_constraintTop_toBottomOf="@id/title_text_view_item_my_downward_auction" />
 
     <TextView
-        android:id="@+id/buy_now_hint_text_view_item_downward_auction"
+        android:id="@+id/buy_now_hint_text_view_item_my_downward_auction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/verdana"
         android:text="@string/buy_now_hint_phrase"
         android:textColor="@color/white"
 
-        app:layout_constraintStart_toEndOf="@id/buy_now_icon_item_downward_auction"
-        app:layout_constraintTop_toTopOf="@id/buy_now_icon_item_downward_auction" />
+        app:layout_constraintStart_toEndOf="@id/buy_now_icon_item_my_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/buy_now_icon_item_my_downward_auction" />
 
   <TextView
-        android:id="@+id/buy_now_text_view_item_downward_auction"
+        android:id="@+id/buy_now_text_view_item_my_downward_auction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/verdana"
         android:text="20€"
         android:textColor="@color/white"
 
-        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_downward_auction"
-        app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
-        app:layout_constraintTop_toBottomOf="@id/buy_now_icon_item_downward_auction" />
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_my_downward_auction"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_my_downward_auction"
+        app:layout_constraintTop_toBottomOf="@id/buy_now_icon_item_my_downward_auction" />
 </androidx.constraintlayout.widget.ConstraintLayout>

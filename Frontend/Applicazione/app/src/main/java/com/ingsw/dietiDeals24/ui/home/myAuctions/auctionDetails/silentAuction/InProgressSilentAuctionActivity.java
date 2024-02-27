@@ -2,7 +2,6 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -75,7 +74,7 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
                     progressBar.setVisibility(View.VISIBLE);
                 });
                 try {
-                    List<SilentBid> bids = MyAuctionDetailsController.getAllSilentBidsBySilentAuctionId(auction.getIdAuction()).get();
+                    List<SilentBid> bids = MyAuctionDetailsController.getAllSilentBidsByAuctionId(auction.getIdAuction()).get();
                     runOnUiThread(() -> {
                         if (bids.isEmpty()) {
                             progressBar.setVisibility(View.GONE);

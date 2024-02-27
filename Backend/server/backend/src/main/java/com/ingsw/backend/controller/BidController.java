@@ -181,7 +181,7 @@ public class BidController {
     public ResponseEntity<Boolean> acceptBid(@PathVariable Integer id) {
     	
         Boolean result = bidService.acceptSilentBid(id);
-        	
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     

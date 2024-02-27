@@ -12,9 +12,6 @@ import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MyDownwardAuctionViewHolder;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MyReverseAuctionViewHolder;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MySilentAuctionViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -67,10 +67,8 @@ public class SearchFragment extends FragmentOfHomeActivity {
     }
 
     private void updateAuctions() {
-
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-
         new Thread(() -> {
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctions().get();
@@ -79,10 +77,11 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
                 if (isAdded()) {
                     requireActivity().runOnUiThread(() -> {
-                        recyclerView.setAdapter(new SearchAuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions));
+                        SearchAuctionAdapter adapter = new SearchAuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions);
+                        recyclerView.setAdapter(adapter);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        recyclerView.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                     });
                 }
             } catch (ExecutionException e) {

@@ -4,6 +4,7 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
@@ -49,7 +50,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         });
     }
 
-    public static CompletableFuture<List<SilentBid>> getAllSilentBidsBySilentAuctionId(Integer auctionId) {
+    public static CompletableFuture<List<SilentBid>> getAllSilentBidsByAuctionId(Integer auctionId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
@@ -68,6 +69,27 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         });
     }
 
+    public static CompletableFuture<List<ReverseBid>> getAllReverseBidsByAuctionId(Integer auctionId) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<List<ReverseBid>> response = myAuctiondDetailsDao.getAllReverseBidsByReverseAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
+    }
+
+
+
     public static CompletableFuture<Boolean> acceptBid(int id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -75,6 +97,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
                 Response<Boolean> response = myAuctiondDetailsDao.acceptBid(id, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
+                        MyAuctionsController.setUpdatedAll(false);
                     return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");

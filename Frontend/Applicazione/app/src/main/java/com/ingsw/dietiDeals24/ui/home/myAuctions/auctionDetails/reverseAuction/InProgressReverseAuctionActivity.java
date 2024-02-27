@@ -6,17 +6,21 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
@@ -57,8 +61,43 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
 
     private void setButtons() {
         setRedButton();
-        greenButton.setText("VISUALIZZA LE OFFERTE");
+        setGreenButton();
     }
+
+        private void setGreenButton() {
+            greenButton.setText("VISUALIZZA LE OFFERTE");
+            greenButton.setOnClickListener(v -> {
+
+                new Thread(() -> {
+                    runOnUiThread(() -> {
+                        progressBar.setVisibility(View.VISIBLE);
+                    });
+                    try {
+                        List<ReverseBid> bids = MyAuctionDetailsController.getAllReverseBidsByAuctionId(auction.getIdAuction()).get();
+                        runOnUiThread(() -> {
+                            if (bids.isEmpty()) {
+                                progressBar.setVisibility(View.GONE);
+                                emptyBidsTextView.setText("Nessuna offerta disponibile");
+                                emptyBidsTextView.setVisibility(View.VISIBLE);
+                                bidsRecyclerView.setVisibility(View.GONE);
+                                bottomSheetDialog.show();
+                            } else {
+                                emptyBidsTextView.setVisibility(View.GONE);
+                                bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this));
+                                bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressReverseAuctionActivity.this));
+                                bidsRecyclerView.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
+                                bottomSheetDialog.show();
+                            }
+                        });
+                    } catch (ExecutionException e) {
+                        runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), e.getCause().getMessage()));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            });
+        }
 
     private void setRedButton() {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));

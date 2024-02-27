@@ -64,20 +64,27 @@
 
     <TextView
         android:id="@+id/auction_category_text_view_item_reverse_auction"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+
+
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
         android:fontFamily="@font/verdana_bold"
+        android:gravity="right"
+        android:maxLines="1"
         android:shadowColor="#000000"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="2"
         android:text="Categoria"
+
         android:textColor="@color/yellow"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_reverse_auction"
+        app:layout_constraintTop_toTopOf="@+id/auction_type_text_view_item_reverse_auction" />
 
-        android:layout_marginEnd="10dp"
-        tools:layout_editor_absoluteY="7dp" />
 
     <TextView
         android:id="@+id/title_text_view_item_reverse_auction"

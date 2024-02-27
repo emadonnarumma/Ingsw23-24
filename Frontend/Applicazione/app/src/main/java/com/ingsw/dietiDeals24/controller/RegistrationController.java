@@ -29,7 +29,6 @@ public class RegistrationController implements RetroFitHolder {
                 Response<TokenHolder> response = registrationDao.register(registrationRequest).execute();
 
                 if (response.isSuccessful() && response.body() != null) {
-//                    TokenHolder.instance = response.body();
 
                     TokenHolder tokenHolder = TokenHolder.getInstance();
 

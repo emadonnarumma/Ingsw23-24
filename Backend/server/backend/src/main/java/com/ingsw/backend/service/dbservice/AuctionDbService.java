@@ -226,72 +226,72 @@ public class AuctionDbService implements AuctionService {
 	@Override
 	public List<SilentAuction> getAllSilentAuctions() {
 		
-		return auctionRepository.findAllSilent();
+		return auctionRepository.findAllSilentByStatus(AuctionStatus.IN_PROGRESS);
 	}
 
 	@Override
 	public List<ReverseAuction> getAllReverseAuctions() {
 		
-		return auctionRepository.findAllReverse();
+		return auctionRepository.findAllReverseByStatus(AuctionStatus.IN_PROGRESS);
 	}
 
 	@Override
 	public List<DownwardAuction> getAllDownwardAuctions() {
 		
-		return auctionRepository.findAllDownward();
+		return auctionRepository.findAllDownwardByStatus(AuctionStatus.IN_PROGRESS);
 	}
 
 	@Override
 	public List<SilentAuction> getSilentAuctionsByCategory(Category category) {
 		
-		return auctionRepository.findAllSilentByCategory(category);
+		return auctionRepository.findAllSilentByStatusAndCategory(AuctionStatus.IN_PROGRESS, category);
 	}
 
 	@Override
 	public List<SilentAuction> getSilentAuctionsByTitleContaining(String keyword) {
 	
-		return auctionRepository.findAllSilentByTitleContainingIgnoreCase(keyword);
+		return auctionRepository.findAllSilentByStatusAndTitleContainingIgnoreCase(AuctionStatus.IN_PROGRESS, keyword);
 	}
 
 	@Override
 	public List<SilentAuction> getSilentAuctionsByTitleContainingAndCategory(String keyword, Category category) {
 		
-		return auctionRepository.findAllSilentByTitleContainingIgnoreCaseAndCategory(keyword, category);
+		return auctionRepository.findAllSilentByStatusAndTitleContainingIgnoreCaseAndCategory(AuctionStatus.IN_PROGRESS, keyword, category);
 	}
 
 	@Override
 	public List<DownwardAuction> getDownwardAuctionsByCategory(Category category) {
 		
-		return auctionRepository.findAllDownwardByCategory(category);
+		return auctionRepository.findAllDownwardByStatusAndCategory(AuctionStatus.IN_PROGRESS, category);
 	}
 
 	@Override
 	public List<DownwardAuction> getDownwardAuctionsByTitleContaining(String keyword) {
 		
-		return auctionRepository.findAllDownwardByTitleContainingIgnoreCase(keyword);
+		return auctionRepository.findAllDownwardByStatusAndTitleContainingIgnoreCase(AuctionStatus.IN_PROGRESS, keyword);
 	}
 
 	@Override
 	public List<DownwardAuction> getDownwardAuctionsByTitleContainingAndCategory(String keyword, Category category) {
 		
-		return auctionRepository.findAllDownwardByTitleContainingIgnoreCaseAndCategory(keyword, category);
+		return auctionRepository.findAllDownwardByStatusAndTitleContainingIgnoreCaseAndCategory(AuctionStatus.IN_PROGRESS, keyword, category);
 	}
 
 	@Override
 	public List<ReverseAuction> getReverseAuctionsByCategory(Category category) {
 		
-		return auctionRepository.findAllReverseByCategory(category);
+		return auctionRepository.findAllReverseByStatusAndCategory(AuctionStatus.IN_PROGRESS, category);
 	}
 
 	@Override
 	public List<ReverseAuction> getReverseAuctionsByTitleContaining(String keyword) {
 		
-		return auctionRepository.findAllReverseByTitleContainingIgnoreCase(keyword);
+		return auctionRepository.findAllReverseByStatusAndTitleContainingIgnoreCase(AuctionStatus.IN_PROGRESS, keyword);
 	}
 
 	@Override
 	public List<ReverseAuction> getReverseAuctionsByTitleContainingAndCategory(String keyword, Category category) {
 		
-		return auctionRepository.findAllReverseByTitleContainingIgnoreCaseAndCategory(keyword, category);
+		return auctionRepository.findAllReverseByStatusAndTitleContainingIgnoreCaseAndCategory(AuctionStatus.IN_PROGRESS, keyword, category);
 	}
 }

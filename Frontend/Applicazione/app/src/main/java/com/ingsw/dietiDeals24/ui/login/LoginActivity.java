@@ -12,8 +12,8 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.registration.activity.RegistrationActivity;
-import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
 
@@ -21,12 +21,11 @@ import com.ingsw.dietiDeals24.controller.LogInController;
 import java.util.concurrent.ExecutionException;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
 
     private TextView registrationTextView;
     private EditText emailEditText, passwordEditText;
     private CircularProgressButton loginButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
 
                 LogInController.login(email, password).get();
-                goToHomeActivity();
+                onNavigateToHomeActivityFragmentRequest("HomeFragment", getApplicationContext());
 
             } catch (ExecutionException e) {
 
@@ -87,11 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                 throw new RuntimeException("Interruzione non prevista");
             }
         });
-    }
-
-    private void goToHomeActivity() {
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -113,4 +107,5 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = null;
         registrationTextView = null;
     }
+
 }

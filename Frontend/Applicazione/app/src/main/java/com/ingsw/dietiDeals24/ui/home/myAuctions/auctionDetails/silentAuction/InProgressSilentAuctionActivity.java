@@ -11,12 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
-import com.ingsw.dietiDeals24.controller.MyAuctionsController;
-import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
-import com.ingsw.dietiDeals24.model.Bid;
-import com.ingsw.dietiDeals24.model.DownwardAuction;
-import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
@@ -26,9 +20,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.AuctionAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -93,7 +85,7 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
                             bottomSheetDialog.show();
                         } else {
                             emptyBidsTextView.setVisibility(View.GONE);
-                            bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids));
+                            bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this));
                             bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressSilentAuctionActivity.this));
                             bidsRecyclerView.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);

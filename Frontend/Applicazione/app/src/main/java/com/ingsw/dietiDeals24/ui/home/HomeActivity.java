@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -97,8 +96,17 @@ public class HomeActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new SearchFragment()).commit();
 
-        String openFragment = getIntent().getStringExtra("openSilent");
-        if ("SilentAuctionAttributesFragment".equals(openFragment)) {
+        checkRequestToOpenAFragmentFromAnOtherActivity();
+    }
+
+    private void checkRequestToOpenAFragmentFromAnOtherActivity() {
+        String fragmentToOpen = getIntent().getStringExtra("openFragment");
+        if ("MyAuctionFragment".equals(fragmentToOpen)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_home, new MyAuctionFragment())
+                    .commit();
+
+        } else if ("SilentAuctionAttributesFragment".equals(fragmentToOpen)) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_home, new GeneralAuctionAttributesFragment())
                     .commit();
@@ -122,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setNavigatioBarView(NavigationBarView navigationBarView) {
         this.navigationBarView = navigationBarView;
         navigationBarView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.navigation_search){
+            if (item.getItemId() == R.id.navigation_search) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                         new SearchFragment()).commit();

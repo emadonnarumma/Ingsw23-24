@@ -12,20 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.MyAuctionsController;
-import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
-import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.InProgressSilentAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.OnNavigateToHomeActivityFragmentListener;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class AuctionBidAdapter extends RecyclerView.Adapter<AuctionBidHolder> {
     private List<SilentBid> silentBids;
+    private AuctionDetailsActivity auctionDetailsActivity;
 
-    public AuctionBidAdapter(List<SilentBid> silentBids) {
+    public AuctionBidAdapter(List<SilentBid> silentBids, AuctionDetailsActivity activity) {
         this.silentBids = silentBids;
+        this.auctionDetailsActivity = activity;
     }
 
     @NonNull
@@ -50,7 +50,7 @@ public class AuctionBidAdapter extends RecyclerView.Adapter<AuctionBidHolder> {
                                 boolean isAccepted = MyAuctionDetailsController.acceptBid(silentBid.getIdBid()).get();
                                 if (isAccepted) {
                                     MyAuctionsController.setUpdatedSilent(true);
-                                    ((AuctionDetailsActivity) v.getContext()).runOnUiThread(() -> ((AuctionDetailsActivity) v.getContext()).finish());
+                                    auctionDetailsActivity.onNavigateToHomeActivityFragmentRequest("MyAuctionFragment", auctionDetailsActivity.getApplicationContext());
                                 }
                             } catch (ExecutionException e) {
                                 v.post(() -> Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());

@@ -2,12 +2,12 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 import com.ingsw.dietiDeals24.R;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 import jp.hamcheesedev.outlinedtextview.CompatOutlinedTextView;
 
-public abstract class AuctionDetailsActivity extends AppCompatActivity {
+public abstract class AuctionDetailsActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
     protected ScrollView scrollViewAuctionDetails;
     protected Button greenButton, redButton;
     protected ImageButton questionMarkButtonAuctionDetails;
@@ -38,8 +39,6 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
     protected RecyclerView bidsRecyclerView;
     protected ProgressBar progressBar;
     protected TextView emptyBidsTextView;
-    protected FrameLayout overlay;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

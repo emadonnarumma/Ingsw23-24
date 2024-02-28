@@ -253,7 +253,7 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
                 if (text.toString().isEmpty()) {
 
-                    if (categorySmartSpinner.getSelectedItem().isEmpty()) {
+                    if (categorySmartSpinner.getSelectedItem() == null) {
 
                         updateAuctions();
 
@@ -264,7 +264,7 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
                 } else {
 
-                    if (categorySmartSpinner.getSelectedItem().isEmpty()) {
+                    if (categorySmartSpinner.getSelectedItem() == null) {
 
                         filterByKeyword(text.toString());
 

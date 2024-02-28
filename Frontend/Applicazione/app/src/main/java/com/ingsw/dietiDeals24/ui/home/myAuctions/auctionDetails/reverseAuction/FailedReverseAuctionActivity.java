@@ -45,20 +45,20 @@ public class FailedReverseAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setAuctionDetails() {
-        scrollViewAuctionDetails.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
-        auctionTypeTextViewAuctionDetails.setText(AuctionType.toItalianString(auction.getType()));
-        categoryTextViewAuctionDetails.setText(Category.toItalianString(auction.getCategory()));
-        titleTextViewAuctionDetails.setText(auction.getTitle());
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
+        auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
+        categoryTextView.setText(Category.toItalianString(auction.getCategory()));
+        titleTextView.setText(auction.getTitle());
 
-        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        auctionStatusTextViewAuctionDetails.setTextColor(ContextCompat.getColor(this, R.color.yellow));
-        auctionStatusTextViewAuctionDetails.setStrokeColor(R.color.black);
+        auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
+        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.yellow));
+        auctionStatusTextView.setStrokeColor(R.color.black);
 
-        wearTextViewAuctionDetails.setText(Wear.toItalianString(auction.getWear()));
-        descriptionTextViewAuctionDetails.setText(auction.getDescription());
-        priceTextViewAuctionDetails.setText("Offerta corrente: " + auction.getStartingPrice() + "€");
-        specificInformation1TextViewAuctionDetails.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextViewAuctionDetails.setVisibility(View.GONE);
+        wearTextView.setText(Wear.toItalianString(auction.getWear()));
+        descriptionTextView.setText(auction.getDescription());
+        priceTextView.setText("Offerta corrente: " + auction.getStartingPrice() + "€");
+        specificInformation1TextView.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
+        specificInformation2TextView.setVisibility(View.GONE);
         setButtons();
     }
 

@@ -2,7 +2,6 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -40,22 +39,23 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setAuctionDetails() {
-        scrollViewAuctionDetails.setBackground(AppCompatResources.getDrawable(this, R.color.cyan));
-        auctionTypeTextViewAuctionDetails.setText(AuctionType.toItalianString(auction.getType()));
-        categoryTextViewAuctionDetails.setText(Category.toItalianString(auction.getCategory()));
-        titleTextViewAuctionDetails.setText(auction.getTitle());
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.cyan));
+        auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
+        categoryTextView.setText(Category.toItalianString(auction.getCategory()));
+        titleTextView.setText(auction.getTitle());
 
-        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        auctionStatusTextViewAuctionDetails.setTextColor(ContextCompat.getColor(this, R.color.yellow));
-        auctionStatusTextViewAuctionDetails.setStrokeColor(R.color.black);
+        auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
+        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.yellow));
+        auctionStatusTextView.setStrokeColor(R.color.black);
 
-        wearTextViewAuctionDetails.setText(Wear.toItalianString(auction.getWear()));
-        descriptionTextViewAuctionDetails.setText(auction.getDescription());
-        priceTextViewAuctionDetails.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
+        wearTextView.setText(Wear.toItalianString(auction.getWear()));
+        descriptionTextView.setText(auction.getDescription());
+        priceTextView.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
 
-        specificInformation1TextViewAuctionDetails.setText("Decremento: " + auction.getDecrementAmount() + "€");
-        specificInformation2TextViewAuctionDetails.setText(MyAuctionDetailsController.getNextDecrementTimeText(auction));
-        specificInformation3TextViewAuctionDetails.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
+        specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
+        specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
+//        specificInformation3TextView.setText(MyAuctionDetailsController.getRemainingTime(auction.getNextDecrement()));
+        specificInformation4TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
         setButtons();
     }
 

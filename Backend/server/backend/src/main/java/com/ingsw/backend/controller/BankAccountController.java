@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/bankaccount")
+@RequestMapping("/bankAccount")
 public class BankAccountController {
 
     @Autowired

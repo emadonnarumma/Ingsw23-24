@@ -90,7 +90,7 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
     }
 
     private void onDoneButtonClick() {
-        ProfileController.addLink(
+        ProfileController.updateLink(
                 titleEditText.getText().toString(),
                 urlEditText.getText().toString()
         );

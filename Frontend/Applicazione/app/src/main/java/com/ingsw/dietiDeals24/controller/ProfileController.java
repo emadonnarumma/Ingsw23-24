@@ -6,9 +6,22 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.formstate.ExternalLinkFormState;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.model.BankAccount;
 import com.ingsw.dietiDeals24.model.ExternalLink;
+import com.ingsw.dietiDeals24.model.Seller;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.network.RetroFitHolder;
+import com.ingsw.dietiDeals24.network.TokenHolder;
+import com.ingsw.dietiDeals24.network.dao.BankAccountDao;
+import com.ingsw.dietiDeals24.network.dao.EditProfileDao;
+import com.ingsw.dietiDeals24.network.dao.ExternalLinkDao;
+
+import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+
+import retrofit2.Response;
 
 public class ProfileController {
     private static MutableLiveData<ExternalLinkFormState> externalLinkFormState = new MutableLiveData<>();
@@ -30,16 +43,62 @@ public class ProfileController {
         }
     }
 
-    public static void addLink(String title, String url) {
-        //TODO
+    public static CompletableFuture<Boolean> addLink(String title, String url) {
+        ExternalLink newLink = new ExternalLink(title, url);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
+                Response<ExternalLink> response = externalLinkDao.addExternalLink(UserHolder.user.getEmail(), newLink, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    UserHolder.user.getExternalLinks().add(response.body());
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+        });
     }
 
-    public static void updateLink(String title, String url) {
-        //TODO
+    public static CompletableFuture<Boolean> updateLink(String title, String url) {
+        ExternalLink updatedLink = new ExternalLink(title, url);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
+                Response<ExternalLink> response = externalLinkDao.updateExternalLink(selectedLink.getId(), updatedLink, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    ExternalLink linkFromServer = response.body();
+                    UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setTitle(linkFromServer.getTitle());
+                    UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setUrl(linkFromServer.getUrl());
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+        });
     }
 
-    public static void deleteLink(ExternalLink externalLink) {
-        //TODO
+    public static CompletableFuture<Boolean> deleteLink(ExternalLink externalLink) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
+                Response<Void> response = externalLinkDao.deleteExternalLink(externalLink.getId(), TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    UserHolder.user.getExternalLinks().remove(externalLink);
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+        });
     }
 
     public static void setSelectedLink(ExternalLink selectedLink) {
@@ -50,24 +109,79 @@ public class ProfileController {
         return selectedLink;
     }
 
-    public static void updateBio(String bio) {
-        //TODO
+    public static CompletableFuture<Boolean> updateBio(String bio) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
+                Response<User> response = editProfileDao.updateBio(UserHolder.user.getEmail(), bio, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    if(response.body()==null)
+                        return false;
+                    UserHolder.user.setBio(response.body().getBio());
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+        });
     }
 
-    public static void updateRegion(Region region) {
-        //TODO
+    public static CompletableFuture<Boolean> updateRegion(Region region) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
+                Response<User> response = editProfileDao.updateRegion(UserHolder.user.getEmail(), region, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    if(response.body()==null)
+                        return false;
+                    UserHolder.user.setRegion(response.body().getRegion());
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+        });
     }
 
-    public static void updateBankAccount(String iban, String iva) {
-        //TODO
+    public static CompletableFuture<Boolean> updateBankAccount(String iban, String iva) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                if(UserHolder.isUserBuyer())
+                    return false;
+
+                BankAccount updatedBankAccount = new BankAccount(iban, iva);
+                BankAccountDao bankAccountDao = RetroFitHolder.retrofit.create(BankAccountDao.class);
+                Response<BankAccount> response = bankAccountDao.updateBankAccount(
+                        UserHolder.getSeller().getBankAccount().getId(), updatedBankAccount,
+                        TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    if(response.body()==null)
+                        return false;
+                    UserHolder.getSeller().getBankAccount().setIban(response.body().getIban());
+                    UserHolder.getSeller().getBankAccount().setIva(response.body().getIva());
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+        });
     }
 
     public static void logout() {
         UserHolder.user = null;
     }
 
-    public static void switchAccountType() {
-        //TODO
+    public static void switchAccountType(String iban, String iva) {
+
     }
 
     public static boolean isUrlTitleValid(String title) {

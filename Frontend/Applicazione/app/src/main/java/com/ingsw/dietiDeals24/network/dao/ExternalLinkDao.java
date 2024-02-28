@@ -12,11 +12,12 @@ import retrofit2.http.Path;
 
 public interface ExternalLinkDao {
     @POST("externalLink/{email}")
-    Call<Void> addExternalLink(@Path("email") String email, @Body ExternalLink externalLink, @Header("Authorization") String token);
+    Call<ExternalLink> addExternalLink(@Path("email") String email, @Body ExternalLink externalLink, @Header("Authorization") String token);
 
     @PUT("externalLink/{id}")
-    Call<Void> updateExternalLink(@Path("id") Integer id, @Body ExternalLink externalLink, @Header("Authorization") String token);
+    Call<ExternalLink> updateExternalLink(@Path("id") Integer id, @Body ExternalLink externalLink, @Header("Authorization") String token);
 
     @DELETE("externalLink/{id}")
     Call<Void> deleteExternalLink(@Path("id") Integer id, @Header("Authorization") String token);
 }
+// <3 ~Pea

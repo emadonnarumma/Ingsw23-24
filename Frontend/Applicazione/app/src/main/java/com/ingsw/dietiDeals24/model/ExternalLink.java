@@ -2,7 +2,7 @@ package com.ingsw.dietiDeals24.model;
 
 public class ExternalLink {
 
-    private Integer idExternalLink;
+    private Integer id;
     private String title;
     private String url;
 
@@ -11,12 +11,12 @@ public class ExternalLink {
         this.url = url;
     }
 
-    public Integer getIdExternalLink() {
-        return idExternalLink;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdExternalLink(Integer idExternalLink) {
-        this.idExternalLink = idExternalLink;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -33,5 +33,17 @@ public class ExternalLink {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        ExternalLink that = (ExternalLink) obj;
+        return id != null && id.equals(that.id);
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,12 @@ import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,8 +52,8 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
         recyclerView = view.findViewById(R.id.auctions_search);
         progressBar = view.findViewById(R.id.progress_bar_search_auctions);
-        searchBar = view.findViewById(R.id.search_bar);
 
+        setupSearchBar(view);
         setupCategorySpinner(view);
 
     }
@@ -97,6 +100,106 @@ public class SearchFragment extends FragmentOfHomeActivity {
         }).start();
     }
 
+    private void filterByCategory(Category category) {
+
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+
+        new Thread(() -> {
+            try {
+                List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByCategory(category).get();
+                List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctionsByCategory(category).get();
+                List<ReverseAuction> reverseAuctions = SearchAuctionsController.getAllReverseAuctionsByCategory(category).get();
+
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> {
+                        SearchAuctionAdapter adapter = new SearchAuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    });
+                }
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> {
+                    recyclerView.setAdapter(new SearchAuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+                    ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                });
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    private void filterByKeyword(String keyword) {
+
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        new Thread(() -> {
+            try {
+                List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByKeyword(keyword).get();
+                List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctionsByKeyword(keyword).get();
+                List<ReverseAuction> reverseAuctions = SearchAuctionsController.getAllReverseAuctionsByKeyword(keyword).get();
+
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> {
+                        SearchAuctionAdapter adapter = new SearchAuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    });
+                }
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> {
+                    recyclerView.setAdapter(new SearchAuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+                    ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                });
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    private void filterByKeywordAndCategory(String keyword, Category category) {
+
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+
+
+        new Thread(() -> {
+            try {
+                List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByKeywordAndCategory(keyword, category).get();
+                List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctionsByKeywordAndCategory(keyword, category).get();
+                List<ReverseAuction> reverseAuctions = SearchAuctionsController.getAllReverseAuctionsByKeywordAndCategory(keyword, category).get();
+
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> {
+                        SearchAuctionAdapter adapter = new SearchAuctionAdapter(silentAuctions, downwardAuctions, reverseAuctions);
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    });
+                }
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> {
+                    recyclerView.setAdapter(new SearchAuctionAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+                    ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                });
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+
     private void setupCategorySpinner(View view) {
         categorySmartSpinner = view.findViewById(R.id.filter_button_search);
         categorySmartSpinner.setItem(
@@ -104,5 +207,93 @@ public class SearchFragment extends FragmentOfHomeActivity {
                         getResources().getStringArray(R.array.categories)
                 )
         );
+
+        categorySmartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Category category = Category.fromItalianString(categorySmartSpinner.getSelectedItem());
+
+                if (searchBar.getText().isEmpty()) {
+
+                    filterByCategory(category);
+
+                } else {
+
+                    filterByKeywordAndCategory(searchBar.getText(), category);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                if (searchBar.getText().isEmpty()) {
+
+                    updateAuctions();
+
+                } else {
+
+                    filterByKeyword(searchBar.getText());
+                }
+            }
+        });
+    }
+
+    private void setupSearchBar(View view) {
+
+        searchBar = view.findViewById(R.id.search_bar);
+
+        searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+            @Override
+            public void onSearchStateChanged(boolean enabled) {
+            }
+
+            @Override
+            public void onSearchConfirmed(CharSequence text) {
+
+                if (text.toString().isEmpty()) {
+
+                    if (categorySmartSpinner.getSelectedItem().isEmpty()) {
+
+                        updateAuctions();
+
+                    } else {
+
+                        filterByCategory(Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
+                    }
+
+                } else {
+
+                    if (categorySmartSpinner.getSelectedItem().isEmpty()) {
+
+                        filterByKeyword(text.toString());
+
+                    } else {
+
+                        filterByKeywordAndCategory(text.toString(), Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
+                    }
+                }
+            }
+
+            @Override
+            public void onButtonClicked(int buttonCode) {
+            }
+        });
+
+        searchBar.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
+            @Override
+            public void OnItemClickListener(int position, View v) {
+                String suggestion = searchBar.getLastSuggestions().get(position).toString();
+                searchBar.setText(suggestion);
+                filterByKeyword(suggestion);
+            }
+
+            @Override
+            public void OnItemDeleteListener(int position, View v) {
+                searchBar.getLastSuggestions().remove(position);
+                searchBar.updateLastSuggestions(searchBar.getLastSuggestions());
+            }
+        });
+
     }
 }

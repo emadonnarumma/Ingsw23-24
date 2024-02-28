@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.network.dao;
 
+import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentBid;
 
@@ -21,6 +22,15 @@ public interface MyAuctiondDetailsDao {
 
     @GET("bid/reverse/{auctionId}")
     Call<ReverseBid> getMinPricedReverseBidsByAuctionId(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);
+
+    @GET("bid/silent/winning/{auctionId}")
+    Call<SilentBid> getWinningSilentBidByAuctionId(@Path("auctionId") Integer id, @Header("Authorization") String authToken);
+
+    @GET("bid/reverse/winning/{auctionId}")
+    Call<ReverseBid> getWinningReverseBidByAuctionId(@Path("auctionId") Integer id, @Header("Authorization") String authToken);
+
+    @GET("bid/downward/winning/{auctionId}")
+    Call<DownwardBid> getWinningDownwardBidByAuctionId(@Path("auctionId") Integer id, @Header("Authorization") String authToken);
 
     @POST("bid/acceptBid/{id}")
     Call<Boolean> acceptBid(@Path("id") Integer id, @Header("Authorization") String authToken);

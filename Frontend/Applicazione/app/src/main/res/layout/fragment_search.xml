@@ -18,18 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/search_bar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/filter_button_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:mt_hint="Cerca"
-        app:mt_searchBarColor="@color/gray"
-        app:mt_searchIconTint="@color/green" />
+
 
     <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
         android:id="@+id/filter_button_search"
@@ -56,7 +45,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_my_auctions"
+        android:id="@+id/card_view_search_auctions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
@@ -72,4 +61,20 @@
             android:layout_height="match_parent"
             android:background="@color/ms_material_grey_400" />
     </androidx.cardview.widget.CardView>
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/search_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/filter_button_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mt_hint="Cerca"
+        app:mt_searchBarColor="@color/gray"
+        app:mt_searchIconTint="@color/green"
+        app:mt_roundedSearchBarEnabled="false"
+        app:mt_maxSuggestionsCount="6"
+        android:elevation="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

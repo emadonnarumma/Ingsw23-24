@@ -52,6 +52,7 @@
 
         app:layout_constraintBottom_toTopOf="@id/green_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar_auction_details">
 
@@ -218,7 +219,9 @@
                 android:text="Prezzo minimo segreto: 15€"
                 android:textAlignment="center"
                 android:textColor="@color/white"
+                android:fontFamily="@font/verdana"
                 android:textSize="@dimen/text_size_large"
+                android:gravity="center"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -230,12 +233,42 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Prossimo decremento tra: 2H 5M"
-
                 android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large"
+                android:fontFamily="@font/verdana"
+                android:gravity="center"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/specific_information_2_text_view_auction_details" />
 
+            <TextView
+                android:id="@+id/specific_information_4_text_view_auction_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Valore di decremento 1€"
+                android:textColor="@color/white"
+                android:fontFamily="@font/verdana"
+                android:textSize="@dimen/text_size_large"
+                android:gravity="center"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/specific_information_3_text_view_auction_details" />
+
+            <TextView
+                android:id="@+id/specific_information_5_text_view_auction_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:visibility="invisible"
+                android:text="Prezzo minimo segreto: 15€"
+
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/specific_information_4_text_view_auction_details" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

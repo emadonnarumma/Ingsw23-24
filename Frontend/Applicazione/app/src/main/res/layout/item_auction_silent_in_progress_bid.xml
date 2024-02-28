@@ -8,7 +8,7 @@
     android:background="@color/gray">
 
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/profile_button_item_silent_bid"
+        android:id="@+id/profile_button_item_auction_in_progress_silent_bid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/withdrawal_time_text_item_auction_silent_bid"
+        android:id="@+id/withdrawal_time_text_item_auction_in_progress_silent_bid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
@@ -37,12 +37,12 @@
         android:textSize="@dimen/text_medium"
 
         android:layout_marginStart="30dp"
-        app:layout_constraintStart_toEndOf="@id/profile_button_item_silent_bid"
+        app:layout_constraintStart_toEndOf="@id/profile_button_item_auction_in_progress_silent_bid"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/profile_button_item_silent_bid"  />
+        app:layout_constraintTop_toTopOf="@id/profile_button_item_auction_in_progress_silent_bid"  />
 
     <TextView
-        android:id="@+id/price_text_view_item_auction_silent_bid"
+        android:id="@+id/price_text_view_item_auction_in_progress_silent_bid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/verdana_bold"
@@ -52,10 +52,10 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/withdrawal_time_text_item_auction_silent_bid" />
+        app:layout_constraintTop_toBottomOf="@id/withdrawal_time_text_item_auction_in_progress_silent_bid" />
 
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/accept_button_item_auction_silent_bid"
+        android:id="@+id/accept_button_item_auction_in_progress_silent_bid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval_shape_green"
@@ -68,10 +68,10 @@
         android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/price_text_view_item_auction_silent_bid" />
+        app:layout_constraintTop_toBottomOf="@id/price_text_view_item_auction_in_progress_silent_bid" />
 
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/decline_button_item_auction_silent_bid"
+        android:id="@+id/decline_button_item_auction_in_progress_silent_bid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval_shape_red"
@@ -83,6 +83,6 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/price_text_view_item_auction_silent_bid" />
+        app:layout_constraintTop_toBottomOf="@id/price_text_view_item_auction_in_progress_silent_bid" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

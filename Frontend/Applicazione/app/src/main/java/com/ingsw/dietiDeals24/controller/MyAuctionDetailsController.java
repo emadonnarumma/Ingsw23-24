@@ -4,6 +4,7 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
@@ -12,6 +13,7 @@ import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,7 +30,65 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         MyAuctionDetailsController.auction = auction;
     }
 
-    private MyAuctionDetailsController() {}
+    private MyAuctionDetailsController() {
+    }
+
+    public static CompletableFuture<DownwardBid> getWinningDownwardBidByAuctionId(Integer idAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<DownwardBid> response = myAuctiondDetailsDao.getWinningDownwardBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
+    }
+
+    public static CompletableFuture<ReverseBid> getWinningReverseBidByAuctionId(Integer idAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<ReverseBid> response = myAuctiondDetailsDao.getWinningReverseBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
+    }
+
+    public static CompletableFuture<SilentBid> getWinningSilentBidByAuctionId(Integer idAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<SilentBid> response = myAuctiondDetailsDao.getWinningSilentBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
+    }
 
     public static CompletableFuture<Boolean> deleteAuction(Integer idAuction) {
         return CompletableFuture.supplyAsync(() -> {
@@ -89,7 +149,6 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     }
 
 
-
     public static CompletableFuture<Boolean> acceptBid(int id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -97,7 +156,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
                 Response<Boolean> response = myAuctiondDetailsDao.acceptBid(id, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                        MyAuctionsController.setUpdatedAll(false);
+                    MyAuctionsController.setUpdatedAll(false);
                     return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -141,37 +200,6 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         return formattedTime;
     }
 
-    public static String getNextDecrementTimeText(DownwardAuction auction) {
-        long totalSeconds = auction.getDecrementTime();
-
-        long months = totalSeconds / (30 * 24 * 60 * 60);
-        totalSeconds %= 30 * 24 * 60 * 60;
-
-        long days = totalSeconds / (24 * 60 * 60);
-        totalSeconds %= 24 * 60 * 60;
-
-        long hours = totalSeconds / (60 * 60);
-        totalSeconds %= 60 * 60;
-
-        long minutes = totalSeconds / 60;
-
-        String formattedTime = "";
-        if (months > 0) {
-            formattedTime += months + "M ";
-        }
-        if (days > 0) {
-            formattedTime += days + "G ";
-        }
-        if (hours > 0) {
-            formattedTime += hours + "H ";
-        }
-        if (minutes > 0) {
-            formattedTime += minutes + "Min";
-        }
-
-        return "Tempo del prossimo decremento  : " + formattedTime ;
-    }
-
     public static String getRemainingWithdrawalTimeText(SilentBid silentBid) {
         long currentTimestamp = System.currentTimeMillis() / 1000L;
         long bidTimestamp = silentBid.getTimestamp().getTime() / 1000L;
@@ -205,4 +233,62 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
 
         return "L'utente ha : " + formattedTime + " per ritirare l'offerta";
     }
+
+    public static String getDecrementTimeText(long seconds) {
+        long totalSeconds = seconds;
+
+        long months = totalSeconds / (30 * 24 * 60 * 60);
+        totalSeconds %= 30 * 24 * 60 * 60;
+
+        long days = totalSeconds / (24 * 60 * 60);
+        totalSeconds %= 24 * 60 * 60;
+
+        long hours = totalSeconds / (60 * 60);
+        totalSeconds %= 60 * 60;
+
+        long minutes = totalSeconds / 60;
+
+        String formattedTime = "";
+        if (months > 0) {
+            formattedTime += months + "M ";
+        }
+        if (days > 0) {
+            formattedTime += days + "G ";
+        }
+        if (hours > 0) {
+            formattedTime += hours + "H ";
+        }
+        if (minutes > 0) {
+            formattedTime += minutes + "Min";
+        }
+
+        return "Decremento ogni  : " + formattedTime;
+    }
+
+    public static long getRemainingTime(String nextDecrement) {
+        Calendar nextDecrementTime = convertStringToCalendar(nextDecrement);
+        Calendar currentTime = Calendar.getInstance();
+        return (nextDecrementTime.getTimeInMillis() - currentTime.getTimeInMillis()) / 1000;
+    }
+
+    public static Calendar convertStringToCalendar(String timestamp) {
+        String[] parts = timestamp.split(" ");
+        String[] dateParts = parts[0].split("-");
+        String[] timeParts = parts[1].split(":");
+
+        int year = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]) - 1;
+        int day = Integer.parseInt(dateParts[2]);
+        int hour = Integer.parseInt(timeParts[0]);
+        int minute = Integer.parseInt(timeParts[1]);
+        int second = Integer.parseInt(timeParts[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute, second);
+
+        return calendar;
+    }
 }
+
+
+

@@ -28,5 +28,4 @@ public class ReverseBid extends Bid {
     @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
     private ReverseAuction reverseAuction;
 
-
 }

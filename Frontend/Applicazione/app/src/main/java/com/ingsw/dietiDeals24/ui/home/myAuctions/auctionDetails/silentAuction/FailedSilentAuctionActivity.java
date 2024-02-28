@@ -18,7 +18,6 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.ArrayList;
@@ -43,20 +42,20 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setAuctionDetails() {
-        scrollViewAuctionDetails.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
-        auctionTypeTextViewAuctionDetails.setText(AuctionType.toItalianString(auction.getType()));
-        categoryTextViewAuctionDetails.setText(Category.toItalianString(auction.getCategory()));
-        titleTextViewAuctionDetails.setText(auction.getTitle());
-        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        wearTextViewAuctionDetails.setText(Wear.toItalianString(auction.getWear()));
-        descriptionTextViewAuctionDetails.setText(auction.getDescription());
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+        auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
+        categoryTextView.setText(Category.toItalianString(auction.getCategory()));
+        titleTextView.setText(auction.getTitle());
+        auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
+        wearTextView.setText(Wear.toItalianString(auction.getWear()));
+        descriptionTextView.setText(auction.getDescription());
 
-        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        auctionStatusTextViewAuctionDetails.setTextColor(ContextCompat.getColor(this, R.color.red));
-        auctionStatusTextViewAuctionDetails.setStrokeColor(R.color.white);
+        auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
+        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.red));
+        auctionStatusTextView.setStrokeColor(R.color.white);
 
-        specificInformation1TextViewAuctionDetails.setText("scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextViewAuctionDetails.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));
+        specificInformation1TextView.setText("scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
+        specificInformation2TextView.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));
 
         setRedButton();
         setGreenButton();

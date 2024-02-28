@@ -4,19 +4,13 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+import com.ingsw.backend.model.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ingsw.backend.enumeration.AuctionStatus;
 import com.ingsw.backend.enumeration.BidStatus;
-import com.ingsw.backend.model.Bid;
-import com.ingsw.backend.model.Buyer;
-import com.ingsw.backend.model.ReverseAuction;
-import com.ingsw.backend.model.ReverseBid;
-import com.ingsw.backend.model.Seller;
-import com.ingsw.backend.model.SilentAuction;
-import com.ingsw.backend.model.SilentBid;
 import com.ingsw.backend.repository.AuctionRepository;
 import com.ingsw.backend.repository.BidRepository;
 import com.ingsw.backend.service.BidService;
@@ -32,6 +26,21 @@ public class BidDbService implements BidService {
 	public BidDbService(BidRepository bidRepository, AuctionRepository auctionRepository) {
 		this.bidRepository = bidRepository;
 		this.auctionRepository = auctionRepository;
+	}
+
+	@Override
+	public DownwardBid getWinningDownwardBidByAuctionId(Integer auctionId) {
+		return bidRepository.getWinningDownwardBidByAuctionId(auctionId);
+	}
+
+	@Override
+	public ReverseBid getWinningReverseBidByAuctionId(Integer auctionId) {
+		return bidRepository.getWinningReverseBidByAuctionId(auctionId);
+	}
+
+	@Override
+	public SilentBid getWinningSilentBidByAuctionId(Integer auctionId) {
+        return bidRepository.getWinningSilentBidByAuctionId(auctionId);
 	}
 
 	@Override
@@ -51,7 +60,8 @@ public class BidDbService implements BidService {
 
 	@Override
 	public ReverseBid getMinReverseBidByReverseAuctionId(Integer id) {
-		return bidRepository.findPendingReverseBidByAuctionId(id);
+		ReverseBid reverseBid = bidRepository.findPendingReverseBidByAuctionId(id);
+		return reverseBid;
 	}
 
 	@Override
@@ -90,7 +100,19 @@ public class BidDbService implements BidService {
 		return bidRepository.save(reverseBid);
 	}
 
+	@Override
+	public DownwardBid makeDownwardAuctionPayment(DownwardBid downwardBid) {
 
+		DownwardAuction auction = downwardBid.getDownwardAuction();
+
+		auction.setStatus(AuctionStatus.SUCCESSFUL);
+
+		downwardBid.setStatus(BidStatus.ACCEPTED);
+
+		auctionRepository.save(auction);
+
+		return bidRepository.save(downwardBid);
+	}
 
 
 	@Override

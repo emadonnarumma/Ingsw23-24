@@ -25,7 +25,7 @@ public interface SearchAuctionsDao {
     public Call<List<SilentAuction>> getAllSilentAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
 
     @GET("auction/silent/search/{keyword}/category/{category}")
-    public Call<List<SilentAuction>> getAllSilentAuctionsByCategoryAndKeyword(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
+    public Call<List<SilentAuction>> getAllSilentAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
 
     @GET("auction/reverse")
     public Call<List<ReverseAuction>> getAllReverseAuctions(@Header("Authorization") String authToken);
@@ -37,7 +37,7 @@ public interface SearchAuctionsDao {
     public Call<List<ReverseAuction>> getAllReverseAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
 
     @GET("auction/reverse/search/{keyword}/category/{category}")
-    public Call<List<ReverseAuction>> getAllReverseAuctionsByCategoryAndKeyword(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
+    public Call<List<ReverseAuction>> getAllReverseAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
 
 
     @GET("auction/downward")
@@ -50,7 +50,7 @@ public interface SearchAuctionsDao {
     public Call<List<DownwardAuction>> getAllDownwardAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
 
     @GET("auction/downward/search/{keyword}/category/{category}")
-    public Call<List<DownwardAuction>> getAllDownwardAuctionsByCategoryAndKeyword(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
+    public Call<List<DownwardAuction>> getAllDownwardAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
 
 
 

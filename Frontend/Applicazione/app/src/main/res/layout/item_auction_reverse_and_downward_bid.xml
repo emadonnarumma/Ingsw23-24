@@ -8,7 +8,7 @@
     android:background="@color/gray">
 
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/profile_button_item_reverse_bid"
+        android:id="@+id/profile_button_item_auction_reverse_bid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -33,7 +33,7 @@
         android:textSize="@dimen/text_size_large"
 
         android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="@id/profile_button_item_reverse_bid"
-        app:layout_constraintTop_toBottomOf="@id/profile_button_item_reverse_bid" />
+        app:layout_constraintStart_toStartOf="@id/profile_button_item_auction_reverse_bid"
+        app:layout_constraintTop_toBottomOf="@id/profile_button_item_auction_reverse_bid" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

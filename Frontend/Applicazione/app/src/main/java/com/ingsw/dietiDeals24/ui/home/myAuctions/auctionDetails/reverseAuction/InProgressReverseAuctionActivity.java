@@ -20,6 +20,7 @@ import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsAc
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -42,20 +43,20 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setAuctionDetails() {
-        scrollViewAuctionDetails.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
-        auctionTypeTextViewAuctionDetails.setText(AuctionType.toItalianString(auction.getType()));
-        categoryTextViewAuctionDetails.setText(Category.toItalianString(auction.getCategory()));
-        titleTextViewAuctionDetails.setText(auction.getTitle());
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
+        auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
+        categoryTextView.setText(Category.toItalianString(auction.getCategory()));
+        titleTextView.setText(auction.getTitle());
 
-        auctionStatusTextViewAuctionDetails.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        auctionStatusTextViewAuctionDetails.setTextColor(ContextCompat.getColor(this, R.color.yellow));
-        auctionStatusTextViewAuctionDetails.setStrokeColor(R.color.black);
+        auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
+        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.yellow));
+        auctionStatusTextView.setStrokeColor(R.color.black);
 
-        wearTextViewAuctionDetails.setText(Wear.toItalianString(auction.getWear()));
-        descriptionTextViewAuctionDetails.setText(auction.getDescription());
-        priceTextViewAuctionDetails.setText("Prezzo iniziale: " + auction.getStartingPrice() + "€");
-        specificInformation1TextViewAuctionDetails.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextViewAuctionDetails.setVisibility(View.GONE);
+        wearTextView.setText(Wear.toItalianString(auction.getWear()));
+        descriptionTextView.setText(auction.getDescription());
+        priceTextView.setText("Prezzo iniziale: " + auction.getStartingPrice() + "€");
+        specificInformation1TextView.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
+        specificInformation2TextView.setVisibility(View.GONE);
         setButtons();
     }
 
@@ -64,40 +65,47 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
         setGreenButton();
     }
 
-        private void setGreenButton() {
-            greenButton.setText("VISUALIZZA OFFERTA CORRENTE");
-            greenButton.setOnClickListener(v -> {
+    private void setGreenButton() {
+        greenButton.setText("VISUALIZZA OFFERTA CORRENTE");
+        greenButton.setOnClickListener(v -> {
 
-                new Thread(() -> {
-                    runOnUiThread(() -> {
-                        progressBar.setVisibility(View.VISIBLE);
-                    });
-                    try {
-                        List<ReverseBid> bids = List.of(MyAuctionDetailsController.getMinPricedReverseBidByAuctionId(auction.getIdAuction()).get());
-                        runOnUiThread(() -> {
-                            if (bids.isEmpty()) {
-                                progressBar.setVisibility(View.GONE);
-                                emptyBidsTextView.setText("Nessuna offerta disponibile");
-                                emptyBidsTextView.setVisibility(View.VISIBLE);
-                                bidsRecyclerView.setVisibility(View.GONE);
-                                bottomSheetDialog.show();
-                            } else {
-                                emptyBidsTextView.setVisibility(View.GONE);
-                                bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this));
-                                bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressReverseAuctionActivity.this));
-                                bidsRecyclerView.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                                bottomSheetDialog.show();
-                            }
-                        });
-                    } catch (ExecutionException e) {
-                        runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), e.getCause().getMessage()));
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+            new Thread(() -> {
+                runOnUiThread(() -> {
+                    progressBar.setVisibility(View.VISIBLE);
+                });
+                try {
+                    List<ReverseBid> bids = new ArrayList<>();
+                    ReverseBid reverseBid = MyAuctionDetailsController.getMinPricedReverseBidByAuctionId(auction.getIdAuction()).get();
+                    if (reverseBid != null) {
+                        bids.add(reverseBid);
                     }
-                }).start();
-            });
-        }
+                    runOnUiThread(() -> {
+                        if (bids.isEmpty()) {
+                            progressBar.setVisibility(View.GONE);
+                            emptyBidsTextView.setText("Nessuna offerta disponibile");
+                            emptyBidsTextView.setVisibility(View.VISIBLE);
+                            bidsRecyclerView.setVisibility(View.GONE);
+                            bottomSheetDialog.show();
+                        } else {
+                            emptyBidsTextView.setVisibility(View.GONE);
+                            bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this, true));
+                            bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressReverseAuctionActivity.this));
+                            bidsRecyclerView.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            bottomSheetDialog.show();
+                        }
+                    });
+                } catch (ExecutionException e) {
+                    runOnUiThread(() -> {
+                        progressBar.setVisibility(View.GONE);
+                        ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
+                    });
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        });
+    }
 
     private void setRedButton() {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));

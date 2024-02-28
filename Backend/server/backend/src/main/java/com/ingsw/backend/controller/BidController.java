@@ -3,6 +3,7 @@ package com.ingsw.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.ingsw.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -16,14 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ingsw.backend.enumeration.Role;
-import com.ingsw.backend.model.Auction;
-import com.ingsw.backend.model.Buyer;
-import com.ingsw.backend.model.ReverseAuction;
-import com.ingsw.backend.model.ReverseBid;
-import com.ingsw.backend.model.Seller;
-import com.ingsw.backend.model.SilentAuction;
-import com.ingsw.backend.model.SilentBid;
-import com.ingsw.backend.model.User;
 import com.ingsw.backend.service.AuctionService;
 import com.ingsw.backend.service.BidService;
 import com.ingsw.backend.service.UserService;
@@ -44,14 +37,24 @@ public class BidController {
 	@Qualifier("mainAuctionService")
 	private AuctionService auctionService;
 	
-	@Autowired
+		@Autowired
 	@Qualifier("mainUserService")
 	private UserService userService;
+
+	@GetMapping("/silent/winning/{auctionId}")
+	public ResponseEntity<SilentBid> getWinningSilentBidByAuctionId(@PathVariable Integer auctionId) {
+		return ResponseEntity.ok(bidService.getWinningSilentBidByAuctionId(auctionId));
+	}
+
+	@GetMapping("/reverse/winning/{auctionId}")
+	public ResponseEntity<ReverseBid> getWinningReverseBidByAuctionId(@PathVariable Integer auctionId) {
+		return ResponseEntity.ok(bidService.getWinningReverseBidByAuctionId(auctionId));
+	}
 	
 	@GetMapping("/silent/buyer/{buyerEmail}")
     public ResponseEntity<List<SilentBid>> getAllSilentBidsByBuyer(@PathVariable String buyerEmail) {
         
-		Optional<User> buyer = userService.getUser(buyerEmail); 
+		Optional<User> buyer = userService.getUser(buyerEmail);
 		
 		if (buyer.isEmpty() || buyer.get().getRole() != Role.BUYER) {
 			
@@ -59,9 +62,12 @@ public class BidController {
 		}
         
 		List<SilentBid> bids = bidService.getAllSilentBidsByBuyer((Buyer) buyer.get());
-        
+
 		return ResponseEntity.ok(bids);
     }
+
+
+
 
 
     @GetMapping("/reverse/seller/{sellerEmail}")
@@ -96,10 +102,40 @@ public class BidController {
 
    
     @GetMapping("/reverse/{auctionId}")
-    public ResponseEntity<ReverseBid> getMinPricedReverseBidByReverseAuction(@PathVariable Integer auctionId) {
+    public ResponseEntity<ReverseBid> getMinPricedReverseBidByReverseAuctionId(@PathVariable Integer auctionId) {
 		ReverseBid bid = bidService.getMinReverseBidByReverseAuctionId(auctionId);
+		if (bid == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
 		return ResponseEntity.ok(bid);
     }
+
+	@PostMapping("/downward")
+	public ResponseEntity<DownwardBid> addDownwardBid(@Valid @RequestBody DownwardBid downwardBid) {
+
+		Optional<User> owner = userService.getUser(downwardBid.getBuyer().getEmail());
+
+		if (owner.isEmpty() || owner.get().getRole() == Role.SELLER) {
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		downwardBid.setBuyer((Buyer) owner.get());
+
+		Optional<Auction> auction = auctionService.findById(downwardBid.getDownwardAuction().getIdAuction());
+
+		if (auction.isEmpty() || !(auction.get() instanceof DownwardAuction)) {
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		downwardBid.setDownwardAuction((DownwardAuction) auction.get());
+
+		DownwardBid savedBid = bidService.makeDownwardAuctionPayment(downwardBid);
+
+		return new ResponseEntity<>(savedBid, HttpStatus.CREATED);
+	}
 
 
     @PostMapping("/silent")

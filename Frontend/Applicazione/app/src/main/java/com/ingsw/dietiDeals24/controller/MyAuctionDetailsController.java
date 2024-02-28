@@ -28,7 +28,46 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         MyAuctionDetailsController.auction = auction;
     }
 
-    private MyAuctionDetailsController() {}
+    private MyAuctionDetailsController() {
+    }
+
+    public static CompletableFuture<ReverseBid> getWinningReverseBidByAuctionId(Integer idAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<ReverseBid> response = myAuctiondDetailsDao.getWinningReverseBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
+    }
+
+    public static CompletableFuture<SilentBid> getWinningSilentBidByAuctionId(Integer idAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<SilentBid> response = myAuctiondDetailsDao.getWinningSilentBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
+    }
 
     public static CompletableFuture<Boolean> deleteAuction(Integer idAuction) {
         return CompletableFuture.supplyAsync(() -> {
@@ -89,7 +128,6 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     }
 
 
-
     public static CompletableFuture<Boolean> acceptBid(int id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -97,7 +135,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
                 Response<Boolean> response = myAuctiondDetailsDao.acceptBid(id, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                        MyAuctionsController.setUpdatedAll(false);
+                    MyAuctionsController.setUpdatedAll(false);
                     return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -169,7 +207,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
             formattedTime += minutes + "Min";
         }
 
-        return "Tempo del prossimo decremento  : " + formattedTime ;
+        return "Tempo del prossimo decremento  : " + formattedTime;
     }
 
     public static String getRemainingWithdrawalTimeText(SilentBid silentBid) {

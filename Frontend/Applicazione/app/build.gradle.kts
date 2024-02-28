@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
     implementation("jp.hamcheesedev:outlinedtextview:0.1.0")
 
     implementation ("com.github.mancj:MaterialSearchBar:0.8.5")

@@ -1,9 +1,12 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.ingsw.dietiDeals24.R;
@@ -58,10 +61,13 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
 
     private void setButtons() {
         setRedButton();
-        greenButton.setText("VISUALIZZA LE OFFERTE");
+        greenButton.setVisibility(View.GONE);
     }
 
     private void setRedButton() {
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        redButton.setLayoutParams(params); // Imposta la larghezza del pulsante a MATCH_PARENT e la sua posizione in basso
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {

@@ -84,7 +84,7 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
                             bottomSheetDialog.show();
                         } else {
                             emptyBidsTextView.setVisibility(View.GONE);
-                            bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this));
+                            bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this, true));
                             bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressSilentAuctionActivity.this));
                             bidsRecyclerView.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
@@ -93,6 +93,7 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
                     });
                 } catch (ExecutionException e) {
                     runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), e.getCause().getMessage()));
+                    progressBar.setVisibility(View.GONE);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

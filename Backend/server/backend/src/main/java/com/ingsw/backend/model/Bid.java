@@ -25,7 +25,8 @@ import java.sql.Timestamp;
 		)
 @JsonSubTypes({
 		  @JsonSubTypes.Type(value = SilentBid.class, name = "SILENT"),
-		  @JsonSubTypes.Type(value = ReverseBid.class, name = "REVERSE")
+		  @JsonSubTypes.Type(value = ReverseBid.class, name = "REVERSE"),
+          @JsonSubTypes.Type(value = DownwardBid.class, name = "DOWNWARD")
 				})
 public abstract class Bid {
 

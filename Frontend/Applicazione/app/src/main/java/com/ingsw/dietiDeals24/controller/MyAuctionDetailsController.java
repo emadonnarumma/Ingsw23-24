@@ -4,6 +4,7 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
@@ -29,6 +30,25 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     }
 
     private MyAuctionDetailsController() {
+    }
+
+    public static CompletableFuture<DownwardBid> getWinningDownwardBidByAuctionId(Integer idAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<DownwardBid> response = myAuctiondDetailsDao.getWinningDownwardBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
     }
 
     public static CompletableFuture<ReverseBid> getWinningReverseBidByAuctionId(Integer idAuction) {
@@ -207,7 +227,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
             formattedTime += minutes + "Min";
         }
 
-        return "Tempo del prossimo decremento  : " + formattedTime;
+        return "Tempo al prossimo decremento  : " + formattedTime;
     }
 
     public static String getRemainingWithdrawalTimeText(SilentBid silentBid) {

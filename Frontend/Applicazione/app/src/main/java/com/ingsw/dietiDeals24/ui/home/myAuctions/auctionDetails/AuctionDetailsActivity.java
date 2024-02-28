@@ -2,7 +2,6 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
-import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 import com.ingsw.dietiDeals24.R;
@@ -97,7 +95,7 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
     }
 
     private void setupButtons() {
-        questionMarkButtonAuctionDetails = findViewById(R.id.iquestion_mark_button_auction_details);
+        questionMarkButtonAuctionDetails = findViewById(R.id.question_mark_button_auction_details);
         greenButton = findViewById(R.id.green_button);
         redButton = findViewById(R.id.red_button);
     }

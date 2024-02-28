@@ -61,13 +61,13 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
 
     private void setButtons() {
         setRedButton();
-        greenButton.setVisibility(View.GONE);
+        greenButton.setVisibility(View.VISIBLE);
     }
 
     private void setRedButton() {
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-        redButton.setLayoutParams(params); // Imposta la larghezza del pulsante a MATCH_PARENT e la sua posizione in basso
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) greenButton.getLayoutParams();
+        params.width = ConstraintLayout.LayoutParams.MATCH_PARENT; // Imposta la larghezza per coprire tutta la schermata
+        redButton.setLayoutParams(params);
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {

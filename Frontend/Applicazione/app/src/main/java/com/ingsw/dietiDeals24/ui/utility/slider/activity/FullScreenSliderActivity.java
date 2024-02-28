@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -47,13 +48,9 @@ public class FullScreenSliderActivity extends AppCompatActivity {
 
         sliderView.setCurrentPagePosition(getPositionFromSlider());
 
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar_full_screen_slider_activity);
-        toolbar.setTitle("");
-        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_white_24dp));
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
+        setSupportActionBar(findViewById(R.id.toolbar_full_screen_slider_activity));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
     }
 
 

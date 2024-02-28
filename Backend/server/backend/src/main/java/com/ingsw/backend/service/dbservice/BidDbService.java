@@ -29,6 +29,11 @@ public class BidDbService implements BidService {
 	}
 
 	@Override
+	public DownwardBid getWinningDownwardBidByAuctionId(Integer auctionId) {
+		return bidRepository.getWinningDownwardBidByAuctionId(auctionId);
+	}
+
+	@Override
 	public ReverseBid getWinningReverseBidByAuctionId(Integer auctionId) {
 		return bidRepository.getWinningReverseBidByAuctionId(auctionId);
 	}

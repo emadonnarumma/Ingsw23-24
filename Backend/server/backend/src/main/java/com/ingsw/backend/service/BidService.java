@@ -32,4 +32,6 @@ public interface BidService {
     SilentBid getWinningSilentBidByAuctionId(Integer auctionId);
 
 	ReverseBid getWinningReverseBidByAuctionId(Integer auctionId);
+
+	DownwardBid getWinningDownwardBidByAuctionId(Integer auctionId);
 }

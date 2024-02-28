@@ -41,6 +41,11 @@ public class BidController {
 	@Qualifier("mainUserService")
 	private UserService userService;
 
+	@GetMapping("/downward/winning/{auctionId}")
+	public ResponseEntity<DownwardBid> getWinningDownwardBidByAuctionId(@PathVariable Integer auctionId) {
+		return ResponseEntity.ok(bidService.getWinningDownwardBidByAuctionId(auctionId));
+	}
+
 	@GetMapping("/silent/winning/{auctionId}")
 	public ResponseEntity<SilentBid> getWinningSilentBidByAuctionId(@PathVariable Integer auctionId) {
 		return ResponseEntity.ok(bidService.getWinningSilentBidByAuctionId(auctionId));

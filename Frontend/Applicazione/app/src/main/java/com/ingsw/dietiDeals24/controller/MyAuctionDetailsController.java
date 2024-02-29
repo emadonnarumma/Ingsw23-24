@@ -265,7 +265,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         return "Decremento ogni  : " + formattedTime;
     }
 
-    public static String getRemainingTime(String nextDecrement) {
+    public static String getRemainingDecrementTime(String nextDecrement) {
         Calendar nextDecrementTime = convertStringToCalendar(nextDecrement);
         Calendar currentTime = Calendar.getInstance();
         long remainingSeconds = (nextDecrementTime.getTimeInMillis() - currentTime.getTimeInMillis()) / 1000;

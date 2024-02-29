@@ -58,7 +58,7 @@ public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
         priceTextView.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
 
         specificInformation1TextView.setText("Decremento: " + auction.getDecrementAmount() + "€");
-        specificInformation2TextView.setText(MyAuctionDetailsController.getNextDecrementTimeText(auction));
+        specificInformation2TextView.setText(MyAuctionDetailsController.getRemainingDecrementTime(auction.getNextDecrement()));
         specificInformation3TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
         setButtons();
     }

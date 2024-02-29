@@ -54,7 +54,7 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
 
         specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
         specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
-        specificInformation3TextView.setText(MyAuctionDetailsController.getRemainingTime(auction.getNextDecrement()));
+        specificInformation3TextView.setText(MyAuctionDetailsController.getRemainingDecrementTime(auction.getNextDecrement()));
         specificInformation4TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
         setButtons();
     }

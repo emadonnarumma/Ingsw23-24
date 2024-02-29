@@ -25,7 +25,7 @@ import com.ingsw.dietiDeals24.ui.home.profile.EditExternalLinksFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.EditRegionFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.ProfileFragment;
-import com.ingsw.dietiDeals24.ui.home.search.SearchFragment;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity {
     private NavigationBarView navigationBarView;

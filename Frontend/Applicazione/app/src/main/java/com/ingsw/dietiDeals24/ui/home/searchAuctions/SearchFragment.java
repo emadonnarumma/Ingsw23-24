@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.search;
+package com.ingsw.dietiDeals24.ui.home.searchAuctions;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.search;
+package com.ingsw.dietiDeals24.ui.home.searchAuctions;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

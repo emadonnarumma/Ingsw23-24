@@ -265,10 +265,37 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         return "Decremento ogni  : " + formattedTime;
     }
 
-    public static long getRemainingTime(String nextDecrement) {
+    public static String getRemainingTime(String nextDecrement) {
         Calendar nextDecrementTime = convertStringToCalendar(nextDecrement);
         Calendar currentTime = Calendar.getInstance();
-        return (nextDecrementTime.getTimeInMillis() - currentTime.getTimeInMillis()) / 1000;
+        long remainingSeconds = (nextDecrementTime.getTimeInMillis() - currentTime.getTimeInMillis()) / 1000;
+
+        long months = remainingSeconds / (30 * 24 * 60 * 60);
+        remainingSeconds %= 30 * 24 * 60 * 60;
+
+        long days = remainingSeconds / (24 * 60 * 60);
+        remainingSeconds %= 24 * 60 * 60;
+
+        long hours = remainingSeconds / (60 * 60);
+        remainingSeconds %= 60 * 60;
+
+        long minutes = remainingSeconds / 60;
+
+        String formattedTime = "Prossimo decremento tra: ";
+        if (months > 0) {
+            formattedTime += months + "M ";
+        }
+        if (days > 0) {
+            formattedTime += days + "G ";
+        }
+        if (hours > 0) {
+            formattedTime += hours + "H ";
+        }
+        if (minutes > 0) {
+            formattedTime += minutes + "Min";
+        }
+
+        return formattedTime;
     }
 
     public static Calendar convertStringToCalendar(String timestamp) {

@@ -79,7 +79,7 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iquestion_mark_button_auction_details" />
+                app:layout_constraintTop_toTopOf="@id/question_mark_button_auction_details" />
 
             <TextView
                 android:id="@+id/category_text_view_auction_details"
@@ -88,14 +88,14 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/verdana_bold"
                 android:text="categoria"
-
                 android:textColor="@color/yellow"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/auction_type_text_view_auction_details" />
 
             <ImageButton
-                android:id="@+id/iquestion_mark_button_auction_details"
+                android:id="@+id/question_mark_button_auction_details"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
@@ -201,12 +201,12 @@
                 android:id="@+id/specific_information_1_text_view_auction_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="Decremento ogni: 2h"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_large"
 
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/price_text_view_auction_details" />
@@ -215,7 +215,6 @@
                 android:id="@+id/specific_information_2_text_view_auction_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="Prezzo minimo segreto: 15€"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -223,6 +222,7 @@
                 android:textSize="@dimen/text_size_large"
                 android:gravity="center"
 
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/specific_information_1_text_view_auction_details" />
@@ -231,13 +231,13 @@
                 android:id="@+id/specific_information_3_text_view_auction_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:text="Prossimo decremento tra: 2H 5M"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_large"
                 android:fontFamily="@font/verdana"
                 android:gravity="center"
 
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/specific_information_2_text_view_auction_details" />
@@ -246,13 +246,13 @@
                 android:id="@+id/specific_information_4_text_view_auction_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:text="Valore di decremento 1€"
                 android:textColor="@color/white"
                 android:fontFamily="@font/verdana"
                 android:textSize="@dimen/text_size_large"
                 android:gravity="center"
 
+                android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/specific_information_3_text_view_auction_details" />

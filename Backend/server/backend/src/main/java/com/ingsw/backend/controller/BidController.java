@@ -71,10 +71,6 @@ public class BidController {
 		return ResponseEntity.ok(bids);
     }
 
-
-
-
-
     @GetMapping("/reverse/seller/{sellerEmail}")
     public ResponseEntity<List<ReverseBid>> getAllReverseBidsBySeller(@PathVariable String sellerEmail) {
 		

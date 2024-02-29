@@ -94,10 +94,7 @@ public class FailedReverseAuctionActivity extends AuctionDetailsActivity {
                             throw new RuntimeException(e);
                         }
 
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        intent.putExtra("openSilent", "SilentAuctionAttributesFragment");
-                        startActivity(intent);
-                        finish();
+                        onNavigateToHomeActivityFragmentRequest("ReverseAuctionAttributesFragment", getApplicationContext());
                     })
                     .setNegativeButton("No", null)
                     .show();

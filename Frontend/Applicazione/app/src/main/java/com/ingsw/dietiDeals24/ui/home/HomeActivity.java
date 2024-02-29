@@ -108,7 +108,17 @@ public class HomeActivity extends AppCompatActivity {
 
         } else if ("SilentAuctionAttributesFragment".equals(fragmentToOpen)) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_home, new GeneralAuctionAttributesFragment())
+                    .replace(R.id.fragment_container_home, new SilentAuctionAttributesFragment())
+                    .commit();
+
+        } else if ("DownwardAuctionAttributesFragment".equals(fragmentToOpen)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_home, new DownwardAuctionAttributesFragment())
+                    .commit();
+
+        } else if ("ReverseAuctionAttributesFragment".equals(fragmentToOpen)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_home, new ReverseAuctionAttributesFragment())
                     .commit();
         }
     }

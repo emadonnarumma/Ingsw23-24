@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +24,15 @@ import java.util.concurrent.ExecutionException;
 public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
     private DownwardAuction auction;
 
+    private Handler handler = new Handler();
+    private Runnable updateRemainingTimeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            specificInformation3TextView.setText(MyAuctionDetailsController.getRemainingDecrementTime(auction.getNextDecrement()));
+            handler.postDelayed(this, 60000);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +43,16 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
     protected void onResume() {
         super.onResume();
         setAuctionDetails();
+        handler.post(updateRemainingTimeRunnable);
         if (auction.getImages() != null) {
             bindImages(auction);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(updateRemainingTimeRunnable); // Interrompi l'aggiornamento quando l'activity viene messa in pausa
     }
 
     private void setAuctionDetails() {
@@ -54,7 +71,6 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
 
         specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
         specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
-        specificInformation3TextView.setText(MyAuctionDetailsController.getRemainingDecrementTime(auction.getNextDecrement()));
         specificInformation4TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
         setButtons();
     }
@@ -66,7 +82,7 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
 
     private void setRedButton() {
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) greenButton.getLayoutParams();
-        params.width = ConstraintLayout.LayoutParams.MATCH_PARENT; // Imposta la larghezza per coprire tutta la schermata
+        params.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
         redButton.setLayoutParams(params);
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("CANCELLA L'ASTA");

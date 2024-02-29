@@ -13,7 +13,10 @@ import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -94,11 +97,11 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         return CompletableFuture.supplyAsync(() -> {
             try {
                 MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<Void> response = myAuctiondDetailsDao.deleteAuction(idAuction, TokenHolder.getAuthToken()).execute();
+                Response<Boolean> response = myAuctiondDetailsDao.deleteAuction(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     MyAuctionsController.setUpdatedAll(false);
-                    return true;
+                    return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");
                 }
@@ -201,10 +204,12 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     }
 
     public static String getRemainingWithdrawalTimeText(SilentBid silentBid) {
-        long currentTimestamp = System.currentTimeMillis() / 1000L;
-        long bidTimestamp = silentBid.getTimestamp().getTime() / 1000L;
+        long currentTimestamp = System.currentTimeMillis();
+        long bidTimestamp = silentBid.getTimestamp().getTime();
         long withdrawalTime = silentBid.getSilentAuction().getWithdrawalTime();
-        long remainingSeconds = bidTimestamp + withdrawalTime - currentTimestamp;
+        long remainingMillis = withdrawalTime - (currentTimestamp - bidTimestamp);
+
+        long remainingSeconds = remainingMillis / 1000L;
 
         long months = remainingSeconds / (30 * 24 * 60 * 60);
         remainingSeconds %= 30 * 24 * 60 * 60;
@@ -270,6 +275,10 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         Calendar currentTime = Calendar.getInstance();
         long remainingSeconds = (nextDecrementTime.getTimeInMillis() - currentTime.getTimeInMillis()) / 1000;
 
+        if (remainingSeconds < 0) {
+            return "Il decremento è già avvenuto";
+        }
+
         long months = remainingSeconds / (30 * 24 * 60 * 60);
         remainingSeconds %= 30 * 24 * 60 * 60;
 
@@ -299,20 +308,17 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     }
 
     public static Calendar convertStringToCalendar(String timestamp) {
-        String[] parts = timestamp.split(" ");
-        String[] dateParts = parts[0].split("-");
-        String[] timeParts = parts[1].split(":");
-
-        int year = Integer.parseInt(dateParts[0]);
-        int month = Integer.parseInt(dateParts[1]) - 1;
-        int day = Integer.parseInt(dateParts[2]);
-        int hour = Integer.parseInt(timeParts[0]);
-        int minute = Integer.parseInt(timeParts[1]);
-        int second = Integer.parseInt(timeParts[2]);
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(timestamp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day, hour, minute, second);
-
+        if (date != null) {
+            calendar.setTime(date);
+        }
         return calendar;
     }
 }

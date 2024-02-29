@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -23,7 +24,7 @@ public class DownwardAuction extends Auction {
     private Double secretMinimumPrice;
 
     private Double currentPrice;
-    
+
     private Double decrementAmount;
 
     private Long decrementTime;
@@ -31,7 +32,7 @@ public class DownwardAuction extends Auction {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", locale = "it_IT", timezone = "Europe/Rome")
     private Timestamp nextDecrement;
 
-    @OneToOne(mappedBy = "downwardAuction")
+    @OneToMany(mappedBy = "downwardAuction", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
-    private DownwardBid winningBid;
+    private List<DownwardBid> receivedBids;
 }

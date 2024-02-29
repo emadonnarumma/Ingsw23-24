@@ -100,7 +100,7 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
     }
 
     private void setupButtons() {
-        questionMarkButton = findViewById(R.id.iquestion_mark_button_auction_details);
+        questionMarkButton = findViewById(R.id.question_mark_button_auction_details);
         greenButton = findViewById(R.id.green_button);
         redButton = findViewById(R.id.red_button);
     }

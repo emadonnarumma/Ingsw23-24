@@ -18,9 +18,11 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAtt
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.home.myBids.MyBidsFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.AddBankAccountFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.AddExternalLinkFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.EditBankAccountFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.EditBioFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.EditExternalLinkFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.EditExternalLinksFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.EditRegionFragment;
@@ -78,7 +80,15 @@ public class HomeActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_home, new EditExternalLinksFragment())
                         .commit();
-            } else {
+            } else if (currentFragment instanceof AddBankAccountFragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_home, new ProfileFragment())
+                        .commit();
+            } else if (currentFragment instanceof EditExternalLinkFragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_home, new EditExternalLinksFragment())
+                        .commit();
+            }else {
                 callback.setEnabled(false);
                 onBackPressed();
                 callback.setEnabled(true);

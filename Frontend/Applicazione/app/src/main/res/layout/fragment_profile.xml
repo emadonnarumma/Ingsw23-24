@@ -93,21 +93,20 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/user_bio_layout_profile"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-
+        android:layout_height="wrap_content"
+        android:maxHeight="150dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/seller_switch_layout_profile"
         app:counterEnabled="false">
 
-
-
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user_bio_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="top|start"
             android:editable="false"
             android:inputType="none"
             android:maxLength="200"

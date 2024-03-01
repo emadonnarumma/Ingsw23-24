@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.profile;
 
+import static java.lang.Thread.sleep;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 public class EditBioFragment extends FragmentOfHomeActivity {
     private ImageView doneButton;
@@ -46,21 +49,32 @@ public class EditBioFragment extends FragmentOfHomeActivity {
 
     private void onDoneButtonClick() {
         progressBar.setVisibility(View.VISIBLE);
-        try {
-            if(bioEditText.getText() == null)
-                return;
-            ProfileController.updateBio(bioEditText.getText().toString());
-            ToastManager.showToast(getContext(), R.string.bio_updated);
-            goToEditProfileFragment();
-        } catch (ConnectionException e) {
-            ToastManager.showToast(getContext(), e.getMessage());
-        } finally {
-            progressBar.setVisibility(View.GONE);
-        }
+        new Thread(() -> {
+            try {
+                if(isBioChanged()) {
+                    if(bioEditText.getText() == null)
+                        return;
+                    ProfileController.updateBio(bioEditText.getText().toString()).get();
+                    sleep(500);
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.bio_updated));
+                }
+                requireActivity().runOnUiThread(this::goToProfileFragment);
+            } catch (InterruptedException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+            } finally {
+                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+            }
+        }).start();
     }
 
-    private void goToEditProfileFragment() {
+    private void goToProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                new EditProfileFragment()).commit();
+                new ProfileFragment()).commit();
+    }
+
+    private boolean isBioChanged() {
+        return !Objects.equals(bioEditText.getText().toString(), UserHolder.user.getBio());
     }
 }

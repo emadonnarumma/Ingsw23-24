@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.profile;
 
+import static java.lang.Thread.sleep;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 public class EditRegionFragment extends FragmentOfHomeActivity {
     private ImageView doneButton;
@@ -64,19 +67,30 @@ public class EditRegionFragment extends FragmentOfHomeActivity {
 
     private void onDoneButtonClick() {
         progressBar.setVisibility(View.VISIBLE);
-        try {
-            ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem()));
-            ToastManager.showToast(getContext(), R.string.region_updated);
-            goToEditProfileFragment();
-        } catch (ConnectionException e) {
-            ToastManager.showToast(getContext(), e.getMessage());
-        } finally {
-            progressBar.setVisibility(View.GONE);
-        }
+        new Thread(() -> {
+            try {
+                if(isRegionChanged()) {
+                    ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem())).get();
+                    sleep(500);
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.region_updated));
+                }
+                requireActivity().runOnUiThread(this::goToProfileFragment);
+            } catch (InterruptedException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta"));
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+            } finally {
+                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+            }
+        }).start();
     }
 
-    private void goToEditProfileFragment() {
+    private boolean isRegionChanged() {
+        return !Region.fromItalianString(regionSmartSpinner.getSelectedItem()).equals(UserHolder.user.getRegion());
+    }
+
+    private void goToProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                new EditProfileFragment()).commit();
+                new ProfileFragment()).commit();
     }
 }

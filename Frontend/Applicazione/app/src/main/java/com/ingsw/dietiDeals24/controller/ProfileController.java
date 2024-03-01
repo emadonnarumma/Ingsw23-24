@@ -62,53 +62,61 @@ public class ProfileController {
         }
     }
 
-    public static void addLink(String title, String url) throws ConnectionException {
-        ExternalLink newLink = new ExternalLink(title, url);
-        try {
-            ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
-            Response<ExternalLink> response = externalLinkDao.addExternalLink(UserHolder.user.getEmail(), newLink, TokenHolder.getAuthToken()).execute();
+    public static CompletableFuture<Void> addLink(String title, String url) throws ConnectionException {
+        return CompletableFuture.runAsync(() -> {
+            ExternalLink newLink = new ExternalLink(title, url);
+            try {
+                ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
+                Response<ExternalLink> response = externalLinkDao.addExternalLink(UserHolder.user.getEmail(), newLink, TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                UserHolder.user.getExternalLinks().add(response.body());
-            } else {
+                if (response.isSuccessful()) {
+                    ExternalLink linkFromServer = new ExternalLink(response.body());
+                    UserHolder.user.getExternalLinks().add(linkFromServer);
+                } else {
+                    throw new ConnectionException("Errore di connessione");
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
-    public static void updateLink(String title, String url) throws ConnectionException {
-        ExternalLink updatedLink = new ExternalLink(title, url);
-        try {
-            ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
-            Response<ExternalLink> response = externalLinkDao.updateExternalLink(selectedLink.getId(), updatedLink, TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                ExternalLink linkFromServer = response.body();
-                UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setTitle(linkFromServer.getTitle());
-                UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setUrl(linkFromServer.getUrl());
-            } else {
+    public static CompletableFuture<Void> updateLink(String title, String url) throws ConnectionException {
+        return CompletableFuture.runAsync(() -> {
+            ExternalLink updatedLink = new ExternalLink(title, url);
+            try {
+                ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
+                Response<ExternalLink> response = externalLinkDao.updateExternalLink(selectedLink.getId(), updatedLink, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    ExternalLink linkFromServer = response.body();
+                    UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setTitle(linkFromServer.getTitle());
+                    UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setUrl(linkFromServer.getUrl());
+                } else {
+                    throw new ConnectionException("Errore di connessione");
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
-    public static void deleteLink(ExternalLink externalLink) throws ConnectionException {
-        try {
-            ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
-            Response<Void> response = externalLinkDao.deleteExternalLink(externalLink.getId(), TokenHolder.getAuthToken()).execute();
+    public static CompletableFuture<Void> deleteLink(ExternalLink externalLink) throws ConnectionException {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                ExternalLinkDao externalLinkDao = RetroFitHolder.retrofit.create(ExternalLinkDao.class);
+                Response<Void> response = externalLinkDao.deleteExternalLink(externalLink.getId(), TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                UserHolder.user.getExternalLinks().remove(externalLink);
-            } else {
+                if (response.isSuccessful()) {
+                    UserHolder.user.getExternalLinks().remove(externalLink);
+                } else {
+                    throw new ConnectionException("Errore di connessione");
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
     public static void setSelectedLink(ExternalLink selectedLink) {
@@ -119,62 +127,68 @@ public class ProfileController {
         return selectedLink;
     }
 
-    public static void updateBio(String bio) throws ConnectionException {
-        try {
-            EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
-            Response<User> response = editProfileDao.updateBio(UserHolder.user.getEmail(), bio, TokenHolder.getAuthToken()).execute();
+    public static CompletableFuture<Void> updateBio(String bio) throws ConnectionException {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
+                Response<User> response = editProfileDao.updateBio(UserHolder.user.getEmail(), bio, TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                if (response.body() == null)
+                if (response.isSuccessful()) {
+                    if (response.body() == null)
+                        throw new ConnectionException("Errore di connessione");
+                    UserHolder.user.setBio(response.body().getBio());
+                } else {
                     throw new ConnectionException("Errore di connessione");
-                UserHolder.user.setBio(response.body().getBio());
-            } else {
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
-    public static void updateRegion(Region region) throws ConnectionException {
-        try {
-            EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
-            Response<User> response = editProfileDao.updateRegion(UserHolder.user.getEmail(), region, TokenHolder.getAuthToken()).execute();
+    public static CompletableFuture<Void> updateRegion(Region region) throws ConnectionException {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
+                Response<User> response = editProfileDao.updateRegion(UserHolder.user.getEmail(), region, TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                if (response.body() == null)
+                if (response.isSuccessful()) {
+                    if (response.body() == null)
+                        throw new ConnectionException("Errore di connessione");
+                    UserHolder.user.setRegion(response.body().getRegion());
+                } else {
                     throw new ConnectionException("Errore di connessione");
-                UserHolder.user.setRegion(response.body().getRegion());
-            } else {
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
-    public static void updateBankAccount(String iban, String iva) throws ConnectionException, IllegalStateException {
-        try {
-            if (UserHolder.isUserBuyer())
-                throw new IllegalStateException("L'utente non è un venditore");
+    public static CompletableFuture<Void> updateBankAccount(String iban, String iva) throws ConnectionException, IllegalStateException {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                if (UserHolder.isUserBuyer())
+                    throw new IllegalStateException("L'utente non è un venditore");
 
-            BankAccount updatedBankAccount = new BankAccount(iban, iva);
-            BankAccountDao bankAccountDao = RetroFitHolder.retrofit.create(BankAccountDao.class);
-            Response<BankAccount> response = bankAccountDao.updateBankAccount(
-                    UserHolder.getSeller().getBankAccount().getId(), updatedBankAccount,
-                    TokenHolder.getAuthToken()).execute();
+                BankAccount updatedBankAccount = new BankAccount(iban, iva);
+                BankAccountDao bankAccountDao = RetroFitHolder.retrofit.create(BankAccountDao.class);
+                Response<BankAccount> response = bankAccountDao.updateBankAccount(
+                        UserHolder.getSeller().getBankAccount().getId(), updatedBankAccount,
+                        TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                if (response.body() == null)
+                if (response.isSuccessful()) {
+                    if (response.body() == null)
+                        throw new ConnectionException("Errore di connessione");
+                    UserHolder.getSeller().getBankAccount().setIban(response.body().getIban());
+                    UserHolder.getSeller().getBankAccount().setIva(response.body().getIva());
+                } else {
                     throw new ConnectionException("Errore di connessione");
-                UserHolder.getSeller().getBankAccount().setIban(response.body().getIban());
-                UserHolder.getSeller().getBankAccount().setIva(response.body().getIva());
-            } else {
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
     public static CompletableFuture<Boolean> hasBankAccount() throws ConnectionException {
@@ -194,46 +208,50 @@ public class ProfileController {
         });
     }
 
-    public static void unlockSellerMode(String iban, String iva) throws ConnectionException {
-        try {
-            if (UserHolder.isUserBuyer())
-                switchAccountType();
+    public static CompletableFuture<Void> unlockSellerMode(String iban, String iva) throws ConnectionException {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                if (UserHolder.isUserBuyer())
+                    switchAccountType();
 
-            BankAccount newBankAccount = new BankAccount(iban, iva);
-            BankAccountDao bankAccountDao = RetroFitHolder.retrofit.create(BankAccountDao.class);
-            Response<BankAccount> response = bankAccountDao.addBankAccount(UserHolder.user.getEmail(), newBankAccount, TokenHolder.getAuthToken()).execute();
+                BankAccount newBankAccount = new BankAccount(iban, iva);
+                BankAccountDao bankAccountDao = RetroFitHolder.retrofit.create(BankAccountDao.class);
+                Response<BankAccount> response = bankAccountDao.addBankAccount(UserHolder.user.getEmail(), newBankAccount, TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                if (response.body() == null)
+                if (response.isSuccessful()) {
+                    if (response.body() == null)
+                        throw new ConnectionException("Errore di connessione");
+                    UserHolder.getSeller().setBankAccount(response.body());
+                } else {
                     throw new ConnectionException("Errore di connessione");
-                UserHolder.getSeller().setBankAccount(response.body());
-            } else {
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
-    public static void switchAccountType() throws ConnectionException {
-        try {
-            EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
-            Response<User> response;
-            if (UserHolder.isUserBuyer())
-                response = editProfileDao.updateRole(UserHolder.user.getEmail(), Role.SELLER, TokenHolder.getAuthToken()).execute();
-            else
-                response = editProfileDao.updateRole(UserHolder.user.getEmail(), Role.BUYER, TokenHolder.getAuthToken()).execute();
+    public static CompletableFuture<Void> switchAccountType() throws ConnectionException {
+        return CompletableFuture.runAsync(() -> {
+            try {
+                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
+                Response<User> response;
+                if (UserHolder.isUserBuyer())
+                    response = editProfileDao.updateRole(UserHolder.user.getEmail(), Role.SELLER, TokenHolder.getAuthToken()).execute();
+                else
+                    response = editProfileDao.updateRole(UserHolder.user.getEmail(), Role.BUYER, TokenHolder.getAuthToken()).execute();
 
-            if (response.isSuccessful()) {
-                if (response.body() == null)
+                if (response.isSuccessful()) {
+                    if (response.body() == null)
+                        throw new ConnectionException("Errore di connessione");
+                    UserHolder.user = response.body();
+                } else {
                     throw new ConnectionException("Errore di connessione");
-                UserHolder.user = response.body();
-            } else {
+                }
+            } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
             }
-        } catch (IOException e) {
-            throw new ConnectionException("Errore di connessione");
-        }
+        });
     }
 
     public static void logout() {

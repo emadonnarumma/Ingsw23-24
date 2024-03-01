@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.profile;
 
+import static java.lang.Thread.sleep;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +20,8 @@ import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+
+import java.util.concurrent.ExecutionException;
 
 public class AddExternalLinkFragment extends FragmentOfHomeActivity {
     private TextView titleScreen;
@@ -63,6 +67,7 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
         progressBar = view.findViewById(R.id.progress_bar_edit_external_link);
 
         doneButton.setEnabled(false);
+        doneButton.setColorFilter(getResources().getColor(R.color.gray, null));
         titleScreen.setText(R.string.add_external_link_phrase);
         titleEditText.addTextChangedListener(externalLinkTextWatcher);
         urlEditText.addTextChangedListener(externalLinkTextWatcher);
@@ -85,23 +90,39 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
                 urlEditText.setError(urlError);
             }
             doneButton.setEnabled(externalLinkFormState.isDataValid());
+            if (doneButton.isEnabled()) {
+                doneButton.setColorFilter(getResources().getColor(R.color.green, null));
+            } else {
+                doneButton.setColorFilter(getResources().getColor(R.color.gray, null));
+            }
         });
     }
 
     private void onDoneButtonClick() {
         progressBar.setVisibility(View.VISIBLE);
-        try {
-            ProfileController.addLink(
-                    titleEditText.getText().toString(),
-                    urlEditText.getText().toString()
-            );
-            ToastManager.showToast(getContext(), R.string.link_added);
-            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                    new EditExternalLinksFragment()).commit();
-        } catch (ConnectionException e) {
-            ToastManager.showToast(getContext(), e.getMessage());
-        } finally {
-            progressBar.setVisibility(View.GONE);
-        }
+        new Thread(() -> {
+            try {
+                ProfileController.addLink(
+                        titleEditText.getText().toString(),
+                        urlEditText.getText().toString()
+                ).get();
+                sleep(500);
+                requireActivity().runOnUiThread(() -> {
+                    ToastManager.showToast(getContext(), R.string.link_added);
+                    goToEditExternalLinksFragment();
+                });
+            } catch (InterruptedException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+            } finally {
+                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+            }
+        }).start();
+    }
+
+    private void goToEditExternalLinksFragment() {
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                new EditExternalLinksFragment()).commit();
     }
 }

@@ -6,9 +6,33 @@ public class ExternalLink {
     private String title;
     private String url;
 
+    /**
+     * Constructor for the ExternalLink created by the user
+     */
     public ExternalLink(String title, String url) {
         this.title = title;
         this.url = url;
+    }
+
+    /**
+     * Constructor for the ExternalLink with the id generated from the server
+     */
+    public ExternalLink(Integer id, String title, String url) {
+        this.id = id;
+        this.title = title;
+        this.url = url;
+    }
+
+    /**
+     * Copy constructor
+     */
+    public ExternalLink(ExternalLink externalLink) {
+        if(externalLink == null) {
+            return;
+        }
+        this.id = externalLink.id;
+        this.title = externalLink.title;
+        this.url = externalLink.url;
     }
 
     public Integer getId() {

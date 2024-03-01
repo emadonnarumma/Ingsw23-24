@@ -64,11 +64,9 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         progressBar = view.findViewById(R.id.progress_bar_profile);
 
         showUserData();
-        setupSellerSwitch();
-
+        sellerSwitch.setOnClickListener(v -> setupSellerSwitch());
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
         logoutButton.setOnClickListener(v -> logout());
-
     }
 
     /**
@@ -85,7 +83,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userBioTextView.setText(userBio);
         userRegionTextView.setText(userRegion);
 
-        if(UserHolder.user.hasExternalLinks()) {
+        if (UserHolder.user.hasExternalLinks()) {
             String link = UserHolder.user.getExternalLinks().get(0).getTitle();
             String andNMoreLinks = "and " + (UserHolder.user.getExternalLinks().size() - 1) + " more";
             linkTextView.setText(link);
@@ -101,38 +99,40 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     }
 
     private void setupSellerSwitch() {
-        sellerSwitch.setOnClickListener(v -> {
-            progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        new Thread(() -> {
             if (sellerSwitch.isChecked()) {
                 try {
-                    if (!ProfileController.hasBankAccount().get())
-                        goToAddBankAccountFragment();
-                    ProfileController.switchAccountType();
-                    startSellerAnimation();
+                    if (!ProfileController.hasBankAccount().get()) {
+                        requireActivity().runOnUiThread(this::goToAddBankAccountFragment);
+                        return;
+                    }
+                    ProfileController.switchAccountType().get();
+                    requireActivity().runOnUiThread(this::startSellerAnimation);
                 } catch (ExecutionException e) {
                     sellerSwitch.setChecked(false);
-                    ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
                 } catch (InterruptedException e) {
                     sellerSwitch.setChecked(false);
-                    ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
-                } catch (ConnectionException e) {
-                    sellerSwitch.setChecked(false);
-                    ToastManager.showToast(getContext(), e.getMessage());
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
                 } finally {
                     progressBar.setVisibility(View.GONE);
                 }
             } else {
                 try {
-                    ProfileController.switchAccountType();
-                    startNotSellerAnimation();
-                } catch (ConnectionException e) {
+                    ProfileController.switchAccountType().get();
+                    requireActivity().runOnUiThread(this::startNotSellerAnimation);
+                } catch (ExecutionException e) {
                     sellerSwitch.setChecked(true);
-                    ToastManager.showToast(getContext(), e.getMessage());
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+                } catch (InterruptedException e) {
+                    sellerSwitch.setChecked(true);
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
                 } finally {
                     progressBar.setVisibility(View.GONE);
                 }
             }
-        });
+        }).start();
     }
 
 

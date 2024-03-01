@@ -1,6 +1,7 @@
 package com.ingsw.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +34,8 @@ public class ExternalLink {
 	
     @Column(nullable = false, length = 2083)
 	private String url;
-    
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email")
     @JsonIgnore

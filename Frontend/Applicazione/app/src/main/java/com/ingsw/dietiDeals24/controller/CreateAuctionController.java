@@ -19,7 +19,7 @@ public class CreateAuctionController implements RetroFitHolder {
     private CreateAuctionController() {
     }
 
-    public static CompletableFuture<Boolean> createAuction(ReverseAuction newAuction) {
+    public static CompletableFuture<Boolean> createAuction(ReverseAuction newAuction) throws ConnectionException {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 CreateAuctionDao createAuctionDao = retrofit.create(CreateAuctionDao.class);

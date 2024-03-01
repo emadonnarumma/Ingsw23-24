@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
 public class EditProfileFragment extends FragmentOfHomeActivity {
@@ -36,7 +37,7 @@ public class EditProfileFragment extends FragmentOfHomeActivity {
         editBankAccountButton = view.findViewById(R.id.edit_bank_account_button_edit_profile);
         unlockSellerModeButton = view.findViewById(R.id.unlock_seller_mode_button_edit_profile);
 
-        if(ProfileController.getUser().isSeller()) {
+        if(UserHolder.user.isSeller()) {
             unlockSellerModeButton.setVisibility(View.GONE);
             editBankAccountButton.setVisibility(View.VISIBLE);
         } else {
@@ -72,6 +73,7 @@ public class EditProfileFragment extends FragmentOfHomeActivity {
     }
 
     private void onUnlockSellerModeClick() {
-        //TODO:
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                new AddBankAccountFragment()).commit();
     }
 }

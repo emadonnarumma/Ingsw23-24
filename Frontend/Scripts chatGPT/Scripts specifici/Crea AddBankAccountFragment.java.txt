@@ -1,0 +1,9 @@
+scrivi il codice Java della classe AddBankAccountFragment.java, collegata a questo file fragment_edit_bank_account.xml, analoga a questa classe AddExternalLinkFragment.java e facendo l'override a onViewCreated, avente:
+1. come attributi:
+	- titleScreen
+	- ibanEditText
+	- ivaEditText
+	- doneButton
+2. come metodi:
+	- observeBankAccountFormState
+	- onDoneButtonClick: ti porta alla schermata di ProfileFragment

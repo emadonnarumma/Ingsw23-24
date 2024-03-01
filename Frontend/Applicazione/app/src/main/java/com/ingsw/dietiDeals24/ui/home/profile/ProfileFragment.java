@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.view.animation.Animation;
@@ -17,8 +18,13 @@ import androidx.annotation.Nullable;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+
+import java.util.concurrent.ExecutionException;
 
 public class ProfileFragment extends FragmentOfHomeActivity {
     private TextView usernameTextView;
@@ -31,6 +37,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private TextView userRegionTextView;
     private CircularProgressButton editProfileButton;
     private CircularProgressButton logoutButton;
+    private ProgressBar progressBar;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,9 +61,10 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userRegionTextView = view.findViewById(R.id.user_region_profile);
         editProfileButton = view.findViewById(R.id.edit_profile_button_profile);
         logoutButton = view.findViewById(R.id.logout_button_profile);
+        progressBar = view.findViewById(R.id.progress_bar_profile);
 
         showUserData();
-        putAnimationOnSellerSwitch();
+        setupSellerSwitch();
 
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
         logoutButton.setOnClickListener(v -> logout());
@@ -67,39 +75,66 @@ public class ProfileFragment extends FragmentOfHomeActivity {
      * Puts the user data in the text views of the profile fragment
      */
     private void showUserData() {
-        if (ProfileController.getUser() == null)
+        if (UserHolder.user == null)
             return;
 
-        String username = ProfileController.getUser().getName();
-        String userBio = ProfileController.getUser().getBio();
-        String userRegion = " " + ProfileController.getUser().getRegion().toString() + " ";
+        String username = UserHolder.user.getName();
+        String userBio = UserHolder.user.getBio();
+        String userRegion = " " + UserHolder.user.getRegion().toString() + " ";
         usernameTextView.setText(username);
         userBioTextView.setText(userBio);
         userRegionTextView.setText(userRegion);
 
-        if(ProfileController.getUser().hasExternalLinks()) {
-            String link = ProfileController.getUser().getExternalLinks().get(0).getTitle();
-            String andNMoreLinks = "and " + (ProfileController.getUser().getExternalLinks().size() - 1) + " more";
+        if(UserHolder.user.hasExternalLinks()) {
+            String link = UserHolder.user.getExternalLinks().get(0).getTitle();
+            String andNMoreLinks = "and " + (UserHolder.user.getExternalLinks().size() - 1) + " more";
             linkTextView.setText(link);
             andNMoreLinksTextView.setText(andNMoreLinks);
         } else {
             iconLinkImageView.setVisibility(View.GONE);
         }
 
-        if (ProfileController.getUser().isSeller()) {
+        if (UserHolder.user.isSeller()) {
             sellerSwitch.performClick();
             startSellerAnimation();
         }
     }
 
-    private void putAnimationOnSellerSwitch() {
+    private void setupSellerSwitch() {
         sellerSwitch.setOnClickListener(v -> {
-            if (sellerSwitch.isChecked())
-                startSellerAnimation();
-            else
-                startNotSellerAnimation();
+            progressBar.setVisibility(View.VISIBLE);
+            if (sellerSwitch.isChecked()) {
+                try {
+                    if (!ProfileController.hasBankAccount().get())
+                        goToAddBankAccountFragment();
+                    ProfileController.switchAccountType();
+                    startSellerAnimation();
+                } catch (ExecutionException e) {
+                    sellerSwitch.setChecked(false);
+                    ToastManager.showToast(getContext(), e.getCause().getMessage());
+                } catch (InterruptedException e) {
+                    sellerSwitch.setChecked(false);
+                    ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
+                } catch (ConnectionException e) {
+                    sellerSwitch.setChecked(false);
+                    ToastManager.showToast(getContext(), e.getMessage());
+                } finally {
+                    progressBar.setVisibility(View.GONE);
+                }
+            } else {
+                try {
+                    ProfileController.switchAccountType();
+                    startNotSellerAnimation();
+                } catch (ConnectionException e) {
+                    sellerSwitch.setChecked(true);
+                    ToastManager.showToast(getContext(), e.getMessage());
+                } finally {
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
         });
     }
+
 
     private void startSellerAnimation() {
         sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
@@ -124,6 +159,11 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private void goToEditProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new EditProfileFragment()).commit();
+    }
+
+    private void goToAddBankAccountFragment() {
+        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                new AddBankAccountFragment()).commit();
     }
 
     private void logout() {

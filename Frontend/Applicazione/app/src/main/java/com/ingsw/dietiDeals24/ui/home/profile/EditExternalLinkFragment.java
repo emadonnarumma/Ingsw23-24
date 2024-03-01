@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
@@ -22,6 +24,7 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
     private EditText titleEditText;
     private EditText urlEditText;
     private ImageView doneButton;
+    private ProgressBar progressBar;
 
     private TextWatcher externalLinkTextWatcher = new TextWatcher() {
         @Override
@@ -34,7 +37,7 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            ProfileController.dataChanged(
+            ProfileController.externalLinkDataChanged(
                     titleEditText.getText().toString(),
                     urlEditText.getText().toString(),
                     getResources()
@@ -56,7 +59,8 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
         titleScreen = view.findViewById(R.id.title_of_edit_external_link);
         titleEditText = view.findViewById(R.id.edit_title_edit_external_link);
         urlEditText = view.findViewById(R.id.edit_url_edit_external_link);
-        doneButton = view.findViewById(R.id.doneButton);
+        doneButton = view.findViewById(R.id.done_button_edit_external_link);
+        progressBar = view.findViewById(R.id.progress_bar_edit_external_link);
 
         initEditTexts();
         titleScreen.setText(R.string.edit_external_link_phrase);
@@ -90,12 +94,19 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
     }
 
     private void onDoneButtonClick() {
-        ProfileController.updateLink(
-                titleEditText.getText().toString(),
-                urlEditText.getText().toString()
-        );
-        ToastManager.showToast(getContext(), getString(R.string.link_added));
-        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                new EditExternalLinksFragment()).commit();
+        progressBar.setVisibility(View.VISIBLE);
+        try {
+            ProfileController.updateLink(
+                    titleEditText.getText().toString(),
+                    urlEditText.getText().toString()
+            );
+            ToastManager.showToast(getContext(), R.string.link_added);
+            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
+                    new EditExternalLinksFragment()).commit();
+        } catch (ConnectionException e) {
+            ToastManager.showToast(getContext(), e.getMessage());
+        } finally {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

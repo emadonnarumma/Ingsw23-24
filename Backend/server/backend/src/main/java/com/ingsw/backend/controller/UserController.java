@@ -100,6 +100,29 @@ public class UserController {
         	return ResponseEntity.notFound().build();
         }
     }
+
+	@PutMapping("/{email}/updateRole")
+	public ResponseEntity<User> updateRole(@PathVariable String email, @RequestBody Role newRole) {
+
+		Optional<User> optionalUser = userService.updateRole(email, newRole);
+
+		if (optionalUser.isPresent()) {
+
+			return ResponseEntity.ok(optionalUser.get());
+
+		} else {
+
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/{email}/hasBankAccount")
+	public ResponseEntity<Boolean> hasBankAccount(@PathVariable String email) {
+
+		Boolean hasBankAccount = userService.hasBankAccount(email);
+
+		return ResponseEntity.ok(hasBankAccount);
+	}
 }
 
 

@@ -38,13 +38,23 @@
     <string name="edit_external_links_phrase">Modifica link esterni</string>
     <string name="unlock_seller_mode_phrase">Sblocca la modalità venditore</string>
     <string name="edit_bank_account_phrase">Modifica account bancario</string>
+    <string name="add_bank_account_phrase">Aggiungi account bancario</string>
     <string name="add_external_link_phrase">Aggiungi link esterno</string>
-    <string name="edit_url_phrase">Modifica URL</string>
-    <string name="edit_url_title_phrase">Modifica titolo</string>
+    <string name="edit_url_phrase">URL</string>
+    <string name="edit_url_title_phrase">Titolo</string>
     <string name="edit_external_link_phrase">Modifica link esterno</string>
     <string name="url_title_format_invalid">Il campo non può essere vuoto</string>
     <string name="url_format_invalid">il formato dell\'url non è valido</string>
     <string name="link_added">Link esterno aggiunto con successo!</string>
+    <string name="edit_iban_phrase">IBAN</string>
+    <string name="edit_iva_phrase">Partita IVA</string>
+    <string name="iban_format_invalid">Il formato dell\'IBAN non è valido</string>
+    <string name="iva_format_invalid">Il formato della partita IVA non è valido</string>
+    <string name="seller_mode_unlocked">Modalità venditore sbloccata con successo!</string>
+    <string name="bank_account_updated">Account bancario aggiornato con successo!</string>
+    <string name="bio_updated">Bio aggiornata con successo!</string>
+    <string name="region_updated">Regione aggiornata con successo!</string>
+    <string name="external_link_updated">Link aggiornato con successo!</string>
 
     <string name="search_hint">Cerca</string>
 

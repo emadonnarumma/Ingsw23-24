@@ -3,6 +3,7 @@ package com.ingsw.backend.service;
 import java.util.Optional;
 
 import com.ingsw.backend.enumeration.Region;
+import com.ingsw.backend.enumeration.Role;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.Seller;
 import com.ingsw.backend.model.User;
@@ -24,4 +25,8 @@ public interface UserService {
 	public Optional<User> updateRegion(String email, Region newRegion);
 
 	public Optional<User> updateBio(String email, String newBio);
+
+	public Optional<User> updateRole(String email, Role newRole);
+
+	public Boolean hasBankAccount(String email);
 }

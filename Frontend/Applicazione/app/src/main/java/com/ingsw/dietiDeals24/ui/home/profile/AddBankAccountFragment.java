@@ -19,14 +19,14 @@ import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
-public class AddExternalLinkFragment extends FragmentOfHomeActivity {
+public class AddBankAccountFragment extends FragmentOfHomeActivity {
     private TextView titleScreen;
-    private EditText titleEditText;
-    private EditText urlEditText;
+    private EditText ibanEditText;
+    private EditText ivaEditText;
     private ImageView doneButton;
     private ProgressBar progressBar;
 
-    private TextWatcher externalLinkTextWatcher = new TextWatcher() {
+    private TextWatcher bankAccountTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -37,9 +37,9 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            ProfileController.externalLinkDataChanged(
-                    titleEditText.getText().toString(),
-                    urlEditText.getText().toString(),
+            ProfileController.bankAccountDataChanged(
+                    ibanEditText.getText().toString(),
+                    ivaEditText.getText().toString(),
                     getResources()
             );
         }
@@ -48,7 +48,7 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_edit_external_link, container, false);
+        return inflater.inflate(R.layout.fragment_edit_bank_account, container, false);
     }
 
     @Override
@@ -56,48 +56,48 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
         super.onViewCreated(view, savedInstanceState);
         setBackButtonEnabled(true);
 
-        titleScreen = view.findViewById(R.id.title_of_edit_external_link);
-        titleEditText = view.findViewById(R.id.edit_title_edit_external_link);
-        urlEditText = view.findViewById(R.id.edit_url_edit_external_link);
-        doneButton = view.findViewById(R.id.done_button_edit_external_link);
-        progressBar = view.findViewById(R.id.progress_bar_edit_external_link);
+        titleScreen = view.findViewById(R.id.title_of_edit_bank_account);
+        ibanEditText = view.findViewById(R.id.edit_iban_edit_bank_account);
+        ivaEditText = view.findViewById(R.id.edit_iva_edit_bank_account);
+        doneButton = view.findViewById(R.id.done_button_edit_bank_account);
+        progressBar = view.findViewById(R.id.progress_bar_edit_bank_account);
 
         doneButton.setEnabled(false);
-        titleScreen.setText(R.string.add_external_link_phrase);
-        titleEditText.addTextChangedListener(externalLinkTextWatcher);
-        urlEditText.addTextChangedListener(externalLinkTextWatcher);
-        observeExternalLinkFormState();
+        titleScreen.setText(R.string.add_bank_account_phrase);
+        ibanEditText.addTextChangedListener(bankAccountTextWatcher);
+        ivaEditText.addTextChangedListener(bankAccountTextWatcher);
+        observeBankAccountFormState();
 
         doneButton.setOnClickListener(v -> onDoneButtonClick());
     }
 
-    private void observeExternalLinkFormState() {
-        ProfileController.getExternalLinkFormState().observe(getViewLifecycleOwner(), externalLinkFormState -> {
-            if (externalLinkFormState == null) {
+    private void observeBankAccountFormState() {
+        ProfileController.getBankAccountFormState().observe(getViewLifecycleOwner(), bankAccountFormState -> {
+            if (bankAccountFormState == null) {
                 return;
             }
-            String titleError = externalLinkFormState.getTitleError();
-            String urlError = externalLinkFormState.getUrlError();
-            if (titleError != null) {
-                titleEditText.setError(titleError);
+            String ibanError = bankAccountFormState.getIbanError();
+            String ivaError = bankAccountFormState.getIvaError();
+            if (ibanError != null) {
+                ibanEditText.setError(ibanError);
             }
-            if (urlError != null) {
-                urlEditText.setError(urlError);
+            if (ivaError != null) {
+                ivaEditText.setError(ivaError);
             }
-            doneButton.setEnabled(externalLinkFormState.isDataValid());
+            doneButton.setEnabled(bankAccountFormState.isDataValid());
         });
     }
 
     private void onDoneButtonClick() {
         progressBar.setVisibility(View.VISIBLE);
         try {
-            ProfileController.addLink(
-                    titleEditText.getText().toString(),
-                    urlEditText.getText().toString()
+            ProfileController.unlockSellerMode(
+                    ibanEditText.getText().toString(),
+                    ivaEditText.getText().toString()
             );
-            ToastManager.showToast(getContext(), R.string.link_added);
+            ToastManager.showToast(getContext(), R.string.seller_mode_unlocked);
             getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                    new EditExternalLinksFragment()).commit();
+                    new ProfileFragment()).commit();
         } catch (ConnectionException e) {
             ToastManager.showToast(getContext(), e.getMessage());
         } finally {

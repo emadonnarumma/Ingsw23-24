@@ -97,4 +97,26 @@ public class UserDbService implements UserService {
         return optionalUser;
     }
 
+    @Override
+    public Optional<User> updateRole(String email, Role newRole) {
+
+            Optional<User> optionalUser = userRepository.findByEmail(email);
+
+            if (optionalUser.isPresent()) {
+
+                User user = optionalUser.get();
+
+                user.setRole(newRole);
+
+                userRepository.save(user);
+            }
+
+            return optionalUser;
+    }
+
+    @Override
+    public Boolean hasBankAccount(String email) {
+        return userRepository.hasBankAccount(email);
+    }
+
 }

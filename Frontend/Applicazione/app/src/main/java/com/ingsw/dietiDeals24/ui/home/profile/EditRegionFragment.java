@@ -5,22 +5,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.Arrays;
 
 public class EditRegionFragment extends FragmentOfHomeActivity {
     private ImageView doneButton;
     private SmartMaterialSpinner<String> regionSmartSpinner;
-    private User user = ProfileController.getUser();
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,6 +39,7 @@ public class EditRegionFragment extends FragmentOfHomeActivity {
 
         doneButton = view.findViewById(R.id.done_button_edit_region);
         regionSmartSpinner = view.findViewById(R.id.region_spinner_edit_region);
+        progressBar = view.findViewById(R.id.progress_bar_edit_region);
 
         initRegionSmartSpinner();
         putUserRegionOnSpinner();
@@ -52,14 +57,22 @@ public class EditRegionFragment extends FragmentOfHomeActivity {
 
     private void putUserRegionOnSpinner() {
         String[] regions = getResources().getStringArray(R.array.italian_regions);
-        int index = Arrays.asList(regions).indexOf(user.getRegion().toString());
+        int index = Arrays.asList(regions).indexOf(UserHolder.user.getRegion().toString());
         if (index != -1)
             regionSmartSpinner.setSelection(index);
     }
 
     private void onDoneButtonClick() {
-        ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem()));
-        goToEditProfileFragment();
+        progressBar.setVisibility(View.VISIBLE);
+        try {
+            ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem()));
+            ToastManager.showToast(getContext(), R.string.region_updated);
+            goToEditProfileFragment();
+        } catch (ConnectionException e) {
+            ToastManager.showToast(getContext(), e.getMessage());
+        } finally {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     private void goToEditProfileFragment() {

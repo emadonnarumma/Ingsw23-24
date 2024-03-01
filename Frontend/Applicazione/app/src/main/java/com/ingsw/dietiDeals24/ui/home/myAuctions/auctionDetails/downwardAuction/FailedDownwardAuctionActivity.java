@@ -2,6 +2,7 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -57,9 +58,10 @@ public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
         descriptionTextView.setText(auction.getDescription());
         priceTextView.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
 
-        specificInformation1TextView.setText("Decremento: " + auction.getDecrementAmount() + "€");
-        specificInformation2TextView.setText(MyAuctionDetailsController.getNextDecrementTimeText(auction));
+        specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
+        specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
         specificInformation3TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
+        specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }
 
@@ -95,10 +97,7 @@ public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
                             throw new RuntimeException(e);
                         }
 
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        intent.putExtra("openSilent", "SilentAuctionAttributesFragment");
-                        startActivity(intent);
-                        finish();
+                        onNavigateToHomeActivityFragmentRequest("DownwardAuctionAttributesFragment", getApplicationContext());
                     })
                     .setNegativeButton("No", null)
                     .show();

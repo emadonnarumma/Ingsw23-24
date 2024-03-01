@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.search;
+package com.ingsw.dietiDeals24.ui.home.searchAuctions;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SearchFragment extends FragmentOfHomeActivity {
 
@@ -39,8 +41,12 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
     private MaterialSearchBar searchBar;
 
+    private ExecutorService executorService;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        executorService = Executors.newSingleThreadExecutor();
 
         return inflater.inflate(com.ingsw.dietiDeals24.R.layout.fragment_search, container, false);
     }
@@ -61,18 +67,44 @@ public class SearchFragment extends FragmentOfHomeActivity {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        categorySmartSpinner.setSelected(false);
+        searchBar.setText("");
+
         updateAuctions();
     }
 
     private void updateAuctions() {
+
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+
+        executorService = Executors.newSingleThreadExecutor();
+
+
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-        new Thread(() -> {
+
+        executorService.submit(() -> {
+
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctions().get();
                 List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctions().get();
@@ -97,15 +129,22 @@ public class SearchFragment extends FragmentOfHomeActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+        });
     }
 
     private void filterByCategory(Category category) {
 
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+
+        executorService = Executors.newSingleThreadExecutor();
+
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
 
-        new Thread(() -> {
+        executorService.submit(() -> {
+
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByCategory(category).get();
                 List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctionsByCategory(category).get();
@@ -130,14 +169,22 @@ public class SearchFragment extends FragmentOfHomeActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+        });
     }
 
     private void filterByKeyword(String keyword) {
 
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+
+        executorService = Executors.newSingleThreadExecutor();
+
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-        new Thread(() -> {
+
+        executorService.submit(() -> {
+
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByKeyword(keyword).get();
                 List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctionsByKeyword(keyword).get();
@@ -162,16 +209,22 @@ public class SearchFragment extends FragmentOfHomeActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+        });
     }
 
     private void filterByKeywordAndCategory(String keyword, Category category) {
 
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+
+        executorService = Executors.newSingleThreadExecutor();
+
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
 
+        executorService.submit(() -> {
 
-        new Thread(() -> {
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByKeywordAndCategory(keyword, category).get();
                 List<DownwardAuction> downwardAuctions = SearchAuctionsController.getAllDownwardAuctionsByKeywordAndCategory(keyword, category).get();
@@ -196,7 +249,7 @@ public class SearchFragment extends FragmentOfHomeActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+        });
     }
 
 
@@ -294,6 +347,5 @@ public class SearchFragment extends FragmentOfHomeActivity {
                 searchBar.updateLastSuggestions(searchBar.getLastSuggestions());
             }
         });
-
     }
 }

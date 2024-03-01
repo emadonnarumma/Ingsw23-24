@@ -49,16 +49,17 @@ public class SuccessfullDownwardAuctionActivity extends AuctionDetailsActivity {
         titleTextView.setText(auction.getTitle());
 
         auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.yellow));
+        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.green));
         auctionStatusTextView.setStrokeColor(R.color.black);
 
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
         priceTextView.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
 
-        specificInformation1TextView.setText("Decremento: " + auction.getDecrementAmount() + "€");
-        specificInformation2TextView.setText(MyAuctionDetailsController.getNextDecrementTimeText(auction));
+        specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
+        specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
         specificInformation3TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
+        specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }
 

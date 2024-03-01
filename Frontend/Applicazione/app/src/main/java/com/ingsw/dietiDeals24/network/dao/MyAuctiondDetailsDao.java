@@ -15,7 +15,7 @@ import retrofit2.http.Path;
 
 public interface MyAuctiondDetailsDao {
     @DELETE("auction/{id}")
-    Call<Void> deleteAuction(@Path("id") Integer id, @Header("Authorization") String authToken);
+    Call<Boolean> deleteAuction(@Path("id") Integer id, @Header("Authorization") String authToken);
 
     @GET("bid/silent/{auctionId}")
     Call<List<SilentBid>> getAllSilentBidsBySilentAuctionId(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);

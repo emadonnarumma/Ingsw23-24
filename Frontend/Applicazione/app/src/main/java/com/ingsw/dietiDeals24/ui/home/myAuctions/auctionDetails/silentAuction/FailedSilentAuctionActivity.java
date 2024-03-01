@@ -88,7 +88,7 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
                             throw new RuntimeException(e);
                         }
 
-                        onNavigateToHomeActivityFragmentRequest("GeneralAuctionAttributesFragment", getApplicationContext());
+                        onNavigateToHomeActivityFragmentRequest("FailedAuctionAttributesFragment", getApplicationContext());
                     })
                     .setNegativeButton("No", null)
                     .show();

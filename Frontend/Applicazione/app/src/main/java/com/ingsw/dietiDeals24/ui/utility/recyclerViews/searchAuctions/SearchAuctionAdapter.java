@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
+import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.searchAuctionDetails.SearchDownwardAuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.searchAuctionDetails.SearchReverseAuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.searchAuctionDetails.SearchSilentAuctionDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,10 +84,33 @@ public class SearchAuctionAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else if (holder instanceof SearchReverseAuctionViewHolder) {
             ((SearchReverseAuctionViewHolder) holder).bind((ReverseAuction) auction);
         }
+
+        holder.itemView.setOnClickListener(v -> startSearchAuctionDetailsActivity(holder, auction, v));
     }
+
 
     @Override
     public int getItemCount() {
         return auctions.size();
+    }
+
+    private void startSearchAuctionDetailsActivity(RecyclerView.ViewHolder holder, Auction auction, View v) {
+
+        Intent intent;
+
+        if (auction instanceof SilentAuction) {
+            intent = new Intent(v.getContext(), SearchSilentAuctionDetailsActivity.class);
+
+        } else if (auction instanceof DownwardAuction) {
+            intent = new Intent(v.getContext(), SearchDownwardAuctionDetailsActivity.class);
+
+        } else {
+            intent = new Intent(v.getContext(), SearchReverseAuctionDetailsActivity.class);
+        }
+
+        SearchAuctionDetailsController.setAuction(auction);
+
+        v.getContext().startActivity(intent);
+
     }
 }

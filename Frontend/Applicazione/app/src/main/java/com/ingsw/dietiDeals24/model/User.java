@@ -92,4 +92,6 @@ public class User implements Serializable {
     public boolean hasExternalLinks() {
         return !externalLinks.isEmpty();
     }
+
+
 }

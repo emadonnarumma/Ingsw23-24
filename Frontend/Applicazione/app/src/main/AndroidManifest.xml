@@ -85,6 +85,18 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.searchAuctions.searchAuctionDetails.SearchSilentAuctionDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.searchAuctions.searchAuctionDetails.SearchDownwardAuctionDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.searchAuctions.searchAuctionDetails.SearchReverseAuctionDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.myAuctions.auctionDetails.reverseAuction.InProgressReverseAuctionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

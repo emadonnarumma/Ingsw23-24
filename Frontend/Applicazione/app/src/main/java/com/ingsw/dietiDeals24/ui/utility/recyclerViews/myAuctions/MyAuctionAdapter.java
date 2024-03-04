@@ -69,12 +69,10 @@ public class MyAuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else if (viewType == TYPE_DOWNWARD) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_downward_auction, parent, false);
             return new MyDownwardAuctionViewHolder(view);
-        } else if (viewType == TYPE_REVERSE) {
+        } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_reverse_auction, parent, false);
             return new MyReverseAuctionViewHolder(view);
         }
-
-        return null;
     }
 
     @Override

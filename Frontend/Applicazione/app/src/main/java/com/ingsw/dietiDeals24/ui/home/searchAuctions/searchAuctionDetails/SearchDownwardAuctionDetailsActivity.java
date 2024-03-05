@@ -13,6 +13,7 @@ import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsActivity {
 
@@ -65,9 +66,9 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
 
         descriptionTextView.setText(auction.getDescription());
 
-        priceTextView.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
+        priceTextView.setText("Prezzo attuale: " + NumberFormatter.formatPrice(auction.getCurrentPrice()));
 
-        specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
+        specificInformation1TextView.setText("Valore di decremento: " + NumberFormatter.formatPrice(auction.getDecrementAmount()));
 
         specificInformation2TextView.setText(SearchAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
 

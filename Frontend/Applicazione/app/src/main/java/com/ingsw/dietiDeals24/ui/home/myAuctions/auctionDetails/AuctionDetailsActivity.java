@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ScrollView;
+
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter
 import com.smarteist.autoimageslider.SliderView;
 import com.ingsw.dietiDeals24.R;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 
 import jp.hamcheesedev.outlinedtextview.CompatOutlinedTextView;
@@ -37,10 +39,24 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
     protected CompatOutlinedTextView auctionStatusTextView;
     protected CardView cardView;
     protected SliderView sliderView;
+
+
     protected BottomSheetDialog bottomSheetDialog;
     protected RecyclerView bidsRecyclerView;
     protected ProgressBar progressBar;
     protected TextView emptyBidsTextView;
+
+    public BottomSheetDialog getBottomSheetDialog() {
+        return bottomSheetDialog;
+    }
+
+    public RecyclerView getBidsRecyclerView() {
+        return bidsRecyclerView;
+    }
+
+    public TextView getEmptyBidsTextView() {
+        return emptyBidsTextView;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,4 +141,5 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

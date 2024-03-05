@@ -22,6 +22,9 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
 
 	List<SilentBid> findByStatus(BidStatus status);
 
+	@Query("SELECT sb FROM SilentBid sb WHERE sb.silentAuction.idAuction = :auctionId AND sb.status = 'PENDING'")
+	List<SilentBid> findPendingSilentBidsByAuctionId(@Param("auctionId") Integer auctionId);
+
 	@Query("SELECT rb FROM ReverseBid rb WHERE rb.reverseAuction.idAuction = :auctionId AND rb.status = 'PENDING'")
 	ReverseBid findPendingReverseBidByAuctionId(@Param("auctionId") Integer auctionId);
 

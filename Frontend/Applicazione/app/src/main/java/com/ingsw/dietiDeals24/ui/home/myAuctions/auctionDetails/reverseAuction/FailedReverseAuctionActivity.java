@@ -51,14 +51,17 @@ public class FailedReverseAuctionActivity extends AuctionDetailsActivity {
         titleTextView.setText(auction.getTitle());
 
         auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
-        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.yellow));
+        auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.red));
         auctionStatusTextView.setStrokeColor(R.color.black);
 
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
-        priceTextView.setText("Offerta corrente: " + auction.getStartingPrice() + "€");
-        specificInformation1TextView.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
+        priceTextView.setText("Prezzo iniziale: " + auction.getStartingPrice() + "€");
+
+        specificInformation1TextView.setText("Scadeva il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
         specificInformation2TextView.setVisibility(View.GONE);
+        specificInformation3TextView.setVisibility(View.GONE);
+        specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }
 

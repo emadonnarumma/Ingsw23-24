@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -49,13 +50,16 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
         auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
+        priceTextView.setVisibility(View.GONE);
 
         auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
         auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.red));
         auctionStatusTextView.setStrokeColor(R.color.white);
 
-        specificInformation1TextView.setText("scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextView.setText(MyAuctionDetailsController.getWithdrawalTimeText(auction));
+        specificInformation1TextView.setText("scadeva il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
+        specificInformation2TextView.setText("I compratori avevano: " + MyAuctionDetailsController.getWithdrawalTimeText(auction) + " per ritirare le offerte");
+        specificInformation3TextView.setVisibility(View.GONE);
+        specificInformation4TextView.setVisibility(View.GONE);
 
         setRedButton();
         setGreenButton();
@@ -88,7 +92,7 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
                             throw new RuntimeException(e);
                         }
 
-                        onNavigateToHomeActivityFragmentRequest("FailedAuctionAttributesFragment", getApplicationContext());
+                        onNavigateToHomeActivityFragmentRequest("SilentAuctionAttributesFragment", getApplicationContext());
                     })
                     .setNegativeButton("No", null)
                     .show();

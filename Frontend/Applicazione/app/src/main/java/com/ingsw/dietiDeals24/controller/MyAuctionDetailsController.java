@@ -93,6 +93,44 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         });
     }
 
+    public static CompletableFuture<List<SilentBid>> getInProgressSilentBidsByAuctionId(Integer idBid) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<List<SilentBid>> response = myAuctiondDetailsDao.getInProgressSilentBidsByAuctionId(idBid, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
+        });
+    }
+
+    public static CompletableFuture<Boolean> deleteBid(Integer idBid) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<Boolean> response = myAuctiondDetailsDao.deleteBid(idBid, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return false;
+        });
+    }
+
     public static CompletableFuture<Boolean> deleteAuction(Integer idAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -100,7 +138,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
                 Response<Boolean> response = myAuctiondDetailsDao.deleteAuction(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdatedAll(false);
+                    MyAuctionsController.setUpdatedAll  (false);
                     return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");

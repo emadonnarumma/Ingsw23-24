@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,9 +123,13 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
 
     private void setupEditTexts(View view) {
-        setupMinPriceEditText(view);
-        setupDecrementAmountEditText(view);
-        setupInitialPriceEditText(view);
+        minimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
+        decrementAmountEditText = view.findViewById(R.id.decrement_amount_edit_text_downward_auction_attributes);
+        initialPriceEditText = view.findViewById(R.id.initial_price_edit_text_downward_auction_attributes);
+
+        setupInitialPriceEditTextListner(view);
+        setupDecrementAmountEditTextListner(view);
+        setupMinPriceEditTextListner(view);
     }
 
     private void setupWheelViews(View view) {
@@ -194,22 +197,17 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         decrementTimeTextView.setText(decrementTime);
     }
 
-    private void setupInitialPriceEditText(@NonNull View view) {
-        initialPriceEditText = view.findViewById(R.id.initial_price_edit_text_downward_auction_attributes);
+    private void setupInitialPriceEditTextListner(@NonNull View view) {
         initialPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
         initialPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 String price = initialPriceEditText.getText().toString();
                 setEuroToEndIfNotPresent(price, initialPriceEditText);
-                if (!price.equals("") && decrementAmountEditText.getText() != null) {
-
+                if (!price.equals("")) {
                     minimumPriceEditText.setEnabled(true);
-                    decrementAmountEditText.setEnabled(true);
-
                 } else {
                     minimumPriceEditText.setText("");
                     minimumPriceEditText.setEnabled(false);
-
                     decrementAmountEditText.setText("");
                     decrementAmountEditText.setEnabled(false);
                 }
@@ -220,40 +218,33 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             }
         });
 
+        minimumPriceEditText.setEnabled(false);
         decrementAmountEditText.setEnabled(false);
     }
 
-    private void setupMinPriceEditText(@NonNull View view) {
-        minimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
+    private void setupMinPriceEditTextListner(@NonNull View view) {
         minimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
         minimumPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-
                 String minPrice = minimumPriceEditText.getText().toString();
-                String initialPrice = initialPriceEditText.getText().toString();
-
-                if (!minPrice.equals("") && !initialPrice.equals("")) {
-
-                    double minPriceValue = Double.parseDouble(deleteEuroSimbol(minPrice));
-                    double initialPriceValue = Double.parseDouble(deleteEuroSimbol(initialPrice));
-
-                    if (minPriceValue > initialPriceValue) {
-                        setEuroToEndIfNotPresent(minPrice, minimumPriceEditText);
-                        minimumPriceEditText.setError("Il prezzo minimo non può essere maggiore del prezzo iniziale");
-                        return;
-                    }
-                }
                 setEuroToEndIfNotPresent(minPrice, minimumPriceEditText);
+                if (!minPrice.equals("")) {
+                    decrementAmountEditText.setEnabled(true);
+                } else {
+                    decrementAmountEditText.setText("");
+                    decrementAmountEditText.setEnabled(false);
+                }
             } else {
                 if (!minimumPriceEditText.getText().toString().equals("")) {
                     minimumPriceEditText.setText(deleteEuroSimbol(minimumPriceEditText.getText().toString()));
                 }
             }
         });
+
+        decrementAmountEditText.setEnabled(false);
     }
 
-    private void setupDecrementAmountEditText(@NonNull View view) {
-        decrementAmountEditText = view.findViewById(R.id.decrement_amount_edit_text_downward_auction_attributes);
+    private void setupDecrementAmountEditTextListner(@NonNull View view) {
         decrementAmountEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
         decrementAmountEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -271,7 +262,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             }
         });
     }
-
 
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);

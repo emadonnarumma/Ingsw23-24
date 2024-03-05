@@ -17,15 +17,46 @@ import com.ingsw.backend.service.BidService;
 
 @Service("mainBidService")
 public class BidDbService implements BidService {
-	
+
 	private final BidRepository bidRepository;
-	
+
 	private final AuctionRepository auctionRepository;
 
 
 	public BidDbService(BidRepository bidRepository, AuctionRepository auctionRepository) {
 		this.bidRepository = bidRepository;
 		this.auctionRepository = auctionRepository;
+	}
+
+	@Override
+	public List<SilentBid> getAllSilentBidsByBuyer(Buyer buyer) {
+	    return bidRepository.findAllSilentBidsByBuyer(buyer);
+	}
+
+	@Override
+	public List<ReverseBid> getAllReverseBidsBySeller(Seller seller) {
+	    return bidRepository.findAllReverseBidsBySeller(seller);
+	}
+
+	@Override
+	public List<SilentBid> getInProgressSilentBidsByAuctionId(Integer auctionId) {
+		return bidRepository.findPendingSilentBidsByAuctionId(auctionId);
+	}
+
+	@Override
+	public List<ReverseBid> getInProgressReverseBidsByAuctionId(Integer auctionId) {
+		return null;
+	}
+
+	@Override
+	public List<SilentBid> getAllSilentBidsBySilentAuction(SilentAuction auction) {
+	    return bidRepository.findAllSilentBidsBySilentAuction(auction);
+	}
+
+	@Override
+	public ReverseBid getMinReverseBidByReverseAuctionId(Integer id) {
+		ReverseBid reverseBid = bidRepository.findPendingReverseBidByAuctionId(id);
+		return reverseBid;
 	}
 
 	@Override
@@ -43,26 +74,7 @@ public class BidDbService implements BidService {
         return bidRepository.getWinningSilentBidByAuctionId(auctionId);
 	}
 
-	@Override
-	public List<SilentBid> getAllSilentBidsByBuyer(Buyer buyer) {
-	    return bidRepository.findAllSilentBidsByBuyer(buyer);
-	}
 
-	@Override
-	public List<ReverseBid> getAllReverseBidsBySeller(Seller seller) {
-	    return bidRepository.findAllReverseBidsBySeller(seller);
-	}
-
-	@Override
-	public List<SilentBid> getAllSilentBidsBySilentAuction(SilentAuction auction) {
-	    return bidRepository.findAllSilentBidsBySilentAuction(auction);
-	}
-
-	@Override
-	public ReverseBid getMinReverseBidByReverseAuctionId(Integer id) {
-		ReverseBid reverseBid = bidRepository.findPendingReverseBidByAuctionId(id);
-		return reverseBid;
-	}
 
 	@Override
 	public Boolean delete(Integer id) {
@@ -84,9 +96,7 @@ public class BidDbService implements BidService {
 
 	@Override
 	public ReverseBid addReverseBid(ReverseBid reverseBid) {
-		
 		List<ReverseBid> oldReverseBids = reverseBid.getReverseAuction().getReceivedBids();
-		
 		for (ReverseBid oldBid: oldReverseBids) {
 			
 			if (!oldBid.equals(reverseBid)) {

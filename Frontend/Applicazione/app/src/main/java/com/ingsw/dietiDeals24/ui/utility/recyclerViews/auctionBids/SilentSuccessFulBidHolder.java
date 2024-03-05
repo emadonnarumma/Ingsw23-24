@@ -11,6 +11,9 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class SilentSuccessFulBidHolder extends RecyclerView.ViewHolder {
     AuctionDetailsActivity activity;
     CircularProgressButton profileButton;
@@ -25,6 +28,10 @@ public class SilentSuccessFulBidHolder extends RecyclerView.ViewHolder {
 
     public void bind(SilentBid silentBid) {
         profileButton.setText(silentBid.getBuyer().getName());
-        priceTextView.setText(silentBid.getMoneyAmount() + "€");
+
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.ITALY);
+        String formattedPrice = numberFormat.format(silentBid.getMoneyAmount()) + "€";
+        priceTextView.setText(formattedPrice);
+
     }
 }

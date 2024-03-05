@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.model.User;
 
 
 public class OtherUserProfileActivity extends AppCompatActivity {
@@ -20,12 +20,17 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     private TextView andNMoreLinksTextView;
     private TextView userRegionTextView;
     private ProgressBar progressBar;
+    private User user;
 
+    public OtherUserProfileActivity() {
+        super();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user_profile);
+        user = (User) getIntent().getSerializableExtra("otherUser");
     }
 
     @Override
@@ -38,23 +43,29 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         andNMoreLinksTextView = findViewById(R.id.and_n_more_links_other_user_profile);
         userRegionTextView = findViewById(R.id.user_region_other_user_profile);
         progressBar = findViewById(R.id.progress_bar_other_user_profile);
+        setupActionBar();
         showUserData();
     }
 
+    private void setupActionBar() {
+        setSupportActionBar(findViewById(R.id.toolbar_other_user_profile));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     private void showUserData() {
-        if (UserHolder.user == null)
+        if (user == null)
             return;
 
-        String username = UserHolder.user.getName();
-        String userBio = UserHolder.user.getBio();
-        String userRegion = " " + UserHolder.user.getRegion().toString() + " ";
+        String username = user.getName();
+        String userBio = user.getBio();
+        String userRegion = " " + user.getRegion().toString() + " ";
         usernameTextView.setText(username);
         userBioTextView.setText(userBio);
         userRegionTextView.setText(userRegion);
 
-        if (UserHolder.user.hasExternalLinks()) {
-            String link = UserHolder.user.getExternalLinks().get(0).getTitle();
-            String andNMoreLinks = "and " + (UserHolder.user.getExternalLinks().size() - 1) + " more";
+        if (user.hasExternalLinks()) {
+            String link = user.getExternalLinks().get(0).getTitle();
+            String andNMoreLinks = "and " + (user.getExternalLinks().size() - 1) + " more";
             linkTextView.setText(link);
             andNMoreLinksTextView.setText(andNMoreLinks);
         } else {

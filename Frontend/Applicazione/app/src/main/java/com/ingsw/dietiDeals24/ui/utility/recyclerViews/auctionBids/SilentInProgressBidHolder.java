@@ -14,6 +14,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 import java.text.NumberFormat;
@@ -40,7 +41,7 @@ public class SilentInProgressBidHolder extends RecyclerView.ViewHolder {
         withdrawalTimeTextView.setText(MyAuctionDetailsController.getRemainingWithdrawalTimeText(silentBid));
         profileButton.setText(silentBid.getBuyer().getName());
         profileButton.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), AuctionDetailsActivity.class);
+            Intent intent = new Intent(v.getContext(), OtherUserProfileActivity.class);
             intent.putExtra("otherUser", silentBid.getBuyer());
             v.getContext().startActivity(intent);
         });
@@ -52,6 +53,7 @@ public class SilentInProgressBidHolder extends RecyclerView.ViewHolder {
                     try {
                         boolean isAccepted = MyAuctionDetailsController.acceptBid(silentBid.getIdBid()).get();
                         if (isAccepted) {
+
                             activity.onNavigateToHomeActivityFragmentRequest("MyAuctionFragment", activity.getApplicationContext());
                         }
                     } catch (ExecutionException e) {

@@ -10,6 +10,7 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -28,10 +29,6 @@ public class SilentSuccessFulBidHolder extends RecyclerView.ViewHolder {
 
     public void bind(SilentBid silentBid) {
         profileButton.setText(silentBid.getBuyer().getName());
-
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.ITALY);
-        String formattedPrice = numberFormat.format(silentBid.getMoneyAmount()) + "€";
-        priceTextView.setText(formattedPrice);
-
+        priceTextView.setText(NumberFormatter.formatPrice(silentBid.getMoneyAmount()));
     }
 }

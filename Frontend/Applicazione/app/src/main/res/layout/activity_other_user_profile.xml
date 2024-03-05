@@ -9,7 +9,7 @@
     tools:context=".ui.home.profile.my.ProfileFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/username_profile"
+        android:id="@+id/username_other_user_profile"
         android:layout_width="match_parent"
         android:layout_height="@dimen/username_height_profile"
         app:cardCornerRadius="@dimen/corner_radius"
@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/profile_image_icon_profile"
+                android:id="@+id/profile_image_icon_other_user_profile"
                 android:layout_width="@dimen/username_height_profile"
                 android:layout_height="@dimen/username_height_profile"
                 android:background="@drawable/ic_profile_24dp"
@@ -40,7 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/username_text_profile"
+                android:id="@+id/username_text_other_user_profile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/verdana"
@@ -51,7 +51,8 @@
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/title_text_large"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/profile_image_icon_profile"
+
+                app:layout_constraintStart_toEndOf="@id/profile_image_icon_other_user_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -60,27 +61,17 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
-        android:id="@+id/seller_switch_layout_profile"
+        android:id="@+id/seller_switch_layout_other_user_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/username_profile">
-
-        <Switch
-            android:id="@+id/seller_switch_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="18dp"
-            android:scaleX="2"
-            android:scaleY="2" />
+        app:layout_constraintTop_toBottomOf="@id/username_other_user_profile" >
 
         <TextView
-            android:id="@+id/seller_switch_text_profile"
+            android:id="@+id/seller_switch_text_other_user_profile"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/verdana"
@@ -91,18 +82,18 @@
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/user_bio_layout_profile"
+        android:id="@+id/user_bio_layout_other_user_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="150dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seller_switch_layout_profile"
+        app:layout_constraintTop_toBottomOf="@id/seller_switch_layout_other_user_profile"
         app:counterEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/user_bio_profile"
+            android:id="@+id/user_bio_other_user_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
@@ -114,43 +105,39 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/icon_link_profile"
+        android:id="@+id/icon_link_other_user_profile"
         android:layout_width="@dimen/icon_size_small"
         android:layout_height="@dimen/icon_size_small"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
         android:src="@drawable/ic_link"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_profile" />
+        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_other_user_profile" />
 
     <TextView
-        android:id="@+id/link_profile"
+        android:id="@+id/link_other_user_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:autoLink="web"
         android:fontFamily="@font/verdana"
         android:textSize="@dimen/text_medium"
-        app:layout_constraintStart_toEndOf="@id/icon_link_profile"
-        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_profile" />
+        app:layout_constraintStart_toEndOf="@id/icon_link_other_user_profile"
+        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_other_user_profile" />
 
     <TextView
-        android:id="@+id/and_n_more_links_profile"
+        android:id="@+id/and_n_more_links_other_user_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:textColor="@color/green"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/link_profile"
-        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_profile" />
-
-
-
-
+        app:layout_constraintStart_toEndOf="@id/link_other_user_profile"
+        app:layout_constraintTop_toBottomOf="@id/user_bio_layout_other_user_profile" />
 
     <ImageView
-        android:id="@+id/icon_of_ITALY_profile"
+        android:id="@+id/icon_of_ITALY_other_user_profile"
         android:layout_width="@dimen/icon_size_medium"
         android:layout_height="@dimen/icon_size_medium"
         android:layout_marginHorizontal="16dp"
@@ -158,16 +145,17 @@
         android:src="@drawable/ic_italy"
         app:tint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/link_profile" />
+        app:layout_constraintTop_toBottomOf="@id/link_other_user_profile" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         app:cardCornerRadius="@dimen/corner_radius"
-        app:layout_constraintStart_toEndOf="@id/icon_of_ITALY_profile"
-        app:layout_constraintTop_toTopOf="@id/icon_of_ITALY_profile"
-        app:layout_constraintBottom_toBottomOf="@id/icon_of_ITALY_profile" >
+
+        app:layout_constraintStart_toEndOf="@id/icon_of_ITALY_other_user_profile"
+        app:layout_constraintTop_toTopOf="@id/icon_of_ITALY_other_user_profile"
+        app:layout_constraintBottom_toBottomOf="@id/icon_of_ITALY_other_user_profile" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -177,82 +165,29 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="@color/gray"
-                app:layout_constraintStart_toStartOf="@id/user_region_profile"
-                app:layout_constraintTop_toTopOf="@id/user_region_profile"
-                app:layout_constraintEnd_toEndOf="@id/user_region_profile"
-                app:layout_constraintBottom_toBottomOf="@id/user_region_profile" />
+
+                app:layout_constraintStart_toStartOf="@id/user_region_other_user_profile"
+                app:layout_constraintTop_toTopOf="@id/user_region_other_user_profile"
+                app:layout_constraintEnd_toEndOf="@id/user_region_other_user_profile"
+                app:layout_constraintBottom_toBottomOf="@id/user_region_other_user_profile" />
 
             <TextView
-                android:id="@+id/user_region_profile"
+                android:id="@+id/user_region_other_user_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/verdana"
                 android:textColor="@color/black"
                 android:textSize="@dimen/title_text_small"
                 android:textStyle="bold"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-
-
-
-    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/edit_profile_button_profile"
-        android:layout_width="200dp"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/green"
-        android:text="@string/edit_profile_button_phrase"
-        android:textColor="@color/white"
-        android:layout_marginVertical="8dp"
-        app:spinning_bar_padding="10dp"
-        app:initialCornerAngle="50dp"
-        app:spinning_bar_color="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/logout_button_profile" />
-
-    <ImageView
-        android:id="@+id/icon_edit_profile_button_profile"
-        android:layout_width="@dimen/icon_size_small"
-        android:layout_height="@dimen/icon_size_small"
-        android:src="@drawable/ic_edit"
-        android:layout_margin="8dp"
-        android:elevation="2dp"
-        app:layout_constraintEnd_toEndOf="@id/edit_profile_button_profile"
-        app:layout_constraintTop_toTopOf="@id/edit_profile_button_profile"
-        app:layout_constraintBottom_toBottomOf="@id/edit_profile_button_profile" />
-
-    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/logout_button_profile"
-        android:layout_width="200dp"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/red"
-        android:text="@string/logout_button_phrase"
-        android:textColor="@color/white"
-        android:layout_marginVertical="8dp"
-        app:spinning_bar_padding="10dp"
-        app:initialCornerAngle="50dp"
-        app:spinning_bar_color="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <ImageView
-        android:id="@+id/icon_logout_button_profile"
-        android:layout_width="@dimen/icon_size_small"
-        android:layout_height="@dimen/icon_size_small"
-        android:layout_margin="8dp"
-        android:elevation="2dp"
-        android:src="@drawable/ic_logout"
-        app:layout_constraintBottom_toBottomOf="@id/logout_button_profile"
-        app:layout_constraintEnd_toEndOf="@id/logout_button_profile"
-        app:layout_constraintTop_toTopOf="@id/logout_button_profile" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar_profile"
+      <ProgressBar
+        android:id="@+id/progress_bar_other_user_profile"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -262,7 +197,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

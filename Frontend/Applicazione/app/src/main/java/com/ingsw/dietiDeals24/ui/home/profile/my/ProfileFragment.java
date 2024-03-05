@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.profile;
+package com.ingsw.dietiDeals24.ui.home.profile.my;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;

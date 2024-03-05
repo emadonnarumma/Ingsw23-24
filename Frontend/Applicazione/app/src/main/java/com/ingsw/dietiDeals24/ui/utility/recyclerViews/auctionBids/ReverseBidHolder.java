@@ -10,6 +10,7 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class ReverseBidHolder extends RecyclerView.ViewHolder {
     AuctionDetailsActivity activity;
@@ -25,6 +26,6 @@ public class ReverseBidHolder extends RecyclerView.ViewHolder {
 
     public void bind(ReverseBid reverseBid) {
         profileButton.setText(reverseBid.getSeller().getName());
-        priceTextView.setText(reverseBid.getMoneyAmount() + "€");
+        priceTextView.setText(NumberFormatter.formatPrice(reverseBid.getMoneyAmount()));
     }
 }

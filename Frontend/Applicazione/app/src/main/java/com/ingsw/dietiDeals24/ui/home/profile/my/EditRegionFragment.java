@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.profile;
+package com.ingsw.dietiDeals24.ui.home.profile.my;
 
 import static java.lang.Thread.sleep;
 
@@ -15,9 +15,7 @@ import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
-import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 

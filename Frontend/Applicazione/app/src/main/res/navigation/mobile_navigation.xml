@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.ingsw.dietiDeals24.ui.home.profile.ProfileFragment"
+        android:name="com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment"
         android:label="@string/bottom_nav_profile"
         tools:layout="@layout/fragment_general_auction_attributes" />
 

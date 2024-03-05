@@ -18,15 +18,15 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAtt
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.home.myBids.MyBidsFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.AddBankAccountFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.AddExternalLinkFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.EditBankAccountFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.EditBioFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.EditExternalLinkFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.EditExternalLinksFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.EditProfileFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.EditRegionFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.ProfileFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.AddBankAccountFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.AddExternalLinkFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditBankAccountFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditBioFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinkFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinksFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditProfileFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditRegionFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity {

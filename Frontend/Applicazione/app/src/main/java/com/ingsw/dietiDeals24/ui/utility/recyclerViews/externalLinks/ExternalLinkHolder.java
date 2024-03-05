@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.model.ExternalLink;
-import com.ingsw.dietiDeals24.ui.home.profile.EditExternalLinkFragment;
-import com.ingsw.dietiDeals24.ui.home.profile.EditExternalLinksFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinkFragment;
+import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinksFragment;
 
 public class ExternalLinkHolder extends RecyclerView.ViewHolder {
     private TextView titleTextView;

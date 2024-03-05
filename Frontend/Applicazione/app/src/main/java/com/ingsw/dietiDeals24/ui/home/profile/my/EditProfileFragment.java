@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.profile;
+package com.ingsw.dietiDeals24.ui.home.profile.my;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 

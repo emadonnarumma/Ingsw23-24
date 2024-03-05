@@ -16,6 +16,7 @@ import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -54,7 +55,7 @@ public class MyReverseAuctionViewHolder extends RecyclerView.ViewHolder {
     public void bind(ReverseAuction reverseAuction) {
         titleTextView.setText(reverseAuction.getTitle());
         auctionTypeTextView.setText(AuctionType.toItalianString(reverseAuction.getType()));
-        currentBidTextView.setText(String.valueOf(reverseAuction.getStartingPrice()) + " €");
+        currentBidTextView.setText(NumberFormatter.formatPrice(reverseAuction.getStartingPrice()));
 
         AuctionStatus status = reverseAuction.getStatus();
         switch (status) {

@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.profile;
+package com.ingsw.dietiDeals24.ui.home.profile.my;
 
 import static java.lang.Thread.sleep;
 
@@ -17,14 +17,12 @@ import androidx.annotation.NonNull;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
-import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
 
-public class EditBankAccountFragment extends FragmentOfHomeActivity {
+public class AddBankAccountFragment extends FragmentOfHomeActivity {
     private TextView titleScreen;
     private EditText ibanEditText;
     private EditText ivaEditText;
@@ -67,18 +65,14 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
         doneButton = view.findViewById(R.id.done_button_edit_bank_account);
         progressBar = view.findViewById(R.id.progress_bar_edit_bank_account);
 
-        initEditTexts();
-        titleScreen.setText(R.string.edit_bank_account_phrase);
+        doneButton.setEnabled(false);
+        doneButton.setColorFilter(getResources().getColor(R.color.gray, null));
+        titleScreen.setText(R.string.add_bank_account_phrase);
         ibanEditText.addTextChangedListener(bankAccountTextWatcher);
         ivaEditText.addTextChangedListener(bankAccountTextWatcher);
         observeBankAccountFormState();
 
         doneButton.setOnClickListener(v -> onDoneButtonClick());
-    }
-
-    private void initEditTexts() {
-        ibanEditText.setText(UserHolder.getSeller().getBankAccount().getIban());
-        ivaEditText.setText(UserHolder.getSeller().getBankAccount().getIva());
     }
 
     private void observeBankAccountFormState() {
@@ -107,15 +101,15 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
         progressBar.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
-                if(isBankAccountChanged()) {
-                    ProfileController.updateBankAccount(
-                            ibanEditText.getText().toString(),
-                            ivaEditText.getText().toString()
-                    ).get();
-                    sleep(500);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.bank_account_updated));
-                }
-                requireActivity().runOnUiThread(this::goToProfileFragment);
+                ProfileController.unlockSellerMode(
+                        ibanEditText.getText().toString(),
+                        ivaEditText.getText().toString()
+                ).get();
+                sleep(500);
+                requireActivity().runOnUiThread(() -> {
+                    ToastManager.showToast(getContext(), R.string.seller_mode_unlocked);
+                    goToProfileFragment();
+                });
             } catch (InterruptedException e) {
                 requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
             } catch (ExecutionException e) {
@@ -129,10 +123,5 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
     private void goToProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new ProfileFragment()).commit();
-    }
-
-    private boolean isBankAccountChanged() {
-        return !ibanEditText.getText().toString().equals(UserHolder.getSeller().getBankAccount().getIban()) ||
-                !ivaEditText.getText().toString().equals(UserHolder.getSeller().getBankAccount().getIva());
     }
 }

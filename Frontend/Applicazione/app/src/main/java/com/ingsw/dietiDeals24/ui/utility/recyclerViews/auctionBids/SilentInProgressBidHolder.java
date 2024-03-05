@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +36,15 @@ public class SilentInProgressBidHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(SilentBid silentBid) {
-        profileButton.setText(silentBid.getBuyer().getName());
         priceTextView.setText(NumberFormatter.formatPrice(silentBid.getMoneyAmount()));
         withdrawalTimeTextView.setText(MyAuctionDetailsController.getRemainingWithdrawalTimeText(silentBid));
+        profileButton.setText(silentBid.getBuyer().getName());
+        profileButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), AuctionDetailsActivity.class);
+            intent.putExtra("otherUser", silentBid.getBuyer());
+            v.getContext().startActivity(intent);
+        });
+
         acceptButton.setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
                 .setTitle("Conferma")
                 .setMessage("Sei sicuro di voler accettare?")

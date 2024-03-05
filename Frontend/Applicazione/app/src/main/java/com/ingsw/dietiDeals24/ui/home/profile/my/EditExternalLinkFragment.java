@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.profile;
+package com.ingsw.dietiDeals24.ui.home.profile.my;
 
 import static java.lang.Thread.sleep;
 
@@ -17,13 +17,12 @@ import androidx.annotation.NonNull;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
-import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
 
-public class AddExternalLinkFragment extends FragmentOfHomeActivity {
+public class EditExternalLinkFragment extends FragmentOfHomeActivity {
     private TextView titleScreen;
     private EditText titleEditText;
     private EditText urlEditText;
@@ -66,14 +65,18 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
         doneButton = view.findViewById(R.id.done_button_edit_external_link);
         progressBar = view.findViewById(R.id.progress_bar_edit_external_link);
 
-        doneButton.setEnabled(false);
-        doneButton.setColorFilter(getResources().getColor(R.color.gray, null));
-        titleScreen.setText(R.string.add_external_link_phrase);
+        initEditTexts();
+        titleScreen.setText(R.string.edit_external_link_phrase);
         titleEditText.addTextChangedListener(externalLinkTextWatcher);
         urlEditText.addTextChangedListener(externalLinkTextWatcher);
         observeExternalLinkFormState();
 
         doneButton.setOnClickListener(v -> onDoneButtonClick());
+    }
+
+    private void initEditTexts() {
+        titleEditText.setText(ProfileController.getSelectedLink().getTitle());
+        urlEditText.setText(ProfileController.getSelectedLink().getUrl());
     }
 
     private void observeExternalLinkFormState() {
@@ -102,15 +105,15 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
         progressBar.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
-                ProfileController.addLink(
-                        titleEditText.getText().toString(),
-                        urlEditText.getText().toString()
-                ).get();
-                sleep(500);
-                requireActivity().runOnUiThread(() -> {
-                    ToastManager.showToast(getContext(), R.string.link_added);
-                    goToEditExternalLinksFragment();
-                });
+                if(isExternalLinkChanged()) {
+                    ProfileController.updateLink(
+                            titleEditText.getText().toString(),
+                            urlEditText.getText().toString()
+                    ).get();
+                    sleep(500);
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.external_link_updated));
+                }
+                requireActivity().runOnUiThread(this::goToEditExternalLinksFragment);
             } catch (InterruptedException e) {
                 requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
             } catch (ExecutionException e) {
@@ -124,5 +127,10 @@ public class AddExternalLinkFragment extends FragmentOfHomeActivity {
     private void goToEditExternalLinksFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new EditExternalLinksFragment()).commit();
+    }
+
+    private boolean isExternalLinkChanged() {
+        return !titleEditText.getText().toString().equals(ProfileController.getSelectedLink().getTitle()) ||
+                !urlEditText.getText().toString().equals(ProfileController.getSelectedLink().getUrl());
     }
 }

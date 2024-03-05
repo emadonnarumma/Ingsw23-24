@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.profile;
+package com.ingsw.dietiDeals24.ui.home.profile.my;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;

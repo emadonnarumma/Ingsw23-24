@@ -2,6 +2,7 @@ package com.ingsw.backend.enumeration;
 
 public enum Region {
 
+	NOT_SPECIFIED,
 	CAMPANIA,
     LAZIO,
     LOMBARDIA,

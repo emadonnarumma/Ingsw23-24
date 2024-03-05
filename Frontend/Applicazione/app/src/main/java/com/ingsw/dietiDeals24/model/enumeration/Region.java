@@ -1,6 +1,8 @@
 package com.ingsw.dietiDeals24.model.enumeration;
 
 public enum Region {
+
+    NOT_SPECIFIED,
     CAMPANIA,
     LAZIO,
     LOMBARDIA,
@@ -86,7 +88,7 @@ public enum Region {
                 return "Liguria";
 
             default:
-                return null;
+                return "Non specificato";
         }
     }
 
@@ -153,7 +155,7 @@ public enum Region {
                 return LIGURIA;
 
             default:
-                return null;
+                return NOT_SPECIFIED;
         }
     }
 }

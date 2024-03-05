@@ -69,7 +69,7 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
 
         specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
 
-        specificInformation3TextView.setText(SearchAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
+        specificInformation2TextView.setText(SearchAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
 
         specificInformation4TextView.setVisibility(View.GONE);
 

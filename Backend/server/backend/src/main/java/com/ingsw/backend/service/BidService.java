@@ -6,32 +6,27 @@ import com.ingsw.backend.model.*;
 
 public interface BidService {
 
-	public List<SilentBid> getAllSilentBidsByBuyer(Buyer buyer);
-	
-	public List<ReverseBid> getAllReverseBidsBySeller(Seller seller);
-	
-	public List<SilentBid> getAllSilentBidsBySilentAuction(SilentAuction auction);
+	List<SilentBid> getAllSilentBidsByBuyer(Buyer buyer);
+	List<ReverseBid> getAllReverseBidsBySeller(Seller seller);
 
-	public ReverseBid getMinReverseBidByReverseAuctionId(Integer id);
-
-	public SilentBid addSilentBid(SilentBid silentBid);
-	
-	public ReverseBid addReverseBid(ReverseBid reverseBid);
-
-	public DownwardBid makeDownwardAuctionPayment(DownwardBid downwardBid);
-	
-	public Boolean delete(Integer id);
-	
-	public Boolean acceptSilentBid(Integer id);
-	
-	public Boolean declineSilentBid(Integer id);
-	
-	
-	public Boolean isSilentBidWithdrawable(Integer id);
-
-    SilentBid getWinningSilentBidByAuctionId(Integer auctionId);
+	List<SilentBid> getAllSilentBidsBySilentAuction(SilentAuction auction);
+	List<SilentBid> getInProgressSilentBidsByAuctionId(Integer auctionId);
+	List<ReverseBid> getInProgressReverseBidsByAuctionId(Integer auctionId);
+	ReverseBid getMinReverseBidByReverseAuctionId(Integer id);
 
 	ReverseBid getWinningReverseBidByAuctionId(Integer auctionId);
-
+	SilentBid getWinningSilentBidByAuctionId(Integer auctionId);
 	DownwardBid getWinningDownwardBidByAuctionId(Integer auctionId);
+
+	Boolean acceptSilentBid(Integer id);
+	Boolean declineSilentBid(Integer id);
+
+	SilentBid addSilentBid(SilentBid silentBid);
+	ReverseBid addReverseBid(ReverseBid reverseBid);
+
+	Boolean delete(Integer id);
+
+	DownwardBid makeDownwardAuctionPayment(DownwardBid downwardBid);
+
+	Boolean isSilentBidWithdrawable(Integer id);
 }

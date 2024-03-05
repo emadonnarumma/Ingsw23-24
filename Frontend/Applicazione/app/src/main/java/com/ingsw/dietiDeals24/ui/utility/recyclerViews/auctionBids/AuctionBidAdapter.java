@@ -33,6 +33,9 @@ public class AuctionBidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.auctionDetailsActivity = activity;
     }
 
+    public List<? extends Bid> getBids() {
+        return bids;
+    }
 
     @Override
     public int getItemViewType(int position) {

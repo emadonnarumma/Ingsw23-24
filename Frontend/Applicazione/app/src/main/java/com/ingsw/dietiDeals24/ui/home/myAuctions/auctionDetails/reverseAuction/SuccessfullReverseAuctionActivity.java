@@ -54,8 +54,10 @@ public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
         priceTextView.setText("Prezzo iniziale: " + auction.getStartingPrice() + "€");
-        specificInformation1TextView.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
+        specificInformation1TextView.setText("Scadeva il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
         specificInformation2TextView.setVisibility(View.GONE);
+        specificInformation3TextView.setVisibility(View.GONE);
+        specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }
 
@@ -69,9 +71,7 @@ public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
         greenButton.setOnClickListener(v -> {
 
             new Thread(() -> {
-                runOnUiThread(() -> {
-                    progressBar.setVisibility(View.VISIBLE);
-                });
+                runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
                 try {
                     List<ReverseBid> bids = List.of(MyAuctionDetailsController.getWinningReverseBidByAuctionId(auction.getIdAuction()).get());
                     runOnUiThread(() -> {

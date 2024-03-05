@@ -72,11 +72,9 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
         greenButton.setOnClickListener(v -> {
 
             new Thread(() -> {
-                runOnUiThread(() -> {
-                    progressBar.setVisibility(View.VISIBLE);
-                });
+                runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
                 try {
-                    List<SilentBid> bids = MyAuctionDetailsController.getAllSilentBidsByAuctionId(auction.getIdAuction()).get();
+                    List<SilentBid> bids = MyAuctionDetailsController.getInProgressSilentBidsByAuctionId(auction.getIdAuction()).get();
                     runOnUiThread(() -> {
                         if (bids.isEmpty()) {
                             progressBar.setVisibility(View.GONE);
@@ -94,8 +92,10 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
                         }
                     });
                 } catch (ExecutionException e) {
-                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), e.getCause().getMessage()));
-                    progressBar.setVisibility(View.GONE);
+                    runOnUiThread(() -> {
+                        ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
+                        progressBar.setVisibility(View.GONE);
+                    });
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

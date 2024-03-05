@@ -91,13 +91,13 @@ public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
 
                         try {
                             MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
+                            onNavigateToHomeActivityFragmentRequest("DownwardAuctionAttributesFragment", getApplicationContext());
                         } catch (ExecutionException e) {
                             ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
 
-                        onNavigateToHomeActivityFragmentRequest("DownwardAuctionAttributesFragment", getApplicationContext());
                     })
                     .setNegativeButton("No", null)
                     .show();

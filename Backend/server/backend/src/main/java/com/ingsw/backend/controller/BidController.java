@@ -55,6 +55,15 @@ public class BidController {
 	public ResponseEntity<ReverseBid> getWinningReverseBidByAuctionId(@PathVariable Integer auctionId) {
 		return ResponseEntity.ok(bidService.getWinningReverseBidByAuctionId(auctionId));
 	}
+
+	@GetMapping("/silent/inProgress/{auctionId}")
+	public ResponseEntity<List<SilentBid>> getInProgressSilentBidsByAuctionId(@PathVariable Integer auctionId) {
+		List<SilentBid> bids = bidService.getInProgressSilentBidsByAuctionId(auctionId);
+		if (bids.isEmpty()) {
+			return new ResponseEntity<>(bids, HttpStatus.OK);
+		}
+		return ResponseEntity.ok(bids);
+	}
 	
 	@GetMapping("/silent/buyer/{buyerEmail}")
     public ResponseEntity<List<SilentBid>> getAllSilentBidsByBuyer(@PathVariable String buyerEmail) {

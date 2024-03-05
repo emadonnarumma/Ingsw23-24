@@ -55,8 +55,11 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
         priceTextView.setText("Prezzo iniziale: " + auction.getStartingPrice() + "€");
+
         specificInformation1TextView.setText("Scade il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
         specificInformation2TextView.setVisibility(View.GONE);
+        specificInformation3TextView.setVisibility(View.GONE);
+        specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }
 

@@ -112,21 +112,22 @@ public class HomeActivity extends AppCompatActivity {
     private void checkRequestToOpenAFragmentFromAnOtherActivity() {
         String fragmentToOpen = getIntent().getStringExtra("openFragment");
         if ("MyAuctionFragment".equals(fragmentToOpen)) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_home, new MyAuctionFragment())
-                    .commit();
+            navigationBarView.setSelectedItemId(R.id.navigation_my_auctions);
 
         } else if ("SilentAuctionAttributesFragment".equals(fragmentToOpen)) {
+            navigationBarView.setSelectedItemId(R.id.navigation_create_auction);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_home, new SilentAuctionAttributesFragment())
                     .commit();
 
         } else if ("DownwardAuctionAttributesFragment".equals(fragmentToOpen)) {
+            navigationBarView.setSelectedItemId(R.id.navigation_create_auction);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_home, new DownwardAuctionAttributesFragment())
                     .commit();
 
         } else if ("ReverseAuctionAttributesFragment".equals(fragmentToOpen)) {
+            navigationBarView.setSelectedItemId(R.id.navigation_create_auction);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_home, new ReverseAuctionAttributesFragment())
                     .commit();

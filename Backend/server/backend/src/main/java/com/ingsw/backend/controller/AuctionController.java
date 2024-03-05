@@ -50,7 +50,7 @@ public class AuctionController {
     public ResponseEntity<List<SilentAuction>> getAllSilentAuctions() {
         return ResponseEntity.ok(auctionService.getAllSilentAuctions());
     }
-	
+
 	@GetMapping("/reverse")
     public ResponseEntity<List<ReverseAuction>> getAllReverseAuctions() {
         return ResponseEntity.ok(auctionService.getAllReverseAuctions());

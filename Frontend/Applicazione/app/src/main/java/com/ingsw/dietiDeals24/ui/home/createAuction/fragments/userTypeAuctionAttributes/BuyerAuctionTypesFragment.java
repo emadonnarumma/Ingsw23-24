@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.ReverseAuctionAttributesFragment;
@@ -17,6 +19,8 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAtt
 public class BuyerAuctionTypesFragment extends FragmentOfHomeActivity {
 
     private ImageView reverseAuctionButton;
+    private ImageView questionMarkReverseAuction;
+    private BottomSheetDialog bottomSheetReverseAuctionDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +39,9 @@ public class BuyerAuctionTypesFragment extends FragmentOfHomeActivity {
         setBackButtonEnabled(true);
 
         setupReverseButton(view);
+
+        setupBottomSheetDialogs();
+        setupQuestionMarkReverseAuction(view);
     }
 
     private void setupReverseButton(@NonNull View view) {
@@ -46,4 +53,22 @@ public class BuyerAuctionTypesFragment extends FragmentOfHomeActivity {
                     .commit();
         });
     }
+
+    private void setupBottomSheetDialogs() {
+        bottomSheetReverseAuctionDialog = new BottomSheetDialog(requireContext());
+        bottomSheetReverseAuctionDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        TextView questionMark = bottomSheetReverseAuctionDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        TextView questionMarkExplanation = bottomSheetReverseAuctionDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
+
+        questionMark.setText(R.string.reverse_auction_question);
+        questionMarkExplanation.setText(R.string.reverse_auction_description);
+    }
+
+    private void setupQuestionMarkReverseAuction(@NonNull View view) {
+        questionMarkReverseAuction = view.findViewById(R.id.question_mark_buyer_reverse_auction);
+
+        questionMarkReverseAuction.setOnClickListener(v -> bottomSheetReverseAuctionDialog.show());
+    }
 }
+

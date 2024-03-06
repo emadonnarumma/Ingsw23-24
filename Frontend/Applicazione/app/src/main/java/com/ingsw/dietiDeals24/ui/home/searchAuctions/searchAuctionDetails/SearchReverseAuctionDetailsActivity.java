@@ -28,6 +28,7 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
         auction = (ReverseAuction) SearchAuctionDetailsController.getAuction();
 
         setupOwnerButton();
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -97,5 +98,11 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
             intent.putExtra("otherUser", auction.getOwner());
             v.getContext().startActivity(intent);
         });
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.reverse_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.reverse_auction_description);
     }
 }

@@ -30,6 +30,7 @@ public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActi
         auction = (SilentAuction) SearchAuctionDetailsController.getAuction();
 
         setupOwnerButton();
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -102,5 +103,11 @@ public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActi
             intent.putExtra("otherUser", auction.getOwner());
             v.getContext().startActivity(intent);
         });
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.silent_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.silent_auction_description);
     }
 }

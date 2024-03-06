@@ -31,6 +31,8 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auction = (SilentAuction) MyAuctionDetailsController.getAuction();
+
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -119,5 +121,11 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
                     .setNegativeButton("No", null)
                     .show();
         });
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.silent_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.silent_auction_description);
     }
 }

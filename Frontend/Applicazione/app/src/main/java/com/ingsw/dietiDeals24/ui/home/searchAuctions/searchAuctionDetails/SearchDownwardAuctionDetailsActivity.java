@@ -36,6 +36,7 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
         auction = (DownwardAuction) SearchAuctionDetailsController.getAuction();
 
         setupOwnerButton();
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -108,5 +109,11 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
             intent.putExtra("otherUser", auction.getOwner());
             v.getContext().startActivity(intent);
         });
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.downward_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.downward_auction_description);
     }
 }

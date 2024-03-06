@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.model;
 
+import java.io.Serializable;
+
 public class ExternalLink {
 
     private Integer id;

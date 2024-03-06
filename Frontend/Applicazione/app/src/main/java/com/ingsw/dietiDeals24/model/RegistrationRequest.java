@@ -13,7 +13,7 @@ public class RegistrationRequest {
 
 
     public RegistrationRequest(String name, String email, String password, String bio, Region region) {
-        this.role = Role.BUYER;
+        this.role = Role.SELLER;
         this.email = email;
         this.password = password;
         this.name = name;

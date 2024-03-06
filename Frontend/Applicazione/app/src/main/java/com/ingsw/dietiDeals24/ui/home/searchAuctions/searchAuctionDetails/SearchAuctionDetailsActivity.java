@@ -12,10 +12,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
@@ -25,14 +23,12 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
-import jp.hamcheesedev.outlinedtextview.CompatOutlinedTextView;
-
 public abstract class SearchAuctionDetailsActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
 
     protected ScrollView scrollView;
     protected Button greenButton;
     protected ImageButton questionMarkButton;
-
+    protected CircularProgressButton ownerButton;
 
 
     protected TextView auctionTypeTextView, categoryTextView,
@@ -82,6 +78,7 @@ public abstract class SearchAuctionDetailsActivity extends AppCompatActivity imp
     private void setupButtons() {
         questionMarkButton = findViewById(R.id.question_mark_button_search_auction_details);
         greenButton = findViewById(R.id.search_green_button);
+        ownerButton = findViewById(R.id.auction_owner_button_search_auction_details);
     }
 
     private void setupTextViews() {

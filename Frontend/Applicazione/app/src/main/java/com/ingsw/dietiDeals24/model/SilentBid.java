@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 public class SilentBid extends Bid {
 
+    private final String type =  "SILENT";
     private Buyer buyer;
     private SilentAuction silentAuction;
 

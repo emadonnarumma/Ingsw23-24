@@ -39,6 +39,9 @@ public interface AuctionService {
 	public List<SilentAuction> getSilentAuctionsByOwnerEmail(String email);
 	public List<DownwardAuction> getDownwardAuctionsByOwnerEmail(String email);
 
+	public List<ReverseAuction> getInProgressReverseAuctionsByOwnerEmail(String email);
+	public List<SilentAuction> getInProgressSilentAuctionsByOwnerEmail(String email);
+	public List<DownwardAuction> getInProgressDownwardAuctionsByOwnerEmail(String email);
 
 	public Long getRemainingSecondsForAuction(Integer auctionId);
 

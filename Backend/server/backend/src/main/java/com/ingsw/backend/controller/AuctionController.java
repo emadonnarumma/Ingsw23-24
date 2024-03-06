@@ -40,7 +40,6 @@ public class AuctionController {
     @Qualifier("mainImageService")
     private ImageService imageService;
 	
-	
 	@GetMapping
     public ResponseEntity<List<Auction>> getAllAuctions() {
         return ResponseEntity.ok(auctionService.getAllAuctions());
@@ -188,6 +187,21 @@ public class AuctionController {
     @GetMapping("/{email}/getReverseAuctions")
     public ResponseEntity<List<ReverseAuction>> getReverseAuctionsByOwnerEmail(@PathVariable String email) {
         return ResponseEntity.ok(auctionService.getReverseAuctionsByOwnerEmail(email));
+    }
+
+    @GetMapping("/{email}/getInProgressSilentAuctions")
+    public ResponseEntity<List<SilentAuction>> getInProgressAuctionsByOwnerEmail(@PathVariable String email) {
+        return ResponseEntity.ok(auctionService.getInProgressSilentAuctionsByOwnerEmail(email));
+    }
+
+    @GetMapping("/{email}/getInProgressDownwardAuctions")
+    public ResponseEntity<List<DownwardAuction>> getInProgressDownwardAuctionsByOwnerEmail(@PathVariable String email) {
+        return ResponseEntity.ok(auctionService.getInProgressDownwardAuctionsByOwnerEmail(email));
+    }
+
+    @GetMapping("/{email}/getInProgressReverseAuctions")
+    public ResponseEntity<List<ReverseAuction>> getInProgressReverseAuctionsByOwnerEmail(@PathVariable String email) {
+        return ResponseEntity.ok(auctionService.getInProgressReverseAuctionsByOwnerEmail(email));
     }
 }
 

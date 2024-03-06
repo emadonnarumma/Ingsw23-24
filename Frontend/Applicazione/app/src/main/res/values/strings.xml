@@ -87,6 +87,8 @@
     <string name="reverse_auction_description">In questo tipo di asta, il compratore specifica il prodotto/servizio richiesto, un prezzo iniziale che è disposto a pagare, e una data di scadenza. I venditori in grado di fornire quel particolare prodotto/servizio possono quindi partecipare all’asta competendo abbassando il prezzo. In particolare, fino al momento della scadenza dell’asta, i venditori possono presentare offerte al ribasso. Al momento della scadenza dell’asta, il venditore con l’offerta più bassa si aggiudica la fornitura del prodotto/servizio.</string>
     <string name="downward_auction_description">Un’asta al ribasso è caratterizzata da un prezzo iniziale specificato dal venditore, da un timer per il decremento del prezzo, da un importo, in €, per ciascun decremento, e da un prezzo minimo (segreto) a cui vendere il prodotto/servizio. Il prodotto/servizio sarà in vendita al prezzo iniziale stabilito dal venditore. Al raggiungimento del timer, il prezzo verrà decrementato dell’importo previsto. Il primo compratore a presentare un’offerta si aggiudica il prodotto/servizio. Se il prezzo viene decrementato fino a raggiungere il prezzo minimo segreto, l’asta viene considerata fallita.</string>
     <string name="silent_auction_description">In questo tipo di asta, il venditore specifica una data di scadenza e i compratori possono inviare offerte segrete al venditore. Il venditore può scegliere se accettare o rifiutare le offerte ricevute. Una sola offerta può essere accettata per ogni asta.</string>
+    <string name="make_silent_bid_phrase">Fai la tua offerta</string>
+    <string name="send_phrase">Invia</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

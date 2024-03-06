@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
@@ -136,7 +137,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
 
 
     private void startSellerAnimation() {
-        sellerSwitchTextView.setTextColor(getResources().getColor(R.color.green));
+        sellerSwitchTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
 
         // Load the animation from the XML file
         Animation animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.switch_button_on);

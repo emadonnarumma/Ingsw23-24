@@ -1,7 +1,6 @@
 package com.ingsw.dietiDeals24.controller;
 
 
-
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
@@ -20,7 +19,6 @@ import java.util.concurrent.CompletableFuture;
 import retrofit2.Response;
 
 public class SearchAuctionsController implements RetroFitHolder {
-
 
 
     private static List<SilentAuction> silentAuctions = new ArrayList<>();
@@ -315,7 +313,7 @@ public class SearchAuctionsController implements RetroFitHolder {
 
             try {
                 SearchAuctionsDao searchAuctionsDao = retrofit.create(SearchAuctionsDao.class);
-                Response<List<SilentAuction>> response = searchAuctionsDao.getAllSilentAuctionsByKeywordAndCategory(keyword, category,TokenHolder.getAuthToken()).execute();
+                Response<List<SilentAuction>> response = searchAuctionsDao.getAllSilentAuctionsByKeywordAndCategory(keyword, category, TokenHolder.getAuthToken()).execute();
                 List<SilentAuction> auctions = response.body();
 
                 for (SilentAuction auction : auctions) {
@@ -347,7 +345,7 @@ public class SearchAuctionsController implements RetroFitHolder {
 
             try {
                 SearchAuctionsDao searchAuctionsDao = retrofit.create(SearchAuctionsDao.class);
-                Response<List<ReverseAuction>> response = searchAuctionsDao.getAllReverseAuctionsByKeywordAndCategory(keyword, category,TokenHolder.getAuthToken()).execute();
+                Response<List<ReverseAuction>> response = searchAuctionsDao.getAllReverseAuctionsByKeywordAndCategory(keyword, category, TokenHolder.getAuthToken()).execute();
                 List<ReverseAuction> auctions = response.body();
 
                 for (ReverseAuction auction : auctions) {
@@ -378,7 +376,7 @@ public class SearchAuctionsController implements RetroFitHolder {
 
             try {
                 SearchAuctionsDao searchAuctionsDao = retrofit.create(SearchAuctionsDao.class);
-                Response<List<DownwardAuction>> response = searchAuctionsDao.getAllDownwardAuctionsByKeywordAndCategory(keyword, category,TokenHolder.getAuthToken()).execute();
+                Response<List<DownwardAuction>> response = searchAuctionsDao.getAllDownwardAuctionsByKeywordAndCategory(keyword, category, TokenHolder.getAuthToken()).execute();
                 List<DownwardAuction> auctions = response.body();
 
                 for (DownwardAuction auction : auctions) {
@@ -401,6 +399,69 @@ public class SearchAuctionsController implements RetroFitHolder {
             }
             return new ArrayList<>();
 
+        });
+    }
+
+    public static CompletableFuture<List<ReverseAuction>> getInProgressOtherUserReverseAuctions(String email) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            try {
+                SearchAuctionsDao searchAuctionsDao = retrofit.create(SearchAuctionsDao.class);
+                Response<List<ReverseAuction>> response = searchAuctionsDao.getInProgressOtherUserReverseAuctions(email, TokenHolder.getAuthToken()).execute();
+                List<ReverseAuction> auctions = response.body();
+
+                if (response.isSuccessful() && auctions != null) {
+                    return auctions;
+                } else if (response.code() == 403 || auctions == null) {
+                    return new ArrayList<>();
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return new ArrayList<>();
+        });
+    }
+
+    public static CompletableFuture<List<SilentAuction>> getInProgressOtherUserSilentAuctions(String email) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            try {
+                SearchAuctionsDao searchAuctionsDao = retrofit.create(SearchAuctionsDao.class);
+                Response<List<SilentAuction>> response = searchAuctionsDao.getInProgressOtherUserSilentAuctions(email, TokenHolder.getAuthToken()).execute();
+                List<SilentAuction> auctions = response.body();
+
+                if (response.isSuccessful() && auctions != null) {
+                    return auctions;
+                } else if (response.code() == 403 || auctions == null) {
+                    return new ArrayList<>();
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return new ArrayList<>();
+        });
+    }
+
+    public static CompletableFuture<List<DownwardAuction>> getInProgressOtherUserDownwardAuctions(String email) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            try {
+                SearchAuctionsDao searchAuctionsDao = retrofit.create(SearchAuctionsDao.class);
+                Response<List<DownwardAuction>> response = searchAuctionsDao.getInProgressOtherUserDownwardAuctions(email, TokenHolder.getAuthToken()).execute();
+                List<DownwardAuction> auctions = response.body();
+
+                if (response.isSuccessful() && auctions != null) {
+                    return auctions;
+                } else if (response.code() == 403 || auctions == null) {
+                    return new ArrayList<>();
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return new ArrayList<>();
         });
     }
 }

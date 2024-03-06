@@ -142,4 +142,11 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.dismiss();
+        }
+    }
 }

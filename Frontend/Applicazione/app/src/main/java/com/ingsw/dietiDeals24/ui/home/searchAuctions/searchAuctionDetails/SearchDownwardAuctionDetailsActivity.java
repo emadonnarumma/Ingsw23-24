@@ -1,26 +1,26 @@
 package com.ingsw.dietiDeals24.ui.home.searchAuctions.searchAuctionDetails;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
+import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
+import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.MakeSilentBidActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsActivity {
-
     private DownwardAuction auction;
-
-    private CircularProgressButton ownerButton;
-
     private Handler handler = new Handler();
     private Runnable updateRemainingTimeRunnable = new Runnable() {
         @Override
@@ -79,12 +79,34 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
 
     private void setGreenButton() {
         greenButton.setText("COMPRA ORA A: " + auction.getCurrentPrice() + "€");
-
-        //TODO: Implement the onClickListener for the greenButton
+        greenButton.setOnClickListener(v -> {
+            if (!UserHolder.isUserBuyer()) {
+                if (UserHolder.getSeller().equals(auction.getOwner())) {
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle("Attenzione")
+                            .setMessage("Non comprare il tuo stesso annuncio!")
+                            .setPositiveButton("OK", null)
+                            .show();
+                } else {
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle("Attenzione")
+                            .setMessage("Devi essere un compratore per comprare!")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }
+            } else {
+                //TODO implemetare l'acquisto di un asta al ribasso
+            }
+        });
     }
 
     private void setupOwnerButton() {
         ownerButton = findViewById(R.id.auction_owner_button_search_auction_details);
         ownerButton.setText("Annuncio di: " + auction.getOwner().getName());
+        ownerButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), OtherUserProfileActivity.class);
+            intent.putExtra("otherUser", auction.getOwner());
+            v.getContext().startActivity(intent);
+        });
     }
 }

@@ -33,8 +33,6 @@ public abstract class SearchAuctionDetailsActivity extends AppCompatActivity imp
     protected Button greenButton;
     protected ImageButton questionMarkButton;
 
-
-
     protected TextView auctionTypeTextView, categoryTextView,
             titleTextView, wearTextView,
             descriptionTextView, priceTextView,
@@ -46,11 +44,15 @@ public abstract class SearchAuctionDetailsActivity extends AppCompatActivity imp
 
     protected ProgressBar progressBar;
 
+    protected BottomSheetDialog bottomSheetQuestionMarkDialog;
+    protected TextView questionMarkAuctionType, questionMarkExplanationAuctionType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_auction_details);
 
+        setupBottomSheetDialog();
         setupProgressBar();
         setupActionBar();
         setupSliderView();
@@ -81,7 +83,18 @@ public abstract class SearchAuctionDetailsActivity extends AppCompatActivity imp
 
     private void setupButtons() {
         questionMarkButton = findViewById(R.id.question_mark_button_search_auction_details);
+
+        questionMarkButton.setOnClickListener(v -> bottomSheetQuestionMarkDialog.show());
+
         greenButton = findViewById(R.id.search_green_button);
+    }
+
+    private void setupBottomSheetDialog() {
+        bottomSheetQuestionMarkDialog = new BottomSheetDialog(this);
+        bottomSheetQuestionMarkDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        questionMarkAuctionType = bottomSheetQuestionMarkDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        questionMarkExplanationAuctionType = bottomSheetQuestionMarkDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
     }
 
     private void setupTextViews() {

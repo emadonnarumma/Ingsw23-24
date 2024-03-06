@@ -40,6 +40,8 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auction = (DownwardAuction) MyAuctionDetailsController.getAuction();
+
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -107,5 +109,11 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
                     .setNegativeButton("No", null)
                     .show();
         });
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.downward_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.downward_auction_description);
     }
 }

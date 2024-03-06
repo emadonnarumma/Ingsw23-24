@@ -5,16 +5,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.ImageController;
@@ -44,6 +47,8 @@ import java.util.concurrent.ExecutionException;
 
 public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity implements DatePickerDialog.OnDateSetListener {
 
+    private ImageView questionMark;
+    private BottomSheetDialog bottomSheetDialog;
     private TextView dateTextView, withdrawalTimeTextView;
     private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
 
@@ -68,11 +73,29 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         setupWheelViewStyle();
     }
 
+    private void setupBottomSheetDialog() {
+        bottomSheetDialog = new BottomSheetDialog(requireContext());
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        TextView questionMark = bottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        TextView questionMarkExplanation = bottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
+
+        questionMark.setText(R.string.withdrawal_time_question);
+        questionMarkExplanation.setText(R.string.withdrawal_time_explanation);
+    }
+
+    private void setupQuestionMark(@NonNull View view){
+
+        questionMark = view.findViewById(R.id.withdrawal_time_question_mark);
+
+        questionMark.setOnClickListener(v -> bottomSheetDialog.show());
+    }
+
     private void setupWheelViewStyle() {
         wheelViewStyle = new WheelView.WheelViewStyle();
-        wheelViewStyle.selectedTextColor = getResources().getColor(R.color.blue);
-        wheelViewStyle.textColor = getResources().getColor(R.color.gray);
-        wheelViewStyle.backgroundColor = getResources().getColor(R.color.white);
+        wheelViewStyle.selectedTextColor = ContextCompat.getColor(requireContext(), R.color.blue);
+        wheelViewStyle.textColor = ContextCompat.getColor(requireContext(), R.color.gray);
+        wheelViewStyle.backgroundColor = ContextCompat.getColor(requireContext(), R.color.white);
         wheelViewStyle.selectedTextSize = 20;
     }
 
@@ -111,6 +134,9 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         setupWheelViews(view);
         setupWithdrawalTimeTextView(view);
         setupCreateAuctionButton(view);
+
+        setupBottomSheetDialog();
+        setupQuestionMark(view);
     }
 
     private void setupWheelViews(View view) {

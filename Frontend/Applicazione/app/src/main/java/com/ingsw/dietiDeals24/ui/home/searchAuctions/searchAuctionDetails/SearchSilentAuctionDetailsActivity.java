@@ -26,6 +26,7 @@ public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActi
         auction = (SilentAuction) SearchAuctionDetailsController.getAuction();
 
         setupOwnerButton();
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -76,5 +77,11 @@ public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActi
     private void setupOwnerButton() {
         ownerButton = findViewById(R.id.auction_owner_button_search_auction_details);
         ownerButton.setText("Annuncio di: " + auction.getOwner().getName());
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.silent_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.silent_auction_description);
     }
 }

@@ -26,6 +26,7 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
         auction = (ReverseAuction) SearchAuctionDetailsController.getAuction();
 
         setupOwnerButton();
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -71,5 +72,11 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
     private void setupOwnerButton() {
         ownerButton = findViewById(R.id.auction_owner_button_search_auction_details);
         ownerButton.setText("Annuncio di: " + auction.getOwner().getName());
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.reverse_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.reverse_auction_description);
     }
 }

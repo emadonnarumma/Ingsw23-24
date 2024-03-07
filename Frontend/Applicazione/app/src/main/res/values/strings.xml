@@ -85,9 +85,34 @@
     <string name="expiration_date_hint_phrase">Scade il:</string>
     <string name="buy_now_hint_phrase">Compra ora a:</string>
 
+    <string name="reverse_auction_question">Che cos’è un\'asta inversa?</string>
     <string name="reverse_auction_description">In questo tipo di asta, il compratore specifica il prodotto/servizio richiesto, un prezzo iniziale che è disposto a pagare, e una data di scadenza. I venditori in grado di fornire quel particolare prodotto/servizio possono quindi partecipare all’asta competendo abbassando il prezzo. In particolare, fino al momento della scadenza dell’asta, i venditori possono presentare offerte al ribasso. Al momento della scadenza dell’asta, il venditore con l’offerta più bassa si aggiudica la fornitura del prodotto/servizio.</string>
+
+    <string name="downward_auction_question">Che cos’è un\'asta al ribasso?</string>
     <string name="downward_auction_description">Un’asta al ribasso è caratterizzata da un prezzo iniziale specificato dal venditore, da un timer per il decremento del prezzo, da un importo, in €, per ciascun decremento, e da un prezzo minimo (segreto) a cui vendere il prodotto/servizio. Il prodotto/servizio sarà in vendita al prezzo iniziale stabilito dal venditore. Al raggiungimento del timer, il prezzo verrà decrementato dell’importo previsto. Il primo compratore a presentare un’offerta si aggiudica il prodotto/servizio. Se il prezzo viene decrementato fino a raggiungere il prezzo minimo segreto, l’asta viene considerata fallita.</string>
+
+    <string name="silent_auction_question">Che cos’è un\'asta silenziosa?</string>
     <string name="silent_auction_description">In questo tipo di asta, il venditore specifica una data di scadenza e i compratori possono inviare offerte segrete al venditore. Il venditore può scegliere se accettare o rifiutare le offerte ricevute. Una sola offerta può essere accettata per ogni asta.</string>
+    <string name="make_silent_bid_phrase">Fai la tua offerta</string>
+    <string name="send_phrase">Invia</string>
+
+    <string name="cvv_question">Cos’ è il codice CVV?</string>
+    <string name="cvv_explanation">L’acronimo CVV sta per Card Validation (o Verification) Value e costituisce un codice di verifica della vostra carta di credito, utilizzato per garantire un ulteriore livello di sicurezza, importante in particolar modo nel caso di acquisti o altri pagamenti effettuati online. <b> È costituito da 3 cifre che si trovano sul retro della carta</b></string>
+
+    <string name="downward_initial_price_question">Come scegliere il prezzo iniziale?</string>
+    <string name="downward_initial_price_explanation">L’asta partirà con un prezzo iniziale al quale i compratori potranno comprare il bene/servizio</string>
+
+    <string name="decrement_amount_question">Come scegliere l’importo del decremento?</string>
+    <string name="decrement_amount_explanation">Allo scoccare del timer il prezzo verrà decrementato dell’importo che inserisci. L’importo del decremento non può essere maggiore del 15% del prezzo iniziale</string>
+    
+    <string name="minimum_price_question">Come scegliere il prezzo minimo?</string>
+    <string name="minimum_price_explanation">Se dopo un certo numero di decrementi il prezzo dell’asta arriva al prezzo minimo, l’asta verrà considerata fallita. Il prezzo minimo è segreto, sceglilo con cura</string>
+
+    <string name="reverse_initial_price_question">Come scegliere il prezzo iniziale?</string>
+    <string name="reverse_initial_price_explanation">L’asta partirà con un prezzo iniziale che sei disposto a pagare per ottenere il bene/servizio. I venditori potranno competere per abbassare il prezzo</string>
+
+    <string name="withdrawal_time_question">Come scegliere il tempo massimo per ritirare l’offerta?</string>
+    <string name="withdrawal_time_explanation">I compratori che ti faranno le offerte avranno un lasso di tempo entro e non oltre il quale potranno ritirarle se non le accetti in tempo. Sceglilo con cura!</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

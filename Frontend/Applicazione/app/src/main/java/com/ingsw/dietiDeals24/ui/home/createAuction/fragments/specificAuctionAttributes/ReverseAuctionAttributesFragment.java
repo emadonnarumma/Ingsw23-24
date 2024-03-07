@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.ImageController;
@@ -43,6 +45,8 @@ import java.util.concurrent.ExecutionException;
 
 public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity implements DatePickerDialog.OnDateSetListener {
 
+    private TextInputLayout initialPriceTextInputLayout;
+    private BottomSheetDialog initialPriceBottomSheetDialog;
     private KeyboardFocusManager keyboardFocusManager;
 
     private EditText priceEditText;
@@ -77,6 +81,26 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
         setupDatePicker(view);
         setupKeyboardFocusManager(view);
         setupCreateAuctionButton(view);
+
+        setupBottomSheetDialogs();
+        setupTextInputLayout(view);
+    }
+
+
+    private void setupBottomSheetDialogs() {
+        initialPriceBottomSheetDialog = new BottomSheetDialog(requireContext());
+        initialPriceBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        TextView questionMark = initialPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        TextView questionMarkExplanation = initialPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
+
+        questionMark.setText(R.string.reverse_initial_price_question);
+        questionMarkExplanation.setText(R.string.reverse_initial_price_explanation);
+    }
+    private void setupTextInputLayout(View view) {
+
+        initialPriceTextInputLayout = view.findViewById(R.id.initial_price_layout_reverse_auction_attributes);
+        initialPriceTextInputLayout.setEndIconOnClickListener(v -> initialPriceBottomSheetDialog.show());
     }
 
     private void setupCreateAuctionButton(View view) {

@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.model;
 
 import android.net.Uri;
+import android.os.Parcelable;
 
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;

@@ -1,5 +1,6 @@
 package com.ingsw.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ingsw.backend.enumeration.BidStatus;
@@ -41,6 +42,7 @@ public abstract class Bid {
     @Enumerated(EnumType.STRING)
     private BidStatus status;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", locale = "it_IT", timezone = "Europe/Rome")
     @Column(nullable = false)
     private Timestamp timestamp;
 

@@ -15,45 +15,51 @@ import retrofit2.http.Path;
 
 public interface SearchAuctionsDao {
 
-    @GET("auction/silent")
-    public Call<List<SilentAuction>> getAllSilentAuctions(@Header("Authorization") String authToken);
-
     @GET("auction/silent/category/{category}")
-    public Call<List<SilentAuction>> getAllSilentAuctionsByCategory(@Path("category") Category category, @Header("Authorization") String authToken);
+    Call<List<SilentAuction>> getAllSilentAuctionsByCategory(@Path("category") Category category, @Header("Authorization") String authToken);
+
+    @GET("auction/silent")
+    Call<List<SilentAuction>> getAllSilentAuctions(@Header("Authorization") String authToken);
 
     @GET("auction/silent/search/{keyword}")
-    public Call<List<SilentAuction>> getAllSilentAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
+    Call<List<SilentAuction>> getAllSilentAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
 
     @GET("auction/silent/search/{keyword}/category/{category}")
-    public Call<List<SilentAuction>> getAllSilentAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
+    Call<List<SilentAuction>> getAllSilentAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
 
     @GET("auction/reverse")
-    public Call<List<ReverseAuction>> getAllReverseAuctions(@Header("Authorization") String authToken);
+    Call<List<ReverseAuction>> getAllReverseAuctions(@Header("Authorization") String authToken);
 
     @GET("auction/reverse/category/{category}")
-    public Call<List<ReverseAuction>> getAllReverseAuctionsByCategory(@Path("category") Category category, @Header("Authorization") String authToken);
+    Call<List<ReverseAuction>> getAllReverseAuctionsByCategory(@Path("category") Category category, @Header("Authorization") String authToken);
 
     @GET("auction/reverse/search/{keyword}")
-    public Call<List<ReverseAuction>> getAllReverseAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
+    Call<List<ReverseAuction>> getAllReverseAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
 
     @GET("auction/reverse/search/{keyword}/category/{category}")
-    public Call<List<ReverseAuction>> getAllReverseAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
-
+    Call<List<ReverseAuction>> getAllReverseAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
 
     @GET("auction/downward")
-    public Call<List<DownwardAuction>> getAllDownwardAuctions(@Header("Authorization") String authToken);
+    Call<List<DownwardAuction>> getAllDownwardAuctions(@Header("Authorization") String authToken);
 
     @GET("auction/downward/category/{category}")
-    public Call<List<DownwardAuction>> getAllDownwardAuctionsByCategory(@Path("category") Category category, @Header("Authorization") String authToken);
+    Call<List<DownwardAuction>> getAllDownwardAuctionsByCategory(@Path("category") Category category, @Header("Authorization") String authToken);
 
     @GET("auction/downward/search/{keyword}")
-    public Call<List<DownwardAuction>> getAllDownwardAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
+    Call<List<DownwardAuction>> getAllDownwardAuctionsByKeyword(@Path("keyword") String keyword, @Header("Authorization") String authToken);
 
     @GET("auction/downward/search/{keyword}/category/{category}")
-    public Call<List<DownwardAuction>> getAllDownwardAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
+    Call<List<DownwardAuction>> getAllDownwardAuctionsByKeywordAndCategory(@Path("keyword") String keyword, @Path("category") Category category, @Header("Authorization") String authToken);
 
+    @GET("auction/{email}/getInProgressReverseAuctions")
+    Call<List<ReverseAuction>> getInProgressOtherUserReverseAuctions(@Path("email") String email, @Header("Authorization") String authToken);
 
+    @GET("auction/{email}/getInProgressSilentAuctions")
+    Call<List<SilentAuction>> getInProgressOtherUserSilentAuctions(@Path("email") String email, @Header("Authorization") String authToken);
+
+    @GET("auction/{email}/getInProgressDownwardAuctions")
+    Call<List<DownwardAuction>> getInProgressOtherUserDownwardAuctions(@Path("email") String email, @Header("Authorization") String authToken);
 
     @GET("image/{auctionId}/getAllAuctionImages")
-    public Call<List<Image>> getAllAuctionImages(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);
+    Call<List<Image>> getAllAuctionImages(@Path("auctionId") Integer auctionId, @Header("Authorization") String authToken);
 }

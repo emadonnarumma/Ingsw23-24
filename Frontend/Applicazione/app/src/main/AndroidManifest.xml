@@ -104,6 +104,11 @@
             android:name=".ui.home.profile.other.OtherUserProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.home.searchAuctions.MakeSilentBidActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"

@@ -1,5 +1,7 @@
 package com.ingsw.dietiDeals24.model;
 
+import androidx.annotation.Nullable;
+
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 
@@ -111,5 +113,12 @@ public class User implements Serializable {
         return !externalLinks.isEmpty();
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof User))
+            return false;
 
+        User user = (User) obj;
+        return user.getEmail().equals(email);
+    }
 }

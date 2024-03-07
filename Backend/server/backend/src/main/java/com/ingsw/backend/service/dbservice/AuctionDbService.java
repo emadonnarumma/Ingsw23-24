@@ -142,6 +142,21 @@ public class AuctionDbService implements AuctionService {
 		return auctionRepository.findReverseByOwnerEmail(email);
 	}
 
+	@Override
+	public List<ReverseAuction> getInProgressReverseAuctionsByOwnerEmail(String email) {
+		return auctionRepository.findInProgressReverseByOwnerEmail(email);
+	}
+
+	@Override
+	public List<SilentAuction> getInProgressSilentAuctionsByOwnerEmail(String email) {
+		return auctionRepository.findInProgressSilentByOwnerEmail(email);
+	}
+
+	@Override
+	public List<DownwardAuction> getInProgressDownwardAuctionsByOwnerEmail(String email) {
+		return auctionRepository.findInProgressDownwardByOwnerEmail(email);
+	}
+
 	@Scheduled(fixedRate = 60000) //executed every minute
 	@Transactional
 	public void updateSilentAuctionsStatus() {

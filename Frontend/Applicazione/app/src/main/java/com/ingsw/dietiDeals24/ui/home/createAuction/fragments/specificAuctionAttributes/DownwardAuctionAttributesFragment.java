@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.ImageController;
@@ -45,6 +47,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
+
+    private TextInputLayout initialPriceTextInputLayout, minimumPriceTextInputLayout, decrementAmountTextInputLayout;
+    private BottomSheetDialog initialPriceBottomSheetDialog, minimumPriceBottomSheetDialog, decrementAmountBottomSheetDialog;
+
+
 
     private TextView decrementTimeTextView;
     private EditText initialPriceEditText, minimumPriceEditText, decrementAmountEditText;
@@ -119,8 +126,52 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         setupKeyboardFocusManager(view);
         setupDecrementTimeTextView(view);
         setupCreateAuctionButton(view);
+
+        setupBottomSheetDialogs();
+        setupTextInputLayout(view);
     }
 
+    private void setupBottomSheetDialogs() {
+        initialPriceBottomSheetDialog = new BottomSheetDialog(requireContext());
+        initialPriceBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        TextView questionMark = initialPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        TextView questionMarkExplanation = initialPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
+
+        questionMark.setText(R.string.downward_initial_price_question);
+        questionMarkExplanation.setText(R.string.downward_initial_price_explanation);
+
+        minimumPriceBottomSheetDialog = new BottomSheetDialog(requireContext());
+        minimumPriceBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        questionMark = minimumPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        questionMarkExplanation = minimumPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
+
+        questionMark.setText(R.string.minimum_price_question);
+        questionMarkExplanation.setText(R.string.minimum_price_explanation);
+
+        decrementAmountBottomSheetDialog = new BottomSheetDialog(requireContext());
+        decrementAmountBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        questionMark = decrementAmountBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        questionMarkExplanation = decrementAmountBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
+
+        questionMark.setText(R.string.decrement_amount_question);
+        questionMarkExplanation.setText(R.string.decrement_amount_explanation);
+    }
+
+    private void setupTextInputLayout(View view) {
+
+        initialPriceTextInputLayout = view.findViewById(R.id.initial_price_layout_downward_auction_attributes);
+        initialPriceTextInputLayout.setEndIconOnClickListener(v -> initialPriceBottomSheetDialog.show());
+
+        minimumPriceTextInputLayout = view.findViewById(R.id.minimum_price_layout_downward_auction_attributes);
+        minimumPriceTextInputLayout.setEndIconOnClickListener(v -> minimumPriceBottomSheetDialog.show());
+
+        decrementAmountTextInputLayout = view.findViewById(R.id.decrement_amount_layout_downward_auction_attributes);
+        decrementAmountTextInputLayout.setEndIconOnClickListener(v -> decrementAmountBottomSheetDialog.show());
+
+    }
 
     private void setupEditTexts(View view) {
         minimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
@@ -426,4 +477,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
         return string;
     }
+
+
 }

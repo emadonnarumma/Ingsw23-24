@@ -31,6 +31,8 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
     protected ScrollView scrollView;
     protected Button greenButton, redButton;
     protected ImageButton questionMarkButton;
+    protected TextView questionMarkAuctionType, questionMarkExplanationAuctionType;
+
     protected TextView auctionTypeTextView, categoryTextView,
             titleTextView, wearTextView,
             descriptionTextView, priceTextView,
@@ -42,6 +44,7 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
 
 
     protected BottomSheetDialog bottomSheetDialog;
+    protected BottomSheetDialog bottomSheetQuestionMarkDialog;
     protected RecyclerView bidsRecyclerView;
     protected ProgressBar progressBar;
     protected TextView emptyBidsTextView;
@@ -89,6 +92,12 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
     private void setupBottomSheetDialog() {
         bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_layout);
+
+        bottomSheetQuestionMarkDialog = new BottomSheetDialog(this);
+        bottomSheetQuestionMarkDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        questionMarkAuctionType = bottomSheetQuestionMarkDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        questionMarkExplanationAuctionType = bottomSheetQuestionMarkDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
     }
 
     private void setupSliderView() {
@@ -117,6 +126,9 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
 
     private void setupButtons() {
         questionMarkButton = findViewById(R.id.question_mark_button_auction_details);
+
+        questionMarkButton.setOnClickListener(v -> bottomSheetQuestionMarkDialog.show());
+
         greenButton = findViewById(R.id.green_button);
         redButton = findViewById(R.id.red_button);
     }
@@ -142,4 +154,11 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.dismiss();
+        }
+    }
 }

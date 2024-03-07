@@ -32,6 +32,8 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auction = (ReverseAuction) MyAuctionDetailsController.getAuction();
+
+        setupBottomSheetDialog();
     }
 
     @Override
@@ -131,5 +133,11 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
                     .setNegativeButton("No", null)
                     .show();
         });
+    }
+
+    private void setupBottomSheetDialog() {
+
+        questionMarkAuctionType.setText(R.string.reverse_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.reverse_auction_description);
     }
 }

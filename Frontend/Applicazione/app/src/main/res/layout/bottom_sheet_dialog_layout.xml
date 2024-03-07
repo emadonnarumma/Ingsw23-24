@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recycler_view_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

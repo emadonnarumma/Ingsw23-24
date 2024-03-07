@@ -10,14 +10,13 @@ import com.ingsw.dietiDeals24.controller.formstate.ExternalLinkFormState;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.BankAccount;
 import com.ingsw.dietiDeals24.model.ExternalLink;
-import com.ingsw.dietiDeals24.model.Seller;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.BankAccountDao;
-import com.ingsw.dietiDeals24.network.dao.EditProfileDao;
+import com.ingsw.dietiDeals24.network.dao.UserDao;
 import com.ingsw.dietiDeals24.network.dao.ExternalLinkDao;
 
 import java.io.IOException;
@@ -131,8 +130,8 @@ public class ProfileController {
     public static CompletableFuture<Void> updateBio(String bio) throws ConnectionException {
         return CompletableFuture.runAsync(() -> {
             try {
-                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
-                Response<User> response = editProfileDao.updateBio(UserHolder.user.getEmail(), bio, TokenHolder.getAuthToken()).execute();
+                UserDao userDao = RetroFitHolder.retrofit.create(UserDao.class);
+                Response<User> response = userDao.updateBio(UserHolder.user.getEmail(), bio, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     if (response.body() == null)
@@ -150,8 +149,8 @@ public class ProfileController {
     public static CompletableFuture<Void> updateRegion(Region region) throws ConnectionException {
         return CompletableFuture.runAsync(() -> {
             try {
-                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
-                Response<User> response = editProfileDao.updateRegion(UserHolder.user.getEmail(), region, TokenHolder.getAuthToken()).execute();
+                UserDao userDao = RetroFitHolder.retrofit.create(UserDao.class);
+                Response<User> response = userDao.updateRegion(UserHolder.user.getEmail(), region, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     if (response.body() == null)
@@ -195,8 +194,8 @@ public class ProfileController {
     public static CompletableFuture<Boolean> hasBankAccount() throws ConnectionException {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
-                Response<Boolean> response = editProfileDao.hasBankAccount(UserHolder.user.getEmail(), TokenHolder.getAuthToken()).execute();
+                UserDao userDao = RetroFitHolder.retrofit.create(UserDao.class);
+                Response<Boolean> response = userDao.hasBankAccount(UserHolder.user.getEmail(), TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -235,12 +234,12 @@ public class ProfileController {
     public static CompletableFuture<Void> switchAccountType() throws ConnectionException {
         return CompletableFuture.runAsync(() -> {
             try {
-                EditProfileDao editProfileDao = RetroFitHolder.retrofit.create(EditProfileDao.class);
+                UserDao userDao = RetroFitHolder.retrofit.create(UserDao.class);
                 Response<User> response;
                 if (UserHolder.isUserBuyer())
-                    response = editProfileDao.updateRole(UserHolder.user.getEmail(), Role.SELLER, TokenHolder.getAuthToken()).execute();
+                    response = userDao.updateRole(UserHolder.user.getEmail(), Role.SELLER, TokenHolder.getAuthToken()).execute();
                 else
-                    response = editProfileDao.updateRole(UserHolder.user.getEmail(), Role.BUYER, TokenHolder.getAuthToken()).execute();
+                    response = userDao.updateRole(UserHolder.user.getEmail(), Role.BUYER, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     if (response.body() == null)

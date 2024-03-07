@@ -6,7 +6,7 @@
     android:layout_marginBottom="4dp">
 
     <TextView
-        android:id="@+id/title_of_external_link"
+        android:id="@+id/title_of_editable_external_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -18,7 +18,7 @@
     <!-- android:textColor="@color/colorTextLink" -->
 
     <TextView
-        android:id="@+id/url_of_external_link"
+        android:id="@+id/url_of_editable_external_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -27,13 +27,31 @@
         android:linksClickable="true"
         android:selectAllOnFocus="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_of_external_link" />
+        app:layout_constraintTop_toBottomOf="@+id/title_of_editable_external_link" />
+
+    <ImageButton
+        android:id="@+id/edit_external_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+        android:backgroundTint="@color/green"
+        app:layout_constraintEnd_toStartOf="@+id/delete_external_link"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/delete_external_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_forever"
+        android:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/url_of_external_link" />
+        app:layout_constraintTop_toBottomOf="@id/url_of_editable_external_link" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

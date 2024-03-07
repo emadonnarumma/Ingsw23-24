@@ -16,14 +16,19 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.EditableExternalLinksAdapter;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
 
 import java.util.concurrent.ExecutionException;
 
@@ -39,6 +44,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private CircularProgressButton editProfileButton;
     private CircularProgressButton logoutButton;
     private ProgressBar progressBar;
+    private BottomSheetDialog bottomSheetDialog;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -67,9 +73,22 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userBioTextView.setMovementMethod(new ScrollingMovementMethod());
         showUserData();
 
+        setupBottomSheetDialog();
+        andNMoreLinksTextView.setOnClickListener(v -> bottomSheetDialog.show());
+
         sellerSwitch.setOnClickListener(v -> setupSellerSwitch());
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
         logoutButton.setOnClickListener(v -> logout());
+    }
+
+    private void setupBottomSheetDialog() {
+        bottomSheetDialog = new BottomSheetDialog(requireContext());
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_layout);
+
+        RecyclerView recyclerView = bottomSheetDialog.findViewById(R.id.recycler_view_bottom_sheet);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        ExternalLinksAdapter adapter = new ExternalLinksAdapter(UserHolder.user.getExternalLinks());
+        recyclerView.setAdapter(adapter);
     }
 
     /**
@@ -87,7 +106,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userRegionTextView.setText(userRegion);
 
         if (UserHolder.user.hasExternalLinks()) {
-            String link = UserHolder.user.getExternalLinks().get(0).getTitle();
+            String link = UserHolder.user.getExternalLinks().get(0).getUrl();
             String andNMoreLinks = " and " + (UserHolder.user.getExternalLinks().size() - 1) + " more";
             linkTextView.setText(link);
             andNMoreLinksTextView.setText(andNMoreLinks);
@@ -181,5 +200,13 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         ProfileController.logout();
         Intent intent = new Intent(requireActivity(), LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.dismiss();
+        }
     }
 }

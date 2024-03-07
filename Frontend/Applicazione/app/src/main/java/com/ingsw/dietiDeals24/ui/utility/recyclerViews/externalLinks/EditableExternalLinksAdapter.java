@@ -13,24 +13,26 @@ import com.ingsw.dietiDeals24.model.ExternalLink;
 
 import java.util.List;
 
-public class ExternalLinksAdapter extends RecyclerView.Adapter<ExternalLinkHolder> {
+public class EditableExternalLinksAdapter extends RecyclerView.Adapter<EditableExternalLinkHolder> {
     private static List<ExternalLink> externalLinks;
+    private Fragment fragment;
 
-    public ExternalLinksAdapter(@NonNull List<ExternalLink> externalLinks) {
+    public EditableExternalLinksAdapter(@NonNull List<ExternalLink> externalLinks, Fragment fragment) {
         this.externalLinks = externalLinks;
+        this.fragment = fragment;
     }
 
     @NonNull
     @Override
-    public ExternalLinkHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_external_link, parent, false);
-        return new ExternalLinkHolder(view);
+    public EditableExternalLinkHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_editable_external_link, parent, false);
+        return new EditableExternalLinkHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExternalLinkHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EditableExternalLinkHolder holder, int position) {
         ExternalLink externalLink = externalLinks.get(position);
-        holder.bind(externalLink);
+        holder.bind(fragment, externalLink);
     }
 
     @Override
@@ -38,4 +40,3 @@ public class ExternalLinksAdapter extends RecyclerView.Adapter<ExternalLinkHolde
         return externalLinks.size();
     }
 }
-

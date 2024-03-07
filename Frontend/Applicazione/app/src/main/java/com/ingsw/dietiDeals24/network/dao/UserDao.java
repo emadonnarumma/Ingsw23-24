@@ -11,7 +11,7 @@ import retrofit2.http.Header;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface EditProfileDao {
+public interface UserDao {
     @PUT("user/{email}/updateRegion")
     Call<User> updateRegion(@Path("email") String email, @Body Region region, @Header("Authorization") String token);
 

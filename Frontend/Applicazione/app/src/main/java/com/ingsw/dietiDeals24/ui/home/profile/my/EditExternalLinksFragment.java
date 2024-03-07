@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.EditableExternalLinksAdapter;
 
 public class EditExternalLinksFragment extends FragmentOfHomeActivity {
     private ConstraintLayout addExternalLinkButton;
     private RecyclerView externalLinksRecyclerView;
     private ImageView doneButton;
-    private ExternalLinksAdapter adapter;
+    private EditableExternalLinksAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,7 +44,7 @@ public class EditExternalLinksFragment extends FragmentOfHomeActivity {
 
     private void initRecyclerView() {
         externalLinksRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        adapter = new ExternalLinksAdapter(UserHolder.user.getExternalLinks(), this);
+        adapter = new EditableExternalLinksAdapter(UserHolder.user.getExternalLinks(), this);
         externalLinksRecyclerView.setAdapter(adapter);
     }
 

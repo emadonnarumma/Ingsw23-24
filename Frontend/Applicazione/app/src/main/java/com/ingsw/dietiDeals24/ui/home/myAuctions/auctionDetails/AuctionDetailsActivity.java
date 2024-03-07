@@ -86,7 +86,7 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
     }
 
     private void setupRecyclerView() {
-        bidsRecyclerView = bottomSheetDialog.findViewById(R.id.recyclerView);
+        bidsRecyclerView = bottomSheetDialog.findViewById(R.id.recycler_view_bottom_sheet);
     }
 
     private void setupBottomSheetDialog() {

@@ -90,7 +90,6 @@ public class HomeActivity extends AppCompatActivity {
                         .commit();
             }else {
                 callback.setEnabled(false);
-                onBackPressed();
                 callback.setEnabled(true);
             }
         }
@@ -191,4 +190,6 @@ public class HomeActivity extends AppCompatActivity {
     public NavigationBarView getNavigationBarView() {
         return navigationBarView;
     }
+
+
 }

@@ -256,6 +256,7 @@ public class ProfileController {
 
     public static void logout() {
         UserHolder.user = null;
+        TokenHolder.getInstance().setToken(null);
     }
 
     public static boolean isUrlTitleValid(String title) {

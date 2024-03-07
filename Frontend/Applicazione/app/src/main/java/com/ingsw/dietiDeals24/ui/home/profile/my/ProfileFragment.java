@@ -107,8 +107,8 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userRegionTextView.setText(userRegion);
 
         if (UserHolder.user.hasExternalLinks()) {
-            String link = UserHolder.user.getExternalLinks().get(0).getUrl();
-            String andNMoreLinks = " and " + (UserHolder.user.getExternalLinks().size() - 1) + " more";
+            String link = UserHolder.user.getExternalLinks().get(0).getTitle();
+            String andNMoreLinks = " e altri " + (UserHolder.user.getExternalLinks().size() - 1);
             linkTextView.setText(link);
             andNMoreLinksTextView.setText(andNMoreLinks);
         } else {

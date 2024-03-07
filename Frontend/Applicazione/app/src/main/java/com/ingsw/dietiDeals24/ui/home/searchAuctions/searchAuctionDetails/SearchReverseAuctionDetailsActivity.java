@@ -12,6 +12,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
@@ -21,6 +22,8 @@ import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private ReverseAuction auction;
+
+    private ReverseBid minBid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
 
         descriptionTextView.setText(auction.getDescription());
 
-        priceTextView.setText("Offerta attuale: " + NumberFormatter.formatPrice(auction.getStartingPrice()));
+        getMinBid();
 
         specificInformation1TextView.setText("Scade il: " + SearchAuctionDetailsController.getFormattedExpirationDate(auction));
 
@@ -104,5 +107,18 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
 
         questionMarkAuctionType.setText(R.string.reverse_auction_question);
         questionMarkExplanationAuctionType.setText(R.string.reverse_auction_description);
+    }
+
+    private void getMinBid() {
+
+        SearchAuctionDetailsController.getMinReverseBid(auction.getId()).thenAccept(bid -> {
+            minBid = bid;
+            if (minBid != null) {
+                priceTextView.setText("Offerta attuale: " + NumberFormatter.formatPrice(minBid.getPrice()));
+
+            } else {
+                priceTextView.setText("Offerta attuale: Nessun offerta");
+            }
+        });
     }
 }

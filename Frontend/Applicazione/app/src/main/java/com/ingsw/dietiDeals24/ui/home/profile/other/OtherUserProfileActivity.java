@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
@@ -22,6 +23,7 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MyAuctionAdapter;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
 
@@ -41,6 +43,8 @@ public class OtherUserProfileActivity extends AppCompatActivity {
     private TextView roleTextView;
     private User user;
     private RecyclerView recyclerView;
+
+    private BottomSheetDialog bottomSheetDialog;
 
     public OtherUserProfileActivity() {
         super();
@@ -68,6 +72,9 @@ public class OtherUserProfileActivity extends AppCompatActivity {
         setupActionBar();
         showUserData();
         updateAuctions();
+
+        setupBottomSheetDialog();
+        andNMoreLinksTextView.setOnClickListener(v -> bottomSheetDialog.show());
     }
 
     private void updateAuctions() {
@@ -122,7 +129,7 @@ public class OtherUserProfileActivity extends AppCompatActivity {
 
         if (user.hasExternalLinks()) {
             String link = user.getExternalLinks().get(0).getTitle();
-            String andNMoreLinks = "and " + (user.getExternalLinks().size() - 1) + " more";
+            String andNMoreLinks = " e altri " + (user.getExternalLinks().size() - 1);
             linkTextView.setText(link);
             andNMoreLinksTextView.setText(andNMoreLinks);
         } else {
@@ -137,5 +144,15 @@ public class OtherUserProfileActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupBottomSheetDialog() {
+        bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_layout);
+
+        RecyclerView recyclerView = bottomSheetDialog.findViewById(R.id.recycler_view_bottom_sheet);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ExternalLinksAdapter adapter = new ExternalLinksAdapter(user.getExternalLinks());
+        recyclerView.setAdapter(adapter);
     }
 }

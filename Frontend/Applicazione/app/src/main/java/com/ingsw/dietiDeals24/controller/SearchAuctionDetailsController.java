@@ -1,14 +1,26 @@
 package com.ingsw.dietiDeals24.controller;
 
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
+import com.ingsw.dietiDeals24.network.TokenHolder;
+import com.ingsw.dietiDeals24.network.dao.SearchAuctionDetailsDao;
+import com.ingsw.dietiDeals24.network.dao.SearchAuctionsDao;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import retrofit2.Response;
 
 public class SearchAuctionDetailsController implements RetroFitHolder {
 
@@ -20,6 +32,30 @@ public class SearchAuctionDetailsController implements RetroFitHolder {
 
     public static void setAuction(Auction auction) {
         SearchAuctionDetailsController.auction = auction;
+    }
+
+    public static CompletableFuture<ReverseBid> getMinReverseBid(Integer idAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            try {
+                SearchAuctionDetailsDao searchAuctionsDetailsDao = retrofit.create(SearchAuctionDetailsDao.class);
+                Response<ReverseBid> response = searchAuctionsDetailsDao.getMinReverseBid(idAuction, TokenHolder.getAuthToken()).execute();
+                ReverseBid bid = response.body();
+
+                if (response.isSuccessful()) {
+
+                    return bid;
+
+                } else if (response.code() == 404) {
+                    return null;
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+
+            return null;
+        });
     }
 
     public static String getFormattedExpirationDate(SilentAuction auction) {

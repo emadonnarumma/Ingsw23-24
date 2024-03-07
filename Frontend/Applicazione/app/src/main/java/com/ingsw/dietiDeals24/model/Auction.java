@@ -106,4 +106,8 @@ public class Auction implements Serializable {
     public void setStatus(AuctionStatus status) {
         this.status = status;
     }
+
+    public Integer getId() {
+        return idAuction;
+    }
 }

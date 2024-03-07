@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.login;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -64,6 +65,8 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
 
         userPressRegistrationButton();
         userPressLoginButton();
+
+        disableBackPress();
     }
 
     private void observeLoginFormState() {
@@ -149,4 +152,13 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
         registrationTextView = null;
     }
 
+    private void disableBackPress() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finishAffinity();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+    }
 }

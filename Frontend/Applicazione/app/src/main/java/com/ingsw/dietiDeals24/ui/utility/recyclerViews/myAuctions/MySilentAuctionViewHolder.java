@@ -87,8 +87,13 @@ public class MySilentAuctionViewHolder extends RecyclerView.ViewHolder {
         imagesSliderView.setSliderAdapter(adapter);
 
         ArrayList<Uri> images = new ArrayList<>();
-        for (int i = 0; i < silentAuction.getImages().size(); i++) {
-            images.add(base64ToUri(silentAuction.getImages().get(i).getBase64Data()));
+        if (silentAuction.getImages() != null && !silentAuction.getImages().isEmpty()) {
+            for (int i = 0; i < silentAuction.getImages().size(); i++) {
+                images.add(base64ToUri(silentAuction.getImages().get(i).getBase64Data()));
+            }
+        } else {
+            Uri defaultImageUri = Uri.parse("android.resource://com.ingsw.dietiDeals24/" + R.drawable.no_image_available);
+            images.add(defaultImageUri);
         }
 
         adapter.renewItems(images);

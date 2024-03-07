@@ -338,7 +338,29 @@ public class SearchFragment extends FragmentOfHomeActivity {
             public void OnItemClickListener(int position, View v) {
                 String suggestion = searchBar.getLastSuggestions().get(position).toString();
                 searchBar.setText(suggestion);
-                filterByKeyword(suggestion);
+
+                if (suggestion.isEmpty()) {
+
+                    if (categorySmartSpinner.getSelectedItem() == null) {
+
+                        updateAuctions();
+
+                    } else {
+
+                        filterByCategory(Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
+                    }
+
+                } else {
+
+                    if (categorySmartSpinner.getSelectedItem() == null) {
+
+                        filterByKeyword(suggestion);
+
+                    } else {
+
+                        filterByKeywordAndCategory(suggestion, Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
+                    }
+                }
             }
 
             @Override
@@ -348,4 +370,7 @@ public class SearchFragment extends FragmentOfHomeActivity {
             }
         });
     }
+
+
+
 }

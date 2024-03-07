@@ -138,8 +138,14 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity implement
         sliderView.setSliderAdapter(adapter);
 
         ArrayList<Uri> images = new ArrayList<>();
-        for (int i = 0; i < auction.getImages().size(); i++) {
-            images.add(ImageController.base64ToUri(auction.getImages().get(i).getBase64Data(), getApplicationContext()));
+
+        if (auction.getImages().isEmpty()) {
+            Uri defaultImageUri = Uri.parse("android.resource://com.ingsw.dietiDeals24/" + R.drawable.no_image_available);
+            images.add(defaultImageUri);
+        } else {
+            for (int i = 0; i < auction.getImages().size(); i++) {
+                images.add(ImageController.base64ToUri(auction.getImages().get(i).getBase64Data(), getApplicationContext()));
+            }
         }
 
         adapter.renewItems(images);

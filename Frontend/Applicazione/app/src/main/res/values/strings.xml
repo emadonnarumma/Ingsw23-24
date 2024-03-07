@@ -13,6 +13,8 @@
     <string name="registration_phrase">Non sei ancora registrato?</string>
     <string name="or_phrase">OPPURE</string>
     <string name="registration_link"><u>Registrati</u></string>
+    <string name="email_format_invalid">Formato email non valido</string>
+    <string name="password_format_invalid">La password deve essere lunga almeno 6 caratteri</string>
 
     <!-- Home -->
     <string name="bottom_nav_search">Cerca</string>

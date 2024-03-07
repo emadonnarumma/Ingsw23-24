@@ -38,7 +38,7 @@ public class ProfileController {
         return bankAccountFormState;
     }
 
-    public static void externalLinkDataChanged(String title, String url, Resources resources) {
+    public static void externalLinkInputChanged(String title, String url, Resources resources) {
         if (!isUrlTitleValid(title)) {
             String titleError = resources.getString(R.string.url_title_format_invalid);
             externalLinkFormState.setValue(new ExternalLinkFormState(titleError, null));
@@ -50,15 +50,15 @@ public class ProfileController {
         }
     }
 
-    public static void bankAccountDataChanged(String iban, String iva, Resources resources) {
+    public static void bankAccountInputChanged(String iban, String iva, Resources resources) {
         if (!isIbanFormatValid(iban)) {
             String ibanError = resources.getString(R.string.iban_format_invalid);
-            bankAccountFormState.setValue(new BankAccountFormState(ibanError, null, false));
+            bankAccountFormState.setValue(new BankAccountFormState(ibanError, null));
         } else if (!isIvaFormatValid(iva)) {
             String ivaError = resources.getString(R.string.iva_format_invalid);
-            bankAccountFormState.setValue(new BankAccountFormState(null, ivaError, false));
+            bankAccountFormState.setValue(new BankAccountFormState(null, ivaError));
         } else {
-            bankAccountFormState.setValue(new BankAccountFormState(null, null, true));
+            bankAccountFormState.setValue(new BankAccountFormState(true));
         }
     }
 

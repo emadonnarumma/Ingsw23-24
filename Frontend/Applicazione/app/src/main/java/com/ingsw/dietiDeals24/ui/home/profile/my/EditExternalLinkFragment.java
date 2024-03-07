@@ -40,7 +40,7 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            ProfileController.externalLinkDataChanged(
+            ProfileController.externalLinkInputChanged(
                     titleEditText.getText().toString(),
                     urlEditText.getText().toString(),
                     getResources()

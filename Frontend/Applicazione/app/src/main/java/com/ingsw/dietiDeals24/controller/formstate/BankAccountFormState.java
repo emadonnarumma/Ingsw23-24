@@ -5,9 +5,15 @@ public class BankAccountFormState {
     private String ivaError;
     private boolean dataValid;
 
-    public BankAccountFormState(String ibanError, String ivaError, boolean dataValid) {
+    public BankAccountFormState(String ibanError, String ivaError) {
         this.ibanError = ibanError;
         this.ivaError = ivaError;
+        this.dataValid = false;
+    }
+
+    public BankAccountFormState(boolean dataValid) {
+        this.ibanError = null;
+        this.ivaError = null;
         this.dataValid = dataValid;
     }
 

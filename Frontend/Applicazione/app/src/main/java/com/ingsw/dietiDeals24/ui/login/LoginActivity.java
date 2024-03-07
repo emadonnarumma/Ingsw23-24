@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +29,25 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
     private EditText emailEditText, passwordEditText;
     private CircularProgressButton loginButton;
 
+    private TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            LogInController.loginInputChanged(
+                    emailEditText.getText().toString(),
+                    passwordEditText.getText().toString(),
+                    getResources()
+            );
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +58,30 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
         loginButton = findViewById(R.id.login_button);
         registrationTextView = findViewById(R.id.go_to_registration_text_view);
 
+        emailEditText.addTextChangedListener(loginTextWatcher);
+        passwordEditText.addTextChangedListener(loginTextWatcher);
+        observeLoginFormState();
+
         userPressRegistrationButton();
         userPressLoginButton();
     }
 
+    private void observeLoginFormState() {
+        LogInController.getLoginFormState().observe(this, loginFormState -> {
+            if (loginFormState == null) {
+                return;
+            }
+            String emailError = loginFormState.getEmailError();
+            String passwordError = loginFormState.getPasswordError();
+            if (emailError != null) {
+                emailEditText.setError(emailError);
+            }
+            if (passwordError != null) {
+                passwordEditText.setError(passwordError);
+            }
+            loginButton.setEnabled(loginFormState.isDataValid());
+        });
+    }
 
     private void userPressRegistrationButton() {
         registrationTextView.setOnClickListener(v -> {

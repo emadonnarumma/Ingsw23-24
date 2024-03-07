@@ -41,7 +41,7 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            ProfileController.bankAccountDataChanged(
+            ProfileController.bankAccountInputChanged(
                     ibanEditText.getText().toString(),
                     ivaEditText.getText().toString(),
                     getResources()

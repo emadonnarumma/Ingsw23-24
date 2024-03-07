@@ -99,7 +99,18 @@ public class UserDbService implements UserService {
     @Override
     public Optional<User> updateRole(String email, Role newRole) {
 
-        //TODO: Un macello dio belva
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+
+            User user = optionalUser.get();
+            user.setRole(newRole);
+
+            return Optional.of(userRepository.save(user));
+        }
+
+        return Optional.empty();
+
         /*
         Optional<User> optionalUser = userRepository.findByEmail(email);
 
@@ -137,7 +148,7 @@ public class UserDbService implements UserService {
         }
         */
 
-        return Optional.empty();
+        //return Optional.empty();
     }
 
     @Override

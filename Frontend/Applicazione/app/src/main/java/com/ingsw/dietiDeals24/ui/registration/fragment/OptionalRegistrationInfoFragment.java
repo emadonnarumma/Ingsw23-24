@@ -19,9 +19,11 @@ import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -66,7 +68,9 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
 
 
     private void setRegisteringUserValues() {
-        registeringUser.setRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem()));
+        if(regionSmartSpinner.getSelectedItem() != null)
+            registeringUser.setRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem()));
+
         registeringUser.setBio(bioEditText.getText().toString());
     }
 
@@ -98,8 +102,8 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
 
     @NonNull
     private Thread getRegistrationThread() {
+        PopupDialog loading = PopupDialog.getInstance(requireContext());
         return new Thread(() -> {
-            requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
             try {
 
                 RegistrationController.register().get();
@@ -108,15 +112,15 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
             } catch(ExecutionException e){
 
                 if (e.getCause() instanceof AuthenticationException) {
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Email già in uso"));
+                    requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(requireContext(), getString(R.string.email_already_exists)));
                 } else if (e.getCause() instanceof ConnectionException) {
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Errore di connessione"));
+                    requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(requireContext(), "Errore di connessione"));
                 }
 
             } catch(InterruptedException e){
-                throw new RuntimeException("Interruzione non prevista");
+                requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(requireContext(), "Operazione interrotta, riprovare"));
             } finally {
-                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+                requireActivity().runOnUiThread(loading::dismissDialog);
             }
         });
     }

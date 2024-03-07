@@ -37,6 +37,7 @@ public class PopupGeneratorOf {
                 .setHeading("Riprova!")
                 .setDescription(message)
                 .setCancelable(false)
+                .setDismissButtonText("Chiudi")
                 .showDialog(new OnDialogButtonClickListener() {
                     @Override
                     public void onDismissClicked(Dialog dialog) {
@@ -51,6 +52,7 @@ public class PopupGeneratorOf {
                 .setHeading("Finito!")
                 .setDescription(message)
                 .setCancelable(false)
+                .setDismissButtonText("Chiudi")
                 .showDialog(new OnDialogButtonClickListener() {
                     @Override
                     public void onDismissClicked(Dialog dialog) {
@@ -70,6 +72,8 @@ public class PopupGeneratorOf {
                 .setPopupDialogIcon(R.drawable.ic_logout)
                 .setPopupDialogIconTint(R.color.red)
                 .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
                 .showDialog(new OnDialogButtonClickListener() {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
@@ -99,6 +103,8 @@ public class PopupGeneratorOf {
                 .setPopupDialogIcon(R.drawable.ic_delete_forever)
                 .setPopupDialogIconTint(R.color.red)
                 .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
                 .showDialog(new OnDialogButtonClickListener() {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
@@ -141,6 +147,8 @@ public class PopupGeneratorOf {
                 .setPopupDialogIcon(R.drawable.ic_delete_forever)
                 .setPopupDialogIconTint(R.color.red)
                 .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
                 .showDialog(new OnDialogButtonClickListener() {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
@@ -164,6 +172,8 @@ public class PopupGeneratorOf {
                 .setPopupDialogIcon(R.drawable.ic_delete_forever)
                 .setPopupDialogIconTint(R.color.red)
                 .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
                 .showDialog(new OnDialogButtonClickListener() {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
@@ -187,6 +197,8 @@ public class PopupGeneratorOf {
                 .setPopupDialogIcon(R.drawable.ic_check_circle)
                 .setPopupDialogIconTint(R.color.green)
                 .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
                 .showDialog(new OnDialogButtonClickListener() {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {

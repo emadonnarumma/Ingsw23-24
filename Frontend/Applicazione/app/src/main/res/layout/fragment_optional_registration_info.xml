@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:counterEnabled="true"
-        app:counterMaxLength="200">
+        app:counterMaxLength="500">
 
 
 
@@ -39,7 +39,7 @@
             android:layout_height="200dp"
             android:hint="Aggiungi una descrizione personale"
             android:inputType="textMultiLine"
-            android:maxLength="200" />
+            android:maxLength="500" />
     </com.google.android.material.textfield.TextInputLayout>
 
 

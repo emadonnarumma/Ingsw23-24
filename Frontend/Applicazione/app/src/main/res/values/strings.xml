@@ -30,6 +30,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_password_input">Conferma password</string>
     <string name="region_phrase">Seleziona una regione</string>
+    <string name="username_format_invalid">Il nome utente non deve superare 30 carattere e può contenere solo lettere, numeri e _ ! ?</string>
+    <string name="passwords_mismatch">Le password non corrispondono</string>
+    <string name="email_already_exists">Email già in uso</string>
+    <string name="registration_successful">Registrazione avvenuta con successo!</string>
 
     <!-- Profile -->
     <string name="edit_profile_button_phrase">Modifica profilo</string>

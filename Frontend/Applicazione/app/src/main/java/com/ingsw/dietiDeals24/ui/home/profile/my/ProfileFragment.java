@@ -26,6 +26,7 @@ import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.EditableExternalLinksAdapter;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
@@ -78,7 +79,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
 
         sellerSwitch.setOnClickListener(v -> setupSellerSwitch());
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
-        logoutButton.setOnClickListener(v -> logout());
+        logoutButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToLogoutPopup(getContext()));
     }
 
     private void setupBottomSheetDialog() {
@@ -194,12 +195,6 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private void goToAddBankAccountFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new AddBankAccountFragment()).commit();
-    }
-
-    private void logout() {
-        ProfileController.logout();
-        Intent intent = new Intent(requireActivity(), LoginActivity.class);
-        startActivity(intent);
     }
 
     @Override

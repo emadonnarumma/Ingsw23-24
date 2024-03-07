@@ -72,7 +72,7 @@ public class AddBankAccountFragment extends FragmentOfHomeActivity {
         ivaEditText.addTextChangedListener(bankAccountTextWatcher);
         observeBankAccountFormState();
 
-        doneButton.setOnClickListener(v -> onDoneButtonClick());
+        doneButton.setOnClickListener(v -> unlockSellerMode());
     }
 
     private void observeBankAccountFormState() {
@@ -97,11 +97,13 @@ public class AddBankAccountFragment extends FragmentOfHomeActivity {
         });
     }
 
-    private void onDoneButtonClick() {
+    private void unlockSellerMode() {
         progressBar.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
-                ProfileController.unlockSellerMode(
+                ProfileController.switchAccountType().get();
+                sleep(500);
+                ProfileController.addBankAccount(
                         ibanEditText.getText().toString(),
                         ivaEditText.getText().toString()
                 ).get();

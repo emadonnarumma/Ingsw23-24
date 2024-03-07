@@ -24,56 +24,63 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/externalLink")
 public class ExternalLinkController {
-	
+
     @Autowired
     @Qualifier("mainExternalLinkService")
     private ExternalLinkService externalLinkService;
-    
-	@Autowired
-	@Qualifier("mainUserService")
-	private UserService userService;
+
+    @Autowired
+    @Qualifier("mainUserService")
+    private UserService userService;
 
     @PostMapping("/{email}")
     public ResponseEntity<ExternalLink> addExternalLink(@Valid @RequestBody ExternalLink externalLink, @PathVariable String email) {
-        
-    	Optional<User> user = userService.getUser(email);
-        
-		if (user.isEmpty()) {
-			
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+
+        Optional<User> user = userService.getUser(email);
+
+        if (user.isEmpty()) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         externalLink.setUser(user.get());
 
-        ExternalLink savedExternalLink= externalLinkService.addExternalLink(externalLink);
+        ExternalLink savedExternalLink = externalLinkService.addExternalLink(externalLink);
 
         return new ResponseEntity<>(savedExternalLink, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ExternalLink> updateExternalLink(@PathVariable Integer id, @Valid @RequestBody ExternalLink externalLink) {
-       
-    	Optional<ExternalLink> updatedExternalLink = externalLinkService.update(id, externalLink);
-        
-    	if (updatedExternalLink.isPresent()) {
-        	
+
+        Optional<ExternalLink> existingExternalLink = externalLinkService.get(id);
+        if (existingExternalLink.isPresent())
+            externalLink.setUser(existingExternalLink.get().getUser());
+        else {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<ExternalLink> updatedExternalLink = externalLinkService.update(id, externalLink);
+
+        if (updatedExternalLink.isPresent()) {
+
             return ResponseEntity.ok(updatedExternalLink.get());
-            
+
         } else {
-        	
+
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExternalLink(@PathVariable Integer id) {
-        
-    	if (externalLinkService.delete(id)) {
-    		
+
+        if (externalLinkService.delete(id)) {
+
             return ResponseEntity.noContent().build();
-            
+
         } else {
-        	
+
             return ResponseEntity.notFound().build();
         }
     }

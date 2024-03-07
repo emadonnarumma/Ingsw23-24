@@ -65,7 +65,7 @@ public abstract class User implements UserDetails{
 	@Column(name="role", insertable = false, updatable = false)
 	private Role role;
 	
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<ExternalLink> externalLinks;
 
 	@Override

@@ -1,8 +1,10 @@
 package com.ingsw.dietiDeals24.model;
 
-public class ExternalLink {
+import java.io.Serializable;
 
-    private Integer id;
+public class ExternalLink implements Serializable {
+
+    private Integer idExternalLink;
     private String title;
     private String url;
 
@@ -18,7 +20,7 @@ public class ExternalLink {
      * Constructor for the ExternalLink with the id generated from the server
      */
     public ExternalLink(Integer id, String title, String url) {
-        this.id = id;
+        this.idExternalLink = id;
         this.title = title;
         this.url = url;
     }
@@ -30,17 +32,17 @@ public class ExternalLink {
         if(externalLink == null) {
             return;
         }
-        this.id = externalLink.id;
+        this.idExternalLink = externalLink.idExternalLink;
         this.title = externalLink.title;
         this.url = externalLink.url;
     }
 
     public Integer getId() {
-        return id;
+        return idExternalLink;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.idExternalLink = id;
     }
 
     public String getTitle() {
@@ -68,6 +70,6 @@ public class ExternalLink {
             return false;
         }
         ExternalLink that = (ExternalLink) obj;
-        return id != null && id.equals(that.id);
+        return idExternalLink != null && idExternalLink.equals(that.idExternalLink);
     }
 }

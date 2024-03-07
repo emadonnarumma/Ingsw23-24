@@ -12,4 +12,11 @@ public class Buyer extends User {
 
         super(role, name, email, password, bio, region, externalLinks);
     }
+
+    /**
+     * Copy constructor
+     */
+    public Buyer(Buyer buyer) {
+        super(buyer);
+    }
 }

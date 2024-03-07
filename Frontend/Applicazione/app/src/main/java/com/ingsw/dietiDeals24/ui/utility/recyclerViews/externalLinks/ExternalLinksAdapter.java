@@ -32,7 +32,7 @@ public class ExternalLinksAdapter extends RecyclerView.Adapter<ExternalLinkHolde
     @Override
     public void onBindViewHolder(@NonNull ExternalLinkHolder holder, int position) {
         ExternalLink externalLink = externalLinks.get(position);
-        holder.bind(externalLink, fragment);
+        holder.bind(fragment, externalLink);
     }
 
     @Override

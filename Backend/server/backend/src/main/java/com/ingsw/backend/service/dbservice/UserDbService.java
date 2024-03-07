@@ -88,30 +88,56 @@ public class UserDbService implements UserService {
         if (optionalUser.isPresent()) {
 
             User user = optionalUser.get();
-
             user.setBio(newBio);
 
-            userRepository.save(user);
+            return Optional.of(userRepository.save(user));
         }
 
-        return optionalUser;
+        return Optional.empty();
     }
 
     @Override
     public Optional<User> updateRole(String email, Role newRole) {
 
-            Optional<User> optionalUser = userRepository.findByEmail(email);
+        //TODO: Un macello dio belva
+        /*
+        Optional<User> optionalUser = userRepository.findByEmail(email);
 
-            if (optionalUser.isPresent()) {
+        if (optionalUser.isPresent()) {
+            User existingUser = optionalUser.get();
 
-                User user = optionalUser.get();
-
-                user.setRole(newRole);
-
-                userRepository.save(user);
+            if (existingUser.getRole() == newRole) {
+                // The user is already of the desired role, so there's nothing to do.
+                return Optional.of(existingUser);
             }
 
-            return optionalUser;
+            User newUser;
+            if (newRole == Role.SELLER) {
+                newUser = new Seller();
+            } else if (newRole == Role.BUYER) {
+                newUser = new Buyer();
+            } else {
+                throw new IllegalArgumentException("Invalid role: " + newRole);
+            }
+
+            // Copy all relevant fields from the existing user to the new user.
+            newUser.setEmail(existingUser.getEmail());
+            newUser.setPassword(existingUser.getPassword());
+            newUser.setName(existingUser.getName());
+            newUser.setRegion(existingUser.getRegion());
+            newUser.setBio(existingUser.getBio());
+            newUser.setExternalLinks(existingUser.getExternalLinks());
+
+            // Delete the existing user and save the new user.
+            userRepository.delete(existingUser);
+            userRepository.save(newUser);
+            //Non funziona, non posso cancellare il buyer, perderei tutte le sue aste e offerte così, il buyer deve persistere anche quando passo a seller
+
+            return Optional.of(newUser);
+        }
+        */
+
+        return Optional.empty();
     }
 
     @Override

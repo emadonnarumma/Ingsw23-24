@@ -1,5 +1,6 @@
 package com.ingsw.backend.controller;
 
+import com.ingsw.backend.model.Buyer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -31,14 +32,14 @@ public class BankAccountController {
     @PostMapping("/{email}")
     public ResponseEntity<BankAccount> addBankAccount(@Valid @RequestBody BankAccount bankAccount, @PathVariable String email) {
         
-    	Optional<User> seller = userService.getUser(email);
+    	Optional<Seller> seller = userService.getSeller(email);
         
 		if (seller.isEmpty()) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-        bankAccount.setSeller((Seller) seller.get());
+        bankAccount.setSeller(seller.get());
 
         BankAccount savedBankAccount= bankAccountService.addBankAccount(bankAccount);
 

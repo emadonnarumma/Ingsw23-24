@@ -2,6 +2,8 @@ package com.ingsw.backend.controller;
 
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.gson.Gson;
 import com.ingsw.backend.enumeration.Role;
 import com.ingsw.backend.model.Buyer;
 import com.ingsw.backend.model.Seller;
@@ -88,9 +90,11 @@ public class UserController {
 
     @PutMapping("/{email}/updateBio")
     public ResponseEntity<User> updateBio(@PathVariable String email, @RequestBody String newBio) {
-    	
-        Optional<User> optionalUser = userService.updateBio(email, newBio);
-        
+
+		Gson gson = new Gson();
+		String bioNonCogliona = gson.fromJson(newBio, String.class);
+        Optional<User> optionalUser = userService.updateBio(email, bioNonCogliona);
+
         if (optionalUser.isPresent()) {
             
         	return ResponseEntity.ok(optionalUser.get());

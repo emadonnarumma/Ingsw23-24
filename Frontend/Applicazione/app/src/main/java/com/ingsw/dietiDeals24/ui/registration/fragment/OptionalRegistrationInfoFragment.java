@@ -104,20 +104,19 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
 
                 RegistrationController.register().get();
                 goToHomeActivity();
-                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
 
             } catch(ExecutionException e){
 
                 if (e.getCause() instanceof AuthenticationException) {
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Email già in uso"));
-                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
                 } else if (e.getCause() instanceof ConnectionException) {
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Errore di connessione"));
-                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
                 }
 
             } catch(InterruptedException e){
                 throw new RuntimeException("Interruzione non prevista");
+            } finally {
+                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
             }
         });
     }

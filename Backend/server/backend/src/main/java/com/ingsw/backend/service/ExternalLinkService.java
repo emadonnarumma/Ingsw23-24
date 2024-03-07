@@ -12,4 +12,5 @@ public interface ExternalLinkService {
 	
 	public Optional<ExternalLink> update(Integer id, ExternalLink externalLink);
 
+	public Optional<ExternalLink> get(Integer id);
 }

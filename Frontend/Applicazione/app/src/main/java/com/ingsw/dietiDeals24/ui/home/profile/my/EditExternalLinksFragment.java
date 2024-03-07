@@ -39,7 +39,7 @@ public class EditExternalLinksFragment extends FragmentOfHomeActivity {
 
         initRecyclerView();
         addExternalLinkButton.setOnClickListener(v -> goToAddExternalLinkFragment());
-        doneButton.setOnClickListener(v -> goToEditProfileFragment());
+        doneButton.setOnClickListener(v -> goToProfileFragment());
     }
 
     private void initRecyclerView() {
@@ -48,9 +48,9 @@ public class EditExternalLinksFragment extends FragmentOfHomeActivity {
         externalLinksRecyclerView.setAdapter(adapter);
     }
 
-    private void goToEditProfileFragment() {
+    private void goToProfileFragment() {
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                new EditProfileFragment()).commit();
+                new ProfileFragment()).commit();
     }
 
     private void goToAddExternalLinkFragment() {

@@ -111,7 +111,7 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
                             urlEditText.getText().toString()
                     ).get();
                     sleep(500);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.external_link_updated));
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.link_updated));
                 }
                 requireActivity().runOnUiThread(this::goToEditExternalLinksFragment);
             } catch (InterruptedException e) {

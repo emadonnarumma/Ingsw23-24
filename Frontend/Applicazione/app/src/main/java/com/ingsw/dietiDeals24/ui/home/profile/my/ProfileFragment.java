@@ -2,6 +2,7 @@ package com.ingsw.dietiDeals24.ui.home.profile.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,9 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         logoutButton = view.findViewById(R.id.logout_button_profile);
         progressBar = view.findViewById(R.id.progress_bar_profile);
 
+        userBioTextView.setMovementMethod(new ScrollingMovementMethod());
         showUserData();
+
         sellerSwitch.setOnClickListener(v -> setupSellerSwitch());
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
         logoutButton.setOnClickListener(v -> logout());
@@ -84,7 +87,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
 
         if (UserHolder.user.hasExternalLinks()) {
             String link = UserHolder.user.getExternalLinks().get(0).getTitle();
-            String andNMoreLinks = "and " + (UserHolder.user.getExternalLinks().size() - 1) + " more";
+            String andNMoreLinks = " and " + (UserHolder.user.getExternalLinks().size() - 1) + " more";
             linkTextView.setText(link);
             andNMoreLinksTextView.setText(andNMoreLinks);
         } else {
@@ -109,26 +112,34 @@ public class ProfileFragment extends FragmentOfHomeActivity {
                     ProfileController.switchAccountType().get();
                     requireActivity().runOnUiThread(this::startSellerAnimation);
                 } catch (ExecutionException e) {
-                    sellerSwitch.setChecked(false);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+                    requireActivity().runOnUiThread(() -> {
+                        sellerSwitch.setChecked(false);
+                        ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    });
                 } catch (InterruptedException e) {
-                    sellerSwitch.setChecked(false);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+                    requireActivity().runOnUiThread(() -> {
+                        sellerSwitch.setChecked(false);
+                        ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
+                    });
                 } finally {
-                    progressBar.setVisibility(View.GONE);
+                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
                 }
             } else {
                 try {
                     ProfileController.switchAccountType().get();
                     requireActivity().runOnUiThread(this::startNotSellerAnimation);
                 } catch (ExecutionException e) {
-                    sellerSwitch.setChecked(true);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+                    requireActivity().runOnUiThread(() -> {
+                        sellerSwitch.setChecked(true);
+                        ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    });
                 } catch (InterruptedException e) {
-                    sellerSwitch.setChecked(true);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+                    requireActivity().runOnUiThread(() -> {
+                        sellerSwitch.setChecked(true);
+                        ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
+                    });
                 } finally {
-                    progressBar.setVisibility(View.GONE);
+                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
                 }
             }
         }).start();

@@ -44,9 +44,20 @@ public class ExternalLinkDbService implements ExternalLinkService{
 	        return Optional.empty();
 	    }
 
+		externalLink.setIdExternalLink(id);
 	    ExternalLink updatedExternalLink = externalLinkRepository.save(externalLink);
 	    
 	    return Optional.of(updatedExternalLink);
+	}
+
+	@Override
+	public Optional<ExternalLink> get(Integer id) {
+
+		if (!externalLinkRepository.existsById(id)) {
+	        return Optional.empty();
+	    }
+
+		return externalLinkRepository.findById(id);
 	}
 
 }

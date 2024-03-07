@@ -49,12 +49,13 @@
     <string name="edit_iban_phrase">IBAN</string>
     <string name="edit_iva_phrase">Partita IVA</string>
     <string name="iban_format_invalid">Il formato dell\'IBAN non è valido</string>
-    <string name="iva_format_invalid">Il formato della partita IVA non è valido</string>
+    <string name="iva_format_invalid">La partita IVA deve essere composta da 11 cifre numeriche</string>
     <string name="seller_mode_unlocked">Modalità venditore sbloccata con successo!</string>
     <string name="bank_account_updated">Account bancario aggiornato con successo!</string>
     <string name="bio_updated">Bio aggiornata con successo!</string>
     <string name="region_updated">Regione aggiornata con successo!</string>
-    <string name="external_link_updated">Link aggiornato con successo!</string>
+    <string name="link_updated">Link aggiornato con successo!</string>
+    <string name="link_deleted">Link rimosso con successo!</string>
 
     <string name="search_hint">Cerca</string>
 

@@ -29,6 +29,24 @@ public class User implements Serializable {
         this.externalLinks = externalLinks;
     }
 
+    /**
+     * Copy constructor
+     */
+    public User(User user) {
+        if (user == null) {
+            return;
+        }
+        this.role = user.role;
+        this.name = user.name;
+        this.email = user.email;
+        this.password = user.password;
+        this.bio = user.bio;
+        this.region = user.region;
+        for (ExternalLink link : user.externalLinks) {
+            this.externalLinks.add(new ExternalLink(link));
+        }
+    }
+
     public Role getRole() {
         return role;
     }

@@ -22,6 +22,7 @@ import com.ingsw.dietiDeals24.network.dao.ExternalLinkDao;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Response;
 
@@ -73,7 +74,7 @@ public class ProfileController {
                     ExternalLink linkFromServer = new ExternalLink(response.body());
                     UserHolder.user.getExternalLinks().add(linkFromServer);
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -94,7 +95,7 @@ public class ProfileController {
                     UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setTitle(linkFromServer.getTitle());
                     UserHolder.user.getExternalLinks().get(UserHolder.user.getExternalLinks().indexOf(selectedLink)).setUrl(linkFromServer.getUrl());
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -111,7 +112,7 @@ public class ProfileController {
                 if (response.isSuccessful()) {
                     UserHolder.user.getExternalLinks().remove(externalLink);
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -136,9 +137,9 @@ public class ProfileController {
                 if (response.isSuccessful()) {
                     if (response.body() == null)
                         throw new ConnectionException("Errore di connessione");
-                    UserHolder.user.setBio(response.body().getBio());
+                    UserHolder.user = response.body();
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -157,7 +158,7 @@ public class ProfileController {
                         throw new ConnectionException("Errore di connessione");
                     UserHolder.user.setRegion(response.body().getRegion());
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -183,7 +184,7 @@ public class ProfileController {
                     UserHolder.getSeller().getBankAccount().setIban(response.body().getIban());
                     UserHolder.getSeller().getBankAccount().setIva(response.body().getIva());
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -200,7 +201,7 @@ public class ProfileController {
                 if (response.isSuccessful()) {
                     return response.body();
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -208,11 +209,11 @@ public class ProfileController {
         });
     }
 
-    public static CompletableFuture<Void> unlockSellerMode(String iban, String iva) throws ConnectionException {
+    public static CompletableFuture<Void> addBankAccount(String iban, String iva) throws ConnectionException, ExecutionException, InterruptedException {
         return CompletableFuture.runAsync(() -> {
             try {
-                if (UserHolder.isUserBuyer())
-                    switchAccountType();
+                if(UserHolder.isUserBuyer())
+                    throw new IllegalStateException("L'utente deve essere un venditore per poter aggiungere un account bancario");
 
                 BankAccount newBankAccount = new BankAccount(iban, iva);
                 BankAccountDao bankAccountDao = RetroFitHolder.retrofit.create(BankAccountDao.class);
@@ -223,7 +224,7 @@ public class ProfileController {
                         throw new ConnectionException("Errore di connessione");
                     UserHolder.getSeller().setBankAccount(response.body());
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.errorBody().toString());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -246,7 +247,7 @@ public class ProfileController {
                         throw new ConnectionException("Errore di connessione");
                     UserHolder.user = response.body();
                 } else {
-                    throw new ConnectionException("Errore di connessione");
+                    throw new ConnectionException(response.message());
                 }
             } catch (IOException e) {
                 throw new ConnectionException("Errore di connessione");
@@ -265,13 +266,17 @@ public class ProfileController {
     public static boolean isUrlFormatValid(String url) {
         if (url == null)
             return false;
-        return url.matches("[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)");
+        return url.matches("(https?://www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)");
     }
 
     public static boolean isIbanFormatValid(String iban) {
         if (iban == null)
             return false;
-        return iban.matches("^[A-Z]{2}[0-9]{2}(?:[ ]?[0-9]{4}){4}(?:[ ]?[0-9]{1,2})?$");
+        // IBAN ITALIANO: 2 lettere + 2 cifre + 1 lettera + 22 cifre
+        // REGEX ITALIANA: ^[A-Z]{2}[0-9]{2}[A-Z][0-9]{22}$
+
+        // IBAN GENERICO: 2 lettere + 13-30 cifre o lettere
+        return iban.matches("^[A-Z]{2}(?:[ ]?[0-9A-Z]){13,30}$");
     }
 
     public static boolean isIvaFormatValid(String iva) {

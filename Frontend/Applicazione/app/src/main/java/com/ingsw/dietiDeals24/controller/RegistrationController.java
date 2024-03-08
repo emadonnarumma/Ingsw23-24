@@ -105,14 +105,14 @@ public class RegistrationController implements RetroFitHolder {
         if (username == null)
             return false;
 
-        final String regular_expression = "^[A-Za-z][A-Za-z0-9_!?]{0,29}$";
+        final String regular_expression = "^[A-Za-z][\\w!#$%&'*+/=?`{|}~^-]{0,29}$";
         Pattern pattern = Pattern.compile(regular_expression);
         Matcher matcher = pattern.matcher(username);
         return matcher.matches();
     }
 
     private static boolean isEmailFormatValid(String email) {
-        if (email == null) {
+        if (email == null || email.length()>320) {
             return false;
         }
 

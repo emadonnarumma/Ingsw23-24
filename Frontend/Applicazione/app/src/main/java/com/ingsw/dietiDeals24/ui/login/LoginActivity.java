@@ -17,6 +17,7 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.registration.activity.RegistrationActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
 
@@ -119,15 +120,15 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
 
                 if (e.getCause() instanceof AuthenticationException) {
                     runOnUiThread(() -> loginButton.revertAnimation());
-                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Credenziali errate"));
+                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(getApplicationContext(), "Credenziali errate"));
 
                 } else if (e.getCause() instanceof ConnectionException) {
                     runOnUiThread(() -> loginButton.revertAnimation());
-                    runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Errore di connessione"));
+                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(getApplicationContext(), "Errore di connessione"));
                 }
 
             } catch (InterruptedException e) {
-                throw new RuntimeException("Interruzione non prevista");
+                runOnUiThread(() -> PopupGeneratorOf.errorPopup(getApplicationContext(), "Operazione interrotta, riprovare"));
             }
         });
     }

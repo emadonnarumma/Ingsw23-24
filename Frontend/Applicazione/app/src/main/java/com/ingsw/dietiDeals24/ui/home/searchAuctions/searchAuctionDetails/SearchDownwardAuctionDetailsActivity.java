@@ -16,7 +16,6 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
-import com.ingsw.dietiDeals24.ui.home.searchAuctions.MakeSilentBidActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsActivity {

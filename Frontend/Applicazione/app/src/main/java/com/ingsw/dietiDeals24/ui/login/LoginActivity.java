@@ -15,7 +15,7 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.OnNavigateToHomeActivityFragmentListener;
+import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.registration.activity.RegistrationActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.LogInController;
@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
             try {
 
                 LogInController.login(email, password).get();
-                onNavigateToHomeActivityFragmentRequest("HomeFragment", getApplicationContext());
+                OnNavigateToHomeActivityFragmentListener.navigateTo("HomeFragment", getApplicationContext());
 
             } catch (ExecutionException e) {
 

@@ -19,6 +19,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
                             throw new RuntimeException(e);
                         }
 
-                        onNavigateToHomeActivityFragmentRequest("SilentAuctionAttributesFragment", getApplicationContext());
+                        OnNavigateToHomeActivityFragmentListener.navigateTo("SilentAuctionAttributesFragment", getApplicationContext());
                     })
                     .setNegativeButton("No", null)
                     .show();

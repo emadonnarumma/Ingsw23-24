@@ -4,12 +4,14 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.MakeBidDao;
+import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -57,11 +59,10 @@ public class MakeBidController implements RetroFitHolder {
             try {
                 MakeBidDao makeBidDao = retrofit.create(MakeBidDao.class);
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
-                Date date = Date.from(Instant.now());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ITALY);
+                Date date = new Date();
                 String formattedTimestamp = sdf.format(date);
-                Timestamp currentTimestamp = Timestamp.valueOf(formattedTimestamp);
-                SilentBid silentBid = new SilentBid(amount, BidStatus.PENDING, currentTimestamp, UserHolder.getBuyer(), silentAuction);
+                SilentBid silentBid = new SilentBid(amount, BidStatus.PENDING, formattedTimestamp, UserHolder.getBuyer(), silentAuction);
                 Response<SilentBid> response = makeBidDao.makeSilentBid(silentBid, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
@@ -74,6 +75,25 @@ public class MakeBidController implements RetroFitHolder {
                 throw new ConnectionException("Errore di connessione");
             }
             return false;
+        });
+    }
+
+    public static CompletableFuture<ReverseBid> getCurrentReverseBid() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<ReverseBid> response = myAuctiondDetailsDao.getMinPricedReverseBidsByAuctionId(reverseAuction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
         });
     }
 }

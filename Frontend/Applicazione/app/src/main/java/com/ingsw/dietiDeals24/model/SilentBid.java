@@ -10,7 +10,7 @@ public class SilentBid extends Bid {
     private Buyer buyer;
     private SilentAuction silentAuction;
 
-    public SilentBid(Double moneyAmount, BidStatus status, Timestamp timestamp, Buyer buyer,
+    public SilentBid(Double moneyAmount, BidStatus status, String timestamp, Buyer buyer,
                      SilentAuction silentAuction) {
 
         super(moneyAmount, status, timestamp);

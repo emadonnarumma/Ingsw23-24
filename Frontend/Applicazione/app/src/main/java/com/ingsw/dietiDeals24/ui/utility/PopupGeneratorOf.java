@@ -5,7 +5,6 @@ import static java.lang.Thread.sleep;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
@@ -61,8 +60,23 @@ public class PopupGeneratorOf {
                 });
     }
 
-
-
+    public static void bidSendedSuccessfullyPopup(Context context) {
+        PopupDialog.getInstance(context)
+                .setStyle(Styles.SUCCESS)
+                .setHeading("Offerta inviata!")
+                .setDescription("La tua offerta è stata inviata con successo.")
+                .setPopupDialogIcon(R.drawable.ic_check_circle)
+                .setPopupDialogIconTint(R.color.green)
+                .setCancelable(false)
+                .setDismissButtonText("OK")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onDismissClicked(Dialog dialog) {
+                        super.onDismissClicked(dialog);
+                        OnNavigateToHomeActivityFragmentListener.navigateTo("MyBidsFragment", context);
+                    }
+                });
+    }
 
     public static void areYouSureToLogoutPopup(Context context) {
         PopupDialog.getInstance(context)

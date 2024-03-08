@@ -8,7 +8,7 @@ public class DownwardBid extends Bid {
     private Buyer buyer;
     private DownwardAuction downwardAuction;
 
-    public DownwardBid(Double moneyAmount, BidStatus status, Timestamp timestamp, Buyer buyer,
+    public DownwardBid(Double moneyAmount, BidStatus status, String timestamp, Buyer buyer,
                        DownwardAuction downwardAuction) {
         super(moneyAmount, status, timestamp);
         this.buyer = buyer;

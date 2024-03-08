@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.searchAuctions;
+package com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -10,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
+import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
 
-public class MakeSilentBidActivity extends AppCompatActivity {
+public class MakeSilentBidActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
     private EditText bidEditText;
     private CircularProgressButton sendBidButton;
 
@@ -28,6 +30,10 @@ public class MakeSilentBidActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         bidEditText = findViewById(R.id.bid_edit_text_make_silent_bid);
+        setupBidButton();
+    }
+
+    private void setupBidButton() {
         sendBidButton = findViewById(R.id.send_button_make_silent_bid);
         sendBidButton.setOnClickListener(v -> {
             sendBidButton.startAnimation();
@@ -36,10 +42,8 @@ public class MakeSilentBidActivity extends AppCompatActivity {
                 try {
                     MakeBidController.makeSilentBid(Double.parseDouble(bidEditText.getText().toString())).get();
                     runOnUiThread(() -> {
-                        new AlertDialog.Builder(this)
-                                .setTitle("Offerta inviata")
-                                .setPositiveButton("OK", null)
-                                .show();
+                        sendBidButton.revertAnimation();
+                        PopupGeneratorOf.bidSendedSuccessfullyPopup(this);
                     });
 
                 } catch (ExecutionException e) {
@@ -51,10 +55,6 @@ public class MakeSilentBidActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
             }).start();
-
-            sendBidButton.revertAnimation();
         });
     }
-
-
 }

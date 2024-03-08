@@ -8,7 +8,6 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
@@ -17,9 +16,8 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.InProgressSilentAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
-import com.ingsw.dietiDeals24.ui.home.searchAuctions.MakeSilentBidActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid.MakeSilentBidActivity;
 
 public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private SilentAuction auction;
@@ -88,8 +86,8 @@ public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActi
                             .show();
                 }
             } else {
-                Intent intent = new Intent(v.getContext(), MakeSilentBidActivity.class);
                 MakeBidController.setSilentAuction(auction);
+                Intent intent = new Intent(v.getContext(), MakeSilentBidActivity.class);
                 v.getContext().startActivity(intent);
             }
         });

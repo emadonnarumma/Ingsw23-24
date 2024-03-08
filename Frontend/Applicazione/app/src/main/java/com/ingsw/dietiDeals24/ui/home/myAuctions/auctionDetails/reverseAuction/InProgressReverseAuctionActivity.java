@@ -136,7 +136,6 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setupBottomSheetDialog() {
-
         questionMarkAuctionType.setText(R.string.reverse_auction_question);
         questionMarkExplanationAuctionType.setText(R.string.reverse_auction_description);
     }

@@ -119,6 +119,6 @@ public class User implements Serializable {
             return false;
 
         User user = (User) obj;
-        return user.getEmail().equals(email);
+        return user.getEmail().equals(email) && user.role.equals(role);
     }
 }

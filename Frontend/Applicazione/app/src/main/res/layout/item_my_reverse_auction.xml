@@ -142,7 +142,7 @@
         android:id="@+id/current_bid_icon_item_my_reverse_auction"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/ic_cash24dp"
+        android:background="@drawable/ic_cash_white24dp"
 
         android:layout_marginEnd="5dp"
         app:layout_constraintTop_toTopOf="@id/current_bid_hint_text_view_item_my_reverse_auction"

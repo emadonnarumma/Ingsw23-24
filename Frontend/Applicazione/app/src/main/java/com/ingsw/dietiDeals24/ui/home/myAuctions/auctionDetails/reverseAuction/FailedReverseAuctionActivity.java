@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,10 +16,10 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
-import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.ArrayList;
@@ -99,7 +98,7 @@ public class FailedReverseAuctionActivity extends AuctionDetailsActivity {
                             throw new RuntimeException(e);
                         }
 
-                        onNavigateToHomeActivityFragmentRequest("ReverseAuctionAttributesFragment", getApplicationContext());
+                        OnNavigateToHomeActivityFragmentListener.navigateTo("ReverseAuctionAttributesFragment", getApplicationContext());
                     })
                     .setNegativeButton("No", null)
                     .show();

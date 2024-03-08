@@ -113,6 +113,12 @@ public class HomeActivity extends AppCompatActivity {
         if ("MyAuctionFragment".equals(fragmentToOpen)) {
             navigationBarView.setSelectedItemId(R.id.navigation_my_auctions);
 
+        } else if ("MyBidsFragment".equals(fragmentToOpen)) {
+            navigationBarView.setSelectedItemId(R.id.navigation_my_bids);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_home, new MyBidsFragment())
+                    .commit();
+
         } else if ("SilentAuctionAttributesFragment".equals(fragmentToOpen)) {
             navigationBarView.setSelectedItemId(R.id.navigation_create_auction);
             getSupportFragmentManager().beginTransaction()

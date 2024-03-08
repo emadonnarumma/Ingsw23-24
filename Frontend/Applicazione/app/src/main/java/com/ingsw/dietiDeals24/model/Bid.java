@@ -8,9 +8,9 @@ public class Bid {
     private Integer idBid;
     private Double moneyAmount;
     private BidStatus status;
-    private Timestamp timestamp;
+    private String timestamp;
 
-    public Bid(Double moneyAmount, BidStatus status, Timestamp timestamp) {
+    public Bid(Double moneyAmount, BidStatus status, String timestamp) {
         this.moneyAmount = moneyAmount;
         this.status = status;
         this.timestamp = timestamp;
@@ -40,11 +40,11 @@ public class Bid {
         this.status = status;
     }
 
-    public Timestamp getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

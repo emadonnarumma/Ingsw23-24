@@ -10,7 +10,7 @@ public class ReverseBid extends Bid {
     private Seller seller;
     private ReverseAuction reverseAuction;
 
-    public ReverseBid(Double moneyAmount, BidStatus status, Timestamp timestamp,
+    public ReverseBid(Double moneyAmount, BidStatus status, String timestamp,
                       Seller seller, ReverseAuction reverseAuction) {
 
         super(moneyAmount, status, timestamp);

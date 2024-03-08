@@ -16,9 +16,8 @@ import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 
-import java.text.NumberFormat;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class SilentInProgressBidHolder extends RecyclerView.ViewHolder {
@@ -53,8 +52,7 @@ public class SilentInProgressBidHolder extends RecyclerView.ViewHolder {
                     try {
                         boolean isAccepted = MyAuctionDetailsController.acceptBid(silentBid.getIdBid()).get();
                         if (isAccepted) {
-
-                            activity.onNavigateToHomeActivityFragmentRequest("MyAuctionFragment", activity.getApplicationContext());
+                            OnNavigateToHomeActivityFragmentListener.navigateTo("MyAuctionFragment", activity.getApplicationContext());
                         }
                     } catch (ExecutionException e) {
                         v.post(() -> Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());

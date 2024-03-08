@@ -105,7 +105,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.home.searchAuctions.MakeSilentBidActivity"
+        <activity android:name=".ui.home.searchAuctions.makeBid.MakeSilentBidActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.home.searchAuctions.makeBid.MakeReverseBidActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

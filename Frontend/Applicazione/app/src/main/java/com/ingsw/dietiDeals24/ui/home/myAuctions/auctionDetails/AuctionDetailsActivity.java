@@ -18,16 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 import com.ingsw.dietiDeals24.R;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 
 import jp.hamcheesedev.outlinedtextview.CompatOutlinedTextView;
 
-public abstract class AuctionDetailsActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
+public abstract class AuctionDetailsActivity extends AppCompatActivity {
     protected ScrollView scrollView;
     protected Button greenButton, redButton;
     protected ImageButton questionMarkButton;

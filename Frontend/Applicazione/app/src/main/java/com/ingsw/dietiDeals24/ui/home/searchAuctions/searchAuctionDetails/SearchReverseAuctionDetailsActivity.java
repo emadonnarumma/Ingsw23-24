@@ -7,8 +7,8 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
@@ -17,7 +17,7 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
-import com.ingsw.dietiDeals24.ui.home.searchAuctions.MakeSilentBidActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid.MakeReverseBidActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsActivity {
@@ -57,13 +57,9 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
 
         descriptionTextView.setText(auction.getDescription());
-
         getMinBid();
-
         specificInformation1TextView.setText("Scade il: " + SearchAuctionDetailsController.getFormattedExpirationDate(auction));
-
         specificInformation2TextView.setVisibility(View.GONE);
-
         setGreenButton();
     }
 
@@ -86,8 +82,8 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
                             .show();
                 }
             } else {
-                Intent intent = new Intent(v.getContext(), MakeSilentBidActivity.class);
-                intent.putExtra("auction", auction);
+                MakeBidController.setReverseAuction(auction);
+                Intent intent = new Intent(v.getContext(), MakeReverseBidActivity.class);
                 v.getContext().startActivity(intent);
             }
         });

@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Response;
@@ -189,7 +191,6 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
         });
     }
 
-
     public static CompletableFuture<Boolean> acceptBid(int id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -242,12 +243,29 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     }
 
     public static String getRemainingWithdrawalTimeText(SilentBid silentBid) {
-        long currentTimestamp = System.currentTimeMillis();
-        long bidTimestamp = silentBid.getTimestamp().getTime();
-        long withdrawalTime = silentBid.getSilentAuction().getWithdrawalTime();
-        long remainingMillis = withdrawalTime - (currentTimestamp - bidTimestamp);
+        Calendar currentCalendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+        long currentTimestamp = currentCalendar.getTimeInMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ITALY);
+        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
+        Date bidDate = null;
 
+        try {
+            bidDate = sdf.parse(silentBid.getTimestamp());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long bidTimestamp;
+        if (bidDate != null) {
+            bidTimestamp = bidDate.getTime();
+        } else {
+            bidTimestamp = 0;
+        }
+
+        long withdrawalTime = silentBid.getSilentAuction().getWithdrawalTime() * 1000;
+        long remainingMillis = withdrawalTime - (currentTimestamp - bidTimestamp);
         long remainingSeconds = remainingMillis / 1000L;
+
 
         long months = remainingSeconds / (30 * 24 * 60 * 60);
         remainingSeconds %= 30 * 24 * 60 * 60;

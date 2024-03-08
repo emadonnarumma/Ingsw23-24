@@ -119,6 +119,7 @@
 
     <string name="withdrawal_time_question">Come scegliere il tempo massimo per ritirare l’offerta?</string>
     <string name="withdrawal_time_explanation">I compratori che ti faranno le offerte avranno un lasso di tempo entro e non oltre il quale potranno ritirarle se non le accetti in tempo. Sceglilo con cura!</string>
+    <string name="make_reverse_bid_phrase">Offri a meno</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

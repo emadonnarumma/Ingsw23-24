@@ -108,6 +108,7 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
 
                 RegistrationController.register().get();
                 goToHomeActivity();
+                requireActivity().runOnUiThread(() -> PopupGeneratorOf.successPopup(requireContext(), getString(R.string.registration_successful)));
 
             } catch(ExecutionException e){
 

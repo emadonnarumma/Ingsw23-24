@@ -120,15 +120,15 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
 
                 if (e.getCause() instanceof AuthenticationException) {
                     runOnUiThread(() -> loginButton.revertAnimation());
-                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(getApplicationContext(), "Credenziali errate"));
+                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(this, "Credenziali errate"));
 
                 } else if (e.getCause() instanceof ConnectionException) {
                     runOnUiThread(() -> loginButton.revertAnimation());
-                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(getApplicationContext(), "Errore di connessione"));
+                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(this, "Errore di connessione"));
                 }
 
             } catch (InterruptedException e) {
-                runOnUiThread(() -> PopupGeneratorOf.errorPopup(getApplicationContext(), "Operazione interrotta, riprovare"));
+                runOnUiThread(() -> PopupGeneratorOf.errorPopup(this, "Operazione interrotta, riprovare"));
             }
         });
     }

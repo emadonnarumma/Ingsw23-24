@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.formstate.LoginFormState;
+import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
@@ -56,9 +57,9 @@ public class LogInController implements RetroFitHolder {
                     tokenHolder.setToken(response.body().getToken());
                     Role role = currentUserDao.getRole(email, TokenHolder.getAuthToken()).execute().body();
                     if (role == Role.BUYER) {
-                        UserHolder.user = currentUserDao.getBuyerByEmail(email, TokenHolder.getAuthToken()).execute().body();
+                        UserHolder.user = new User(currentUserDao.getBuyerByEmail(email, TokenHolder.getAuthToken()).execute().body());
                     } else if (role == Role.SELLER) {
-                        UserHolder.user = currentUserDao.getSellerByEmail(email, TokenHolder.getAuthToken()).execute().body();
+                        UserHolder.user = new User(currentUserDao.getSellerByEmail(email, TokenHolder.getAuthToken()).execute().body());
                     }
                     return true;
                 } else if (response.code() == 403) {

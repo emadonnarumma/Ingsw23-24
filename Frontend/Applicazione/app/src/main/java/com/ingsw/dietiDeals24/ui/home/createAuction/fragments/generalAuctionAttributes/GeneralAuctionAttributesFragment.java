@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -49,6 +50,7 @@ import java.util.Locale;
 
 public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
+    private ImageView defaultImageView;
     private Uri currentPhotoUri;
 
     private KeyboardFocusManager keyboardFocusManager;
@@ -106,6 +108,9 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        defaultImageView = view.findViewById(R.id.default_create_auction_image_view);
+
         setupViews(view);
         setupKeyboardFocusManager(view);
         restoreData();
@@ -302,9 +307,13 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         if (selectedImages.isEmpty()) {
             deleteButton.setVisibility(View.GONE);
             deleteButton.setClickable(false);
+
+            defaultImageView.setVisibility(View.VISIBLE);
         } else {
             deleteButton.setVisibility(View.VISIBLE);
             deleteButton.setClickable(true);
+
+            defaultImageView.setVisibility(View.GONE);
         }
     }
 

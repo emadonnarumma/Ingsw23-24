@@ -28,6 +28,7 @@ import com.ingsw.dietiDeals24.ui.home.profile.my.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditRegionFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchFragment;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 
 public class HomeActivity extends AppCompatActivity {
     private NavigationBarView navigationBarView;
@@ -90,6 +91,7 @@ public class HomeActivity extends AppCompatActivity {
                         .commit();
             }else {
                 callback.setEnabled(false);
+                tryToDisconnect();
                 callback.setEnabled(true);
             }
         }
@@ -191,5 +193,8 @@ public class HomeActivity extends AppCompatActivity {
         return navigationBarView;
     }
 
+    private void tryToDisconnect() {
 
+        PopupGeneratorOf.areYouSureToLogoutPopup(this);
+    }
 }

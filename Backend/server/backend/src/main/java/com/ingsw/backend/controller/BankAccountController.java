@@ -1,6 +1,5 @@
 package com.ingsw.backend.controller;
 
-import com.ingsw.backend.model.Buyer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ingsw.backend.model.BankAccount;
 import com.ingsw.backend.model.Seller;
-import com.ingsw.backend.model.User;
 import com.ingsw.backend.service.BankAccountService;
 import com.ingsw.backend.service.UserService;
 

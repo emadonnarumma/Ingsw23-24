@@ -37,7 +37,7 @@ public class BidController {
 	@Qualifier("mainAuctionService")
 	private AuctionService auctionService;
 	
-		@Autowired
+	@Autowired
 	@Qualifier("mainUserService")
 	private UserService userService;
 

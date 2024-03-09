@@ -18,8 +18,10 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -74,10 +76,8 @@ public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
         greenButton.setText("VISUALIZZA DETTAGLI DELL'AFFARE");
         greenButton.setOnClickListener(v -> {
 
+            PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
             new Thread(() -> {
-                runOnUiThread(() -> {
-                    progressBar.setVisibility(View.VISIBLE);
-                });
                 try {
                     SilentBid bid = MyAuctionDetailsController.getWinningSilentBidByAuctionId(auction.getIdAuction()).get();
                     runOnUiThread(() -> {
@@ -85,16 +85,16 @@ public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
                         bidsRecyclerView.setAdapter(new AuctionBidAdapter(List.of(bid), this, false));
                         bidsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
                         bidsRecyclerView.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
                         bottomSheetDialog.show();
                     });
                 } catch (ExecutionException e) {
                     runOnUiThread(() -> {
-                        progressBar.setVisibility(View.GONE);
                         ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
                     });
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
+                } finally {
+                    runOnUiThread(loading::dismissDialog);
                 }
             }).start();
         });

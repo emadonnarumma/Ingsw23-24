@@ -40,8 +40,6 @@ public abstract class SearchAuctionDetailsActivity extends AppCompatActivity imp
     protected CardView cardView;
     protected SliderView sliderView;
 
-    protected ProgressBar progressBar;
-
     protected BottomSheetDialog bottomSheetQuestionMarkDialog;
     protected TextView questionMarkAuctionType, questionMarkExplanationAuctionType;
 
@@ -51,18 +49,12 @@ public abstract class SearchAuctionDetailsActivity extends AppCompatActivity imp
         setContentView(R.layout.activity_search_auction_details);
 
         setupBottomSheetDialog();
-        setupProgressBar();
         setupActionBar();
         setupSliderView();
         setupScrollView();
         setupButtons();
         setupTextViews();
 
-    }
-
-    private void setupProgressBar() {
-        progressBar = findViewById(R.id.progress_bar_search_auction_details);
-        progressBar.setVisibility(View.GONE);
     }
 
     private void setupActionBar() {

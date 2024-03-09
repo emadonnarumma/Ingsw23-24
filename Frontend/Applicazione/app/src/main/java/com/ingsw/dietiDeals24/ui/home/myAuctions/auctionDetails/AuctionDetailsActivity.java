@@ -46,7 +46,6 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
     protected BottomSheetDialog bottomSheetDialog;
     protected BottomSheetDialog bottomSheetQuestionMarkDialog;
     protected RecyclerView bidsRecyclerView;
-    protected ProgressBar progressBar;
     protected TextView emptyBidsTextView;
 
     public BottomSheetDialog getBottomSheetDialog() {
@@ -72,12 +71,6 @@ public abstract class AuctionDetailsActivity extends AppCompatActivity {
         setupSliderView();
         setupActionBar();
         setupRecyclerView();
-        setupProgressBar();
-    }
-
-    private void setupProgressBar() {
-        progressBar = findViewById(R.id.progress_bar_auction_details);
-        progressBar.setVisibility(View.GONE);
     }
 
     private void setupActionBar() {

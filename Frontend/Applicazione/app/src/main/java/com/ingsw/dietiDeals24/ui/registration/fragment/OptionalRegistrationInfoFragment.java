@@ -35,7 +35,6 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     private SmartMaterialSpinner<String> regionSmartSpinner;
     private EditText bioEditText;
     private User registeringUser = RegistrationController.user;
-    private ProgressBar progressBar;
 
 
     @Override
@@ -132,8 +131,6 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     }
 
     private void findTheViews() {
-        progressBar = requireView().findViewById(R.id.progress_bar_registration_optional_info);
-        progressBar.setVisibility(View.GONE);
         regionSmartSpinner = requireView().findViewById(R.id.region_spinner_registration);
         bioEditText = requireView().findViewById(R.id.bio_edit_text_registration);
     }

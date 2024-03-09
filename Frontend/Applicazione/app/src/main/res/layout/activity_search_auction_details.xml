@@ -287,16 +287,5 @@
         android:background="#80000000"
         android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar_search_auction_details"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:indeterminate="true"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

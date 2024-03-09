@@ -30,6 +30,7 @@ import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.EditableExternalLinksAdapter;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.concurrent.ExecutionException;
 
@@ -44,7 +45,6 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private TextView userRegionTextView;
     private CircularProgressButton editProfileButton;
     private CircularProgressButton logoutButton;
-    private ProgressBar progressBar;
     private BottomSheetDialog bottomSheetDialog;
 
 
@@ -69,7 +69,6 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userRegionTextView = view.findViewById(R.id.user_region_profile);
         editProfileButton = view.findViewById(R.id.edit_profile_button_profile);
         logoutButton = view.findViewById(R.id.logout_button_profile);
-        progressBar = view.findViewById(R.id.progress_bar_profile);
 
         userBioTextView.setMovementMethod(new ScrollingMovementMethod());
         showUserData();
@@ -122,7 +121,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     }
 
     private void setupSellerSwitch() {
-        progressBar.setVisibility(View.VISIBLE);
+        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
         new Thread(() -> {
             if (sellerSwitch.isChecked()) {
                 try {
@@ -143,7 +142,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
                         ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
                     });
                 } finally {
-                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+                    requireActivity().runOnUiThread(loading::dismissDialog);
                 }
             } else {
                 try {
@@ -160,7 +159,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
                         ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
                     });
                 } finally {
-                    requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+                    requireActivity().runOnUiThread(loading::dismissDialog);
                 }
             }
         }).start();

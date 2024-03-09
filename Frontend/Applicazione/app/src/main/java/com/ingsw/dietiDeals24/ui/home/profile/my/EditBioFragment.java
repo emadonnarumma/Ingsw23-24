@@ -16,7 +16,9 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -24,7 +26,6 @@ import java.util.concurrent.ExecutionException;
 public class EditBioFragment extends FragmentOfHomeActivity {
     private ImageView doneButton;
     private TextInputEditText bioEditText;
-    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,14 +40,13 @@ public class EditBioFragment extends FragmentOfHomeActivity {
 
         doneButton = view.findViewById(R.id.done_button_edit_bio);
         bioEditText = view.findViewById(R.id.bio_edit_text_edit_bio);
-        progressBar = view.findViewById(R.id.progress_bar_edit_bio);
 
         bioEditText.setText(UserHolder.user.getBio());
         doneButton.setOnClickListener(v -> onDoneButtonClick());
     }
 
     private void onDoneButtonClick() {
-        progressBar.setVisibility(View.VISIBLE);
+        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
         new Thread(() -> {
             try {
                 if(isBioChanged()) {
@@ -62,7 +62,7 @@ public class EditBioFragment extends FragmentOfHomeActivity {
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
             } finally {
-                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+                requireActivity().runOnUiThread(loading::dismissDialog);
             }
         }).start();
     }
@@ -73,6 +73,8 @@ public class EditBioFragment extends FragmentOfHomeActivity {
     }
 
     private boolean isBioChanged() {
+        if (bioEditText.getText() == null)
+            return UserHolder.user.getBio() != null && !UserHolder.user.getBio().isEmpty();
         return !Objects.equals(bioEditText.getText().toString(), UserHolder.user.getBio());
     }
 }

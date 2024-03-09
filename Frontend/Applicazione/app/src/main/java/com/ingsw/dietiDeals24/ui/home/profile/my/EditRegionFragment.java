@@ -17,7 +17,9 @@ import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
@@ -25,7 +27,6 @@ import java.util.concurrent.ExecutionException;
 public class EditRegionFragment extends FragmentOfHomeActivity {
     private ImageView doneButton;
     private SmartMaterialSpinner<String> regionSmartSpinner;
-    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,7 +41,6 @@ public class EditRegionFragment extends FragmentOfHomeActivity {
 
         doneButton = view.findViewById(R.id.done_button_edit_region);
         regionSmartSpinner = view.findViewById(R.id.region_spinner_edit_region);
-        progressBar = view.findViewById(R.id.progress_bar_edit_region);
 
         initRegionSmartSpinner();
         putUserRegionOnSpinner();
@@ -64,13 +64,15 @@ public class EditRegionFragment extends FragmentOfHomeActivity {
     }
 
     private void onDoneButtonClick() {
-        progressBar.setVisibility(View.VISIBLE);
+        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
         new Thread(() -> {
             try {
-                if(isRegionChanged()) {
-                    ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem())).get();
-                    sleep(500);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.region_updated));
+                if(regionSmartSpinner.getSelectedItem() != null) {
+                    if(isRegionChanged()) {
+                        ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem())).get();
+                        sleep(500);
+                        requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.region_updated));
+                    }
                 }
                 requireActivity().runOnUiThread(this::goToProfileFragment);
             } catch (InterruptedException e) {
@@ -78,7 +80,7 @@ public class EditRegionFragment extends FragmentOfHomeActivity {
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
             } finally {
-                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+                requireActivity().runOnUiThread(loading::dismissDialog);
             }
         }).start();
     }

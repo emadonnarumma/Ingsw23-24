@@ -18,7 +18,9 @@ import androidx.annotation.NonNull;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.concurrent.ExecutionException;
 
@@ -27,7 +29,6 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
     private EditText titleEditText;
     private EditText urlEditText;
     private ImageView doneButton;
-    private ProgressBar progressBar;
 
     private TextWatcher externalLinkTextWatcher = new TextWatcher() {
         @Override
@@ -63,7 +64,6 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
         titleEditText = view.findViewById(R.id.edit_title_edit_external_link);
         urlEditText = view.findViewById(R.id.edit_url_edit_external_link);
         doneButton = view.findViewById(R.id.done_button_edit_external_link);
-        progressBar = view.findViewById(R.id.progress_bar_edit_external_link);
 
         initEditTexts();
         titleScreen.setText(R.string.edit_external_link_phrase);
@@ -102,7 +102,7 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
     }
 
     private void onDoneButtonClick() {
-        progressBar.setVisibility(View.VISIBLE);
+        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
         new Thread(() -> {
             try {
                 if(isExternalLinkChanged()) {
@@ -119,7 +119,7 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
             } finally {
-                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+                requireActivity().runOnUiThread(loading::dismissDialog);
             }
         }).start();
     }

@@ -17,8 +17,10 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -73,13 +75,12 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
         greenButton.setText("VISUALIZZA LE OFFERTE");
         greenButton.setOnClickListener(v -> {
 
+            PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
             new Thread(() -> {
-                runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
                 try {
                     List<SilentBid> bids = MyAuctionDetailsController.getInProgressSilentBidsByAuctionId(auction.getIdAuction()).get();
                     runOnUiThread(() -> {
                         if (bids.isEmpty()) {
-                            progressBar.setVisibility(View.GONE);
                             emptyBidsTextView.setText("Nessuna offerta disponibile");
                             emptyBidsTextView.setVisibility(View.VISIBLE);
                             bidsRecyclerView.setVisibility(View.GONE);
@@ -89,17 +90,17 @@ public class InProgressSilentAuctionActivity extends AuctionDetailsActivity {
                             bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this, true));
                             bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressSilentAuctionActivity.this));
                             bidsRecyclerView.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
                             bottomSheetDialog.show();
                         }
                     });
                 } catch (ExecutionException e) {
                     runOnUiThread(() -> {
                         ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        progressBar.setVisibility(View.GONE);
                     });
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
+                } finally {
+                    runOnUiThread(loading::dismissDialog);
                 }
             }).start();
         });

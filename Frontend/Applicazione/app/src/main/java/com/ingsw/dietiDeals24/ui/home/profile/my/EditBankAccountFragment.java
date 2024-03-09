@@ -19,7 +19,9 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.concurrent.ExecutionException;
 
@@ -28,7 +30,6 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
     private EditText ibanEditText;
     private EditText ivaEditText;
     private ImageView doneButton;
-    private ProgressBar progressBar;
 
     private TextWatcher bankAccountTextWatcher = new TextWatcher() {
         @Override
@@ -64,7 +65,6 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
         ibanEditText = view.findViewById(R.id.edit_iban_edit_bank_account);
         ivaEditText = view.findViewById(R.id.edit_iva_edit_bank_account);
         doneButton = view.findViewById(R.id.done_button_edit_bank_account);
-        progressBar = view.findViewById(R.id.progress_bar_edit_bank_account);
 
         initEditTexts();
         titleScreen.setText(R.string.edit_bank_account_phrase);
@@ -103,7 +103,7 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
     }
 
     private void onDoneButtonClick() {
-        progressBar.setVisibility(View.VISIBLE);
+        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
         new Thread(() -> {
             try {
                 if(isBankAccountChanged()) {
@@ -120,7 +120,7 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
             } finally {
-                requireActivity().runOnUiThread(() -> progressBar.setVisibility(View.GONE));
+                requireActivity().runOnUiThread(loading::dismissDialog);
             }
         }).start();
     }

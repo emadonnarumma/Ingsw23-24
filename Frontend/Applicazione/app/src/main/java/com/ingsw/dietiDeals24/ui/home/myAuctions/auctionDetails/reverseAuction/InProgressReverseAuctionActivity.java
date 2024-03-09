@@ -18,8 +18,10 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
+import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,10 +77,8 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
         greenButton.setText("VISUALIZZA OFFERTA CORRENTE");
         greenButton.setOnClickListener(v -> {
 
+            PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
             new Thread(() -> {
-                runOnUiThread(() -> {
-                    progressBar.setVisibility(View.VISIBLE);
-                });
                 try {
                     List<ReverseBid> bids = new ArrayList<>();
                     ReverseBid reverseBid = MyAuctionDetailsController.getMinPricedReverseBidByAuctionId(auction.getIdAuction()).get();
@@ -87,7 +87,6 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
                     }
                     runOnUiThread(() -> {
                         if (bids.isEmpty()) {
-                            progressBar.setVisibility(View.GONE);
                             emptyBidsTextView.setText("Nessuna offerta disponibile");
                             emptyBidsTextView.setVisibility(View.VISIBLE);
                             bidsRecyclerView.setVisibility(View.GONE);
@@ -97,17 +96,17 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
                             bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this, true));
                             bidsRecyclerView.setLayoutManager(new LinearLayoutManager(InProgressReverseAuctionActivity.this));
                             bidsRecyclerView.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
                             bottomSheetDialog.show();
                         }
                     });
                 } catch (ExecutionException e) {
                     runOnUiThread(() -> {
-                        progressBar.setVisibility(View.GONE);
                         ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
                     });
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
+                } finally {
+                    runOnUiThread(loading::dismissDialog);
                 }
             }).start();
         });

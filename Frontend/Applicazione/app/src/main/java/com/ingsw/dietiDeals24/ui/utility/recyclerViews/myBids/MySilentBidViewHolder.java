@@ -1,0 +1,126 @@
+package com.ingsw.dietiDeals24.ui.utility.recyclerViews.myBids;
+
+import android.net.Uri;
+import android.util.Base64;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.model.SilentBid;
+import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
+import com.smarteist.autoimageslider.SliderView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class MySilentBidViewHolder extends RecyclerView.ViewHolder {
+
+    private TextView containerTextView, titleTextView, myOfferTextView,
+            bidStatusTextView;
+
+    private ImageView bidTypeIconImageView, bidStatusIconImageView;
+
+    private SliderView imagesSliderView;
+
+    private CardView cardView;
+
+    public MySilentBidViewHolder(@NonNull View itemView) {
+        super(itemView);
+
+        containerTextView = itemView.findViewById(R.id.container_text_view_item_my_silent_bid);
+        titleTextView = itemView.findViewById(R.id.bid_title_item_my_silent_bid);
+
+        bidStatusTextView = itemView.findViewById(R.id.bid_status_text_view_item_my_silent_bid);
+
+        bidTypeIconImageView = itemView.findViewById(R.id.bid_type_icon_item_my_silent_bid);
+        bidStatusIconImageView = itemView.findViewById(R.id.bid_status_icon_item_my_silent_bid);
+
+        imagesSliderView = itemView.findViewById(R.id.images_item_my_silent_bid);
+        cardView = itemView.findViewById(R.id.card_view_item_my_silent_bid);
+
+        myOfferTextView = itemView.findViewById(R.id.my_offer_view_item_my_silent_bid);
+    }
+
+    public void bind(SilentBid silentBid) {
+
+        myOfferTextView.setText("Mia offerta: " + NumberFormatter.formatPrice(silentBid.getMoneyAmount()));
+
+        SilentAuction auction = silentBid.getSilentAuction();
+
+        titleTextView.setText(auction.getTitle());
+
+        BidStatus status = silentBid.getStatus();
+        switch (status) {
+            case PENDING:
+                bidStatusTextView.setText(R.string.in_progress_phrase);
+                bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_yellow));
+                break;
+
+            case ACCEPTED:
+                bidStatusTextView.setText(R.string.sucessfull_phrase);
+                bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_green));
+                break;
+
+            case DECLINED:
+                bidStatusTextView.setText(R.string.failed_phrase);
+                bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_red));
+                break;
+
+            case EXPIRED:
+                bidStatusTextView.setText(R.string.expired_phrase);
+                bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_red));
+                break;
+
+            default:
+                break;
+        }
+
+        if (auction.getImages() != null) {
+            bindImages(auction);
+        }
+    }
+
+    private void bindImages(SilentAuction silentAuction) {
+        SmallScreenSliderAdapter adapter = new SmallScreenSliderAdapter(itemView.getContext());
+        imagesSliderView.setSliderAdapter(adapter);
+
+        ArrayList<Uri> images = new ArrayList<>();
+        if (silentAuction.getImages() != null && !silentAuction.getImages().isEmpty()) {
+            for (int i = 0; i < silentAuction.getImages().size(); i++) {
+                images.add(base64ToUri(silentAuction.getImages().get(i).getBase64Data()));
+            }
+        } else {
+            Uri defaultImageUri = Uri.parse("android.resource://com.ingsw.dietiDeals24/" + R.drawable.no_image_available);
+            images.add(defaultImageUri);
+        }
+
+        adapter.renewItems(images);
+    }
+
+    private Uri base64ToUri(String base64) {
+        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
+        File tempFile;
+        try {
+            tempFile = File.createTempFile("image", "jpg", itemView.getContext().getCacheDir());
+            tempFile.deleteOnExit();
+            FileOutputStream fos = new FileOutputStream(tempFile);
+            fos.write(decodedString);
+            fos.close();
+            return Uri.fromFile(tempFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}

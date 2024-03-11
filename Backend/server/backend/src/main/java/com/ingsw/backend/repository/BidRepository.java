@@ -13,6 +13,8 @@ import org.springframework.data.repository.query.Param;
 public interface BidRepository extends JpaRepository<Bid, Integer> {
 
 	List<SilentBid> findAllSilentBidsByBuyer(Buyer buyer);
+	
+	List<DownwardBid> findAllDownwardBidsByBuyer(Buyer buyer);
 
 	List<ReverseBid> findAllReverseBidsBySeller(Seller seller);
 

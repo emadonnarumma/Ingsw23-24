@@ -79,6 +79,21 @@ public class BidController {
 
 		return ResponseEntity.ok(bids);
     }
+	
+	@GetMapping("/downward/buyer/{buyerEmail}")
+    public ResponseEntity<List<DownwardBid>> getAllDownwardBidsByBuyer(@PathVariable String buyerEmail) {
+        
+		Optional<User> buyer = userService.getUser(buyerEmail);
+		
+		if (buyer.isEmpty() || buyer.get().getRole() != Role.BUYER) {
+			
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+        
+		List<DownwardBid> bids = bidService.getAllDownwardBidsByBuyer((Buyer) buyer.get());
+
+		return ResponseEntity.ok(bids);
+    }
 
     @GetMapping("/reverse/seller/{sellerEmail}")
     public ResponseEntity<List<ReverseBid>> getAllReverseBidsBySeller(@PathVariable String sellerEmail) {

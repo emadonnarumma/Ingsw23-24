@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 
 public class ReverseBid extends Bid {
 
+    private final String type =  "REVERSE";
     private Seller seller;
     private ReverseAuction reverseAuction;
 

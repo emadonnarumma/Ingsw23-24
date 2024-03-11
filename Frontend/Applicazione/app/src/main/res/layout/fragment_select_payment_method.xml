@@ -3,13 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/auction_type_phrase"
+        android:text="@string/select_payment_method_phrase"
+        android:gravity="center"
         android:fontFamily="@font/verdana_bold"
         android:textSize="25sp"
 
@@ -19,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
-        android:id="@+id/frame_layout"
+        android:id="@+id/frame_layout_select_payment_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,36 +31,35 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/reverse_auction_type_button_buyer_auction_types"
+            android:id="@+id/credit_card_button_select_payment_method"
             android:layout_width="wrap_content"
             android:layout_height="350dp"
             android:background="@drawable/rounded_corners_brown"
-            android:src="@drawable/reverse_arrow"
+            android:scaleType="fitXY"
+            android:src="@drawable/credit_card"
             android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/question_mark_buyer_reverse_auction"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_question_mark_white_24dp"
+            android:src="@drawable/question_mark_black_24dp"
             android:layout_gravity="top|end"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="15dp"/>
     </FrameLayout>
 
-    <TextView
+    <jp.hamcheesedev.outlinedtextview.OutlinedTextView
         android:id="@+id/inverse_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reverse_phrase"
+        android:text="@string/credit_card_phrase"
         android:textStyle="bold"
         android:textSize="40sp"
         android:fontFamily="@font/verdana_bold"
         android:textColor="#FFFFFF"
-        android:shadowColor="#000000"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="2"
+        app:strokeColor="@color/black"
+        app:strokeWidth="10dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -477,6 +477,4 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
         return string;
     }
-
-
 }

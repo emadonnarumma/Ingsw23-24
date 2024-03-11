@@ -18,7 +18,7 @@
         android:layout_marginTop="50dp"
 
 
-        app:endIconDrawable="@drawable/ic_question_mark_24dp_"
+        app:endIconDrawable="@drawable/ic_question_mark_white_24dp"
         app:endIconMode="custom"
 
         app:layout_constraintTop_toTopOf="parent"

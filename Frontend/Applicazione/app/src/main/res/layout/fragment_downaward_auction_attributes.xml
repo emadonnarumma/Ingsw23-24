@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"
 
         app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_question_mark_24dp_">
+        app:endIconDrawable="@drawable/ic_question_mark_white_24dp">
 
 
 
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
 
         app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_question_mark_24dp_"
+        app:endIconDrawable="@drawable/ic_question_mark_white_24dp"
 
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
 
         app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_question_mark_24dp_"
+        app:endIconDrawable="@drawable/ic_question_mark_white_24dp"
 
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"

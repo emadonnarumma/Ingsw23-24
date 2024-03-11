@@ -120,6 +120,11 @@
     <string name="withdrawal_time_question">Come scegliere il tempo massimo per ritirare l’offerta?</string>
     <string name="withdrawal_time_explanation">I compratori che ti faranno le offerte avranno un lasso di tempo entro e non oltre il quale potranno ritirarle se non le accetti in tempo. Sceglilo con cura!</string>
     <string name="make_reverse_bid_phrase">Offri a meno</string>
+    <string name="select_payment_method_phrase">Seleziona il metodo di pagamento</string>
+    <string name="credit_card_phrase">Carta di credito</string>
+    <string name="credit_card_code_phrase">Codice della carta</string>
+    <string name="name_phrase">Nome</string>
+    <string name="surname_phrase">Cognome</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

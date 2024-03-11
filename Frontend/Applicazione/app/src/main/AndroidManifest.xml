@@ -113,6 +113,12 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.home.searchAuctions.makePayment.MakePaymentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"

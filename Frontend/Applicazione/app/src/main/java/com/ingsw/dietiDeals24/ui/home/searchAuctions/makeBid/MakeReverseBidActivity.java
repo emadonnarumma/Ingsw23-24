@@ -21,6 +21,8 @@ import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.ExecutionException;
 
 public class MakeReverseBidActivity extends AppCompatActivity {
@@ -50,7 +52,7 @@ public class MakeReverseBidActivity extends AppCompatActivity {
         setupBidEditText();
         setupActionBar();
         setupBidButton();
-//        setupKeyboardFocusManager();
+        setupKeyboardFocusManager();
     }
 
 
@@ -79,16 +81,26 @@ public class MakeReverseBidActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (bidEditText.getText() == null || bidEditText.getText().toString().isEmpty()) {
+                String bidString = s.toString().replace("€", "");
+                if (bidString.isEmpty()) {
                     return;
                 }
-                double bid = Double.parseDouble(bidEditText.getText().toString().replace("€", ""));
+                double bid = Double.parseDouble(bidString);
                 if (currentBid != null && bid < currentBid.getMoneyAmount()) {
                     sendBidButton.setEnabled(true);
                 } else if (bid < MakeBidController.getReverseAuction().getStartingPrice()) {
                     sendBidButton.setEnabled(true);
                 } else {
                     bidEditText.setError("Devi fare un offerta minore di quella attuale");
+                }
+            }
+        });
+
+        bidEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    bidEditText.setText(bidEditText.getText().toString() + "€");
                 }
             }
         });
@@ -106,7 +118,8 @@ public class MakeReverseBidActivity extends AppCompatActivity {
             }
             new Thread(() -> {
                 try {
-                    MakeBidController.makeReverseBid(Double.parseDouble(bidEditText.getText().toString())).get();
+                    double amount = Double.parseDouble(deleteEuroSimbol(bidEditText.getText().toString()));
+                    MakeBidController.makeReverseBid(amount).get();
                     runOnUiThread(() -> {
                         sendBidButton.revertAnimation();
                         PopupGeneratorOf.bidSendedSuccessfullyPopup(this);
@@ -142,5 +155,12 @@ public class MakeReverseBidActivity extends AppCompatActivity {
         } else {
             currentBidTextView.setText("Offerta attuale: " + NumberFormatter.formatPrice(currentBid.getMoneyAmount()));
         }
+    }
+
+    private String deleteEuroSimbol(String string) {
+        if (string.endsWith("€"))
+            return string.substring(0, string.length() - 1);
+
+        return string;
     }
 }

@@ -1,14 +1,17 @@
 package com.ingsw.dietiDeals24.controller;
 
 
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
+import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
 import com.ingsw.dietiDeals24.network.dao.SearchAuctionsDao;
 
 import java.io.IOException;
@@ -462,6 +465,27 @@ public class SearchAuctionsController implements RetroFitHolder {
                 throw new ConnectionException("Errore di connessione");
             }
             return new ArrayList<>();
+        });
+    }
+
+    public static CompletableFuture<ReverseBid> getCurrentReverseBid(ReverseAuction reverseAuction) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
+                Response<ReverseBid> response = myAuctiondDetailsDao.getMinPricedReverseBidsByAuctionId(reverseAuction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 404) {
+                    return null;
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Token scaduto");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
         });
     }
 }

@@ -120,7 +120,7 @@
                 android:layout_marginTop="5dp"
 
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/ic_question_mark_24dp_"
+                android:background="@drawable/ic_question_mark_white_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

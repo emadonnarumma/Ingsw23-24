@@ -47,7 +47,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container_view_make_payment"
+        android:id="@+id/fragment_container_make_payment"
         android:layout_width="0dp"
         android:layout_height="0dp"
 

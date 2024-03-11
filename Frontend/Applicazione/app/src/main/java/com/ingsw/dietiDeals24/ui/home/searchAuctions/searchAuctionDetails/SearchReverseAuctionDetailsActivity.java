@@ -60,6 +60,8 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
         getMinBid();
         specificInformation1TextView.setText("Scade il: " + SearchAuctionDetailsController.getFormattedExpirationDate(auction));
         specificInformation2TextView.setVisibility(View.GONE);
+        specificInformation3TextView.setVisibility(View.GONE);
+        specificInformation4TextView.setVisibility(View.GONE);
         setGreenButton();
     }
 

@@ -10,7 +10,7 @@
         android:id="@+id/navigation_search"
         android:name="com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchFragment"
         android:label="@string/bottom_nav_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search_auctions" />
 
 
     <fragment

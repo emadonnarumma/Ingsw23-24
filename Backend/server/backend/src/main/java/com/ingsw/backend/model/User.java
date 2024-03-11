@@ -42,15 +42,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 		  
 		})
 public abstract class User implements UserDetails{
-
+	
 	@Column(nullable = false)
 	private String name;
 	
 	@Id
-	@Column(length = 320)
+	@Column(length = 330)
 	private String email;
 
-	
 	@Column(nullable = false)
 	private String password;
 

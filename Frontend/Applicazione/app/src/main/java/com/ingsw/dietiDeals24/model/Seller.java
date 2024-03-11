@@ -16,6 +16,11 @@ public class Seller extends User {
         this.bankAccount = bankAccount;
     }
 
+    public Seller(Seller body) {
+        super(body);
+        this.bankAccount = body.bankAccount;
+    }
+
     public BankAccount getBankAccount() {
         return bankAccount;
     }

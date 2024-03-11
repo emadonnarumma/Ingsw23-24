@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
@@ -31,6 +32,21 @@ public class MakeSilentBidActivity extends AppCompatActivity implements OnNaviga
         super.onResume();
         bidEditText = findViewById(R.id.bid_edit_text_make_silent_bid);
         setupBidButton();
+        setupActionBar();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupActionBar() {
+        setSupportActionBar(findViewById(R.id.toolbar_make_silent_bid));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupBidButton() {

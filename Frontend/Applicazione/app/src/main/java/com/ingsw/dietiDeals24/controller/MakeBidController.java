@@ -14,9 +14,7 @@ import com.ingsw.dietiDeals24.network.dao.MakeBidDao;
 import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
@@ -78,6 +76,30 @@ public class MakeBidController implements RetroFitHolder {
         });
     }
 
+    public static CompletableFuture<Boolean> makeReverseBid(double amount) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MakeBidDao makeBidDao = retrofit.create(MakeBidDao.class);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ITALY);
+                Date date = new Date();
+                String formattedTimestamp = sdf.format(date);
+                ReverseBid reverseBid = new ReverseBid(amount, BidStatus.PENDING, formattedTimestamp, UserHolder.getSeller(), reverseAuction);
+                Response<ReverseBid> response = makeBidDao.makeReverseBid(reverseBid, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return true;
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Errore di autenticazione");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return false;
+        });
+    }
+
     public static CompletableFuture<ReverseBid> getCurrentReverseBid() {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -86,6 +108,8 @@ public class MakeBidController implements RetroFitHolder {
 
                 if (response.isSuccessful()) {
                     return response.body();
+                } else if (response.code() == 404) {
+                    return null;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");
                 }

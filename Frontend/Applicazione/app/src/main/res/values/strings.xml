@@ -127,6 +127,10 @@
     <string name="credit_card_code_phrase">Codice della carta</string>
     <string name="name_phrase">Nome</string>
     <string name="surname_phrase">Cognome</string>
+    <string name="go_to_summary_phrase">Vai al riepilogo</string>
+    <string name="buy_phrase">COMPRA</string>
+    <string name="cancel_phrase">ANNULLA</string>
+    <string name="cvv_phrase">CVV</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

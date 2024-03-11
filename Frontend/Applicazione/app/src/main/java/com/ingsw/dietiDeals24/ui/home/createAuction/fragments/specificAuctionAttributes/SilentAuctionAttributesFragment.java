@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -293,7 +292,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
     }
 
     private void setupDatePicker(View view) {
-        dateTextView = view.findViewById(R.id.date_text_silent_auction_attributes);
+        dateTextView = view.findViewById(R.id.expiration_date_text_view_credit_card_attributes);
         dateTextView.setFocusable(false);
         dateTextView.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
@@ -16,6 +17,7 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.activities.MakePaymentActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsActivity {
@@ -95,7 +97,9 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
                             .show();
                 }
             } else {
-                //TODO implemetare l'acquisto di un asta al ribasso
+                MakeBidController.setDownwardAuction(auction);
+                Intent intent = new Intent(v.getContext(), MakePaymentActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
     }

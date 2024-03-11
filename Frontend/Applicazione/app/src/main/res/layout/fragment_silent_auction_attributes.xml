@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date_text_silent_auction_attributes">
+        app:layout_constraintTop_toBottomOf="@id/expiration_date_text_view_credit_card_attributes">
 
         <TextView
             android:id="@+id/withdrawal_time_text_view_silent_auction_attributes"
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/date_text_silent_auction_attributes"
+        android:id="@+id/expiration_date_text_view_credit_card_attributes"
         android:layout_width="280dp"
         android:layout_height="150dp"
         android:background="@drawable/rounded_corners_green"

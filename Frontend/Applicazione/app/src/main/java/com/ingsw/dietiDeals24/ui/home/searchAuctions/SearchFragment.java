@@ -48,7 +48,7 @@ public class SearchFragment extends FragmentOfHomeActivity {
 
         executorService = Executors.newSingleThreadExecutor();
 
-        return inflater.inflate(com.ingsw.dietiDeals24.R.layout.fragment_search, container, false);
+        return inflater.inflate(com.ingsw.dietiDeals24.R.layout.fragment_search_auctions, container, false);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class SearchFragment extends FragmentOfHomeActivity {
         super.onViewCreated(view, savedInstanceState);
         setBackButtonEnabled(false);
 
-        recyclerView = view.findViewById(R.id.auctions_search);
+        recyclerView = view.findViewById(R.id.auctions_fragment_summary);
         progressBar = view.findViewById(R.id.progress_bar_search_auctions);
 
         setupSearchBar(view);

@@ -20,4 +20,3 @@ public interface ExternalLinkDao {
     @DELETE("externalLink/{id}")
     Call<Void> deleteExternalLink(@Path("id") Integer id, @Header("Authorization") String token);
 }
-// <3 ~Pea

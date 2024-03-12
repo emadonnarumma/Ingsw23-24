@@ -76,10 +76,10 @@ public class SearchReverseAuctionViewHolder extends RecyclerView.ViewHolder {
 
         if (currentBid == null) {
             currentBidHintTextView.setText("Prezzo iniziale:");
-            currentBidTextView.setText(NumberFormatter.formatPrice(reverseAuction.getStartingPrice()) + " €");
+            currentBidTextView.setText(NumberFormatter.formatPrice(reverseAuction.getStartingPrice()));
         } else {
             currentBidHintTextView.setText("Offerta attuale:");
-            currentBidTextView.setText(NumberFormatter.formatPrice(currentBid.getMoneyAmount()) + " €");
+            currentBidTextView.setText(NumberFormatter.formatPrice(currentBid.getMoneyAmount()));
         }
     }
 

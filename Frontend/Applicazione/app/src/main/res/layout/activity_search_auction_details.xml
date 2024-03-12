@@ -194,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/verdana_bold"
-                android:text="Prezzo corrente: 20 €"
+                android:text="CARICAMENTO..."
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_large"

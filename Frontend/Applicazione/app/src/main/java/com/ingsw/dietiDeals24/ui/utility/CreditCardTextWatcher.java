@@ -15,7 +15,6 @@ public class CreditCardTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // noop
     }
 
     @Override
@@ -26,8 +25,8 @@ public class CreditCardTextWatcher implements TextWatcher {
     }
 
     private boolean isInputCorrect(Editable s, int totalSymbols, int dividerModulo, char divider) {
-        boolean isCorrect = s.length() <= totalSymbols; // check size of entered string
-        for (int i = 0; i < s.length(); i++) { // check that every element is right
+        boolean isCorrect = s.length() <= totalSymbols;
+        for (int i = 0; i < s.length(); i++) {
             if (i > 0 && (i + 1) % dividerModulo == 0) {
                 isCorrect &= divider == s.charAt(i);
             } else {

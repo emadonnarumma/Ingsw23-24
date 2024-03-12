@@ -19,6 +19,9 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid.MakeReverseBidActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+
+import java.util.concurrent.ExecutionException;
 
 public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private ReverseAuction auction;
@@ -108,15 +111,17 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
     }
 
     private void getMinBid() {
-
-        SearchAuctionDetailsController.getMinReverseBid(auction.getId()).thenAccept(bid -> {
-            minBid = bid;
+        try {
+            minBid = SearchAuctionDetailsController.getMinReverseBid(auction.getId()).get();
             if (minBid != null) {
                 priceTextView.setText("Offerta attuale: " + NumberFormatter.formatPrice(minBid.getPrice()));
-
             } else {
-                priceTextView.setText("Offerta attuale: Nessun offerta");
+                priceTextView.setText("Nessuna offerta");
             }
-        });
+        } catch (ExecutionException e) {
+            ToastManager.showToast(this, e.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

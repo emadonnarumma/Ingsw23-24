@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.utility.recyclerViews.myBids;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MyBidDetailsController;
+import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
+import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.Bid;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseBid;
+import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
+import com.ingsw.dietiDeals24.ui.home.myBids.myBidDetails.MyDownwardBidDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.myBids.myBidDetails.MyReverseBidDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.myBids.myBidDetails.MySilentBidDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.searchAuctionDetails.SearchDownwardAuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.searchAuctionDetails.SearchReverseAuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.searchAuctionDetails.SearchSilentAuctionDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +85,34 @@ public class MyBidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         } else if (holder instanceof MyReverseBidViewHolder) {
             ((MyReverseBidViewHolder) holder).bind((ReverseBid) bid);
         }
+
+        holder.itemView.setOnClickListener(v -> startMyBidDetailsActivity(holder, bid, v));
     }
+
+
 
     @Override
     public int getItemCount() {
         return bids.size();
+    }
+
+    private void startMyBidDetailsActivity(RecyclerView.ViewHolder holder, Bid bid, View v) {
+
+        Intent intent;
+
+        if (bid instanceof SilentBid) {
+            intent = new Intent(v.getContext(), MySilentBidDetailsActivity.class);
+
+        } else if (bid instanceof DownwardBid) {
+            intent = new Intent(v.getContext(), MyDownwardBidDetailsActivity.class);
+
+        } else {
+            intent = new Intent(v.getContext(), MyReverseBidDetailsActivity.class);
+        }
+
+        MyBidDetailsController.setBid(bid);
+
+        v.getContext().startActivity(intent);
+
     }
 }

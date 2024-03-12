@@ -48,7 +48,5 @@ public class Bid {
         this.timestamp = timestamp;
     }
 
-    public Double getPrice() {
-        return moneyAmount;
-    }
+
 }

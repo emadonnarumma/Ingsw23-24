@@ -22,24 +22,7 @@ public class MyBidsController implements RetroFitHolder {
     private static List<DownwardBid> downwardBids = new ArrayList<>();
     private static List<ReverseBid> reverseBids = new ArrayList<>();
 
-    public static CompletableFuture<Boolean> deleteBid(Integer idBid) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                MyBidsDao myBidsDao = retrofit.create(MyBidsDao.class);
-                Response<Boolean> response = myBidsDao.deleteBid(idBid, TokenHolder.getAuthToken()).execute();
 
-                if (response.isSuccessful()) {
-                    return response.body();
-                } else if (response.code() == 403) {
-                    throw new AuthenticationException("Token scaduto");
-                }
-
-            } catch (IOException e) {
-                throw new ConnectionException("Errore di connessione");
-            }
-            return false;
-        });
-    }
 
 
     public static CompletableFuture<List<ReverseBid>> getReverseBids(String email) {

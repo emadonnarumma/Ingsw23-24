@@ -26,6 +26,12 @@
             android:name=".ui.home.searchAuctions.searchAuctionDetails.SearchAuctionDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.myBids.myBidDetails.MyBidDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.home.myAuctions.auctionDetails.AuctionDetailsActivity"
             android:exported="false" />
@@ -96,6 +102,19 @@
             android:name=".ui.home.searchAuctions.searchAuctionDetails.SearchReverseAuctionDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.myBids.myBidDetails.MySilentBidDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myBids.myBidDetails.MyDownwardBidDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.myBids.myBidDetails.MyReverseBidDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.myAuctions.auctionDetails.reverseAuction.InProgressReverseAuctionActivity"
             android:exported="false"
@@ -116,6 +135,8 @@
         <activity android:name=".ui.home.searchAuctions.makePayment.activities.MakePaymentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+
 
 
 

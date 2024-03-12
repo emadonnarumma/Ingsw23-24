@@ -163,7 +163,7 @@
         android:id="@+id/current_bid_text_view_item_reverse_auction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0,00€"
+        android:text=""
         android:fontFamily="@font/verdana"
         android:textColor="@color/white"
 

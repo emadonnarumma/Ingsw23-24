@@ -16,6 +16,7 @@ import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -52,10 +53,8 @@ public class SearchDownwardAuctionViewHolder extends RecyclerView.ViewHolder {
     public void bind(DownwardAuction downwardAuction) {
         titleTextView.setText(downwardAuction.getTitle());
         auctionTypeTextView.setText(AuctionType.toItalianString(downwardAuction.getType()));
-        buyNowTextView.setText(downwardAuction.getCurrentPrice() + " €");
-
+        buyNowTextView.setText(NumberFormatter.formatPrice(downwardAuction.getCurrentPrice()));
         auctionCategoryTextView.setText(Category.toItalianString(downwardAuction.getCategory()));
-
         bindImages(downwardAuction);
     }
 

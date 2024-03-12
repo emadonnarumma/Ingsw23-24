@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.network.dao;
 
+import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentBid;
 
@@ -14,4 +15,7 @@ public interface MakeBidDao {
 
     @POST("bid/reverse")
     Call<ReverseBid> makeReverseBid(@Body ReverseBid reverseBid, @Header("Authorization") String token);
+
+    @POST("bid/downward")
+    Call<DownwardBid> makeDownwardBid(@Body DownwardBid downwardBid, @Header("Authorization") String token);
 }

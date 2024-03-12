@@ -104,10 +104,10 @@
         android:id="@+id/buy_now_icon_item_downward_auction"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/ic_cart_shopping_24dp"
+        android:layout_marginStart="20dp"
 
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
+        android:background="@drawable/ic_cart_shopping_24dp"
         app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
         app:layout_constraintTop_toBottomOf="@id/title_text_view_item_downward_auction" />
 

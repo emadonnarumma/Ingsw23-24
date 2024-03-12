@@ -20,6 +20,7 @@ import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
 import com.mancj.materialsearchbar.MaterialSearchBar;
@@ -56,7 +57,7 @@ public class SearchFragment extends FragmentOfHomeActivity {
         super.onViewCreated(view, savedInstanceState);
         setBackButtonEnabled(false);
 
-        recyclerView = view.findViewById(R.id.auctions_fragment_summary);
+        recyclerView = view.findViewById(R.id.auctions_recycler_view_search_auctions);
         progressBar = view.findViewById(R.id.progress_bar_search_auctions);
 
         setupSearchBar(view);

@@ -2,7 +2,9 @@ package com.ingsw.dietiDeals24.controller;
 
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.model.CreditCard;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
@@ -25,6 +27,15 @@ public class MakeBidController implements RetroFitHolder {
     private static SilentAuction silentAuction;
     private static ReverseAuction reverseAuction;
     private static DownwardAuction downwardAuction;
+    private static CreditCard creditCard;
+
+    public static CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public static void setCreditCard(String cardNumber, String ownerName, String ownerSurname, String cvv, String expirationDate) {
+        creditCard = new CreditCard(cardNumber, ownerName, ownerSurname, cvv, expirationDate);
+    }
 
     public static SilentAuction getSilentAuction() {
         return silentAuction;
@@ -97,6 +108,30 @@ public class MakeBidController implements RetroFitHolder {
                 throw new ConnectionException("Errore di connessione");
             }
             return false;
+        });
+    }
+
+    public static CompletableFuture<DownwardBid> makeDownwardBid() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                MakeBidDao makeBidDao = retrofit.create(MakeBidDao.class);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ITALY);
+                Date date = new Date();
+                String formattedTimestamp = sdf.format(date);
+                DownwardBid downwardBid = new DownwardBid(downwardAuction.getCurrentPrice(), BidStatus.PENDING, formattedTimestamp, UserHolder.getBuyer(), downwardAuction);
+                Response<DownwardBid> response = makeBidDao.makeDownwardBid(downwardBid, TokenHolder.getAuthToken()).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body();
+                } else if (response.code() == 403) {
+                    throw new AuthenticationException("Errore di autenticazione");
+                }
+
+            } catch (IOException e) {
+                throw new ConnectionException("Errore di connessione");
+            }
+            return null;
         });
     }
 

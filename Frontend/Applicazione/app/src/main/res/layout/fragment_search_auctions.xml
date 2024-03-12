@@ -18,8 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
     <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
         android:id="@+id/filter_button_search"
         android:layout_width="150dp"
@@ -45,7 +43,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_fragment_summary"
+        android:id="@+id/card_view_search_auctions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
@@ -56,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@id/filter_button_search">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/auctions_fragment_summary"
+            android:id="@+id/auctions_recycler_view_search_auctions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/ms_material_grey_400" />

@@ -221,4 +221,10 @@ public class BidDbService implements BidService {
 			bidRepository.save(bid);
 		}
 	}
+
+	@Override
+	public List<DownwardBid> getAllDownwardBidsByBuyer(Buyer buyer) {
+		
+		return bidRepository.findAllDownwardBidsByBuyer(buyer);
+	}
 }

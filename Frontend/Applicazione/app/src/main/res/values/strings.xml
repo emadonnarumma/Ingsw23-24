@@ -8,6 +8,8 @@
     <string name="sucessfull_phrase">VENDUTA</string>
     <string name="failed_phrase">FALLITA</string>
 
+    <string name="expired_phrase">SCADUTA</string>
+
     <!-- Login -->
     <string name="login_phrase">Accedi</string>
     <string name="registration_phrase">Non sei ancora registrato?</string>

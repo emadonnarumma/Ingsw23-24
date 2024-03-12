@@ -140,7 +140,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
                 Response<Boolean> response = myAuctiondDetailsDao.deleteAuction(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
-                    MyAuctionsController.setUpdatedAll  (false);
+                    MyAuctionsController.setUpdatedAll(false);
                     return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");

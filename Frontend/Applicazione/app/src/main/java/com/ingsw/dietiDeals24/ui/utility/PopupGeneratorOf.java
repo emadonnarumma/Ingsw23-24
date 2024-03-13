@@ -132,7 +132,6 @@ public class PopupGeneratorOf {
         context.startActivity(intent);
     }
 
-
     public static void areYouSureToDeleteLinkPopup(Fragment fragment, ExternalLink externalLink) {
         PopupDialog.getInstance(fragment.getContext())
                 .setStyle(Styles.STANDARD)

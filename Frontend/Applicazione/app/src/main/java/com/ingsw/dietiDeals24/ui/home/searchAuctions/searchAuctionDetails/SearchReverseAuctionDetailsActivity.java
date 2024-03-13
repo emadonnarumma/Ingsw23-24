@@ -114,7 +114,7 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
         try {
             minBid = SearchAuctionDetailsController.getMinReverseBid(auction.getId()).get();
             if (minBid != null) {
-                priceTextView.setText("Offerta attuale: " + NumberFormatter.formatPrice(minBid.getPrice()));
+                priceTextView.setText("Offerta attuale: " + NumberFormatter.formatPrice(minBid.getMoneyAmount()));
             } else {
                 priceTextView.setText("Nessuna offerta");
             }

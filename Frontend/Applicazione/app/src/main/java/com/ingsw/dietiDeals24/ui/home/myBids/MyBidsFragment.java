@@ -15,23 +15,32 @@ import android.widget.ProgressBar;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyBidsController;
+import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.DownwardBid;
+import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.ReverseBid;
+import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myBids.MyBidAdapter;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MyBidsFragment extends FragmentOfHomeActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private MyBidsViewModel mViewModel;
+
+    private ExecutorService executorService;
 
     public static MyBidsFragment newInstance() {
         return new MyBidsFragment();
@@ -40,6 +49,9 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        executorService = Executors.newSingleThreadExecutor();
+
         return inflater.inflate(R.layout.fragment_my_bids, container, false);
     }
 
@@ -59,11 +71,37 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+    }
+
     private void updateBids() {
+
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+
+        executorService = Executors.newSingleThreadExecutor();
+
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
 
-        new Thread(() -> {
+
+        executorService.submit(() -> {
+
             try {
                 List<SilentBid> silentBids = MyBidsController.getSilentBids(UserHolder.user.getEmail()).get();
                 List<DownwardBid> downwardBids = MyBidsController.getDownwardBids(UserHolder.user.getEmail()).get();
@@ -87,6 +125,6 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+        });
     }
 }

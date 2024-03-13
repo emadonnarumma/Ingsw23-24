@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttr
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -47,11 +49,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
+    private HomeActivity parentActivity;
+    private Context parentContext;
 
     private TextInputLayout initialPriceTextInputLayout, minimumPriceTextInputLayout, decrementAmountTextInputLayout;
     private BottomSheetDialog initialPriceBottomSheetDialog, minimumPriceBottomSheetDialog, decrementAmountBottomSheetDialog;
-
-
 
     private TextView decrementTimeTextView;
     private EditText initialPriceEditText, minimumPriceEditText, decrementAmountEditText;
@@ -73,9 +75,10 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBackButtonEnabled(true);
-
         viewModel = GeneralAuctionAttributesViewModel.getInstance();
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
+        parentActivity = (HomeActivity) requireActivity();
+        parentContext = parentActivity.getApplicationContext();
         setupLists();
         setupWheelViewStyle();
     }
@@ -316,10 +319,11 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
-        createAuctionButton.setOnClickListener(v -> {
+        createAuctionButton.setOnClickListener(v -> new Thread(() -> {
+            parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
 
             if (fieldsEmpty()) {
-                Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
+                parentActivity.runOnUiThread(() -> Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show());
                 return;
             }
 
@@ -350,21 +354,17 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                     calculateNextDecrement()
             );
 
-            createAuctionButton.startAnimation();
 
             try {
+
                 List<Image> images = ImageController.convertUriListToImageList(getContext(), uriImages);
                 newDownwardAuction.setImages(images);
                 CreateAuctionController.createAuction(newDownwardAuction).get();
                 viewModel.setNewAuction(new MutableLiveData<>());
-                createAuctionButton.revertAnimation();
-
-                getParentFragmentManager().beginTransaction().replace(
-                        R.id.fragment_container_home,
-                        new MyAuctionFragment()
-                ).commit();
-
-                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
+                parentActivity.runOnUiThread(() -> {
+                    createAuctionButton.revertAnimation();
+                    parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
+                });
 
             } catch (ExecutionException e) {
 
@@ -376,12 +376,10 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                     requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
                 }
 
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
+            } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }).start());
     }
 
     private boolean auctionIsSetWell(double initialPrice, double secretMinimumPrice, double decrementAmount) {

@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -45,12 +47,13 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity implements DatePickerDialog.OnDateSetListener {
+    private HomeActivity parentActivity;
+    private Context parentContext;
 
     private ImageView questionMark;
     private BottomSheetDialog bottomSheetDialog;
     private TextView dateTextView, withdrawalTimeTextView;
     private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
-
     private WheelView.WheelViewStyle wheelViewStyle;
 
     private List<String> hourList, minuteList, dayList, monthList;
@@ -68,6 +71,8 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
 
         viewModel = GeneralAuctionAttributesViewModel.getInstance();
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
+        parentActivity = (HomeActivity) requireActivity();
+        parentContext = parentActivity.getApplicationContext();
         setupLists();
         setupWheelViewStyle();
     }
@@ -83,7 +88,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         questionMarkExplanation.setText(R.string.withdrawal_time_explanation);
     }
 
-    private void setupQuestionMark(@NonNull View view){
+    private void setupQuestionMark(@NonNull View view) {
 
         questionMark = view.findViewById(R.id.withdrawal_time_question_mark);
 
@@ -192,10 +197,9 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
 
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
-        createAuctionButton.setOnClickListener(v -> {
-
+        createAuctionButton.setOnClickListener(v -> new Thread(() -> {
             if (fieldsEmpty()) {
-                Toast.makeText(getContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT).show());
                 return;
             }
 
@@ -204,7 +208,6 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
             Category category = genericAuctionAttributesHolder.getCategory();
             Wear wear = genericAuctionAttributesHolder.getWear();
             String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
-
 
             SilentAuction newSilentAuction = new SilentAuction(
                     UserHolder.user,
@@ -217,22 +220,15 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
                     getWithDrawalTime()
             );
 
-            createAuctionButton.startAnimation();
+            parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
 
             try {
                 List<Image> images = ImageController.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
                 newSilentAuction.setImages(images);
                 CreateAuctionController.createAuction(newSilentAuction).get();
-                createAuctionButton.revertAnimation();
+                parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
                 viewModel.setNewAuction(new MutableLiveData<>());
-
-                getParentFragmentManager().beginTransaction().replace(
-                        R.id.fragment_container_home,
-                        new MyAuctionFragment()
-                ).commit();
-
-                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
-
+                parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
             } catch (ExecutionException e) {
 
                 if (e.getCause() instanceof AuthenticationException) {
@@ -247,7 +243,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
                 throw new RuntimeException(e);
             }
 
-        });
+        }).start());
     }
 
     private long getWithDrawalTime() {

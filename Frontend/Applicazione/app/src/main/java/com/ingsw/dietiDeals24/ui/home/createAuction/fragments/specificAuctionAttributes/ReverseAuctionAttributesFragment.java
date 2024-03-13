@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttr
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -44,6 +46,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity implements DatePickerDialog.OnDateSetListener {
+    private HomeActivity parentActivity;
+    private Context parentContext;
 
     private TextInputLayout initialPriceTextInputLayout;
     private BottomSheetDialog initialPriceBottomSheetDialog;
@@ -63,6 +67,8 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
         super.onCreate(savedInstanceState);
         viewModel = GeneralAuctionAttributesViewModel.getInstance();
         genericAuctionAttributesHolder = viewModel.getNewAuction().getValue();
+        parentActivity = (HomeActivity) requireActivity();
+        parentContext = parentActivity.getApplicationContext();
     }
 
     @Nullable
@@ -88,7 +94,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
 
     private void setupBottomSheetDialogs() {
-        initialPriceBottomSheetDialog = new BottomSheetDialog(requireContext());
+        initialPriceBottomSheetDialog = new BottomSheetDialog(parentContext);
         initialPriceBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
 
         TextView questionMark = initialPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);
@@ -97,6 +103,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
         questionMark.setText(R.string.reverse_initial_price_question);
         questionMarkExplanation.setText(R.string.reverse_initial_price_explanation);
     }
+
     private void setupTextInputLayout(View view) {
 
         initialPriceTextInputLayout = view.findViewById(R.id.initial_price_layout_reverse_auction_attributes);
@@ -104,11 +111,9 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     }
 
     private void setupCreateAuctionButton(View view) {
-        createAuctionButton = view.findViewById(
-                R.id.create_auction_button_reverse_auction_attributes
-        );
-
-        createAuctionButton.setOnClickListener(v -> {
+        createAuctionButton = view.findViewById(R.id.create_auction_button_reverse_auction_attributes);
+        createAuctionButton.setOnClickListener(v -> new Thread(() -> {
+            parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
             String title = genericAuctionAttributesHolder.getTitle();
             String description = genericAuctionAttributesHolder.getDescription();
             Category category = genericAuctionAttributesHolder.getCategory();
@@ -131,36 +136,28 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
 
             try {
+
                 List<Image> images = ImageController.convertUriListToImageList(getContext(), uriImages);
                 newReverseAuction.setImages(images);
                 CreateAuctionController.createAuction(newReverseAuction).get();
-                createAuctionButton.revertAnimation();
+                parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
                 viewModel.setNewAuction(new MutableLiveData<>());
-
-                getParentFragmentManager().beginTransaction().replace(
-                        R.id.fragment_container_home,
-                        new MyAuctionFragment()
-                ).commit();
-
-                ((HomeActivity) requireActivity()).getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);
+                parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
 
             } catch (ExecutionException e) {
 
                 if (e.getCause() instanceof AuthenticationException) {
-                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
+                    parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
+                    parentActivity.runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
                 } else if (e.getCause() instanceof ConnectionException) {
-                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
-                } else if (e.getCause() instanceof StackOverflowError) {
-                    System.out.println(e.getCause().getMessage());
-                    throw new RuntimeException(e);
+                    parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
+                    parentActivity.runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
                 }
 
             } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }).start());
     }
 
     private String deleteMoneySimbol(String string) {

@@ -136,7 +136,7 @@
         android:id="@+id/create_auction_button_downward_auction_attributes"
         android:layout_width="200dp"
         android:layout_height="66dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/green"
         android:text="@string/create_downward_auction_phrase"
         android:textColor="@color/white"

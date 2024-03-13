@@ -10,20 +10,18 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GeneralAuctionAttributesViewModel extends ViewModel {
-    private static GeneralAuctionAttributesViewModel instance;
     private MutableLiveData<AuctionHolder> newAuction = new MutableLiveData<>();
 
-    private static class GeneralAuctionViewModelHolder {
+    private static class SingletonHolder {
         private static final GeneralAuctionAttributesViewModel INSTANCE = new GeneralAuctionAttributesViewModel();
     }
 
     private GeneralAuctionAttributesViewModel() {}
 
-    public static synchronized GeneralAuctionAttributesViewModel getInstance() {
-        return GeneralAuctionViewModelHolder.INSTANCE;
+    public static GeneralAuctionAttributesViewModel getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 
     public MutableLiveData<AuctionHolder> getNewAuction() {

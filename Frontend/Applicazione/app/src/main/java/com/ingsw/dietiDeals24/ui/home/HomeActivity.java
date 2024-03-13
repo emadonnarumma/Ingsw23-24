@@ -16,7 +16,7 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAtt
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.SilentAuctionAttributesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment;
 import com.ingsw.dietiDeals24.ui.home.myBids.MyBidsFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.AddBankAccountFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.AddExternalLinkFragment;
@@ -27,7 +27,7 @@ import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinksFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditRegionFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment;
-import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchFragment;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchAuctionsFragment;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 
 public class HomeActivity extends AppCompatActivity {
@@ -105,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(this, callback);
         setNavigatioBarView(findViewById(R.id.bottom_navigation_home));
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                new SearchFragment()).commit();
+                new SearchAuctionsFragment()).commit();
 
         checkRequestToOpenAFragmentFromAnOtherActivity();
     }
@@ -161,13 +161,13 @@ public class HomeActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.navigation_search) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                        new SearchFragment()).commit();
+                        new SearchAuctionsFragment()).commit();
                 return true;
 
             } else if (item.getItemId() == R.id.navigation_my_auctions) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
-                        new MyAuctionFragment()).commit();
+                        new MyAuctionsFragment()).commit();
                 return true;
 
             } else if (item.getItemId() == R.id.navigation_create_auction) {

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchFragment"
+        android:name="com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchAuctionsFragment"
         android:label="@string/bottom_nav_search"
         tools:layout="@layout/fragment_search_auctions" />
 
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_my_auctions"
-        android:name="com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment"
+        android:name="com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment"
         android:label="@string/bottom_nav_my_auctions"
         tools:layout="@layout/fragment_my_auctions" />
 

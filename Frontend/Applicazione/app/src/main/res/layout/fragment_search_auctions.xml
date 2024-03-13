@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
     android:layout_marginVertical="@dimen/activity_vertical_margin"
-    tools:context=".ui.home.searchAuctions.SearchFragment">
+    tools:context=".ui.home.searchAuctions.SearchAuctionsFragment">
 
     <ProgressBar
         android:id="@+id/progress_bar_search_auctions"
@@ -53,11 +53,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filter_button_search">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/auctions_recycler_view_search_auctions"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout_fragment_search_auctions"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/ms_material_grey_400" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_fragment_search_auctions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ms_material_grey_400"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.cardview.widget.CardView>
 
     <com.mancj.materialsearchbar.MaterialSearchBar

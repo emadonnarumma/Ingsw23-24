@@ -12,8 +12,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
-import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionFragment;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinksFragment;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 import com.saadahmedsoft.popupdialog.PopupDialog;
@@ -76,7 +75,7 @@ public class PopupGeneratorOf {
                         super.onDismissClicked(dialog);
                         homeActivity.getSupportFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.fragment_container_home, new MyAuctionFragment())
+                                .replace(R.id.fragment_container_home, new MyAuctionsFragment())
                                 .commit();
 
                         homeActivity.getNavigationBarView().setSelectedItemId(R.id.navigation_my_auctions);

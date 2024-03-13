@@ -37,7 +37,7 @@ public class MyAuctionsController implements RetroFitHolder {
     }
 
 
-    protected static void setUpdatedAll(boolean b) {
+    public static void setUpdatedAll(boolean b) {
         updatedSilent = b;
         updatedDownward = b;
         updatedReverse = b;

@@ -51,10 +51,10 @@ public class MyDownwardBidDetailsActivity extends MyBidDetailsActivity{
 
     private void setAuctionDetails() {
 
-        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.blue));
 
         auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
-        auctionTypeTextView.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+        auctionTypeTextView.setBackground(AppCompatResources.getDrawable(this, R.color.blue));
 
         categoryTextView.setText(Category.toItalianString(auction.getCategory()));
 

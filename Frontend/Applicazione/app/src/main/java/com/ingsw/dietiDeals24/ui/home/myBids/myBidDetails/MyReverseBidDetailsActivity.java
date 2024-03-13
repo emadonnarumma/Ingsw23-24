@@ -52,10 +52,10 @@ public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
 
     private void setAuctionDetails() {
 
-        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
 
         auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
-        auctionTypeTextView.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+        auctionTypeTextView.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
 
         categoryTextView.setText(Category.toItalianString(auction.getCategory()));
 

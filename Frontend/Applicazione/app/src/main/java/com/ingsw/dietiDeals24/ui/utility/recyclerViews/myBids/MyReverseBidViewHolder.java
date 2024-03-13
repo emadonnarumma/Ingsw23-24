@@ -68,12 +68,12 @@ public class MyReverseBidViewHolder extends RecyclerView.ViewHolder {
                 break;
 
             case ACCEPTED:
-                bidStatusTextView.setText(R.string.sucessfull_phrase);
+                bidStatusTextView.setText(R.string.accepted_phrase);
                 bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_green));
                 break;
 
             case DECLINED:
-                bidStatusTextView.setText(R.string.failed_phrase);
+                bidStatusTextView.setText(R.string.declined_phrase);
                 bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_red));
                 break;
 

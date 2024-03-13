@@ -82,6 +82,11 @@ public class MyDownwardBidViewHolder extends RecyclerView.ViewHolder {
                 bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_red));
                 break;
 
+            case PAYED:
+                bidStatusTextView.setText(R.string.payed_phrase);
+                bidStatusIconImageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circular_green));
+                break;
+
             default:
                 break;
         }

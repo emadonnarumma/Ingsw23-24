@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
+import com.ingsw.dietiDeals24.controller.MakePaymentController;
 import com.ingsw.dietiDeals24.ui.utility.ExpirationDateTextWatcher;
 import com.ingsw.dietiDeals24.ui.utility.FourDigitCardFormatWatcher;
 
@@ -53,7 +54,7 @@ public class CreditCardAttributesFragment extends FragmentOfMakePaymentActivity 
             String cardNumber = cardNumberEditText.getText().toString();
             String cvv = cvvEditText.getText().toString();
             String expirationDate = expirationDateEditText.getText().toString();
-            MakeBidController.setCreditCard(cardNumber, ownerName, ownerSurname, cvv, expirationDate);
+            MakePaymentController.setCreditCard(cardNumber, ownerName, ownerSurname, cvv, expirationDate);
 
             getParentFragmentManager()
                     .beginTransaction()

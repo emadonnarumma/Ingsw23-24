@@ -275,6 +275,8 @@
         android:text="Effettua pagamento"
         android:textColor="@color/white"
 
+        android:paddingHorizontal="110dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.5" />

@@ -1,9 +1,11 @@
 package com.ingsw.dietiDeals24.ui.home.myBids.myBidDetails;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
@@ -18,6 +20,9 @@ import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+
+import java.util.concurrent.ExecutionException;
 
 public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
 
@@ -103,18 +108,62 @@ public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
 
     private void setupPendingBidButton() {
 
-        bidButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        bidButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
         bidButton.setText("Offerta inviata");
     }
 
     private void setupDeclinedBidButton() {
         bidButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
         bidButton.setText("Offerta rifiutata");
+
+        Drawable trashIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete_forever);
+        trashIcon.setBounds(0, 0, trashIcon.getIntrinsicWidth(), trashIcon.getIntrinsicHeight());
+        bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
+
+        bidButton.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Conferma")
+                    .setMessage("Rimuovere l'offerta dalla cronologia?")
+                    .setPositiveButton("Si", (dialog, which) -> {
+                        try {
+                            MyBidDetailsController.deleteBid(bid.getIdBid()).get();
+                            finish();
+                        } catch (ExecutionException e) {
+                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        });
     }
 
     private void setupExpiredBidButton() {
         bidButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
         bidButton.setText("Asta scaduta");
+
+        Drawable trashIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete_forever);
+        trashIcon.setBounds(0, 0, trashIcon.getIntrinsicWidth(), trashIcon.getIntrinsicHeight());
+        bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
+
+        bidButton.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Conferma")
+                    .setMessage("Rimuovere l'offerta dalla cronologia?")
+                    .setPositiveButton("Si", (dialog, which) -> {
+                        try {
+                            MyBidDetailsController.deleteBid(bid.getIdBid()).get();
+                            finish();
+                        } catch (ExecutionException e) {
+                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        });
     }
     private void setupOwnerButton() {
 

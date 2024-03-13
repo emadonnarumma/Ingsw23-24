@@ -16,6 +16,5 @@ public interface MakeBidDao {
     @POST("bid/reverse")
     Call<ReverseBid> makeReverseBid(@Body ReverseBid reverseBid, @Header("Authorization") String token);
 
-    @POST("bid/downward")
-    Call<DownwardBid> makeDownwardBid(@Body DownwardBid downwardBid, @Header("Authorization") String token);
+
 }

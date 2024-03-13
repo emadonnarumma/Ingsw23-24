@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.ui.home.myBids.myBidDetails;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -76,6 +77,10 @@ public class MyDownwardBidDetailsActivity extends MyBidDetailsActivity{
     }
 
     private void setButton() {
+        Drawable shoppingCartIcon = ContextCompat.getDrawable(this, R.drawable.ic_cart_shopping_24dp);
+        shoppingCartIcon.setBounds(0, 0, shoppingCartIcon.getIntrinsicWidth(), shoppingCartIcon.getIntrinsicHeight());
+        bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, shoppingCartIcon, null);
+
         bidButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
         bidButton.setText("Acquistato per: " + NumberFormatter.formatPrice(bid.getMoneyAmount()));
     }

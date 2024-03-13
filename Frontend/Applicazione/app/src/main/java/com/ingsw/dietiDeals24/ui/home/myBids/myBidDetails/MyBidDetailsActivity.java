@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public abstract class MyBidDetailsActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
 
     protected ScrollView scrollView;
-    protected Button bidButton;
+    protected CircularProgressButton bidButton;
     protected ImageButton questionMarkButton;
     protected CircularProgressButton ownerButton;
 

@@ -11,6 +11,7 @@
     <string name="expired_phrase">SCADUTA</string>
     <string name="declined_phrase">RIFIUTATA</string>
     <string name="accepted_phrase">ACCETTATA</string>
+    <string name="payed_phrase">PAGATA</string>
 
     <!-- Login -->
     <string name="login_phrase">Accedi</string>

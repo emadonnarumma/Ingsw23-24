@@ -117,7 +117,7 @@ public class BidDbService implements BidService {
 
 		auction.setStatus(AuctionStatus.SUCCESSFUL);
 
-		downwardBid.setStatus(BidStatus.ACCEPTED);
+		downwardBid.setStatus(BidStatus.PAYED);
 
 		auctionRepository.save(auction);
 
@@ -226,5 +226,21 @@ public class BidDbService implements BidService {
 	public List<DownwardBid> getAllDownwardBidsByBuyer(Buyer buyer) {
 		
 		return bidRepository.findAllDownwardBidsByBuyer(buyer);
+	}
+
+	@Override
+	public Optional<Bid> payBid(Integer id) {
+		
+        Optional<Bid> optionalBid = bidRepository.findById(id);
+
+        if (optionalBid.isPresent()) {
+
+            Bid bid = optionalBid.get();
+            bid.setStatus(BidStatus.PAYED);
+
+            return Optional.of(bidRepository.save(bid));
+        }
+
+        return Optional.empty();
 	}
 }

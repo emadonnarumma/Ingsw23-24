@@ -4,5 +4,6 @@ public enum BidStatus {
     ACCEPTED,
     DECLINED,
     PENDING,
-    EXPIRED
+    EXPIRED,
+    PAYED
 }

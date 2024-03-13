@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.MakeBidController;
+import com.ingsw.dietiDeals24.controller.MakePaymentController;
+import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.model.Bid;
+import com.ingsw.dietiDeals24.model.CreditCard;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
@@ -34,6 +37,8 @@ public class SummaryFragment extends FragmentOfMakePaymentActivity {
 
     private RecyclerView auctionRecyclerView;
     private CircularProgressButton buyButton, cancelButton;
+
+    private CreditCard creditCard = MakePaymentController.getCreditCard();
 
     @Nullable
     @Override
@@ -58,9 +63,17 @@ public class SummaryFragment extends FragmentOfMakePaymentActivity {
     private void setupBuyButton(@NonNull View view) {
         buyButton = view.findViewById(R.id.buy_button_fragment_summary);
         buyButton.setOnClickListener(v -> new Thread(() -> {
-                    requireActivity().runOnUiThread(() -> buyButton.startAnimation());;
+                    requireActivity().runOnUiThread(() -> buyButton.startAnimation());
                     try {
-                        MakeBidController.makeDownwardBid().get();
+
+                        if (MakePaymentController.getAuction().getClass() == DownwardAuction.class) {
+
+                            MakePaymentController.makeDownwardBid().get();
+
+                        } else {
+                            MakePaymentController.payBid();
+                        }
+
                         requireActivity().runOnUiThread(() -> {
                             buyButton.revertAnimation();
                             PopupGeneratorOf.bidSendedSuccessfullyPopup(requireContext());
@@ -88,9 +101,9 @@ public class SummaryFragment extends FragmentOfMakePaymentActivity {
 
     @NonNull
     private static SearchAuctionAdapter getAdapterWithOneAuction() {
-        List<DownwardAuction> downwardAuctions = new ArrayList<>();
-        downwardAuctions.add(MakeBidController.getDownwardAuction());
-        SearchAuctionAdapter adapter = new SearchAuctionAdapter(new ArrayList<>(), downwardAuctions, new ArrayList<>());
+        List<Auction> auctions = new ArrayList<>();
+        auctions.add(MakePaymentController.getAuction());
+        SearchAuctionAdapter adapter = new SearchAuctionAdapter(auctions);
         return adapter;
     }
 
@@ -113,22 +126,32 @@ public class SummaryFragment extends FragmentOfMakePaymentActivity {
 
     private void setupTotalTextView(@NonNull View view) {
         totalTextView = view.findViewById(R.id.total_text_view_fragment_summary);
-        totalTextView.setText("TOTALE: " + NumberFormatter.formatPrice(MakeBidController.getDownwardAuction().getCurrentPrice()));
+
+        Bid bid = MakePaymentController.getBid();
+
+        if (bid == null) {
+
+            DownwardAuction downwardAuction = (DownwardAuction) MakePaymentController.getAuction();
+            totalTextView.setText("TOTALE: " + NumberFormatter.formatPrice(downwardAuction.getCurrentPrice()));
+
+        } else {
+            totalTextView.setText("TOTALE: " + NumberFormatter.formatPrice(bid.getMoneyAmount()));
+        }
     }
 
     private void setupExpirationDateTextView(@NonNull View view) {
         expirationDateTextView = view.findViewById(R.id.expiration_date_text_view_fragment_summary);
-        expirationDateTextView.setText(MakeBidController.getCreditCard().getExpirationDate());
+        expirationDateTextView.setText(creditCard.getExpirationDate());
     }
 
     private void setupCardCodeTextView(@NonNull View view) {
         cardCodeTextView = view.findViewById(R.id.card_code_text_view_fragment_summary);
-        cardCodeTextView.setText(MakeBidController.getCreditCard().getCardNumber().replace("-", " "));
+        cardCodeTextView.setText(creditCard.getCardNumber().replace("-", " "));
     }
 
     private void setupNameTextView(@NonNull View view) {
         ownerTextView = view.findViewById(R.id.name_text_view_fragment_summary);
-        ownerTextView.setText(MakeBidController.getCreditCard().getCardOwnerName() + " " + MakeBidController.getCreditCard().getCardOwnerSurname());
+        ownerTextView.setText(creditCard.getCardOwnerName() + " " + creditCard.getCardOwnerSurname());
     }
 
     private void setupPaymentMethodHintTextView(@NonNull View view) {
@@ -138,6 +161,6 @@ public class SummaryFragment extends FragmentOfMakePaymentActivity {
 
     private void setupAuctionOwnerTextView(@NonNull View view) {
         auctionOwnerTextView = view.findViewById(R.id.auction_owner_text_view_fragment_summary);
-        auctionOwnerTextView.setText("ANNUNCIO DI: " + MakeBidController.getDownwardAuction().getOwner().getName());
+        auctionOwnerTextView.setText("ANNUNCIO DI: " + MakePaymentController.getAuction().getOwner().getName());
     }
 }

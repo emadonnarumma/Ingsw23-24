@@ -41,6 +41,10 @@ public class SearchAuctionAdapter extends RecyclerView.Adapter<RecyclerView.View
         auctions.addAll(reverseAuctions);
     }
 
+    public SearchAuctionAdapter(List<Auction> auctions) {
+        this.auctions = auctions;
+    }
+
     @Override
     public int getItemViewType(int position) {
         Auction auction = auctions.get(position);

@@ -10,6 +10,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
+import com.ingsw.dietiDeals24.controller.MakePaymentController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
@@ -97,7 +98,8 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
                             .show();
                 }
             } else {
-                MakeBidController.setDownwardAuction(auction);
+                MakePaymentController.setBid(null);
+                MakePaymentController.setAuction(auction);
                 Intent intent = new Intent(v.getContext(), MakePaymentActivity.class);
                 v.getContext().startActivity(intent);
             }

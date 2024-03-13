@@ -1,6 +1,7 @@
 package com.ingsw.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.ingsw.backend.model.*;
 
@@ -30,4 +31,6 @@ public interface BidService {
 	DownwardBid makeDownwardAuctionPayment(DownwardBid downwardBid);
 
 	Boolean isSilentBidWithdrawable(Integer id);
+	
+	Optional<Bid> payBid(Integer id);
 }

@@ -23,7 +23,5 @@ public interface MyBidsDao {
     @GET("bid/reverse/seller/{sellerEmail}")
     Call<List<ReverseBid>> getReverseBids(@Path("sellerEmail") String sellerEmail, @Header("Authorization") String authToken);
 
-    @DELETE("bid/{idBid}")
-    Call<Boolean> deleteBid(@Path("idBid") Integer idBid, @Header("Authorization") String authToken);
 }
 

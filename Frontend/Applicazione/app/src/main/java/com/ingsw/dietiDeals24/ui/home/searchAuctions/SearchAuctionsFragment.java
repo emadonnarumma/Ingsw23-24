@@ -40,8 +40,8 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
     private SearchAuctionsViewModel viewModel;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private SmartMaterialSpinner<String> categorySmartSpinner;
     private SwipeRefreshLayout auctionsSwipeRefreshLayout;
+    private SmartMaterialSpinner<String> categorySmartSpinner;
     private MaterialSearchBar searchBar;
 
     private ExecutorService executorService;

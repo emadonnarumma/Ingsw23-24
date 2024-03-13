@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,23 +36,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MyBidsFragment extends FragmentOfHomeActivity {
-
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private MyBidsViewModel mViewModel;
-
+    private SwipeRefreshLayout bidsSwipeRefreshLayout;
     private ExecutorService executorService;
-
-    public static MyBidsFragment newInstance() {
-        return new MyBidsFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         executorService = Executors.newSingleThreadExecutor();
-
         return inflater.inflate(R.layout.fragment_my_bids, container, false);
     }
 
@@ -65,16 +59,23 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setBackButtonEnabled(false);
-
-        recyclerView = view.findViewById(R.id.recycler_view_my_bids);
+        recyclerView = view.findViewById(R.id.recycler_view_fragment_my_bids);
         progressBar = view.findViewById(R.id.progress_bar_my_bids);
+        setupBidsSwipeRefreshLayout(view);
+    }
 
+    private void setupBidsSwipeRefreshLayout(@NonNull View view) {
+        bidsSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout_fragment_my_bids);
+        bidsSwipeRefreshLayout.setOnRefreshListener(() -> {
+            bidsSwipeRefreshLayout.setRefreshing(false);
+            MyBidsController.setUpdatedAll(false);
+            updateBids();
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         if (!executorService.isShutdown()) {
             executorService.shutdownNow();
         }
@@ -89,19 +90,13 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
     }
 
     private void updateBids() {
-
         if (!executorService.isShutdown()) {
             executorService.shutdownNow();
         }
-
         executorService = Executors.newSingleThreadExecutor();
-
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
-
-
         executorService.submit(() -> {
-
             try {
                 List<SilentBid> silentBids = MyBidsController.getSilentBids(UserHolder.user.getEmail()).get();
                 List<DownwardBid> downwardBids = MyBidsController.getDownwardBids(UserHolder.user.getEmail()).get();
@@ -115,6 +110,7 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
                         recyclerView.setVisibility(View.VISIBLE);
                     });
                 }
+
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> {
                     recyclerView.setAdapter(new MyBidAdapter(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));

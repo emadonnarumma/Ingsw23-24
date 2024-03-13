@@ -39,11 +39,16 @@
         app:layout_constraintTop_toBottomOf="@id/personal_bid_text_view_my_bids"
         app:layout_constraintBottom_toBottomOf="parent" >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_my_bids"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout_fragment_my_bids"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/ms_material_grey_400"/>
-    </androidx.cardview.widget.CardView>
+            android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_fragment_my_bids"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ms_material_grey_400"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

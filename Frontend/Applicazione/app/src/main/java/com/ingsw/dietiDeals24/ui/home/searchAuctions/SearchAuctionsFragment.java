@@ -263,7 +263,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         categorySmartSpinner = view.findViewById(R.id.filter_button_search);
         categorySmartSpinner.setItem(
                 Arrays.asList(
-                        getResources().getStringArray(R.array.categories)
+                        getResources().getStringArray(R.array.filters)
                 )
         );
         categorySmartSpinner.setSelection(0);

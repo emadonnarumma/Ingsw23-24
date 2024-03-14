@@ -49,7 +49,8 @@ public class SearchReverseAuctionViewHolder extends RecyclerView.ViewHolder {
         auctionCategoryTextView = itemView.findViewById(R.id.auction_category_text_view_item_reverse_auction);
         expirationDateTextView = itemView.findViewById(R.id.expiration_date_text_view_item_reverse_auction);
         currentBidTextView = itemView.findViewById(R.id.current_bid_text_view_item_reverse_auction);
-        currentBidHintTextView = itemView.findViewById(R.id.current_bid_hint_text_view_item_reverse_auction);        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_reverse_auction);
+        currentBidHintTextView = itemView.findViewById(R.id.current_bid_hint_text_view_item_reverse_auction);
+        auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_reverse_auction);
         expirationDateIconImageView = itemView.findViewById(R.id.expiration_date_icon_item_reverse_auction);
         imagesSliderView = itemView.findViewById(R.id.slider_item_reverse_auction);
         cardView = itemView.findViewById(R.id.card_view_item_reverse_auction);

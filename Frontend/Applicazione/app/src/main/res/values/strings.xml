@@ -167,8 +167,28 @@
         <item>Pessime condizioni</item>
     </string-array>
 
-    <string-array name="categories">
+    <string-array name="filters">
         <item>Nessun filtro</item>
+        <item>Archeologia e storia naturale</item>
+        <item>Arte</item>
+        <item>Arte asiatica e tribale</item>
+        <item>Auto d\'epoca, moto d\'epoca e automobilia</item>
+        <item>Collezionismo militare e documenti storici</item>
+        <item>Decorazioni d\'interni</item>
+        <item>Giochi e modellismo</item>
+        <item>Gioielli e pietre preziose</item>
+        <item>Carte da collezione e videogiochi</item>
+        <item>Libri e fumetti</item>
+        <item>Moda</item>
+        <item>Monete e francobolli</item>
+        <item>Musica e fotocamere</item>
+        <item>Orologi da polso</item>
+        <item>Sport</item>
+        <item>Vini e liquori</item>
+        <item>Servizi</item>
+    </string-array>
+
+    <string-array name="categories">
         <item>Archeologia e storia naturale</item>
         <item>Arte</item>
         <item>Arte asiatica e tribale</item>

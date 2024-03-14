@@ -16,13 +16,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
-public abstract class MyBidDetailsActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
+public abstract class MyBidDetailsActivity extends CheckConnectionActivity implements OnNavigateToHomeActivityFragmentListener {
 
     protected ScrollView scrollView;
     protected CircularProgressButton bidButton;

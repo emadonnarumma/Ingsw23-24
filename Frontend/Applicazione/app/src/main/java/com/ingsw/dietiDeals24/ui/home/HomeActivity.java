@@ -28,9 +28,10 @@ import com.ingsw.dietiDeals24.ui.home.profile.my.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditRegionFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchAuctionsFragment;
+import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends CheckConnectionActivity {
     private NavigationBarView navigationBarView;
     private Toolbar toolbar;
     private final OnBackPressedCallback callback = new OnBackPressedCallback(true) {

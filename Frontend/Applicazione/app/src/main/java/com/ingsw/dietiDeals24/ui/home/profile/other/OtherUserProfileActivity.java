@@ -22,6 +22,7 @@ import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
+import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MyAuctionAdapter;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-public class OtherUserProfileActivity extends AppCompatActivity {
+public class OtherUserProfileActivity extends CheckConnectionActivity {
     private TextView usernameTextView;
     private TextView userBioTextView;
     private ImageView iconLinkImageView;

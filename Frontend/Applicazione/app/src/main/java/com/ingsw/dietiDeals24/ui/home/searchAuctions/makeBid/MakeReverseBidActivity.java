@@ -15,6 +15,7 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.model.ReverseBid;
+import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
@@ -25,7 +26,7 @@ import org.w3c.dom.Text;
 
 import java.util.concurrent.ExecutionException;
 
-public class MakeReverseBidActivity extends AppCompatActivity {
+public class MakeReverseBidActivity extends CheckConnectionActivity {
     private TextView currentBidTextView;
     private EditText bidEditText;
     private CircularProgressButton sendBidButton;

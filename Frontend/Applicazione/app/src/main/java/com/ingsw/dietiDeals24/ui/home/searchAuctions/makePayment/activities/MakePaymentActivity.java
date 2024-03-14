@@ -11,8 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.fragments.SelectPaymentMethodFragment;
+import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 
-public class MakePaymentActivity extends AppCompatActivity {
+public class MakePaymentActivity extends CheckConnectionActivity {
     private Toolbar toolbar;
 
     private final OnBackPressedCallback callback = new OnBackPressedCallback(true) {

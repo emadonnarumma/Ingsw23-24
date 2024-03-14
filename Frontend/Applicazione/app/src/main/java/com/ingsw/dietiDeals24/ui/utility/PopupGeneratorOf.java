@@ -9,7 +9,10 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MyAuctionsController;
+import com.ingsw.dietiDeals24.controller.MyBidsController;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment;
@@ -43,6 +46,24 @@ public class PopupGeneratorOf {
                     @Override
                     public void onDismissClicked(Dialog dialog) {
                         super.onDismissClicked(dialog);
+                    }
+                });
+    }
+
+    public static void connectionLostPopup(Context context) {
+
+        PopupDialog.getInstance(context)
+                .setStyle(Styles.FAILED)
+                .setHeading("Riprova!")
+                .setDescription("Connessione persa. Controlla la tua connessione e riprova.")
+                .setCancelable(false)
+                .setDismissButtonText("Chiudi")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onDismissClicked(Dialog dialog) {
+                        ProfileController.logout();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
                     }
                 });
     }
@@ -126,6 +147,11 @@ public class PopupGeneratorOf {
     }
 
     private static void logout(Context context) {
+
+        SearchAuctionsController.setUpdatedAll(false);
+        MyBidsController.setUpdatedAll(false);
+        MyAuctionsController.setUpdatedAll(false);
+
         ProfileController.logout();
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);

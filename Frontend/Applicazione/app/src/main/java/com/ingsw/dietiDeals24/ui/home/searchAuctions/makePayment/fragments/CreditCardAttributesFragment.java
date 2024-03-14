@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.MakePaymentController;
@@ -20,6 +23,10 @@ public class CreditCardAttributesFragment extends FragmentOfMakePaymentActivity 
     private EditText cardNumberEditText, cardOwnerNameEditText,
             cardOwnerSurnameEditText, cvvEditText, expirationDateEditText;
     private CircularProgressButton goToSummaryButton;
+
+    private BottomSheetDialog cvvBottomSheetDialog;
+
+    private TextInputLayout cvvTextInputLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +50,9 @@ public class CreditCardAttributesFragment extends FragmentOfMakePaymentActivity 
         cvvEditText = view.findViewById(R.id.cvv_edit_text_credit_card_attributes);
         setupGoToSummaryButton(view);
         setupExpirationDateEditText(view);
+
+        setupBottomSheetDialog();
+        setupTextInputLayout(view);
     }
 
     private void setupGoToSummaryButton(@NonNull View view) {
@@ -67,5 +77,24 @@ public class CreditCardAttributesFragment extends FragmentOfMakePaymentActivity 
     private void setupExpirationDateEditText(@NonNull View view) {
         expirationDateEditText = view.findViewById(R.id.expiration_date_edit_text_card_attributes);
         expirationDateEditText.addTextChangedListener(new ExpirationDateTextWatcher(expirationDateEditText));
+    }
+
+    private void setupBottomSheetDialog() {
+
+        cvvBottomSheetDialog = new BottomSheetDialog(requireContext());
+        cvvBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
+
+        TextView questionMark = cvvBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);
+        TextView questionMarkExplanation = cvvBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view_description);
+
+        questionMark.setText(R.string.cvv_question);
+        questionMarkExplanation.setText(R.string.cvv_explanation);
+
+
+    }
+
+    private void setupTextInputLayout(View view) {
+        cvvTextInputLayout = view.findViewById(R.id.cvv_layout_credit_card_attributes);
+        cvvTextInputLayout.setEndIconOnClickListener(v -> cvvBottomSheetDialog.show());
     }
 }

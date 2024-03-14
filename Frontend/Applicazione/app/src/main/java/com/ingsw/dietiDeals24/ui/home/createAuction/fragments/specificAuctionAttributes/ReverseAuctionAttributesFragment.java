@@ -92,7 +92,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
 
     private void setupBottomSheetDialogs() {
-        initialPriceBottomSheetDialog = new BottomSheetDialog(parentContext);
+        initialPriceBottomSheetDialog = new BottomSheetDialog(requireContext());
         initialPriceBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_questionmark_layout);
 
         TextView questionMark = initialPriceBottomSheetDialog.findViewById(R.id.question_bottom_sheet_text_view);

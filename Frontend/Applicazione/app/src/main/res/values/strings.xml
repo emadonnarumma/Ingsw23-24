@@ -168,6 +168,7 @@
     </string-array>
 
     <string-array name="categories">
+        <item>Nessun filtro</item>
         <item>Archeologia e storia naturale</item>
         <item>Arte</item>
         <item>Arte asiatica e tribale</item>

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
@@ -37,7 +38,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SearchAuctionsFragment extends FragmentOfHomeActivity {
-    private SearchAuctionsViewModel viewModel;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout auctionsSwipeRefreshLayout;
@@ -48,15 +48,6 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        if (savedInstanceState != null) {
-            int spinnerIndex = savedInstanceState.getInt("CATEGORY_SPINNER_INDEX");
-            categorySmartSpinner.setSelection(spinnerIndex);
-            searchBar.setText(savedInstanceState.getString("SEARCH_BAR"));
-        }
-
-        viewModel = SearchAuctionsViewModel.getInstance();
-
         executorService = Executors.newSingleThreadExecutor();
         return inflater.inflate(com.ingsw.dietiDeals24.R.layout.fragment_search_auctions, container, false);
     }
@@ -80,7 +71,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
             String keyword = searchBar.getText().toString();
             if (keyword.isEmpty()) {
 
-                if (categorySmartSpinner.getSelectedItem() == null) {
+                if (categorySmartSpinner.getSelectedItem().equals("Nessun filtro")) {
                     updateAuctions();
                 } else {
 
@@ -89,7 +80,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
 
             } else {
 
-                if (categorySmartSpinner.getSelectedItem() == null) {
+                if (categorySmartSpinner.getSelectedItem().equals("Nessun filtro")) {
                     filterByKeyword(keyword);
                 } else {
                     filterByKeywordAndCategory(keyword, Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
@@ -120,16 +111,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         super.onResume();
         categorySmartSpinner.setSelected(false);
         searchBar.setText("");
-        restoreData();
         updateAuctions();
-    }
-
-    private void restoreData() {
-        viewModel.getSpinnerIndex().observe(getViewLifecycleOwner(), index -> {
-            if (index != null) {
-                categorySmartSpinner.setSelection(index);
-            }
-        });
     }
 
     private void updateAuctions() {
@@ -284,15 +266,23 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
                         getResources().getStringArray(R.array.categories)
                 )
         );
-
+        categorySmartSpinner.setSelection(0);
         categorySmartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Category category = Category.fromItalianString(categorySmartSpinner.getSelectedItem());
-                if (searchBar.getText().isEmpty()) {
-                    filterByCategory(category);
+                if (category.equals(Category.NO_FILTERS)) {
+                    if (searchBar.getText().isEmpty()) {
+                        updateAuctions();
+                    } else {
+                        filterByKeyword(searchBar.getText());
+                    }
                 } else {
-                    filterByKeywordAndCategory(searchBar.getText(), category);
+                    if (searchBar.getText().isEmpty()) {
+                        filterByCategory(category);
+                    } else {
+                        filterByKeywordAndCategory(searchBar.getText(), category);
+                    }
                 }
             }
 
@@ -318,7 +308,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
             public void onSearchConfirmed(CharSequence text) {
                 if (text.toString().isEmpty()) {
 
-                    if (categorySmartSpinner.getSelectedItem() == null) {
+                    if (categorySmartSpinner.getSelectedItem().equals("Nessun filtro")) {
                         updateAuctions();
                     } else {
                         filterByCategory(Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
@@ -326,7 +316,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
 
                 } else {
 
-                    if (categorySmartSpinner.getSelectedItem() == null) {
+                    if (categorySmartSpinner.getSelectedItem().equals("Nessun filtro")) {
                         filterByKeyword(text.toString());
                     } else {
                         filterByKeywordAndCategory(text.toString(), Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
@@ -348,7 +338,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
 
                 if (suggestion.isEmpty()) {
 
-                    if (categorySmartSpinner.getSelectedItem() == null) {
+                    if (categorySmartSpinner.getSelectedItem().equals("Nessun filtro")) {
                         updateAuctions();
                     } else {
                         filterByCategory(Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
@@ -356,7 +346,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
 
                 } else {
 
-                    if (categorySmartSpinner.getSelectedItem() == null) {
+                    if (categorySmartSpinner.getSelectedItem().equals("Nessun filtro")) {
                         filterByKeyword(suggestion);
                     } else {
                         filterByKeywordAndCategory(suggestion, Category.fromItalianString(categorySmartSpinner.getSelectedItem()));
@@ -378,15 +368,5 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         super.onSaveInstanceState(outState);
         outState.putInt("CATEGORY_SPINNER_INDEX", categorySmartSpinner.getSelectedItemPosition());
         outState.putString("SEARCH_BAR", searchBar.getText());
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        updateViewModel();
-    }
-
-    private void updateViewModel() {
-        viewModel.spinnerIndexChanged(categorySmartSpinner.getSelectedItemPosition());
     }
 }

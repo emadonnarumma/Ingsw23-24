@@ -3,6 +3,7 @@ package com.ingsw.dietiDeals24.model.enumeration;
 import java.io.Serializable;
 
 public enum Category implements Serializable {
+    NO_FILTERS,
     ARCHAEOLOGY_AND_NATURAL_HISTORY,
     ART,
     ASIAN_AND_TRIABAL_ART,
@@ -22,8 +23,10 @@ public enum Category implements Serializable {
     SERVICES;
 
     public static Category fromItalianString(String category) {
-        int c = 9;
         switch (category) {
+            case "Nessun filtro":
+                return NO_FILTERS;
+
             case "Archeologia e storia naturale":
                 return ARCHAEOLOGY_AND_NATURAL_HISTORY;
 
@@ -82,6 +85,9 @@ public enum Category implements Serializable {
 
     public static String toItalianString(Category category) {
         switch (category) {
+            case NO_FILTERS:
+                return "Nessun filtro";
+
             case ARCHAEOLOGY_AND_NATURAL_HISTORY:
                 return "Archeologia e storia naturale";
 

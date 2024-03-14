@@ -19,6 +19,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
@@ -59,9 +60,9 @@ public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
         descriptionTextView.setText(auction.getDescription());
         priceTextView.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
 
-        specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
+        specificInformation1TextView.setText("Valore di decremento: " + NumberFormatter.formatPrice(auction.getDecrementAmount()));
         specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
-        specificInformation3TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
+        specificInformation3TextView.setText("Prezzo minimo segreto " + NumberFormatter.formatPrice(auction.getSecretMinimumPrice()));
         specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }

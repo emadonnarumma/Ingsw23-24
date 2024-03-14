@@ -323,7 +323,7 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
             formattedTime += minutes + "Min";
         }
 
-        return "Decremento ogni  : " + formattedTime;
+        return "Decremento ogni: " + formattedTime;
     }
 
     public static String getRemainingDecrementTime(String nextDecrement) {

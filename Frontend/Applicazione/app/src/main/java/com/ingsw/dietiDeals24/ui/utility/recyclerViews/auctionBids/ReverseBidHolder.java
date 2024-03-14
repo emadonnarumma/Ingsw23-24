@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 public class ReverseBidHolder extends RecyclerView.ViewHolder {
@@ -26,6 +28,11 @@ public class ReverseBidHolder extends RecyclerView.ViewHolder {
 
     public void bind(ReverseBid reverseBid) {
         profileButton.setText(reverseBid.getSeller().getName());
+        profileButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), OtherUserProfileActivity.class);
+            intent.putExtra("otherUser", reverseBid.getSeller());
+            v.getContext().startActivity(intent);
+        });
         priceTextView.setText(NumberFormatter.formatPrice(reverseBid.getMoneyAmount()));
     }
 }

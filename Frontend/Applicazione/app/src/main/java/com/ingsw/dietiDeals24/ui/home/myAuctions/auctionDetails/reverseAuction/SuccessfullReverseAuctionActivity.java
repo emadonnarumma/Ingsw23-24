@@ -17,6 +17,7 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
@@ -57,7 +58,7 @@ public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
 
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
-        priceTextView.setText("Prezzo iniziale: " + auction.getStartingPrice() + "€");
+        priceTextView.setText("Prezzo iniziale: " + NumberFormatter.formatPrice(auction.getStartingPrice()));
         specificInformation1TextView.setText("Scadeva il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
         specificInformation2TextView.setVisibility(View.GONE);
         specificInformation3TextView.setVisibility(View.GONE);

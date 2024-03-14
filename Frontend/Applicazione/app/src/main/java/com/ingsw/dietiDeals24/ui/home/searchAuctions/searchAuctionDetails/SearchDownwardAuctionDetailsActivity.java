@@ -117,7 +117,6 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
     }
 
     private void setupBottomSheetDialog() {
-
         questionMarkAuctionType.setText(R.string.downward_auction_question);
         questionMarkExplanationAuctionType.setText(R.string.downward_auction_description);
     }

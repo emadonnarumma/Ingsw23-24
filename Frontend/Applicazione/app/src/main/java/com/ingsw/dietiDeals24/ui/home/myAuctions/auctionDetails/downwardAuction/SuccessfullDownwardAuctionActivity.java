@@ -17,6 +17,7 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
@@ -58,11 +59,11 @@ public class SuccessfullDownwardAuctionActivity extends AuctionDetailsActivity {
 
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
-        priceTextView.setText("Prezzo attuale: " + auction.getCurrentPrice() + "€");
+        priceTextView.setText("Prezzo attuale: " + NumberFormatter.formatPrice(auction.getCurrentPrice()));
 
-        specificInformation1TextView.setText("Valore di decremento: " + auction.getDecrementAmount() + "€");
+        specificInformation1TextView.setText("Valore di decremento: " + NumberFormatter.formatPrice(auction.getDecrementAmount()));
         specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
-        specificInformation3TextView.setText("Prezzo minimo segreto " + auction.getSecretMinimumPrice());
+        specificInformation3TextView.setText("Prezzo minimo segreto " + NumberFormatter.formatPrice(auction.getSecretMinimumPrice()));
         specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }
@@ -75,7 +76,6 @@ public class SuccessfullDownwardAuctionActivity extends AuctionDetailsActivity {
     private void setGreenButton() {
         greenButton.setText("VISUALIZZA DETTAGLI DELL'AFFARE");
         greenButton.setOnClickListener(v -> {
-
             PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
             new Thread(() -> {
                 try {

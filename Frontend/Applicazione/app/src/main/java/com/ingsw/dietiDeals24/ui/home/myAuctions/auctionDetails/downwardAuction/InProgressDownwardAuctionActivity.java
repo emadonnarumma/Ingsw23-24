@@ -57,7 +57,7 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacks(updateRemainingTimeRunnable); // Interrompi l'aggiornamento quando l'activity viene messa in pausa
+        handler.removeCallbacks(updateRemainingTimeRunnable);
     }
 
     private void setAuctionDetails() {
@@ -73,7 +73,6 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
         priceTextView.setText("Prezzo attuale: " + NumberFormatter.formatPrice(auction.getCurrentPrice()));
-
 
         specificInformation1TextView.setText("Valore di decremento: " + NumberFormatter.formatPrice(auction.getDecrementAmount()));
         specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));

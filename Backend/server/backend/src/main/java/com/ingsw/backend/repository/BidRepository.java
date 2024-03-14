@@ -33,13 +33,13 @@ public interface BidRepository extends JpaRepository<Bid, Integer> {
 	@Query("SELECT sb FROM SilentBid sb WHERE sb.status = :status AND sb.silentAuction.expirationDate < :currentTimestamp")
     List<SilentBid> findExpiredSilentBidsByStatus(BidStatus status, Timestamp currentTimestamp);
 
-	@Query("SELECT sb FROM SilentBid sb WHERE sb.silentAuction.idAuction = :auctionId AND sb.status = 'ACCEPTED'")
+	@Query("SELECT sb FROM SilentBid sb WHERE sb.silentAuction.idAuction = :auctionId AND sb.status = 'ACCEPTED' OR sb.status = 'PAYED'")
 	SilentBid getWinningSilentBidByAuctionId(@Param("auctionId") Integer auctionId);
 
-	@Query("SELECT rb FROM ReverseBid rb WHERE rb.reverseAuction.idAuction = :auctionId AND rb.status = 'ACCEPTED'")
+	@Query("SELECT rb FROM ReverseBid rb WHERE rb.reverseAuction.idAuction = :auctionId AND rb.status = 'ACCEPTED' OR rb.status = 'PAYED'")
 	ReverseBid getWinningReverseBidByAuctionId(@Param("auctionId") Integer auctionId);
 
-	@Query("SELECT db FROM DownwardBid db WHERE db.downwardAuction.idAuction = :auctionId AND db.status = 'ACCEPTED'")
+	@Query("SELECT db FROM DownwardBid db WHERE db.downwardAuction.idAuction = :auctionId AND db.status = 'PAYED'")
 	DownwardBid getWinningDownwardBidByAuctionId(@Param("auctionId") Integer auctionId);
 }
 

@@ -1,5 +1,6 @@
 package com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 
 import java.text.NumberFormat;
@@ -29,6 +31,11 @@ public class SilentSuccessFulBidHolder extends RecyclerView.ViewHolder {
 
     public void bind(SilentBid silentBid) {
         profileButton.setText(silentBid.getBuyer().getName());
+        profileButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), OtherUserProfileActivity.class);
+            intent.putExtra("otherUser", silentBid.getBuyer());
+            v.getContext().startActivity(intent);
+        });
         priceTextView.setText(NumberFormatter.formatPrice(silentBid.getMoneyAmount()));
     }
 }

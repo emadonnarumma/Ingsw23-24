@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+
+    implementation ("com.github.JobGetabu:DroidNet:v2.0.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     implementation("jp.hamcheesedev:outlinedtextview:0.1.0")

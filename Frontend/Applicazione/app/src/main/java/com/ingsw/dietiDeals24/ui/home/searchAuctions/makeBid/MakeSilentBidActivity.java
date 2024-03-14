@@ -11,13 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
+import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
 
-public class MakeSilentBidActivity extends AppCompatActivity implements OnNavigateToHomeActivityFragmentListener {
+public class MakeSilentBidActivity extends CheckConnectionActivity {
     private EditText bidEditText;
     private CircularProgressButton sendBidButton;
 

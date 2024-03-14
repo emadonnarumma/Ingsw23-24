@@ -83,39 +83,6 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
     private void setEmailTextView() {
         emailEditText = requireView().findViewById(R.id.email_edit_text_madatory_registration_info);
         emailEditText.addTextChangedListener(registrationTextWatcher);
-        /*emailEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                CompletableFuture<Boolean> emailAlredyExists = RegistrationController.emailAlreadyExists(s.toString());
-                try {
-
-                    if (emailAlredyExists.get()) {
-                        emailEditText.setError("");
-                    }
-
-                } catch (ExecutionException e) {
-
-                    if (e.getCause() instanceof ConnectionException) {
-                        requireActivity().runOnUiThread(() -> ToastManager.showToast(requireContext(), "Errore di connessione"));
-                    }
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });*/
     }
 
     private void setPasswordTextView() {

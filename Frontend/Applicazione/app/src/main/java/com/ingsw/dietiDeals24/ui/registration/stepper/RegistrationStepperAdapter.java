@@ -80,9 +80,6 @@ public class RegistrationStepperAdapter extends AbstractFragmentStepAdapter {
         return builder.create();
     }
 
-
-
-
     @Override
     public int getCount() {
         return 2;

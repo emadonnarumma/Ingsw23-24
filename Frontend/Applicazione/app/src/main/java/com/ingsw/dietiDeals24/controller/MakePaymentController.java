@@ -88,6 +88,9 @@ public class MakePaymentController implements RetroFitHolder {
                 Response<Bid> response = makePaymentDao.payBid(bid.getIdBid(), TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
+                    SearchAuctionsController.setUpdatedAll(false);
+                    MyAuctionsController.setUpdatedAll(false);
+                    MyBidsController.setUpdatedAll(false);
                     return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");

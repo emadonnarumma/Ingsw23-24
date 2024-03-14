@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.ingsw.dietiDeals24.R;
@@ -17,12 +16,9 @@ import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-
-import org.w3c.dom.Text;
 
 import java.util.concurrent.ExecutionException;
 
@@ -31,7 +27,6 @@ public class MakeReverseBidActivity extends CheckConnectionActivity {
     private EditText bidEditText;
     private CircularProgressButton sendBidButton;
     private ReverseBid currentBid = null;
-    private KeyboardFocusManager keyboardFocusManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +48,6 @@ public class MakeReverseBidActivity extends CheckConnectionActivity {
         setupBidEditText();
         setupActionBar();
         setupBidButton();
-        setupKeyboardFocusManager();
     }
 
 
@@ -96,15 +90,6 @@ public class MakeReverseBidActivity extends CheckConnectionActivity {
                 }
             }
         });
-
-        bidEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    bidEditText.setText(bidEditText.getText().toString() + "€");
-                }
-            }
-        });
     }
 
     private void setupBidButton() {
@@ -119,7 +104,7 @@ public class MakeReverseBidActivity extends CheckConnectionActivity {
             }
             new Thread(() -> {
                 try {
-                    double amount = Double.parseDouble(deleteEuroSimbol(bidEditText.getText().toString()));
+                    double amount = Double.parseDouble(bidEditText.getText().toString());
                     MakeBidController.makeReverseBid(amount).get();
                     runOnUiThread(() -> {
                         sendBidButton.revertAnimation();
@@ -143,12 +128,6 @@ public class MakeReverseBidActivity extends CheckConnectionActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setupKeyboardFocusManager() {
-        keyboardFocusManager = new KeyboardFocusManager(this, findViewById(R.id.make_reverse_bid_layout));
-        keyboardFocusManager.closeKeyboardWhenUserClickOutside();
-        keyboardFocusManager.loseFocusWhenKeyboardClose();
-    }
-
     private void setupCurrentBidEditText() {
         currentBidTextView = findViewById(R.id.current_bid_text_view_item_my_reverse_auction);
         if (currentBid == null) {
@@ -156,12 +135,5 @@ public class MakeReverseBidActivity extends CheckConnectionActivity {
         } else {
             currentBidTextView.setText("Offerta attuale: " + NumberFormatter.formatPrice(currentBid.getMoneyAmount()));
         }
-    }
-
-    private String deleteEuroSimbol(String string) {
-        if (string.endsWith("€"))
-            return string.substring(0, string.length() - 1);
-
-        return string;
     }
 }

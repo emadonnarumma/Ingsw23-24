@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
-
-
-
     <ImageView
         android:id="@+id/logo_login"
         android:layout_width="370dp"
@@ -19,9 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/dieti_deals_24_logo" />
-
-
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_layout_login"
@@ -44,9 +38,6 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_layout_login"
         android:layout_width="370dp"
@@ -56,9 +47,6 @@
         app:layout_constraintStart_toStartOf="@id/logo_login"
         app:layout_constraintTop_toBottomOf="@id/logo_login">
 
-
-
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_edit_text_login"
             android:layout_width="match_parent"
@@ -66,9 +54,6 @@
             android:hint="@string/e_mail_input"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/login_button"
@@ -85,29 +70,23 @@
         app:layout_constraintEnd_toEndOf="@id/password_layout_login"
         app:layout_constraintTop_toBottomOf="@id/password_layout_login" />
 
-
-
-
     <View
         android:id="@+id/or_line_login"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="40dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_button" />
 
-
-
-
     <TextView
         android:id="@+id/or_text_view_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="87dp"
         android:background="@color/cardview_light_background"
         android:text="@string/or_phrase"
 
@@ -116,22 +95,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_button" />
 
-
-
-
     <TextView
         android:id="@+id/registration_phrase_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="65dp"
 
         android:text="@string/registration_phrase"
         app:layout_constraintEnd_toEndOf="@id/or_text_view_registration"
         app:layout_constraintStart_toStartOf="@id/or_text_view_registration"
         app:layout_constraintTop_toBottomOf="@id/or_text_view_registration" />
-
-
-
 
     <TextView
         android:id="@+id/go_to_registration_text_view"

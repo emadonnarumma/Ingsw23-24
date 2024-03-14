@@ -94,27 +94,16 @@
 
     <TextView
         android:id="@+id/my_offer_view_item_my_reverse_bid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fontFamily="@font/verdana"
         android:text="Mia offerta: €10.0"
         android:textColor="@color/white"
 
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/container_text_view_item_my_reverse_bid"
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_my_reverse_bid"
         app:layout_constraintStart_toEndOf="@id/card_view_item_my_reverse_bid"
         app:layout_constraintTop_toTopOf="@id/card_view_item_my_reverse_bid" />
-
-    <TextView
-        android:id="@+id/price_item_my_reverse_bid"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:fontFamily="@font/verdana"
-        android:textColor="@color/white"
-        android:ellipsize="end"
-
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@id/my_offer_view_item_my_reverse_bid"
-        app:layout_constraintTop_toTopOf="@id/my_offer_view_item_my_reverse_bid"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

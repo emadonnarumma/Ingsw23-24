@@ -81,7 +81,7 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
     }
 
     private void setGreenButton() {
-        greenButton.setText("COMPRA ORA A: " + auction.getCurrentPrice() + "€");
+        greenButton.setText("COMPRA ORA A: " + NumberFormatter.formatPrice(auction.getCurrentPrice()) );
         greenButton.setOnClickListener(v -> {
             if (!UserHolder.isUserBuyer()) {
                 if (UserHolder.getSeller().equals(auction.getOwner())) {

@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/make_reverse_bid_phrase"
             android:inputType="numberDecimal"
+            android:drawableStart="@drawable/ic_euro_24dp"
             android:textAlignment="center"
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>

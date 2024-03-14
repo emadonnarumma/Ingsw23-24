@@ -2,6 +2,7 @@ package com.ingsw.dietiDeals24.ui.utility;
 
 import static java.lang.Thread.sleep;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -225,6 +226,29 @@ public class PopupGeneratorOf {
                 });
     }
 
+    public static void areYouSureToCancelBidOperationPopUp(Context context) {
+        PopupDialog.getInstance(context)
+                .setStyle(Styles.STANDARD)
+                .setHeading("Vuoi annullare?")
+                .setDescription("Sei sicuro di voler annullare? Tutti i dati inseriti andranno persi.")
+                .setPopupDialogIcon(R.drawable.ic_cancel_24dp)
+                .setPopupDialogIconTint(R.color.red)
+                .setCancelable(false)
+                .setPositiveButtonText("Si")
+                .setNegativeButtonText("No")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClicked(Dialog dialog) {
+                        super.onPositiveClicked(dialog);
+                        ((Activity) context).finish();
+                    }
+
+                    @Override
+                    public void onNegativeClicked(Dialog dialog) {
+                        super.onNegativeClicked(dialog);
+                    }
+                });
+    }
 
     public static void areYouSureToDeleteBidPopup(Context context) {
         PopupDialog.getInstance(context)

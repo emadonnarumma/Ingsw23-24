@@ -33,7 +33,6 @@ import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
@@ -63,8 +62,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     private List<String> hourList, minuteList, dayList, monthList;
 
     private CircularProgressButton createAuctionButton;
-
-    private KeyboardFocusManager keyboardFocusManager;
 
     private GeneralAuctionAttributesViewModel viewModel;
 
@@ -125,7 +122,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         super.onViewCreated(view, savedInstanceState);
         setupWheelViews(view);
         setupEditTexts(view);
-        setupKeyboardFocusManager(view);
         setupDecrementTimeTextView(view);
         setupCreateAuctionButton(view);
 
@@ -252,68 +248,14 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private void setupInitialPriceEditTextListner(@NonNull View view) {
         initialPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        initialPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                String price = initialPriceEditText.getText().toString();
-                setEuroToEndIfNotPresent(price, initialPriceEditText);
-                if (!price.equals("")) {
-                    minimumPriceEditText.setEnabled(true);
-                } else {
-                    minimumPriceEditText.setText("");
-                    minimumPriceEditText.setEnabled(false);
-                    decrementAmountEditText.setText("");
-                    decrementAmountEditText.setEnabled(false);
-                }
-            } else {
-                if (!initialPriceEditText.getText().toString().equals("")) {
-                    initialPriceEditText.setText(deleteEuroSimbol(initialPriceEditText.getText().toString()));
-                }
-            }
-        });
-
-        minimumPriceEditText.setEnabled(false);
-        decrementAmountEditText.setEnabled(false);
     }
 
     private void setupMinPriceEditTextListner(@NonNull View view) {
         minimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        minimumPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                String minPrice = minimumPriceEditText.getText().toString();
-                setEuroToEndIfNotPresent(minPrice, minimumPriceEditText);
-                if (!minPrice.equals("")) {
-                    decrementAmountEditText.setEnabled(true);
-                } else {
-                    decrementAmountEditText.setText("");
-                    decrementAmountEditText.setEnabled(false);
-                }
-            } else {
-                if (!minimumPriceEditText.getText().toString().equals("")) {
-                    minimumPriceEditText.setText(deleteEuroSimbol(minimumPriceEditText.getText().toString()));
-                }
-            }
-        });
-
-        decrementAmountEditText.setEnabled(false);
     }
 
     private void setupDecrementAmountEditTextListner(@NonNull View view) {
         decrementAmountEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        decrementAmountEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                String price = decrementAmountEditText.getText().toString();
-                if (CreateAuctionController.isValidDecrementAmount(Double.parseDouble(deleteEuroSimbol(initialPriceEditText.getText().toString())), Double.parseDouble(deleteEuroSimbol(price)))) {
-                    setEuroToEndIfNotPresent(price, decrementAmountEditText);
-                } else {
-                    decrementAmountEditText.setError("Valore non valido");
-                    setEuroToEndIfNotPresent(price, decrementAmountEditText);
-                }
-            } else {
-                if (!decrementAmountEditText.getText().toString().equals("")) {
-                    decrementAmountEditText.setText(deleteEuroSimbol(decrementAmountEditText.getText().toString()));
-                }
-            }
-        });
     }
 
     private void setupCreateAuctionButton(View view) {
@@ -321,8 +263,20 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         createAuctionButton.setOnClickListener(v -> new Thread(() -> {
             parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
 
+            //TODO jonny metti il formstate basato
             if (fieldsEmpty()) {
-                parentActivity.runOnUiThread(() -> Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show());
+                parentActivity.runOnUiThread(() -> {
+                    Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
+                    createAuctionButton.revertAnimation();
+                });
+                return;
+            }
+
+            if (!CreateAuctionController.isValidDecrementAmount(Double.parseDouble(initialPriceEditText.getText().toString()), Double.parseDouble(decrementAmountEditText.getText().toString()))) {
+                parentActivity.runOnUiThread(() -> {
+                    decrementAmountEditText.setError("Inserisci un valore di decremento valido");
+                    createAuctionButton.revertAnimation();
+                });
                 return;
             }
 
@@ -331,13 +285,9 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             Category category = genericAuctionAttributesHolder.getCategory();
             Wear wear = genericAuctionAttributesHolder.getWear();
             List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
-            double initialPrice = Double.parseDouble(deleteEuroSimbol(initialPriceEditText.getText().toString()));
-            double secretMinimumPrice = Double.parseDouble(deleteEuroSimbol(minimumPriceEditText.getText().toString()));
-            double decrementAmount = Double.parseDouble(deleteEuroSimbol(decrementAmountEditText.getText().toString()));
-
-            if (!auctionIsSetWell(initialPrice, secretMinimumPrice, decrementAmount)) {
-                return;
-            }
+            double initialPrice = Double.parseDouble(initialPriceEditText.getText().toString());
+            double secretMinimumPrice = Double.parseDouble(minimumPriceEditText.getText().toString());
+            double decrementAmount = Double.parseDouble(decrementAmountEditText.getText().toString());
 
             DownwardAuction newDownwardAuction = new DownwardAuction(
                     UserHolder.user,
@@ -381,22 +331,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         }).start());
     }
 
-    private boolean auctionIsSetWell(double initialPrice, double secretMinimumPrice, double decrementAmount) {
-        if (decrementAmountEditText.getError() != null) {
-
-            Toast.makeText(getContext(), "Valore di decremento non valido", Toast.LENGTH_SHORT).show();
-            return false;
-
-        } else if (minimumPriceEditText.getError() != null) {
-
-            Toast.makeText(getContext(), "Valore minimo non valido", Toast.LENGTH_SHORT).show();
-            return false;
-
-        } else {
-            return !auctionDurationLessThen30Minutes(initialPrice, secretMinimumPrice, decrementAmount);
-        }
-    }
-
     private boolean fieldsEmpty() {
         if (initialPriceEditText.getText() != null && minimumPriceEditText.getText() != null && decrementAmountEditText.getText() != null) {
             return initialPriceEditText.getText().toString().equals("") ||
@@ -410,7 +344,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     private boolean auctionDurationLessThen30Minutes(double initialPrice, double secretMinimumPrice, double decrementAmount) {
         double totalTime = (initialPrice - secretMinimumPrice) / decrementAmount * getDecrementTime() / 60.0;
         if (totalTime < 30) {
-            Toast.makeText(getContext(), "L'asta non può terminare in meno di 30 minuti", Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
@@ -443,7 +376,7 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     public String formatTimestamp(String timestamp) {
         String[] parts = timestamp.split(" ");
         String datePart = parts[0];
-        String timePart = parts[1].substring(0, 8); // remove milliseconds
+        String timePart = parts[1].substring(0, 8);
 
         String[] dateParts = datePart.split("-");
         String formattedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
@@ -453,25 +386,5 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private void setupDecrementTimeTextView(@NonNull View view) {
         decrementTimeTextView = view.findViewById(R.id.decrement_time_text_view_downward_auction_attributes);
-    }
-
-    private void setupKeyboardFocusManager(View view) {
-        keyboardFocusManager = new KeyboardFocusManager(this, view);
-        keyboardFocusManager.closeKeyboardWhenUserClickOutside();
-        keyboardFocusManager.loseFocusWhenKeyboardClose();
-    }
-
-    private void setEuroToEndIfNotPresent(String price, EditText decrementAmountEditText) {
-        if (!price.equals("") && !price.endsWith("€")) {
-            price = price + "€";
-            decrementAmountEditText.setText(price);
-        }
-    }
-
-    private String deleteEuroSimbol(String string) {
-        if (string.endsWith("€"))
-            return string.substring(0, string.length() - 1);
-
-        return string;
     }
 }

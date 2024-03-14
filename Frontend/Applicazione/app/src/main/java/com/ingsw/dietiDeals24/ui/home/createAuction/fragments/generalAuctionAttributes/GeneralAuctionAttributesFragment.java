@@ -35,7 +35,6 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
-import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -52,7 +51,6 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     private ImageView noImageSelectedImageView;
     private Uri currentPhotoUri;
 
-    private KeyboardFocusManager keyboardFocusManager;
     private ActivityResultLauncher<Uri> takePictureLauncher;
     private ActivityResultLauncher<String[]> selectPictureLauncher;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
@@ -111,7 +109,6 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         noImageSelectedImageView = view.findViewById(R.id.default_create_auction_image_view);
 
         setupViews(view);
-        setupKeyboardFocusManager(view);
         restoreData();
     }
 
@@ -153,12 +150,6 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
                 actionBar.setDisplayHomeAsUpEnabled(false);
             }
         }
-    }
-
-    private void setupKeyboardFocusManager(View view) {
-        keyboardFocusManager = new KeyboardFocusManager(this, view);
-        keyboardFocusManager.loseFocusWhenKeyboardClose();
-        keyboardFocusManager.closeKeyboardWhenUserClickOutside();
     }
 
     private void restoreData() {

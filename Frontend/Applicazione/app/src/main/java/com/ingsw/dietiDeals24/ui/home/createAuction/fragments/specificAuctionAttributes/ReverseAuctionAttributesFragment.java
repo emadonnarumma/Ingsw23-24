@@ -32,7 +32,6 @@ import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.ui.utility.KeyboardFocusManager;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
@@ -49,7 +48,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
     private TextInputLayout initialPriceTextInputLayout;
     private BottomSheetDialog initialPriceBottomSheetDialog;
-    private KeyboardFocusManager keyboardFocusManager;
 
     private EditText priceEditText;
     private TextView dateTextView;
@@ -83,7 +81,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
         setupPriceEditText(view);
         setupDatePicker(view);
-        setupKeyboardFocusManager(view);
         setupCreateAuctionButton(view);
 
         setupBottomSheetDialogs();
@@ -163,12 +160,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
             return string.substring(0, string.length() - 1);
 
         return string;
-    }
-
-    private void setupKeyboardFocusManager(View view) {
-        keyboardFocusManager = new KeyboardFocusManager(this, view);
-        keyboardFocusManager.closeKeyboardWhenUserClickOutside();
-        keyboardFocusManager.loseFocusWhenKeyboardClose();
     }
 
     private void setupDatePicker(View view) {

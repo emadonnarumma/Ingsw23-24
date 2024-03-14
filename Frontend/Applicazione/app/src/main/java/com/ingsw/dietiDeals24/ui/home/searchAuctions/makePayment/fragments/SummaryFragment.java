@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,7 +55,12 @@ public class SummaryFragment extends FragmentOfMakePaymentActivity {
         setupTotalTextView(view);
         setupAuctionRecyclerView(view);
         setupBuyButton(view);
+        setupCancelButton(view);
+    }
+
+    private void setupCancelButton(@NonNull View view) {
         cancelButton = view.findViewById(R.id.cancel_button_fragment_summary);
+        cancelButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToCancelBidOperationPopUp(requireActivity()));
     }
 
     private void setupBuyButton(@NonNull View view) {
@@ -67,9 +70,7 @@ public class SummaryFragment extends FragmentOfMakePaymentActivity {
                     try {
 
                         if (MakePaymentController.getAuction().getClass() == DownwardAuction.class) {
-
                             MakePaymentController.makeDownwardBid().get();
-
                         } else {
                             MakePaymentController.payBid();
                         }

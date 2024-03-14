@@ -47,18 +47,11 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
     }
 
     private void setAuctionDetails() {
-
         scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
-
         auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
-
         categoryTextView.setText(Category.toItalianString(auction.getCategory()));
-
         titleTextView.setText(auction.getTitle());
-
-
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
-
         descriptionTextView.setText(auction.getDescription());
         getMinBid();
         specificInformation1TextView.setText("Scade il: " + SearchAuctionDetailsController.getFormattedExpirationDate(auction));

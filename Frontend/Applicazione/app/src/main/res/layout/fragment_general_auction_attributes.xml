@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapSentences"
+            android:maxLength="40"
             android:hint="Titolo" />
     </com.google.android.material.textfield.TextInputLayout>
 

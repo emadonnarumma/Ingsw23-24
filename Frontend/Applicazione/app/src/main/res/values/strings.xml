@@ -114,13 +114,13 @@
     <string name="downward_initial_price_explanation">L’asta partirà con un prezzo iniziale al quale i compratori potranno comprare il bene/servizio</string>
 
     <string name="decrement_amount_question">Come scegliere l’importo del decremento?</string>
-    <string name="decrement_amount_explanation">Allo scoccare del timer il prezzo verrà decrementato dell’importo che inserisci. L’importo del decremento non può essere maggiore del 15% del prezzo iniziale</string>
+    <string name="decrement_amount_explanation">Allo scoccare del timer il prezzo verrà decrementato dell’importo che inserisci. L’importo del decremento non può essere maggiore del 15% del prezzo iniziale.</string>
     
     <string name="minimum_price_question">Come scegliere il prezzo minimo?</string>
-    <string name="minimum_price_explanation">Se dopo un certo numero di decrementi il prezzo dell’asta arriva al prezzo minimo, l’asta verrà considerata fallita. Il prezzo minimo è segreto, sceglilo con cura</string>
+    <string name="minimum_price_explanation">Se dopo un certo numero di decrementi il prezzo dell’asta arriva al prezzo minimo, l’asta verrà considerata fallita. Il prezzo minimo è segreto, sceglilo con cura!</string>
 
     <string name="reverse_initial_price_question">Come scegliere il prezzo iniziale?</string>
-    <string name="reverse_initial_price_explanation">L’asta partirà con un prezzo iniziale che sei disposto a pagare per ottenere il bene/servizio. I venditori potranno competere per abbassare il prezzo</string>
+    <string name="reverse_initial_price_explanation">L’asta partirà con un prezzo iniziale che sei disposto a pagare per ottenere il bene/servizio. I venditori potranno competere per abbassare il prezzo.</string>
 
     <string name="withdrawal_time_question">Come scegliere il tempo massimo per ritirare l’offerta?</string>
     <string name="withdrawal_time_explanation">I compratori che ti faranno le offerte avranno un lasso di tempo entro e non oltre il quale potranno ritirarle se non le accetti in tempo. Sceglilo con cura!</string>

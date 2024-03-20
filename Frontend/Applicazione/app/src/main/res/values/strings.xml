@@ -138,6 +138,11 @@
     <string name="no_my_bids_phrase">Non hai \n nessun\'offerta</string>
     <string name="no_search_auction_phrase">Nessun\'asta trovata</string>
 
+    <string name="auction_title_error">Il titolo dell\'asta non può essere vuoto</string>
+    <string name="auction_description_error">La descrizione dell\'asta non può essere vuota</string>
+    <string name="auction_wear_error">Seleziona un\'usura</string>
+    <string name="auction_category_error">Seleziona una categoria</string>
+
     <string-array name="italian_regions">
         <item>Non specificare</item>
         <item>Abruzzo</item>

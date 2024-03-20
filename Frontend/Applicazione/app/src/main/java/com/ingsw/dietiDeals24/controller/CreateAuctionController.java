@@ -1,5 +1,12 @@
 package com.ingsw.dietiDeals24.controller;
 
+import android.content.Context;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.formstate.GeneralAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
@@ -15,6 +22,8 @@ import java.util.concurrent.CompletableFuture;
 import retrofit2.Response;
 
 public class CreateAuctionController implements RetroFitHolder {
+
+
 
     private CreateAuctionController() {
     }

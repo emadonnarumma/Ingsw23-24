@@ -8,9 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
@@ -63,6 +67,23 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private SmallScreenSliderAdapter smallScreenSliderAdapter;
     private SmartMaterialSpinner<String> wearSmartSpinner, categorySmartSpinner;
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // No action needed here
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // No action needed here
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            updateFormState();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,6 +130,49 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         noImageSelectedImageView = view.findViewById(R.id.default_create_auction_image_view);
 
         setupViews(view);
+
+        titleTextView.addTextChangedListener(textWatcher);
+        descriptionTextView.addTextChangedListener(textWatcher);
+        wearSmartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateFormState();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // No action needed here
+            }
+        });
+
+        categorySmartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateFormState();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // No action needed here
+            }
+        });
+
+        viewModel.getGeneralAuctionAttributesFormState().observe(getViewLifecycleOwner(), formState -> {
+            if (formState == null) {
+                return;
+            }
+
+            nextStepButton.setEnabled(formState.isDataValid());
+
+            if (formState.getTitleError() != null) {
+                titleTextView.setError(formState.getTitleError());
+            }
+            if (formState.getDescriptionError() != null) {
+                descriptionTextView.setError(formState.getDescriptionError());
+            }
+        });
+        updateFormState();
+
         restoreData();
     }
 
@@ -337,5 +401,15 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         }
 
         return null;
+    }
+
+    private void updateFormState() {
+        viewModel.generalAuctionInputChanged(
+                titleTextView.getText().toString(),
+                descriptionTextView.getText().toString(),
+                wearSmartSpinner.getSelectedItem() != null,
+                categorySmartSpinner.getSelectedItem() != null,
+                getContext()
+        );
     }
 }

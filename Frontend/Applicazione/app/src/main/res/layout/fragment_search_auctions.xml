@@ -64,6 +64,16 @@
                 android:layout_height="match_parent"
                 android:background="@color/ms_material_grey_400"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/no_found_auction_text_view_my_auctions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_search_auction_phrase"
+            android:textAlignment="center"
+            android:fontFamily="@font/verdana_bold"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_size_large" />
     </androidx.cardview.widget.CardView>
 
     <com.mancj.materialsearchbar.MaterialSearchBar

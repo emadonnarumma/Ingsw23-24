@@ -66,6 +66,7 @@ public class MakeBidController implements RetroFitHolder {
                 Response<SilentBid> response = makeBidDao.makeSilentBid(silentBid, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
+                    MyBidsController.setUpdatedSilent(false);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
@@ -82,7 +83,6 @@ public class MakeBidController implements RetroFitHolder {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 MakeBidDao makeBidDao = retrofit.create(MakeBidDao.class);
-
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ITALY);
                 Date date = new Date();
                 String formattedTimestamp = sdf.format(date);
@@ -90,6 +90,7 @@ public class MakeBidController implements RetroFitHolder {
                 Response<ReverseBid> response = makeBidDao.makeReverseBid(reverseBid, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
+                    MyBidsController.setUpdatedReverse(false);
                     return true;
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");

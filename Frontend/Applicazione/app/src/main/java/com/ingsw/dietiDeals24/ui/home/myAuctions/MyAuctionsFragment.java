@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ public class MyAuctionsFragment extends Fragment {
     private RecyclerView myAuctionsRecyclerView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout auctionsSwipeRefreshLayout;
+    private TextView noAuctionTextView;
 
     private ExecutorService executorService;
 
@@ -56,6 +58,12 @@ public class MyAuctionsFragment extends Fragment {
         setupMyAuctionsRecyclerView(view);
         setupProgresBar(view);
         setupSwipeAuctionRefreshLayout(view);
+        setupNoAuctionTextView(view);
+    }
+
+    private void setupNoAuctionTextView(View view) {
+        noAuctionTextView = view.findViewById(R.id.no_auction_text_view_my_auctions);
+        noAuctionTextView.setVisibility(View.GONE);
     }
 
     private void setupProgresBar(@NonNull View view) {
@@ -93,16 +101,13 @@ public class MyAuctionsFragment extends Fragment {
     }
 
     private void updateAuctions() {
-
         if (!executorService.isShutdown()) {
             executorService.shutdownNow();
         }
-
         executorService = Executors.newSingleThreadExecutor();
-
         progressBar.setVisibility(View.VISIBLE);
+        noAuctionTextView.setVisibility(View.GONE);
         myAuctionsRecyclerView.setVisibility(View.GONE);
-
         executorService.submit(() -> {
 
             try {
@@ -116,6 +121,12 @@ public class MyAuctionsFragment extends Fragment {
                         myAuctionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressBar.setVisibility(View.GONE);
                         myAuctionsRecyclerView.setVisibility(View.VISIBLE);
+
+                        if (silentAuctions.isEmpty() && downwardAuctions.isEmpty() && reverseAuctions.isEmpty()) {
+                            noAuctionTextView.setVisibility(View.VISIBLE);
+                        } else {
+                            noAuctionTextView.setVisibility(View.GONE);
+                        }
                     });
                 }
             } catch (ExecutionException e) {

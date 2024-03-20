@@ -54,6 +54,15 @@
                 android:background="@color/ms_material_grey_400"/>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/no_auction_text_view_my_auctions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_my_auction_phrase"
+            android:textAlignment="center"
+            android:fontFamily="@font/verdana_bold"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_size_large" />
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

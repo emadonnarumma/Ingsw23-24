@@ -134,7 +134,9 @@
     <string name="buy_phrase">COMPRA</string>
     <string name="cancel_phrase">ANNULLA</string>
     <string name="cvv_phrase">CVV</string>
-    <string name="no_my_auction_phrase">Non hai \n nessun asta</string>
+    <string name="no_my_auction_phrase">Non hai \n nessun\'asta</string>
+    <string name="no_my_bids_phrase">Non hai \n nessun\'offerta</string>
+    <string name="no_search_auction_phrase">Nessun\'asta trovata</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

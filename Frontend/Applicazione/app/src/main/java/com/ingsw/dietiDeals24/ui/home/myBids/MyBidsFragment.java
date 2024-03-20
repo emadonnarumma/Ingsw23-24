@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyBidsController;
@@ -41,6 +42,8 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
     private SwipeRefreshLayout bidsSwipeRefreshLayout;
     private ExecutorService executorService;
 
+    private TextView noBidsTextView;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
         recyclerView = view.findViewById(R.id.recycler_view_fragment_my_bids);
         progressBar = view.findViewById(R.id.progress_bar_my_bids);
         setupBidsSwipeRefreshLayout(view);
+        setupNoAuctionTextView(view);
     }
 
     private void setupBidsSwipeRefreshLayout(@NonNull View view) {
@@ -96,6 +100,7 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
         executorService = Executors.newSingleThreadExecutor();
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        noBidsTextView.setVisibility(View.GONE);
         executorService.submit(() -> {
             try {
                 List<SilentBid> silentBids = MyBidsController.getSilentBids(UserHolder.user.getEmail()).get();
@@ -108,6 +113,12 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
+
+                        if (silentBids.isEmpty() && downwardBids.isEmpty() && reverseBids.isEmpty()) {
+                            noBidsTextView.setVisibility(View.VISIBLE);
+                        } else {
+                            noBidsTextView.setVisibility(View.GONE);
+                        }
                     });
                 }
 
@@ -122,5 +133,10 @@ public class MyBidsFragment extends FragmentOfHomeActivity {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    private void setupNoAuctionTextView(View view) {
+        noBidsTextView = view.findViewById(R.id.no_bids_text_view_my_auctions);
+        noBidsTextView.setVisibility(View.GONE);
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,6 +47,8 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
 
     private ExecutorService executorService;
 
+    private TextView noAuctionTextView;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         executorService = Executors.newSingleThreadExecutor();
@@ -61,6 +64,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         setupAuctionsSwipeRefreshLayout(view);
         setupSearchBar(view);
         setupCategorySpinner(view);
+        setupNoAuctionTextView(view);
     }
 
     private void setupAuctionsSwipeRefreshLayout(@NonNull View view) {
@@ -121,6 +125,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         executorService = Executors.newSingleThreadExecutor();
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        noAuctionTextView.setVisibility(View.GONE);
         executorService.submit(() -> {
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctions().get();
@@ -134,6 +139,12 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
+
+                        if (silentAuctions.isEmpty() && downwardAuctions.isEmpty() && reverseAuctions.isEmpty()) {
+                            noAuctionTextView.setVisibility(View.VISIBLE);
+                        } else {
+                            noAuctionTextView.setVisibility(View.GONE);
+                        }
                     });
                 }
             } catch (ExecutionException e) {
@@ -159,6 +170,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
 
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        noAuctionTextView.setVisibility(View.GONE);
 
         executorService.submit(() -> {
 
@@ -176,6 +188,12 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
                         recyclerView.setVisibility(View.VISIBLE
                         );
                     });
+
+                    if (silentAuctions.isEmpty() && downwardAuctions.isEmpty() && reverseAuctions.isEmpty()) {
+                        noAuctionTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        noAuctionTextView.setVisibility(View.GONE);
+                    }
                 }
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> {
@@ -197,6 +215,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         executorService = Executors.newSingleThreadExecutor();
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        noAuctionTextView.setVisibility(View.GONE);
         executorService.submit(() -> {
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByKeyword(keyword).get();
@@ -210,6 +229,12 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                     });
+
+                    if (silentAuctions.isEmpty() && downwardAuctions.isEmpty() && reverseAuctions.isEmpty()) {
+                        noAuctionTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        noAuctionTextView.setVisibility(View.GONE);
+                    }
                 }
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> {
@@ -231,6 +256,7 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         executorService = Executors.newSingleThreadExecutor();
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        noAuctionTextView.setVisibility(View.GONE);
         executorService.submit(() -> {
             try {
                 List<SilentAuction> silentAuctions = SearchAuctionsController.getAllSilentAuctionsByKeywordAndCategory(keyword, category).get();
@@ -244,6 +270,12 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
                         progressBar.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                     });
+
+                    if (silentAuctions.isEmpty() && downwardAuctions.isEmpty() && reverseAuctions.isEmpty()) {
+                        noAuctionTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        noAuctionTextView.setVisibility(View.GONE);
+                    }
                 }
             } catch (ExecutionException e) {
                 requireActivity().runOnUiThread(() -> {
@@ -368,5 +400,10 @@ public class SearchAuctionsFragment extends FragmentOfHomeActivity {
         super.onSaveInstanceState(outState);
         outState.putInt("CATEGORY_SPINNER_INDEX", categorySmartSpinner.getSelectedItemPosition());
         outState.putString("SEARCH_BAR", searchBar.getText());
+    }
+
+    private void setupNoAuctionTextView(View view) {
+        noAuctionTextView = view.findViewById(R.id.no_found_auction_text_view_my_auctions);
+        noAuctionTextView.setVisibility(View.GONE);
     }
 }

@@ -36,6 +36,7 @@ public class MyBidDetailsController implements RetroFitHolder {
                 Response<Boolean> response = myBidDetailsDao.deleteBid(idBid, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
+                    MyBidsController.setUpdatedAll(false);
                     return response.body();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Token scaduto");

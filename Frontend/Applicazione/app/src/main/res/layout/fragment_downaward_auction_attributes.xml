@@ -141,7 +141,7 @@
         android:textColor="@color/white"
         app:initialCornerAngle="50dp"
         app:layout_constraintEnd_toEndOf="@id/months_wheel_view_downward_auction_attributes"
-        app:layout_constraintTop_toBottomOf="@id/months_wheel_view_downward_auction_attributes"
+        app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_goneMarginTop="30dp"
         app:spinning_bar_color="@color/white"

@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +60,25 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
     private AuctionHolder genericAuctionAttributesHolder;
 
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            CreateAuctionController.reverseAuctionInputChanged(
+                    priceEditText.getText().toString(),
+                    !dateTextView.getText().toString().isEmpty(),
+                    getContext()
+            );
+        }
+    };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,14 +98,32 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        observeFormState();
         setBackButtonEnabled(true);
-
         setupPriceEditText(view);
         setupDatePicker(view);
         setupCreateAuctionButton(view);
-
         setupBottomSheetDialogs();
         setupTextInputLayout(view);
+    }
+
+    private void observeFormState() {
+        CreateAuctionController.getReverseAuctionFormState().observe(getViewLifecycleOwner(), formState -> {
+            if (formState == null) {
+                return;
+            }
+            createAuctionButton.setEnabled(formState.isDataValid());
+            if (formState.getInitialPriceError() != null) {
+                priceEditText.setError(formState.getInitialPriceError());
+            } else {
+                priceEditText.setError(null);
+            }
+            if (formState.getExpirationDateError() != null) {
+                dateTextView.setError(formState.getExpirationDateError());
+            } else {
+                dateTextView.setError(null);
+            }
+        });
     }
 
 
@@ -172,7 +211,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                     0,
                     1
             );
-
+            dateTextView.addTextChangedListener(textWatcher);
             setTheMinumumToday(datePickerDialog);
         });
     }
@@ -207,5 +246,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                 }
             }
         });
+        priceEditText.addTextChangedListener(textWatcher);
     }
 }

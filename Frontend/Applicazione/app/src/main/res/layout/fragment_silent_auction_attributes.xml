@@ -57,6 +57,7 @@
         android:gravity="center"
         android:drawablePadding="10dp"
         android:layout_marginTop="15dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/date_hint_text_view_silent_auction_attributes"
@@ -107,6 +108,7 @@
         app:initialCornerAngle="50dp"
         app:spinning_bar_color="@color/white"
         app:spinning_bar_padding="10dp"
+        android:enabled="false"
 
         app:layout_constraintTop_toBottomOf="@id/months_wheel_view_silent_auction_attributes"
         app:layout_constraintEnd_toEndOf="@id/months_wheel_view_silent_auction_attributes"

@@ -138,10 +138,15 @@
     <string name="no_my_bids_phrase">Non hai \n nessun\'offerta</string>
     <string name="no_search_auction_phrase">Nessun\'asta trovata</string>
 
+    <string name="price_error">Prezzo non valido</string>
+    <string name="expiration_date_error">Data di scadenza non valida</string>
     <string name="auction_title_error">Il titolo dell\'asta non può essere vuoto</string>
     <string name="auction_description_error">La descrizione dell\'asta non può essere vuota</string>
     <string name="auction_wear_error">Seleziona un\'usura</string>
     <string name="auction_category_error">Seleziona una categoria</string>
+    <string name="silent_auction_withdrawal_bid_time_error">Il valore non deve essere 0.</string>
+    <string name="downward_auction_decrement_amount_error">L\'importo di decremento non può essere più del 15% del prezzo iniziale e l\'asta non può durare meno di 30 minuti.</string>
+    <string name="downward_auction_decrement_time_error">L\'asta non può durare meno di 30 minuti.</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

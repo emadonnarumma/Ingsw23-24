@@ -216,7 +216,6 @@ public class PopupGeneratorOf {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
                         super.onPositiveClicked(dialog);
-                        //TODO: delete auction
                     }
 
                     @Override
@@ -264,7 +263,6 @@ public class PopupGeneratorOf {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
                         super.onPositiveClicked(dialog);
-                        //TODO: delete bid
                     }
 
                     @Override
@@ -289,7 +287,6 @@ public class PopupGeneratorOf {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
                         super.onPositiveClicked(dialog);
-                        //TODO: accept bid
                     }
 
                     @Override

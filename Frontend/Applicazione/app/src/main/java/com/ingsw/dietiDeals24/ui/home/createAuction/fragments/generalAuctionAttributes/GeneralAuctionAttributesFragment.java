@@ -71,12 +71,10 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // No action needed here
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // No action needed here
         }
 
         @Override
@@ -94,6 +92,13 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         setMenuVisibility(true);
         createTakePictureLauncher();
         createSelectPictureLauncher();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        titleTextView.setError(null);
+        descriptionTextView.setError(null);
     }
 
     private void createSelectPictureLauncher() {

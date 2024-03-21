@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
+import com.ingsw.dietiDeals24.controller.formstate.ReverseAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
@@ -66,6 +70,30 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     private GeneralAuctionAttributesViewModel viewModel;
 
     private AuctionHolder genericAuctionAttributesHolder;
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            CreateAuctionController.downwardAuctionInputChanged(
+                    initialPriceEditText.getText().toString(),
+                    minimumPriceEditText.getText().toString(),
+                    decrementAmountEditText.getText().toString(),
+                    monthsWheelView.getSelectionItem(),
+                    daysWheelView.getSelectionItem(),
+                    hoursWheelView.getSelectionItem(),
+                    minutesWheelView.getSelectionItem(),
+                    getContext()
+            );
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,9 +152,39 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         setupEditTexts(view);
         setupDecrementTimeTextView(view);
         setupCreateAuctionButton(view);
-
         setupBottomSheetDialogs();
         setupTextInputLayout(view);
+        observeFormState();
+    }
+
+    private void observeFormState() {
+        CreateAuctionController.getDownwardAuctionFormState().observe(getViewLifecycleOwner(), formState -> {
+            if (formState == null) {
+                return;
+            }
+            createAuctionButton.setEnabled(formState.isDataValid());
+            if (formState.getInitialPriceError() != null) {
+                initialPriceTextInputLayout.setErrorEnabled(true);
+                initialPriceTextInputLayout.setError(formState.getInitialPriceError());
+            } else {
+                initialPriceTextInputLayout.setErrorEnabled(false);
+                initialPriceTextInputLayout.setError(null);
+            }
+            if (formState.getMinimalPriceError() != null) {
+                minimumPriceTextInputLayout.setErrorEnabled(true);
+                minimumPriceTextInputLayout.setError(formState.getMinimalPriceError());
+            } else {
+                minimumPriceTextInputLayout.setErrorEnabled(false);
+                minimumPriceTextInputLayout.setError(null);
+            }
+            if (formState.getDecrementAmountError() != null) {
+                decrementAmountTextInputLayout.setErrorEnabled(true);
+                decrementAmountTextInputLayout.setError(formState.getDecrementAmountError());
+            } else {
+                decrementAmountTextInputLayout.setErrorEnabled(false);
+                decrementAmountTextInputLayout.setError(null);
+            }
+        });
     }
 
     private void setupBottomSheetDialogs() {
@@ -244,18 +302,31 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             decrementTime += minutesWheelView.getSelectionItem() + "Min";
         }
         decrementTimeTextView.setText(decrementTime);
+        CreateAuctionController.downwardAuctionInputChanged(
+                initialPriceEditText.getText().toString(),
+                minimumPriceEditText.getText().toString(),
+                decrementAmountEditText.getText().toString(),
+                monthsWheelView.getSelectionItem(),
+                daysWheelView.getSelectionItem(),
+                hoursWheelView.getSelectionItem(),
+                minutesWheelView.getSelectionItem(),
+                getContext()
+        );
     }
 
     private void setupInitialPriceEditTextListner(@NonNull View view) {
         initialPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        initialPriceEditText.addTextChangedListener(textWatcher);
     }
 
     private void setupMinPriceEditTextListner(@NonNull View view) {
         minimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        minimumPriceEditText.addTextChangedListener(textWatcher);
     }
 
     private void setupDecrementAmountEditTextListner(@NonNull View view) {
         decrementAmountEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        decrementAmountEditText.addTextChangedListener(textWatcher);
     }
 
     private void setupCreateAuctionButton(View view) {
@@ -263,7 +334,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         createAuctionButton.setOnClickListener(v -> new Thread(() -> {
             parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
 
-            //TODO jonny metti il formstate basato
             if (fieldsEmpty()) {
                 parentActivity.runOnUiThread(() -> {
                     Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
@@ -288,7 +358,10 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             double initialPrice = Double.parseDouble(initialPriceEditText.getText().toString());
             double secretMinimumPrice = Double.parseDouble(minimumPriceEditText.getText().toString());
             double decrementAmount = Double.parseDouble(decrementAmountEditText.getText().toString());
-
+            long months = Long.parseLong(monthsWheelView.getSelectionItem());
+            long days = Long.parseLong(daysWheelView.getSelectionItem());
+            long hours = Long.parseLong(hoursWheelView.getSelectionItem());
+            long minutes = Long.parseLong(minutesWheelView.getSelectionItem());
             DownwardAuction newDownwardAuction = new DownwardAuction(
                     UserHolder.user,
                     title,
@@ -299,8 +372,8 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                     secretMinimumPrice,
                     initialPrice,
                     decrementAmount,
-                    getDecrementTime(),
-                    calculateNextDecrement()
+                    CreateAuctionController.getDecrementTime(months, days, hours, minutes),
+                    CreateAuctionController.calculateNextDecrement(months, days, hours, minutes)
             );
 
 
@@ -339,49 +412,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         }
 
         return false;
-    }
-
-    private boolean auctionDurationLessThen30Minutes(double initialPrice, double secretMinimumPrice, double decrementAmount) {
-        double totalTime = (initialPrice - secretMinimumPrice) / decrementAmount * getDecrementTime() / 60.0;
-        if (totalTime < 30) {
-            return true;
-        }
-        return false;
-    }
-
-    private long getDecrementTime() {
-        long months = Integer.parseInt(monthsWheelView.getSelectionItem());
-        long days = Integer.parseInt(daysWheelView.getSelectionItem());
-        long hours = Integer.parseInt(hoursWheelView.getSelectionItem());
-        int minutes = Integer.parseInt(minutesWheelView.getSelectionItem());
-
-        long totalSeconds = 0;
-
-        totalSeconds += (long) months * 30 * 24 * 60 * 60;
-        totalSeconds += (long) days * 24 * 60 * 60;
-        totalSeconds += (long) hours * 60 * 60;
-        totalSeconds += minutes * 60L;
-
-        return totalSeconds;
-    }
-
-    private String calculateNextDecrement() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, (int) getDecrementTime());
-        Timestamp nextDecrementDate = new Timestamp(calendar.getTimeInMillis());
-
-        return formatTimestamp(nextDecrementDate.toString());
-    }
-
-    public String formatTimestamp(String timestamp) {
-        String[] parts = timestamp.split(" ");
-        String datePart = parts[0];
-        String timePart = parts[1].substring(0, 8);
-
-        String[] dateParts = datePart.split("-");
-        String formattedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-
-        return formattedDate + " " + timePart;
     }
 
     private void setupDecrementTimeTextView(@NonNull View view) {

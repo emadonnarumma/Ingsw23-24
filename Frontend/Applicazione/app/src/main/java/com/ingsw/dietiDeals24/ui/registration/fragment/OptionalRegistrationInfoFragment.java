@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
@@ -20,7 +19,6 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
 import com.saadahmedsoft.popupdialog.PopupDialog;
@@ -47,7 +45,7 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        findTheViews();
+        setupViews();
         initRegionSmartSpinner();
     }
 
@@ -130,8 +128,9 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
         startActivity(intent);
     }
 
-    private void findTheViews() {
+    private void setupViews() {
         regionSmartSpinner = requireView().findViewById(R.id.region_spinner_registration);
+        regionSmartSpinner.setSelection(0);
         bioEditText = requireView().findViewById(R.id.bio_edit_text_registration);
     }
 

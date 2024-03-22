@@ -153,7 +153,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         setupBottomSheetDialogs();
         setupTextInputLayout(view);
         setupErrorTextViews(view);
-
         observeFormState();
     }
 
@@ -221,7 +220,13 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     }
 
     private void showErrorAndChangeColor(DownwardAuctionAttributesFormState formState, EditText editText, TextView errorTextView, TextInputLayout layout) {
-        errorTextView.setText(formState.getInitialPriceError());
+        if (errorTextView.equals(initialPriceErrorTextView)) {
+            errorTextView.setText(formState.getInitialPriceError());
+        } else if (errorTextView.equals(secretMinimumPriceErrorTextView)) {
+            errorTextView.setText(formState.getMinimalPriceError());
+        } else {
+            errorTextView.setText(formState.getDecrementAmountError());
+        }
         errorTextView.setVisibility(View.VISIBLE);
         editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
         layout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.red));

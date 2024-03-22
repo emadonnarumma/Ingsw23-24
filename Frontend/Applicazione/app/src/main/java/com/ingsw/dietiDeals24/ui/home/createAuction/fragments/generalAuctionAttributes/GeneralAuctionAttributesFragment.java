@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,9 +31,10 @@ import androidx.fragment.app.Fragment;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.controller.formstate.GeneralAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
@@ -54,15 +56,14 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private ImageView noImageSelectedImageView;
     private Uri currentPhotoUri;
-
     private ActivityResultLauncher<Uri> takePictureLauncher;
     private ActivityResultLauncher<String[]> selectPictureLauncher;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
-
     private GeneralAuctionAttributesViewModel viewModel;
-    private TextView titleTextView, descriptionTextView;
+    private TextView titleErrorTextView, descriptionErrorTextView;
+    private TextInputLayout titleTextInputLayout, descriptionTextInputLayout;
+    private EditText titleEditText, descriptionEditText;
     private SliderView sliderView;
-
     private FloatingActionButton addButton, deleteButton, nextStepButton;
 
     private SmallScreenSliderAdapter smallScreenSliderAdapter;
@@ -97,8 +98,8 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     @Override
     public void onResume() {
         super.onResume();
-        titleTextView.setError(null);
-        descriptionTextView.setError(null);
+        titleEditText.setError(null);
+        descriptionEditText.setError(null);
     }
 
     private void createSelectPictureLauncher() {
@@ -131,13 +132,16 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         noImageSelectedImageView = view.findViewById(R.id.default_create_auction_image_view);
+        setupActionBar();
+        setupButtons(view);
+        setupSlider(view);
+        setupTextViews(view);
+        setupSpinners(view);
+        setupTextInputLayouts(view);
 
-        setupViews(view);
-
-        titleTextView.addTextChangedListener(textWatcher);
-        descriptionTextView.addTextChangedListener(textWatcher);
+        titleEditText.addTextChangedListener(textWatcher);
+        descriptionEditText.addTextChangedListener(textWatcher);
         wearSmartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -158,35 +162,71 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // No action needed here
             }
         });
 
+        observeFormState();
+        updateFormState();
+        restoreData();
+    }
+
+    private void setupTextInputLayouts(View view) {
+        titleTextInputLayout = view.findViewById(R.id.title_layout_general_auction_attributes);
+        descriptionTextInputLayout = view.findViewById(R.id.description_layout_general_auction_attributes);
+    }
+
+    private void observeFormState() {
         viewModel.getGeneralAuctionAttributesFormState().observe(getViewLifecycleOwner(), formState -> {
             if (formState == null) {
                 return;
             }
-
             nextStepButton.setEnabled(formState.isDataValid());
-
             if (formState.getTitleError() != null) {
-                titleTextView.setError(formState.getTitleError());
+                showErrorAndChangeColor(
+                        formState,
+                        titleEditText,
+                        titleErrorTextView,
+                        titleTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        titleEditText,
+                        titleErrorTextView,
+                        titleTextInputLayout
+                );
             }
             if (formState.getDescriptionError() != null) {
-                descriptionTextView.setError(formState.getDescriptionError());
+                showErrorAndChangeColor(
+                        formState,
+                        descriptionEditText,
+                        descriptionErrorTextView,
+                        descriptionTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        descriptionEditText,
+                        descriptionErrorTextView,
+                        descriptionTextInputLayout
+                );
             }
         });
-        updateFormState();
-
-        restoreData();
     }
 
-    private void setupViews(@NonNull View view) {
-        setupActionBar();
-        setupButtons(view);
-        setupSlider(view);
-        setupTextViews(view);
-        setupSpinners(view);
+    private void hideErrorAndChangeColor(EditText editText, TextView errorTextView, TextInputLayout textInputLayout) {
+        errorTextView.setVisibility(View.GONE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.green));
+        textInputLayout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.green));
+    }
+
+    private void showErrorAndChangeColor(GeneralAuctionAttributesFormState formState, EditText editText, TextView errorTextView, TextInputLayout layout) {
+        if (errorTextView.equals(titleErrorTextView)) {
+            errorTextView.setText(formState.getTitleError());
+        } else {
+            errorTextView.setText(formState.getDescriptionError());
+        }
+        errorTextView.setVisibility(View.VISIBLE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+        layout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.red));
     }
 
     private void setupButtons(@NonNull View view) {
@@ -208,6 +248,8 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     }
 
     private void setupTextViews(View view) {
+        titleErrorTextView = view.findViewById(R.id.title_error_text_view_general_auction_attributes);
+        descriptionErrorTextView = view.findViewById(R.id.description_error_text_view_general_auction_attributes);
         setupTitleTextView(view);
         setupDescriptionTextView(view);
     }
@@ -224,8 +266,8 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     private void restoreData() {
         viewModel.getNewAuction().observe(getViewLifecycleOwner(), auction -> {
             if (auction != null) {
-                titleTextView.setText(auction.getTitle());
-                descriptionTextView.setText(auction.getDescription());
+                titleEditText.setText(auction.getTitle());
+                descriptionEditText.setText(auction.getDescription());
 
                 if (auction.getWear() != null) {
                     wearSmartSpinner.setSelection(auction.getWear().ordinal());
@@ -243,11 +285,11 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     }
 
     private void setupDescriptionTextView(View view) {
-        descriptionTextView = view.findViewById(R.id.description_edit_text_general_auction_attributes);
+        descriptionEditText = view.findViewById(R.id.description_edit_text_general_auction_attributes);
     }
 
     private void setupTitleTextView(View view) {
-        titleTextView = view.findViewById(R.id.title_edit_text_general_auction_attributes);
+        titleEditText = view.findViewById(R.id.title_edit_text_general_auction_attributes);
     }
 
     private void setupWearSpinner(View view) {
@@ -384,8 +426,8 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private void updateViewModel() {
         viewModel.generalAuctionAttributesChanged(
-                titleTextView.getText().toString(),
-                descriptionTextView.getText().toString(),
+                titleEditText.getText().toString(),
+                descriptionEditText.getText().toString(),
                 getWearValue(),
                 getCategoryValue(),
                 selectedImages
@@ -410,8 +452,8 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private void updateFormState() {
         viewModel.generalAuctionInputChanged(
-                titleTextView.getText().toString(),
-                descriptionTextView.getText().toString(),
+                titleEditText.getText().toString(),
+                descriptionEditText.getText().toString(),
                 wearSmartSpinner.getSelectedItem() != null,
                 categorySmartSpinner.getSelectedItem() != null,
                 getContext()

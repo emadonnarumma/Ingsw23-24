@@ -1,5 +1,12 @@
 package com.ingsw.dietiDeals24.controller;
 
+import android.content.Context;
+
+import androidx.lifecycle.MutableLiveData;
+
+import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.formstate.ReverseBidFormState;
+import com.ingsw.dietiDeals24.controller.formstate.SilentBidFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.CreditCard;
@@ -27,6 +34,58 @@ public class MakeBidController implements RetroFitHolder {
     private static SilentAuction silentAuction;
     private static ReverseAuction reverseAuction;
     private static DownwardAuction downwardAuction;
+    private static MutableLiveData<SilentBidFormState> silentBidFormState = new MutableLiveData<>();
+    private static MutableLiveData<ReverseBidFormState> reverseBidFormState = new MutableLiveData<>();
+
+    public static MutableLiveData<SilentBidFormState> getSilentBidFormState() {
+        return silentBidFormState;
+    }
+
+    public static MutableLiveData<ReverseBidFormState> getReverseBidFormState() {
+        return reverseBidFormState;
+    }
+
+    public static void reverseBidInputChanged(Context context, String currentBid, double minBid) {
+        if (!isReverseBidValid(currentBid, minBid)) {
+            reverseBidFormState.setValue(new ReverseBidFormState(context.getString(R.string.reverse_bid_error)));
+        } else {
+            reverseBidFormState.setValue(new ReverseBidFormState(true));
+        }
+    }
+
+    public static void silentBidInputChanged(Context context, String bid) {
+        if (!isSilentBidValid(bid)) {
+            silentBidFormState.setValue(new SilentBidFormState(context.getString(R.string.bid_error)));
+        } else {
+            silentBidFormState.setValue(new SilentBidFormState(true));
+        }
+    }
+
+    private static boolean isSilentBidValid(String bid) {
+        if (bid == null) {
+            return false;
+        }
+        if (bid.isEmpty()) {
+            return false;
+        }
+        if (bid.equals("0")) {
+            return false;
+        }
+        return bid.length() <= 10;
+    }
+
+    private static boolean isReverseBidValid(String currentBid, double minBid) {
+        if (currentBid == null) {
+            return false;
+        }
+        if (currentBid.isEmpty()) {
+            return false;
+        }
+        if (Double.parseDouble(currentBid) >= minBid || currentBid.equals("0")) {
+            return false;
+        }
+        return currentBid.length() <= 10;
+    }
 
     public static SilentAuction getSilentAuction() {
         return silentAuction;

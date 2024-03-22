@@ -51,4 +51,5 @@ public class DownwardAuctionAttributesFormState {
     public void setDataValid(boolean dataValid) {
         isDataValid = dataValid;
     }
+
 }

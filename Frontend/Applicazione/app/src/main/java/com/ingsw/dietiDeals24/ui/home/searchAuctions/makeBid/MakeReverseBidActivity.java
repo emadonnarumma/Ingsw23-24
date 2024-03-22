@@ -9,10 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
+import com.ingsw.dietiDeals24.controller.formstate.ReverseBidFormState;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
@@ -23,33 +26,105 @@ import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import java.util.concurrent.ExecutionException;
 
 public class MakeReverseBidActivity extends CheckConnectionActivity {
-    private TextView currentBidTextView;
+    private TextView currentBidTextView, bidErrorTextView;
+    private TextInputLayout bidTextInputLayout;
     private EditText bidEditText;
     private CircularProgressButton sendBidButton;
     private ReverseBid currentBid = null;
+    private double moneyAmount;
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            MakeBidController.reverseBidInputChanged(MakeReverseBidActivity.this, s.toString(), moneyAmount);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_reverse_bid);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         try {
             currentBid = MakeBidController.getCurrentReverseBid().get();
+            if (currentBid == null) {
+                moneyAmount = MakeBidController.getReverseAuction().getStartingPrice();
+            } else {
+                moneyAmount = currentBid.getMoneyAmount();
+            }
         } catch (ExecutionException e) {
             ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        setupCurrentBidEditText();
-        setupBidEditText();
-        setupActionBar();
-        setupBidButton();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupTextInputLayout();
+        setupEditTexts();
+        setupTextViews();
+        setupActionBar();
+        setupBidButton();
+        observeReverseBidFormState();
+    }
+
+
+    private void observeReverseBidFormState() {
+        MakeBidController.getReverseBidFormState().observe(this, reverseBidFormState -> {
+            if (reverseBidFormState == null) {
+                return;
+            }
+            sendBidButton.setEnabled(reverseBidFormState.isDataValid());
+            if (reverseBidFormState.getBidError() != null) {
+                showErrorAndChangeColor(
+                        reverseBidFormState,
+                        bidEditText,
+                        bidErrorTextView,
+                        bidTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        bidEditText,
+                        bidErrorTextView,
+                        bidTextInputLayout
+                );
+            }
+        });
+    }
+
+    private void hideErrorAndChangeColor(EditText editText, TextView errorTextView, TextInputLayout textInputLayout) {
+        errorTextView.setVisibility(View.GONE);
+        editText.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+        textInputLayout.setBoxStrokeColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+    }
+
+    private void showErrorAndChangeColor(ReverseBidFormState reverseBidFormState, EditText editText, TextView errorTextView, TextInputLayout textInputLayout) {
+        errorTextView.setText(reverseBidFormState.getBidError());
+        errorTextView.setVisibility(View.VISIBLE);
+        editText.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+        textInputLayout.setBoxStrokeColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+    }
+
+    private void setupTextViews() {
+        bidErrorTextView = findViewById(R.id.bid_error_text_view_make_reverse_bid);
+    }
+
+    private void setupEditTexts() {
+        setupCurrentBidEditText();
+        setupBidEditText();
+    }
+
+    private void setupTextInputLayout() {
+        bidTextInputLayout = findViewById(R.id.bid_layout_make_reverse_bid);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -63,33 +138,7 @@ public class MakeReverseBidActivity extends CheckConnectionActivity {
     private void setupBidEditText() {
         bidEditText = findViewById(R.id.bid_edit_text_make_reverse_bid);
         bidEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        bidEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String bidString = s.toString().replace("€", "");
-                if (bidString.isEmpty()) {
-                    return;
-                }
-                double bid = Double.parseDouble(bidString);
-                if (currentBid != null && bid < currentBid.getMoneyAmount()) {
-                    sendBidButton.setEnabled(true);
-                } else if (bid < MakeBidController.getReverseAuction().getStartingPrice()) {
-                    sendBidButton.setEnabled(true);
-                } else {
-                    bidEditText.setError("Devi fare un offerta minore di quella attuale");
-                }
-            }
-        });
+        bidEditText.addTextChangedListener(textWatcher);
     }
 
     private void setupBidButton() {

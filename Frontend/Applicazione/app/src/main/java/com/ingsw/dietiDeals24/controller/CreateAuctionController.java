@@ -40,7 +40,7 @@ public class CreateAuctionController implements RetroFitHolder {
         if (!isInitialPriceValid(initialPrice)) {
             downwardAuctionFormState.setValue(new DownwardAuctionAttributesFormState(context.getString(R.string.price_error), null, null, null));
         } else if (!isMinimalPriceValid(minimalPrice, initialPrice)) {
-            downwardAuctionFormState.setValue(new DownwardAuctionAttributesFormState(null, context.getString(R.string.price_error), null, null));
+            downwardAuctionFormState.setValue(new DownwardAuctionAttributesFormState(null, context.getString(R.string.secret_minimum_price_error), null, null));
         } else if (!isDecrementAmountValid(decrementAmount, initialPrice, minimalPrice, months, days, hours, minutes)) {
             downwardAuctionFormState.setValue(new DownwardAuctionAttributesFormState(null, null, context.getString(R.string.downward_auction_decrement_amount_error), null));
         } else {

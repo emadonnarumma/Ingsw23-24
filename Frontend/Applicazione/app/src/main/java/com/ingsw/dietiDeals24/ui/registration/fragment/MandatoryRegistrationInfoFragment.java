@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -15,8 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
+import com.ingsw.dietiDeals24.controller.formstate.RegistrationFormState;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
@@ -28,11 +33,11 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MandatoryRegistrationInfoFragment extends Fragment implements BlockingStep {
 
+    private TextView usernameErrorTextView, emailErrorTextView, passwordErrorTextView, passwordConfirmationErrorTextView;
+    private TextInputLayout usernameTextInputLayout, emailTextInputLayout, passwordTextInputLayout, passwordConfirmationTextInputLayout;
     private EditText userNameEditText, emailEditText, passwordEditText, passwordConfirmationEditText;
     private User registeringUser = RegistrationController.user;
 
@@ -68,20 +73,36 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setUserNameTextView();
-        setEmailTextView();
-        setPasswordTextView();
+        setupTextViews();
+        setupTextInputLayouts();
         setPasswordConfirmationEditText();
         observeRegistrationFormState();
     }
 
-    private void setUserNameTextView() {
+    private void setupTextInputLayouts() {
+        usernameTextInputLayout = requireView().findViewById(R.id.username_layout_mandatory_registration_info);
+        emailTextInputLayout = requireView().findViewById(R.id.email_layout_mandatory_registration_info);
+        passwordTextInputLayout = requireView().findViewById(R.id.password_layout_mandatory_registration_info);
+        passwordConfirmationTextInputLayout = requireView().findViewById(R.id.password_confirmation_layout_mandatory_registration_info);
+    }
+
+    private void setupTextViews() {
+        setupUserNameTextView();
+        setEmailTextView();
+        setPasswordTextView();
+        usernameErrorTextView = requireView().findViewById(R.id.username_error_text_view_mandatory_registration_info);
+        emailErrorTextView = requireView().findViewById(R.id.email_error_text_view_mandatory_registration_info);
+        passwordErrorTextView = requireView().findViewById(R.id.password_error_text_view_mandatory_registration_info);
+        passwordConfirmationErrorTextView = requireView().findViewById(R.id.password_confirmation_error_text_view_mandatory_registration_info);
+    }
+
+    private void setupUserNameTextView() {
         userNameEditText = requireView().findViewById(R.id.username_edit_text_madatory_registration_info);
         userNameEditText.addTextChangedListener(registrationTextWatcher);
     }
 
     private void setEmailTextView() {
-        emailEditText = requireView().findViewById(R.id.email_edit_text_madatory_registration_info);
+        emailEditText = requireView().findViewById(R.id.email_edit_text_mandatory_registration_info);
         emailEditText.addTextChangedListener(registrationTextWatcher);
     }
 
@@ -100,23 +121,84 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
             if (registrationFormState == null) {
                 return;
             }
-            String usernameError = registrationFormState.getUsernameError();
-            String emailError = registrationFormState.getEmailError();
-            String passwordError = registrationFormState.getPasswordError();
-            String passwordConfirmationError = registrationFormState.getRepeatPasswordError();
-            if (usernameError != null) {
-                userNameEditText.setError(usernameError);
+            if (registrationFormState.getUsernameError() != null) {
+                showErrorAndChangeColor(
+                        registrationFormState,
+                        userNameEditText,
+                        usernameErrorTextView,
+                        usernameTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        userNameEditText,
+                        usernameErrorTextView,
+                        usernameTextInputLayout
+                );
             }
-            if (emailError != null) {
-                emailEditText.setError(emailError);
+            if (registrationFormState.getEmailError() != null) {
+                showErrorAndChangeColor(
+                        registrationFormState,
+                        emailEditText,
+                        emailErrorTextView,
+                        emailTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        emailEditText,
+                        emailErrorTextView,
+                        emailTextInputLayout
+                );
             }
-            if (passwordError != null) {
-                passwordEditText.setError(passwordError);
+            if (registrationFormState.getPasswordError() != null) {
+                showErrorAndChangeColor(
+                        registrationFormState,
+                        passwordEditText,
+                        passwordErrorTextView,
+                        passwordTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        passwordEditText,
+                        passwordErrorTextView,
+                        passwordTextInputLayout
+                );
             }
-            if (passwordConfirmationError != null) {
-                passwordConfirmationEditText.setError(passwordConfirmationError);
+            if (registrationFormState.getRepeatPasswordError() != null) {
+                showErrorAndChangeColor(
+                        registrationFormState,
+                        passwordConfirmationEditText,
+                        passwordConfirmationErrorTextView,
+                        passwordConfirmationTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        passwordConfirmationEditText,
+                        passwordConfirmationErrorTextView,
+                        passwordConfirmationTextInputLayout
+                );
             }
         });
+    }
+
+    private void hideErrorAndChangeColor(EditText editText, TextView errorTextView, TextInputLayout textInputLayout) {
+        errorTextView.setVisibility(View.GONE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.green));
+        textInputLayout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.green));
+    }
+
+    private void showErrorAndChangeColor(RegistrationFormState formState, EditText editText, TextView errorTextView, TextInputLayout layout) {
+        if (errorTextView.equals(usernameErrorTextView)) {
+            errorTextView.setText(formState.getUsernameError());
+        } else if (errorTextView.equals(emailErrorTextView)) {
+            errorTextView.setText(formState.getEmailError());
+        } else if (errorTextView.equals(passwordErrorTextView)) {
+            errorTextView.setText(formState.getPasswordError());
+        } else {
+            errorTextView.setText(formState.getRepeatPasswordError());
+        }
+        errorTextView.setVisibility(View.VISIBLE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+        layout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.red));
     }
 
     @Override

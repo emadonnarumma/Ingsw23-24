@@ -147,9 +147,15 @@
     <string name="silent_auction_withdrawal_bid_time_error">Il valore non deve essere 0</string>
     <string name="downward_auction_decrement_amount_error">L\'importo di decremento non può essere più del 15% del prezzo iniziale e l\'asta non può durare meno di 30 minuti.</string>
     <string name="downward_auction_decrement_time_error">L\'asta non può durare meno di 30 minuti.</string>
+
     <string name="bid_error">L\'offerta non deve avere più di 10 cifre e non deve essere vuota</string>
     <string name="secret_minimum_price_error">Il prezzo segreto non può essere superiore a quello iniziale e non può essere vuoto</string>
     <string name="reverse_bid_error">L\'offerta non può essere uguale o superiore a quella corrente e non puo essere 0</string>
+
+    <string name="card_code_error">Il numero della carta di credito deve essere di 16 cifre</string>
+    <string name="name_error">Nome non valido</string>
+    <string name="surname_error">Cognome non valido</string>
+    <string name="cvv_error">Il cvv deve essere di 3 cifre</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

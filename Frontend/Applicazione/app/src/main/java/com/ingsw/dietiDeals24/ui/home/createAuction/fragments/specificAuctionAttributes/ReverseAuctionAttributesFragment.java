@@ -105,6 +105,8 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
         setupCreateAuctionButton(view);
         setupBottomSheetDialogs();
         setupTextInputLayout(view);
+
+        createAuctionButton.setEnabled(false);
     }
 
     private void observeFormState() {

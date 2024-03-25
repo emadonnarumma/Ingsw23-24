@@ -8,4 +8,6 @@ import com.ingsw.backend.model.User;
 public interface NotificationService {
 
 	public List<Notification> getAllNotificationsByUser(User user);
+	
+	public Boolean delete(Integer id);
 }

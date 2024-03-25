@@ -24,4 +24,16 @@ public class NotificationDbService implements NotificationService {
 		return notificationRepository.findAllByUser(user);
 	}
 
+	@Override
+	public Boolean delete(Integer id) {
+		
+	    if (!notificationRepository.existsById(id)) {
+	        return false;
+	    }
+	    
+	    notificationRepository.deleteById(id);
+	    
+	    return true;
+	}
+
 }

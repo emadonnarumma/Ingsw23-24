@@ -156,6 +156,7 @@
     <string name="name_error">Nome non valido</string>
     <string name="surname_error">Cognome non valido</string>
     <string name="cvv_error">Il cvv deve essere di 3 cifre</string>
+    <string name="notification_phrase">Notifiche</string>
 
     <string-array name="italian_regions">
         <item>Non specificare</item>

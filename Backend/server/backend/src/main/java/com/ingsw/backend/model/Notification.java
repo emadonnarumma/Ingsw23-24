@@ -40,6 +40,6 @@ public class Notification {
     
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
-    private Auction auction;
+    private DownwardAuction auction;
 
 }

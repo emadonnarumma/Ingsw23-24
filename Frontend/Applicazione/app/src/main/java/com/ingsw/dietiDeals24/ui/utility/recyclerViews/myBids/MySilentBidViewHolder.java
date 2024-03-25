@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
@@ -103,7 +104,7 @@ public class MySilentBidViewHolder extends RecyclerView.ViewHolder {
         ArrayList<Uri> images = new ArrayList<>();
         if (silentAuction.getImages() != null && !silentAuction.getImages().isEmpty()) {
             for (int i = 0; i < silentAuction.getImages().size(); i++) {
-                images.add(base64ToUri(silentAuction.getImages().get(i).getBase64Data()));
+                images.add(ImageController.base64ToUri(silentAuction.getImages().get(i).getBase64Data(), itemView.getContext()));
             }
         } else {
             Uri defaultImageUri = Uri.parse("android.resource://com.ingsw.dietiDeals24/" + R.drawable.no_image_available);
@@ -111,21 +112,5 @@ public class MySilentBidViewHolder extends RecyclerView.ViewHolder {
         }
 
         adapter.renewItems(images);
-    }
-
-    private Uri base64ToUri(String base64) {
-        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
-        File tempFile;
-        try {
-            tempFile = File.createTempFile("image", "jpg", itemView.getContext().getCacheDir());
-            tempFile.deleteOnExit();
-            FileOutputStream fos = new FileOutputStream(tempFile);
-            fos.write(decodedString);
-            fos.close();
-            return Uri.fromFile(tempFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

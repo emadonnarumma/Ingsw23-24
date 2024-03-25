@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public interface RetroFitHolder {
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.115.185:8080/")
+            .baseUrl("http://192.168.23.135:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }

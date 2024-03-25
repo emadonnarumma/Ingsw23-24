@@ -66,6 +66,12 @@ public abstract class User implements UserDetails{
 	
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<ExternalLink> externalLinks;
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Notification> notifications;
+    
+    
 
 	@Override
 	@JsonIgnore

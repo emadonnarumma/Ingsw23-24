@@ -9,9 +9,6 @@ import com.ingsw.backend.model.Seller;
 import com.ingsw.backend.model.User;
 
 public interface UserService {
-
-	public User addUser(User user);
-
 	public Optional<User> getUser(String email, Role role);
 	
 	public Optional<User> getUser(String email, String password);

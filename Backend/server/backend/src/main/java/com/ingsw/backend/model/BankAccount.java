@@ -40,5 +40,12 @@ public class BankAccount {
     @Column(nullable = false, length = 11)
     private String iva;
 
-
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((iban == null) ? 0 : iban.hashCode());
+        result = prime * result + ((iva == null) ? 0 : iva.hashCode());
+        return result;
+    }
 }

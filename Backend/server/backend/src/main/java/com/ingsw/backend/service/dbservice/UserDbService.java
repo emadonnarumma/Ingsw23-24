@@ -28,35 +28,6 @@ public class UserDbService implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
-        if(user.getRole() == null) {
-            throw new IllegalArgumentException("Role must be specified");
-        }
-
-        User newUser;
-        if (user.getRole() == Role.BUYER) {
-            newUser = Buyer.builder()
-                    .bio(user.getBio())
-                    .email(user.getEmail())
-                    .password(user.getPassword())
-                    .name(user.getName())
-                    .region(user.getRegion())
-                    .role(Role.BUYER)
-                    .build();
-        } else {
-            newUser = Seller.builder()
-                    .bio(user.getBio())
-                    .email(user.getEmail())
-                    .password(user.getPassword())
-                    .name(user.getName())
-                    .region(user.getRegion())
-                    .role(Role.SELLER)
-                    .build();
-        }
-        return userRepository.save(newUser);
-    }
-
-    @Override
     public Optional<User> getUser(String email, Role role) {
         return userRepository.findByEmailAndRole(email, role);
     }

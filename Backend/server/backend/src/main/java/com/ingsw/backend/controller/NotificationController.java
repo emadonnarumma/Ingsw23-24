@@ -3,6 +3,7 @@ package com.ingsw.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.ingsw.backend.enumeration.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,10 @@ public class NotificationController {
 	@Qualifier("mainNotificationService")
 	private NotificationService notificationService;
 	
-	@GetMapping("/{userEmail}/getAllNotifications")
-	public ResponseEntity<List<Notification>> getAllNotificationsByUser(@PathVariable String userEmail) {
+	@GetMapping("/{userEmail}/{userRole}/getAllNotifications")
+	public ResponseEntity<List<Notification>> getAllNotificationsByUser(@PathVariable String userEmail, @PathVariable Role userRole) {
 	    
-	    Optional<User> user = userService.getUser(userEmail);
+	    Optional<User> user = userService.getUser(userEmail, userRole);
 	    
 	    if (!user.isPresent()) {
 	        
@@ -52,7 +53,7 @@ public class NotificationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteNotification(@PathVariable Integer id) {
         
-    	if (notificationService.delete(id)) {
+    	if (Boolean.TRUE.equals(notificationService.delete(id))) {
     		
             return ResponseEntity.noContent().build();
             

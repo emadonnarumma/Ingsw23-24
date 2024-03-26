@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.NotificationController;
@@ -46,8 +47,10 @@ import java.util.concurrent.Executors;
 
 public class HomeActivity extends CheckConnectionActivity {
     private DrawerLayout drawerLayout;
-    private ImageButton notificationButton, closeDrawerButton;
+    private ImageButton notificationButton;
+    private ImageButton closeDrawerButton;
     private RecyclerView notificationsRecyclerView;
+    private BadgeDrawable notificationBadge;
     private NavigationBarView navigationBarView;
     private Toolbar toolbar;
     private ExecutorService executorService;
@@ -124,8 +127,8 @@ public class HomeActivity extends CheckConnectionActivity {
         setupActionBar();
         setupDrawerLayout();
         setupNotificationButton();
+        setupNavigationBarView();
         getOnBackPressedDispatcher().addCallback(this, callback);
-        setupNavigationBarView(findViewById(R.id.bottom_navigation_home));
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new SearchAuctionsFragment()).commit();
 
@@ -230,8 +233,8 @@ public class HomeActivity extends CheckConnectionActivity {
         notificationsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void setupNavigationBarView(NavigationBarView navigationBarView) {
-        this.navigationBarView = navigationBarView;
+    private void setupNavigationBarView() {
+        navigationBarView = findViewById(R.id.bottom_navigation_home);
         navigationBarView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_search) {
 

@@ -37,6 +37,4 @@ public class Seller extends User {
     @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<ReverseBid> bids;
-
-
 }

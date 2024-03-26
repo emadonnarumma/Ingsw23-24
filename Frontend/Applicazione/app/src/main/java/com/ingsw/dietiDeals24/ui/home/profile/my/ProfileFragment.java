@@ -67,7 +67,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         logoutButton = view.findViewById(R.id.logout_button_profile);
 
         userBioTextView.setMovementMethod(new ScrollingMovementMethod());
-        retrieveUserData();
+
         showUserData();
 
         setupBottomSheetDialog();
@@ -249,5 +249,13 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
             bottomSheetDialog.dismiss();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!ProfileController.wasUserAlreadyRetrieved)
+            retrieveUserData();
+        updateUserData();
     }
 }

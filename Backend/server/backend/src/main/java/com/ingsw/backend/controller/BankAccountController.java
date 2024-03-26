@@ -46,7 +46,15 @@ public class BankAccountController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BankAccount> updateBankAccount(@PathVariable Integer id, @Valid @RequestBody BankAccount bankAccount) {
-       
+
+        Optional<BankAccount> existingBankAccount = bankAccountService.get(id);
+        if (existingBankAccount.isPresent())
+            bankAccount.setSeller(existingBankAccount.get().getSeller());
+        else {
+
+            return ResponseEntity.notFound().build();
+        }
+
     	Optional<BankAccount> updatedBankAccount = bankAccountService.update(id, bankAccount);
         
     	if (updatedBankAccount.isPresent()) {

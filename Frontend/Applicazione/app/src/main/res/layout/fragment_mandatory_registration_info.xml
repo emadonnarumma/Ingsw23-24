@@ -14,6 +14,8 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
         android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username_input"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:maxLength="30"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -41,6 +45,9 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
+        app:counterEnabled="true"
+        app:counterMaxLength="320"
+
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/e_mail_input"
+            android:maxLength="320"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,6 +79,9 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
+        app:counterEnabled="true"
+        app:counterMaxLength="16"
+
         android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="@id/email_layout_mandatory_registration_info"
         app:layout_constraintEnd_toEndOf="@id/email_layout_mandatory_registration_info"
@@ -85,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password_input"
+            android:maxLength="16"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,6 +114,9 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
+        app:counterEnabled="true"
+        app:counterMaxLength="16"
+
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@id/password_layout_mandatory_registration_info"
         app:layout_constraintEnd_toEndOf="@id/password_layout_mandatory_registration_info"
@@ -116,6 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/confirm_password_input"
+            android:maxLength="16"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -6,11 +6,11 @@ import com.ingsw.backend.model.ExternalLink;
 
 public interface ExternalLinkService {
 	
-	public ExternalLink addExternalLink(ExternalLink externalLink);
+	ExternalLink addExternalLink(ExternalLink externalLink);
 	
-	public Boolean delete(Integer id);
+	Boolean delete(Integer id);
 	
-	public Optional<ExternalLink> update(Integer id, ExternalLink externalLink);
+	Optional<ExternalLink> update(Integer id, ExternalLink externalLink);
 
-	public Optional<ExternalLink> get(Integer id);
+	Optional<ExternalLink> get(Integer id);
 }

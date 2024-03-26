@@ -17,25 +17,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_title_edit_external_link"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/external_link_title_text_layout"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/edit_url_title_phrase"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_of_edit_external_link" />
+        android:layout_marginTop="5dp"
 
-    <EditText
-        android:id="@+id/edit_url_edit_external_link"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/edit_url_phrase"
+        app:counterEnabled="true"
+        app:counterMaxLength="100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_title_edit_external_link" />
+        app:layout_constraintTop_toBottomOf="@+id/title_of_edit_external_link">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_title_edit_external_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/edit_url_title_phrase"
+            android:maxLength="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_of_edit_bank_account" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/external_link_title_error_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/external_link_title_text_layout"
+        app:layout_constraintStart_toStartOf="@id/external_link_title_text_layout"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/external_link_url_text_layout"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+
+        app:counterEnabled="true"
+        app:counterMaxLength="2083"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/external_link_title_error_text_view">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_url_edit_external_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/edit_url_phrase"
+            android:maxLength="2083"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_of_edit_bank_account" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/external_link_url_error_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/external_link_url_text_layout"
+        app:layout_constraintStart_toStartOf="@id/external_link_url_text_layout"/>
 
     <ImageView
         android:id="@+id/done_button_edit_external_link"
@@ -45,7 +95,7 @@
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_done_button"
         app:tint="@color/green"
-        app:layout_constraintTop_toBottomOf="@id/edit_url_edit_external_link"
+        app:layout_constraintTop_toBottomOf="@id/external_link_url_error_text_view"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,9 +14,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
+import com.ingsw.dietiDeals24.controller.formstate.BankAccountFormState;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
@@ -26,8 +29,13 @@ import java.util.concurrent.ExecutionException;
 
 public class AddBankAccountFragment extends FragmentOfHomeActivity {
     private TextView titleScreen;
+    private TextInputLayout ibanTextInputLayout;
     private EditText ibanEditText;
+    private TextView ibanErrorText;
+
+    private TextInputLayout ivaTextInputLayout;
     private EditText ivaEditText;
+    private TextView ivaErrorText;
     private ImageView doneButton;
 
     private TextWatcher bankAccountTextWatcher = new TextWatcher() {
@@ -70,32 +78,87 @@ public class AddBankAccountFragment extends FragmentOfHomeActivity {
         titleScreen.setText(R.string.add_bank_account_phrase);
         ibanEditText.addTextChangedListener(bankAccountTextWatcher);
         ivaEditText.addTextChangedListener(bankAccountTextWatcher);
-        observeBankAccountFormState();
+
+        setupTextInputLayout(view);
+        setupErrorTextViews(view);
+        observeFormState();
 
         doneButton.setOnClickListener(v -> unlockSellerMode());
     }
 
-    private void observeBankAccountFormState() {
-        ProfileController.getBankAccountFormState().observe(getViewLifecycleOwner(), bankAccountFormState -> {
-            if (bankAccountFormState == null) {
+    private void setupTextInputLayout(View view) {
+
+        ibanTextInputLayout = view.findViewById(R.id.iban_text_layout);
+        ivaTextInputLayout = view.findViewById(R.id.iva_text_layout);
+    }
+
+    private void setupErrorTextViews(View view) {
+
+        ibanErrorText = view.findViewById(R.id.iban_error_text_view);
+        ivaErrorText = view.findViewById(R.id.iva_error_text_view);
+    }
+
+    private void hideErrorAndChangeColor(EditText editText, TextView errorTextView, TextInputLayout textInputLayout) {
+        errorTextView.setVisibility(View.GONE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.green));
+        textInputLayout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.green));
+    }
+
+    private void showErrorAndChangeColor(BankAccountFormState formState, EditText editText, TextView errorTextView, TextInputLayout layout) {
+        if (errorTextView.equals(ibanErrorText)) {
+            errorTextView.setText(formState.getIbanError());
+        } else if (errorTextView.equals(ivaErrorText)) {
+            errorTextView.setText(formState.getIvaError());
+        }
+
+        errorTextView.setVisibility(View.VISIBLE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+        layout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.red));
+    }
+
+    private void observeFormState() {
+        ProfileController.getBankAccountFormState().observe(getViewLifecycleOwner(), formState -> {
+            if (formState == null) {
                 return;
             }
-            String ibanError = bankAccountFormState.getIbanError();
-            String ivaError = bankAccountFormState.getIvaError();
-            if (ibanError != null) {
-                ibanEditText.setError(ibanError);
-            }
-            if (ivaError != null) {
-                ivaEditText.setError(ivaError);
-            }
-            doneButton.setEnabled(bankAccountFormState.isDataValid());
+            doneButton.setEnabled(formState.isDataValid());
             if (doneButton.isEnabled()) {
                 doneButton.setColorFilter(getResources().getColor(R.color.green, null));
             } else {
                 doneButton.setColorFilter(getResources().getColor(R.color.gray, null));
             }
+
+            if (formState.getIbanError() != null) {
+                showErrorAndChangeColor(
+                        formState,
+                        ibanEditText,
+                        ibanErrorText,
+                        ibanTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        ibanEditText,
+                        ibanErrorText,
+                        ibanTextInputLayout
+                );
+            }
+            if (formState.getIvaError() != null) {
+                showErrorAndChangeColor(
+                        formState,
+                        ivaEditText,
+                        ivaErrorText,
+                        ivaTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        ivaEditText,
+                        ivaErrorText,
+                        ivaTextInputLayout
+                );
+            }
         });
     }
+
 
     private void unlockSellerMode() {
         PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());

@@ -6,7 +6,6 @@ import com.ingsw.backend.enumeration.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ingsw.backend.model.User;
-import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, String>{
 

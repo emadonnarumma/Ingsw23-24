@@ -12,10 +12,12 @@ import androidx.fragment.app.Fragment;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.MyAuctionsController;
+import com.ingsw.dietiDeals24.controller.MyBidDetailsController;
 import com.ingsw.dietiDeals24.controller.MyBidsController;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.model.Auction;
+import com.ingsw.dietiDeals24.model.Bid;
 import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment;
@@ -262,11 +264,11 @@ public class PopupGeneratorOf {
                 });
     }
 
-    public static void areYouSureToDeleteBidPopup(Context context) {
+    public static void areYouSureToDeleteBidPopup(Activity activity, Bid bid) {
         PopupDialog.getInstance(context)
                 .setStyle(Styles.STANDARD)
                 .setHeading("Cancellare l'offerta?")
-                .setDescription("Sei sicuro di voler cancellare l'offerta? Non potrai più recuperarla.")
+                .setDescription("Sei sicuro di voler cancellare l'offerta?")
                 .setPopupDialogIcon(R.drawable.ic_delete_forever)
                 .setPopupDialogIconTint(R.color.red)
                 .setCancelable(false)
@@ -276,6 +278,7 @@ public class PopupGeneratorOf {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
                         super.onPositiveClicked(dialog);
+                        deleteBid(activity, bid);
                     }
 
                     @Override
@@ -283,6 +286,17 @@ public class PopupGeneratorOf {
                         super.onNegativeClicked(dialog);
                     }
                 });
+    }
+
+    private void deleteBid(Activity activity, Bid bid) {
+        try {
+            MyBidDetailsController.deleteBid(bid.getIdBid()).get();
+            activity.finish();
+        } catch (ExecutionException e) {
+            ToastManager.showToast(activity, e.getCause().getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

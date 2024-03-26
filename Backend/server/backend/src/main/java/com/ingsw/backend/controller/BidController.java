@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ingsw.backend.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,24 +21,22 @@ import com.ingsw.backend.service.BidService;
 import com.ingsw.backend.service.UserService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/bid")
-@RequiredArgsConstructor
 public class BidController {
-	
-	@Autowired
-	@Qualifier("mainBidService")
-	private BidService bidService;
-	
-	@Autowired
-	@Qualifier("mainAuctionService")
-	private AuctionService auctionService;
-	
-	@Autowired
-	@Qualifier("mainUserService")
-	private UserService userService;
+
+	private final BidService bidService;
+	private final AuctionService auctionService;
+	private final UserService userService;
+
+	public BidController(@Qualifier("mainBidService") BidService bidService,
+						 @Qualifier("mainAuctionService") AuctionService auctionService,
+						 @Qualifier("mainUserService") UserService userService) {
+		this.bidService = bidService;
+		this.auctionService = auctionService;
+		this.userService = userService;
+	}
 
 	@GetMapping("/downward/winning/{auctionId}")
 	public ResponseEntity<DownwardBid> getWinningDownwardBidByAuctionId(@PathVariable Integer auctionId) {

@@ -22,10 +22,6 @@ public class UserDbService implements UserService {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public Optional<User> getUser(String email, String password) {
-        return userRepository.findByEmailAndRoleAndPassword(email, Role.BUYER, password);
-    }
 
     @Override
     public Optional<User> getUser(String email, Role role) {
@@ -34,14 +30,14 @@ public class UserDbService implements UserService {
 
     @Override
     public Optional<Seller> getSeller(String email) {
-        User user = userRepository.findByEmailAndRole(email, Role.SELLER).get();
-        return Optional.of((Seller) user);
+        Optional<User> user = userRepository.findByEmailAndRole(email, Role.SELLER);
+        return user.map(Seller.class::cast);
     }
 
     @Override
     public Optional<Buyer> getBuyer(String email) {
-        User user = userRepository.findByEmailAndRole(email, Role.BUYER).get();
-        return Optional.of((Buyer) user);
+        Optional<User> user = userRepository.findByEmailAndRole(email, Role.BUYER);
+        return user.map(Buyer.class::cast);
     }
 
     @Override

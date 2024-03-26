@@ -4,7 +4,6 @@ package com.ingsw.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +25,16 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/image")
-@RequiredArgsConstructor
 public class ImageController {
-	
-	@Autowired
-	@Qualifier("mainAuctionService")
-	private AuctionService auctionService;
-	
-	@Autowired
-	@Qualifier("mainImageService")
-	private ImageService imageService;
+
+	private final AuctionService auctionService;
+	private final ImageService imageService;
+
+	public ImageController(@Qualifier("mainAuctionService") AuctionService auctionService,
+						   @Qualifier("mainImageService") ImageService imageService) {
+		this.auctionService = auctionService;
+		this.imageService = imageService;
+	}
 
 	@GetMapping("/{auctionId}/getAllAuctionImages")
 	public ResponseEntity<List<Image>> getAllImagesByAuction(@PathVariable Integer auctionId) {

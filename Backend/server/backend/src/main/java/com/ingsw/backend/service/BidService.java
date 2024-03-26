@@ -6,14 +6,12 @@ import java.util.Optional;
 import com.ingsw.backend.model.*;
 
 public interface BidService {
-
 	List<SilentBid> getAllSilentBidsByBuyer(Buyer buyer);
 	List<DownwardBid> getAllDownwardBidsByBuyer(Buyer buyer);
 	List<ReverseBid> getAllReverseBidsBySeller(Seller seller);
 
 	List<SilentBid> getAllSilentBidsBySilentAuction(SilentAuction auction);
 	List<SilentBid> getInProgressSilentBidsByAuctionId(Integer auctionId);
-	List<ReverseBid> getInProgressReverseBidsByAuctionId(Integer auctionId);
 	ReverseBid getMinReverseBidByReverseAuctionId(Integer id);
 
 	ReverseBid getWinningReverseBidByAuctionId(Integer auctionId);

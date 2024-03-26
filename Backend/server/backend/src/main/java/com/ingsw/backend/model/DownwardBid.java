@@ -12,10 +12,8 @@ import lombok.*;
 @DiscriminatorValue("DOWNWARD")
 public class DownwardBid extends Bid {
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name="owner_email", referencedColumnName="email"),
-            @JoinColumn(name="owner_role", referencedColumnName="role")
-    })
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    @JoinColumn(name = "owner_role", referencedColumnName = "role")
     private Buyer buyer;
 
     @ManyToOne

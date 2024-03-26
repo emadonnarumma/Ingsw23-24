@@ -34,19 +34,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Integer>{
 	List<Auction> findAllByCategory(Category category);
 	List<Auction> findAllByTitleContainingIgnoreCase(String keyword);
 	List<Auction> findAllByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);
-	
-//	public List<SilentAuction> findAllSilentByCategory(Category category);
-//	public List<SilentAuction> findAllSilentByTitleContainingIgnoreCase(String keyword);
-//	public List<SilentAuction> findAllSilentByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);
-//	
-//	public List<ReverseAuction> findAllReverseByCategory(Category category);
-//	public List<ReverseAuction> findAllReverseByTitleContainingIgnoreCase(String keyword);
-//	public List<ReverseAuction> findAllReverseByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);
-//	
-//	public List<DownwardAuction> findAllDownwardByCategory(Category category);
-//	public List<DownwardAuction> findAllDownwardByTitleContainingIgnoreCase(String keyword);
-//	public List<DownwardAuction> findAllDownwardByTitleContainingIgnoreCaseAndCategory(String keyword, Category category);
-	
+
 	List<SilentAuction> findAllSilentByStatusAndCategory(AuctionStatus status, Category category);
 	List<SilentAuction> findAllSilentByStatusAndTitleContainingIgnoreCase(AuctionStatus status, String keyword);
 	List<SilentAuction> findAllSilentByStatusAndTitleContainingIgnoreCaseAndCategory(AuctionStatus status, String keyword, Category category);

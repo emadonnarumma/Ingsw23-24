@@ -5,7 +5,6 @@ import java.util.Optional;
 import com.ingsw.backend.model.BankAccount;
 
 public interface BankAccountService {
-	
 	BankAccount addBankAccount(BankAccount bankAccount);
 	
 	Boolean delete(Integer id);

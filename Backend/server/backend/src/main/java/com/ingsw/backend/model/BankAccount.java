@@ -14,26 +14,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="bank_accounts")
+@Table(name = "bank_accounts")
 public class BankAccount {
-	
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBankAccount;
 
     @OneToOne
-    @JoinColumns({
-            @JoinColumn(name="seller_email", referencedColumnName="email"),
-            @JoinColumn(name="seller_role", referencedColumnName="role")
-    })
+    @JoinColumn(name = "seller_email", referencedColumnName = "email")
+    @JoinColumn(name = "seller_role", referencedColumnName = "role")
     @JsonIgnore
     private Seller seller;
 
-    @Length(min=27, max=27)
+    @Length(min = 27, max = 27)
     @Column(nullable = false, length = 27)
     private String iban;
 
-    @Length(min=11, max=11)
+    @Length(min = 11, max = 11)
     @Column(nullable = false, length = 11)
     private String iva;
 

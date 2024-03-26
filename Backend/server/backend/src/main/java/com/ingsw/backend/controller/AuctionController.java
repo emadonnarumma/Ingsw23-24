@@ -14,7 +14,6 @@ import com.ingsw.backend.service.AuctionService;
 import com.ingsw.backend.service.UserService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 import com.ingsw.backend.model.Auction;
 import com.ingsw.backend.model.User;
@@ -26,20 +25,22 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auction")
-@RequiredArgsConstructor
 public class AuctionController {
 	
-	@Autowired
-	@Qualifier("mainAuctionService")
-	private AuctionService auctionService;
-	
-	@Autowired
-	@Qualifier("mainUserService")
-	private UserService userService;
+
+
+	private final AuctionService auctionService;
+	private final UserService userService;
+    private final ImageService imageService;
 
     @Autowired
-    @Qualifier("mainImageService")
-    private ImageService imageService;
+    public AuctionController(@Qualifier("mainAuctionService") AuctionService auctionService,
+                             @Qualifier("mainUserService") UserService userService,
+                             @Qualifier("mainImageService") ImageService imageService) {
+        this.auctionService = auctionService;
+        this.userService = userService;
+        this.imageService = imageService;
+    }
 	
 	@GetMapping
     public ResponseEntity<List<Auction>> getAllAuctions() {

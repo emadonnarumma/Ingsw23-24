@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.ingsw.backend.enumeration.Role;
 import com.ingsw.backend.model.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +14,17 @@ import org.springframework.web.bind.annotation.*;
 import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.service.UserService;
 
-import lombok.RequiredArgsConstructor;
 
 
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor
 public class UserController {
-	
-	@Autowired
-	@Qualifier("mainUserService")
-	private UserService userService;
+
+	private final UserService userService;
+
+	public UserController(@Qualifier("mainUserService") UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping("/{email}/seller")
 	public ResponseEntity<Seller> getSellerByEmail(@PathVariable String email) {

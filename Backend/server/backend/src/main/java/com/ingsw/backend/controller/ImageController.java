@@ -74,7 +74,7 @@ public class ImageController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteImage(@PathVariable Integer id) {
         
-    	if (imageService.delete(id)) {
+    	if (Boolean.TRUE.equals(imageService.delete(id))) {
     		
             return ResponseEntity.noContent().build();
             

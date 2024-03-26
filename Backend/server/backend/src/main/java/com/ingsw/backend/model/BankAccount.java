@@ -48,4 +48,23 @@ public class BankAccount {
         result = prime * result + ((iva == null) ? 0 : iva.hashCode());
         return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BankAccount other = (BankAccount) obj;
+        if (iban == null) {
+            if (other.iban != null)
+                return false;
+        } else if (!iban.equals(other.iban))
+            return false;
+        if (iva == null) {
+            return other.iva == null;
+        } else return iva.equals(other.iva);
+    }
 }

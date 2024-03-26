@@ -76,7 +76,7 @@ public class ExternalLinkController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExternalLink(@PathVariable Integer id) {
 
-        if (externalLinkService.delete(id)) {
+        if (Boolean.TRUE.equals(externalLinkService.delete(id))) {
 
             return ResponseEntity.noContent().build();
 

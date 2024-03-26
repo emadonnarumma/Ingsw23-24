@@ -62,7 +62,7 @@ public class BankAccountController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBankAccount(@PathVariable Integer id) {
         
-    	if (bankAccountService.delete(id)) {
+    	if (Boolean.TRUE.equals(bankAccountService.delete(id))) {
     		
             return ResponseEntity.noContent().build();
             

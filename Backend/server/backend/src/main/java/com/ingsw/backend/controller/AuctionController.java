@@ -150,7 +150,7 @@ public class AuctionController {
     public ResponseEntity<Void> delete(@PathVariable int id) {
     	Boolean isDeleted = auctionService.delete(id);
 
-    	if (!isDeleted) {
+    	if (Boolean.FALSE.equals(isDeleted)) {
     		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -160,7 +160,7 @@ public class AuctionController {
     @PostMapping("/relaunch")
     public ResponseEntity<Auction> relaunchAuction(@Valid @RequestBody Auction auction) {
         Boolean isDeleted = auctionService.delete(auction.getIdAuction());
-        if (!isDeleted) {
+        if (Boolean.FALSE.equals(isDeleted)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return addAuction(auction);

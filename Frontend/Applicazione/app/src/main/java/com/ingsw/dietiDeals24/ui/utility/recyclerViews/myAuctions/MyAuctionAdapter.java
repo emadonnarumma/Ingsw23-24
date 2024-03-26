@@ -17,13 +17,13 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction.FailedDownwardAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction.InProgressDownwardAuctionActivity;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction.SuccessfullDownwardAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction.SuccessfulDownwardAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.FailedReverseAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.InProgressReverseAuctionActivity;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.SuccessfullReverseAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction.SuccessfulReverseAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.FailedSilentAuctionActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.InProgressSilentAuctionActivity;
-import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.SuccessfullSilentAuctionActivity;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction.SuccessfulSilentAuctionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,17 +93,17 @@ public class MyAuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Class<?> activityClass = null;
         if (holder instanceof MySilentAuctionViewHolder) {
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
-                    SuccessfullSilentAuctionActivity.class,
+                    SuccessfulSilentAuctionActivity.class,
                     FailedSilentAuctionActivity.class,
                     InProgressSilentAuctionActivity.class);
         } else if (holder instanceof MyDownwardAuctionViewHolder) {
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
-                    SuccessfullDownwardAuctionActivity.class,
+                    SuccessfulDownwardAuctionActivity.class,
                     FailedDownwardAuctionActivity.class,
                     InProgressDownwardAuctionActivity.class);
         } else if (holder instanceof MyReverseAuctionViewHolder) {
             activityClass = getActivityClassForAuctionStatus(auction.getStatus(),
-                    SuccessfullReverseAuctionActivity.class,
+                    SuccessfulReverseAuctionActivity.class,
                     FailedReverseAuctionActivity.class,
                     InProgressReverseAuctionActivity.class);
         }

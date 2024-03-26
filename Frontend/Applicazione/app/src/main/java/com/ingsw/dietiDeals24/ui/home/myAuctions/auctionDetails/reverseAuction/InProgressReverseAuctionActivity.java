@@ -116,21 +116,7 @@ public class InProgressReverseAuctionActivity extends AuctionDetailsActivity {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Sei sicuro di voler cancellare l'asta?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        try {
-                            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
-                            finish();
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 

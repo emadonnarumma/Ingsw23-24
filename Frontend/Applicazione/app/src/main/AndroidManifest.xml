@@ -60,7 +60,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.myAuctions.auctionDetails.downwardAuction.SuccessfullDownwardAuctionActivity"
+            android:name=".ui.home.myAuctions.auctionDetails.downwardAuction.SuccessfulDownwardAuctionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -72,7 +72,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.myAuctions.auctionDetails.silentAuction.SuccessfullSilentAuctionActivity"
+            android:name=".ui.home.myAuctions.auctionDetails.silentAuction.SuccessfulSilentAuctionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -84,7 +84,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.myAuctions.auctionDetails.reverseAuction.SuccessfullReverseAuctionActivity"
+            android:name=".ui.home.myAuctions.auctionDetails.reverseAuction.SuccessfulReverseAuctionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

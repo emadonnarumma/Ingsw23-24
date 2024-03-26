@@ -10,10 +10,12 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.controller.MyBidsController;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
+import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment;
@@ -201,8 +203,8 @@ public class PopupGeneratorOf {
         }).start();
     }
     
-    public static void areYouSureToDeleteAuctionPopup(Context context) {
-        PopupDialog.getInstance(context)
+    public static void areYouSureToDeleteAuctionPopup(Activity activity, Auction auction) {
+        PopupDialog.getInstance(activity)
                 .setStyle(Styles.STANDARD)
                 .setHeading("Cancellare l'asta?")
                 .setDescription("Sei sicuro di voler cancellare l'asta? Questa operazione non è reversibile.")
@@ -215,6 +217,7 @@ public class PopupGeneratorOf {
                     @Override
                     public void onPositiveClicked(Dialog dialog) {
                         super.onPositiveClicked(dialog);
+                        deleteAuction(activity, auction);
                     }
 
                     @Override
@@ -222,6 +225,17 @@ public class PopupGeneratorOf {
                         super.onNegativeClicked(dialog);
                     }
                 });
+    }
+
+    private static void deleteAuction(Activity activity, Auction auction) {
+        try {
+            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
+            activity.finish();
+        } catch (ExecutionException e) {
+            ToastManager.showToast(activity, e.getCause().getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void areYouSureToCancelBidOperationPopUp(Context context) {

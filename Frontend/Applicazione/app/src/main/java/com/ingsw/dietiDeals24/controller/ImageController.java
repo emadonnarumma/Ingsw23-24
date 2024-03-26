@@ -9,7 +9,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Base64;
 
+import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.model.Image;
+import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

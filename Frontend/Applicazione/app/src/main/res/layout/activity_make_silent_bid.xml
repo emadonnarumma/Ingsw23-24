@@ -61,6 +61,15 @@
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/bid_error_text_view_make_silent_bid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/bid_layout_make_silent_bid"
+        app:layout_constraintStart_toStartOf="@id/bid_layout_make_silent_bid"/>
+
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/send_button_make_silent_bid"
         android:layout_width="120dp"

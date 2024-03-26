@@ -6,8 +6,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
@@ -40,9 +44,7 @@ import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -50,11 +52,11 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     private HomeActivity parentActivity;
     private Context parentContext;
 
-    private TextInputLayout initialPriceTextInputLayout, minimumPriceTextInputLayout, decrementAmountTextInputLayout;
+    private TextInputLayout initialPriceTextInputLayout, secretMinimumPriceTextInputLayout, decrementAmountTextInputLayout;
     private BottomSheetDialog initialPriceBottomSheetDialog, minimumPriceBottomSheetDialog, decrementAmountBottomSheetDialog;
 
-    private TextView decrementTimeTextView;
-    private EditText initialPriceEditText, minimumPriceEditText, decrementAmountEditText;
+    private TextView decrementTimeTextView, initialPriceErrorTextView, secretMinimumPriceErrorTextView, decrementAmountErrorTextView;
+    private EditText initialPriceEditText, secretMinimumPriceEditText, decrementAmountEditText;
 
     private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
     private WheelView.WheelViewStyle wheelViewStyle;
@@ -66,6 +68,30 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     private GeneralAuctionAttributesViewModel viewModel;
 
     private AuctionHolder genericAuctionAttributesHolder;
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            CreateAuctionController.downwardAuctionInputChanged(
+                    initialPriceEditText.getText().toString(),
+                    secretMinimumPriceEditText.getText().toString(),
+                    decrementAmountEditText.getText().toString(),
+                    monthsWheelView.getSelectionItem(),
+                    daysWheelView.getSelectionItem(),
+                    hoursWheelView.getSelectionItem(),
+                    minutesWheelView.getSelectionItem(),
+                    getContext()
+            );
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,9 +150,86 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         setupEditTexts(view);
         setupDecrementTimeTextView(view);
         setupCreateAuctionButton(view);
-
         setupBottomSheetDialogs();
         setupTextInputLayout(view);
+        setupErrorTextViews(view);
+        observeFormState();
+    }
+
+    private void setupErrorTextViews(@NonNull View view) {
+        initialPriceErrorTextView = view.findViewById(R.id.initial_price_error_text_view_downward_auction_attributes);
+        secretMinimumPriceErrorTextView = view.findViewById(R.id.secret_minumum_price_error_text_view_downward_auction_attributes);
+        decrementAmountErrorTextView = view.findViewById(R.id.decrement_amount_error_text_view_downward_auction_attributes);
+    }
+
+    private void observeFormState() {
+        CreateAuctionController.getDownwardAuctionFormState().observe(getViewLifecycleOwner(), formState -> {
+            if (formState == null) {
+                return;
+            }
+            createAuctionButton.setEnabled(formState.isDataValid());
+            if (formState.getInitialPriceError() != null) {
+                showErrorAndChangeColor(
+                        formState,
+                        initialPriceEditText,
+                        initialPriceErrorTextView,
+                        initialPriceTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        initialPriceEditText,
+                        initialPriceErrorTextView,
+                        initialPriceTextInputLayout
+                );
+            }
+            if (formState.getMinimalPriceError() != null) {
+                showErrorAndChangeColor(
+                        formState,
+                        secretMinimumPriceEditText,
+                        secretMinimumPriceErrorTextView,
+                        secretMinimumPriceTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        secretMinimumPriceEditText,
+                        secretMinimumPriceErrorTextView,
+                        secretMinimumPriceTextInputLayout
+                );
+            }
+            if (formState.getDecrementAmountError() != null) {
+                showErrorAndChangeColor(
+                        formState,
+                        decrementAmountEditText,
+                        decrementAmountErrorTextView,
+                        decrementAmountTextInputLayout
+                        );
+            } else {
+                hideErrorAndChangeColor(
+                        decrementAmountEditText,
+                        decrementAmountErrorTextView,
+                        decrementAmountTextInputLayout
+                );
+            }
+        });
+    }
+
+    private void hideErrorAndChangeColor(EditText editText, TextView errorTextView, TextInputLayout textInputLayout) {
+        errorTextView.setVisibility(View.GONE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.green));
+        textInputLayout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.green));
+    }
+
+    private void showErrorAndChangeColor(DownwardAuctionAttributesFormState formState, EditText editText, TextView errorTextView, TextInputLayout layout) {
+        if (errorTextView.equals(initialPriceErrorTextView)) {
+            errorTextView.setText(formState.getInitialPriceError());
+        } else if (errorTextView.equals(secretMinimumPriceErrorTextView)) {
+            errorTextView.setText(formState.getMinimalPriceError());
+        } else {
+            errorTextView.setText(formState.getDecrementAmountError());
+        }
+        errorTextView.setVisibility(View.VISIBLE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+        layout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.red));
     }
 
     private void setupBottomSheetDialogs() {
@@ -159,23 +262,19 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     }
 
     private void setupTextInputLayout(View view) {
-
         initialPriceTextInputLayout = view.findViewById(R.id.initial_price_layout_downward_auction_attributes);
         initialPriceTextInputLayout.setEndIconOnClickListener(v -> initialPriceBottomSheetDialog.show());
-
-        minimumPriceTextInputLayout = view.findViewById(R.id.minimum_price_layout_downward_auction_attributes);
-        minimumPriceTextInputLayout.setEndIconOnClickListener(v -> minimumPriceBottomSheetDialog.show());
-
+        secretMinimumPriceTextInputLayout = view.findViewById(R.id.secret_minimum_price_layout_downward_auction_attributes);
+        secretMinimumPriceTextInputLayout.setEndIconOnClickListener(v -> minimumPriceBottomSheetDialog.show());
         decrementAmountTextInputLayout = view.findViewById(R.id.decrement_amount_layout_downward_auction_attributes);
         decrementAmountTextInputLayout.setEndIconOnClickListener(v -> decrementAmountBottomSheetDialog.show());
 
     }
 
     private void setupEditTexts(View view) {
-        minimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
+        secretMinimumPriceEditText = view.findViewById(R.id.secret_minimum_price_edit_text_downward_auction_attributes);
         decrementAmountEditText = view.findViewById(R.id.decrement_amount_edit_text_downward_auction_attributes);
         initialPriceEditText = view.findViewById(R.id.initial_price_edit_text_downward_auction_attributes);
-
         setupInitialPriceEditTextListner(view);
         setupDecrementAmountEditTextListner(view);
         setupMinPriceEditTextListner(view);
@@ -244,18 +343,31 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             decrementTime += minutesWheelView.getSelectionItem() + "Min";
         }
         decrementTimeTextView.setText(decrementTime);
+        CreateAuctionController.downwardAuctionInputChanged(
+                initialPriceEditText.getText().toString(),
+                secretMinimumPriceEditText.getText().toString(),
+                decrementAmountEditText.getText().toString(),
+                monthsWheelView.getSelectionItem(),
+                daysWheelView.getSelectionItem(),
+                hoursWheelView.getSelectionItem(),
+                minutesWheelView.getSelectionItem(),
+                getContext()
+        );
     }
 
     private void setupInitialPriceEditTextListner(@NonNull View view) {
         initialPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        initialPriceEditText.addTextChangedListener(textWatcher);
     }
 
     private void setupMinPriceEditTextListner(@NonNull View view) {
-        minimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        secretMinimumPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        secretMinimumPriceEditText.addTextChangedListener(textWatcher);
     }
 
     private void setupDecrementAmountEditTextListner(@NonNull View view) {
         decrementAmountEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        decrementAmountEditText.addTextChangedListener(textWatcher);
     }
 
     private void setupCreateAuctionButton(View view) {
@@ -263,7 +375,6 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
         createAuctionButton.setOnClickListener(v -> new Thread(() -> {
             parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
 
-            //TODO jonny metti il formstate basato
             if (fieldsEmpty()) {
                 parentActivity.runOnUiThread(() -> {
                     Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
@@ -286,9 +397,12 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             Wear wear = genericAuctionAttributesHolder.getWear();
             List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
             double initialPrice = Double.parseDouble(initialPriceEditText.getText().toString());
-            double secretMinimumPrice = Double.parseDouble(minimumPriceEditText.getText().toString());
+            double secretMinimumPrice = Double.parseDouble(secretMinimumPriceEditText.getText().toString());
             double decrementAmount = Double.parseDouble(decrementAmountEditText.getText().toString());
-
+            long months = Long.parseLong(monthsWheelView.getSelectionItem());
+            long days = Long.parseLong(daysWheelView.getSelectionItem());
+            long hours = Long.parseLong(hoursWheelView.getSelectionItem());
+            long minutes = Long.parseLong(minutesWheelView.getSelectionItem());
             DownwardAuction newDownwardAuction = new DownwardAuction(
                     UserHolder.user,
                     title,
@@ -299,8 +413,8 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
                     secretMinimumPrice,
                     initialPrice,
                     decrementAmount,
-                    getDecrementTime(),
-                    calculateNextDecrement()
+                    CreateAuctionController.getDecrementTime(months, days, hours, minutes),
+                    CreateAuctionController.calculateNextDecrement(months, days, hours, minutes)
             );
 
 
@@ -332,56 +446,13 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
     }
 
     private boolean fieldsEmpty() {
-        if (initialPriceEditText.getText() != null && minimumPriceEditText.getText() != null && decrementAmountEditText.getText() != null) {
+        if (initialPriceEditText.getText() != null && secretMinimumPriceEditText.getText() != null && decrementAmountEditText.getText() != null) {
             return initialPriceEditText.getText().toString().equals("") ||
-                    minimumPriceEditText.getText().toString().equals("") ||
+                    secretMinimumPriceEditText.getText().toString().equals("") ||
                     decrementAmountEditText.getText().toString().equals("");
         }
 
         return false;
-    }
-
-    private boolean auctionDurationLessThen30Minutes(double initialPrice, double secretMinimumPrice, double decrementAmount) {
-        double totalTime = (initialPrice - secretMinimumPrice) / decrementAmount * getDecrementTime() / 60.0;
-        if (totalTime < 30) {
-            return true;
-        }
-        return false;
-    }
-
-    private long getDecrementTime() {
-        long months = Integer.parseInt(monthsWheelView.getSelectionItem());
-        long days = Integer.parseInt(daysWheelView.getSelectionItem());
-        long hours = Integer.parseInt(hoursWheelView.getSelectionItem());
-        int minutes = Integer.parseInt(minutesWheelView.getSelectionItem());
-
-        long totalSeconds = 0;
-
-        totalSeconds += (long) months * 30 * 24 * 60 * 60;
-        totalSeconds += (long) days * 24 * 60 * 60;
-        totalSeconds += (long) hours * 60 * 60;
-        totalSeconds += minutes * 60L;
-
-        return totalSeconds;
-    }
-
-    private String calculateNextDecrement() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, (int) getDecrementTime());
-        Timestamp nextDecrementDate = new Timestamp(calendar.getTimeInMillis());
-
-        return formatTimestamp(nextDecrementDate.toString());
-    }
-
-    public String formatTimestamp(String timestamp) {
-        String[] parts = timestamp.split(" ");
-        String datePart = parts[0];
-        String timePart = parts[1].substring(0, 8);
-
-        String[] dateParts = datePart.split("-");
-        String formattedDate = dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
-
-        return formattedDate + " " + timePart;
     }
 
     private void setupDecrementTimeTextView(@NonNull View view) {

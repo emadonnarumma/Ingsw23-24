@@ -2,14 +2,21 @@ package com.ingsw.dietiDeals24.ui.home;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.NotificationController;
+import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
+import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.DownwardAuctionAttributesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.ReverseAuctionAttributesFragment;
@@ -30,10 +37,21 @@ import com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchAuctionsFragment;
 import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.notifications.NotificationAdapter;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HomeActivity extends CheckConnectionActivity {
+    private DrawerLayout drawerLayout;
+    private ImageButton notificationButton, closeDrawerButton;
+    private RecyclerView notificationsRecyclerView;
     private NavigationBarView navigationBarView;
     private Toolbar toolbar;
+    private ExecutorService executorService;
+
     private final OnBackPressedCallback callback = new OnBackPressedCallback(true) {
         @Override
         public void handleOnBackPressed() {
@@ -90,7 +108,7 @@ public class HomeActivity extends CheckConnectionActivity {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_home, new EditExternalLinksFragment())
                         .commit();
-            }else {
+            } else {
                 callback.setEnabled(false);
                 tryToDisconnect();
                 callback.setEnabled(true);
@@ -101,15 +119,46 @@ public class HomeActivity extends CheckConnectionActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startNotificationUpdates();
         setContentView(R.layout.activity_home);
-        setActionBar();
+        setupActionBar();
+        setupDrawerLayout();
+        setupNotificationButton();
         getOnBackPressedDispatcher().addCallback(this, callback);
-        setNavigatioBarView(findViewById(R.id.bottom_navigation_home));
+        setupNavigationBarView(findViewById(R.id.bottom_navigation_home));
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new SearchAuctionsFragment()).commit();
 
         checkRequestToOpenAFragmentFromAnOtherActivity();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (executorService != null) {
+            executorService.shutdownNow();
+        }
+    }
+
+    private void startNotificationUpdates() {
+        executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    NotificationController.updateNotifications().get();
+                } catch (ExecutionException e) {
+                    if (e.getCause() instanceof AuthenticationException) {
+                        runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Sessione scaduta, effettua nuovamente il login"));
+                    } else if (e.getCause() instanceof ConnectionException) {
+                        runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Errore di connessione"));
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+    }
+
 
     private void checkRequestToOpenAFragmentFromAnOtherActivity() {
         String fragmentToOpen = getIntent().getStringExtra("openFragment");
@@ -142,11 +191,6 @@ public class HomeActivity extends CheckConnectionActivity {
         }
     }
 
-    private void setActionBar() {
-        toolbar = findViewById(R.id.toolbar_home);
-        setSupportActionBar(toolbar);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -156,7 +200,37 @@ public class HomeActivity extends CheckConnectionActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setNavigatioBarView(NavigationBarView navigationBarView) {
+    private void setupActionBar() {
+        toolbar = findViewById(R.id.toolbar_home);
+        setSupportActionBar(toolbar);
+    }
+
+    private void setupDrawerLayout() {
+        drawerLayout = findViewById(R.id.drawer_layout_home);
+        setupCloseDrawerButton();
+    }
+
+    private void setupCloseDrawerButton() {
+        closeDrawerButton = findViewById(R.id.close_button_drawer_content);
+        closeDrawerButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
+    }
+
+    private void setupNotificationButton() {
+        notificationButton = findViewById(R.id.notification_button);
+        notificationButton.setOnClickListener(v -> {
+            setupNotificationRecyclerView();
+            drawerLayout.openDrawer(GravityCompat.END);
+        });
+    }
+
+    private void setupNotificationRecyclerView() {
+        notificationsRecyclerView = findViewById(R.id.notification_recycler_view);
+        NotificationAdapter notificationAdapter = new NotificationAdapter(NotificationController.getNotifications());
+        notificationsRecyclerView.setAdapter(notificationAdapter);
+        notificationsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupNavigationBarView(NavigationBarView navigationBarView) {
         this.navigationBarView = navigationBarView;
         navigationBarView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_search) {

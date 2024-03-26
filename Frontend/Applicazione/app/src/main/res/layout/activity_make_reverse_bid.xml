@@ -84,11 +84,29 @@
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/bid_error_text_view_make_reverse_bid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/bid_layout_make_reverse_bid"
+        app:layout_constraintStart_toStartOf="@id/bid_layout_make_reverse_bid"/>
+
+    <TextView
+        android:id="@+id/initial_price_error_text_view_downward_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/bid_layout_make_reverse_bid"
+        app:layout_constraintStart_toStartOf="@id/bid_layout_make_reverse_bid"/>
+
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/send_button_make_reverse_bid"
         android:layout_width="120dp"
         android:layout_height="66dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="@color/green"
         android:text="@string/send_phrase"
         android:textColor="@color/white"

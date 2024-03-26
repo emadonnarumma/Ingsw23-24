@@ -19,10 +19,5 @@ public class RegistrationActivity extends CheckConnectionActivity {
 
         stepperLayout = findViewById(R.id.stepper_layout_registration);
         stepperLayout.setAdapter(new RegistrationStepperAdapter(getSupportFragmentManager(), this));
-
-        //TODO: jonny - implementare la verifica dei dati inseriti dall'utente
-        //stepperLayout.setNextButtonVerificationFailed(false);
-        //stepperLayout.setCompleteButtonVerificationFailed(false);
-
     }
 }

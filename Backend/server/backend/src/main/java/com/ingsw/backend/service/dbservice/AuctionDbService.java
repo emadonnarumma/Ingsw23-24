@@ -18,11 +18,13 @@ import com.ingsw.backend.enumeration.BidStatus;
 import com.ingsw.backend.enumeration.Category;
 import com.ingsw.backend.model.Auction;
 import com.ingsw.backend.model.DownwardAuction;
+import com.ingsw.backend.model.Notification;
 import com.ingsw.backend.model.ReverseAuction;
 import com.ingsw.backend.model.ReverseBid;
 import com.ingsw.backend.model.SilentAuction;
 import com.ingsw.backend.repository.AuctionRepository;
 import com.ingsw.backend.repository.BidRepository;
+import com.ingsw.backend.repository.NotificationRepository;
 import com.ingsw.backend.service.AuctionService;
 
 @Service("mainAuctionService")
@@ -31,11 +33,14 @@ public class AuctionDbService implements AuctionService {
 	private final AuctionRepository auctionRepository;
 	
 	private final BidRepository bidRepository;
+	
+	private final NotificationRepository notificationRepository;
 
 
-	public AuctionDbService(AuctionRepository auctionRepository, BidRepository bidRepository) {
+	public AuctionDbService(AuctionRepository auctionRepository, BidRepository bidRepository, NotificationRepository notificationRepository) {
 		this.auctionRepository = auctionRepository;
 		this.bidRepository = bidRepository;
+		this.notificationRepository = notificationRepository;
 	}
 
 	@Override
@@ -193,6 +198,8 @@ public class AuctionDbService implements AuctionService {
 	            if (auction.getCurrentPrice() <= auction.getSecretMinimumPrice()) {
 	                
 	                auction.setStatus(AuctionStatus.FAILED);
+	                
+	                generateFailedDownwardAuctionNotification(auction);
 	            }
 	           
 	            auctionRepository.save(auction);
@@ -200,6 +207,18 @@ public class AuctionDbService implements AuctionService {
 	    }
 	}
 	
+	private void generateFailedDownwardAuctionNotification(DownwardAuction auction) {
+		
+		Notification notification = new Notification();
+		
+		notification.setAuction(auction);
+		notification.setUser(auction.getOwner());
+		notification.setMessage("L'asta al ribasso \"" + auction.getTitle() + "\" ha raggiunto il prezzo minimo segreto ed è fallita");
+
+		notificationRepository.save(notification);
+		
+	}
+
 	@Scheduled(fixedRate = 60000) //executed every minute
 	@Transactional
 	public void updateReverseAuctionsStatus() {

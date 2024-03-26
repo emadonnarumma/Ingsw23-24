@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
@@ -47,7 +48,7 @@ public class MyDownwardAuctionViewHolder extends RecyclerView.ViewHolder {
         auctionTypeIconImageView = itemView.findViewById(R.id.auction_type_icon_item_my_downward_auction);
         auctionStatusIconImageView = itemView.findViewById(R.id.auction_status_icon_item_my_downward_auction);
         imagesSliderView = itemView.findViewById(R.id.slider_item_my_downward_auction);
-        cardView = itemView.findViewById(R.id.card_view_item_my_downward_auction);
+        cardView = itemView.findViewById(R.id.card_view_item_notifications);
     }
 
     public void bind(DownwardAuction downwardAuction) {
@@ -86,7 +87,7 @@ public class MyDownwardAuctionViewHolder extends RecyclerView.ViewHolder {
         ArrayList<Uri> images = new ArrayList<>();
         if (reverseAuction.getImages() != null && !reverseAuction.getImages().isEmpty()) {
             for (int i = 0; i < reverseAuction.getImages().size(); i++) {
-                images.add(base64ToUri(reverseAuction.getImages().get(i).getBase64Data()));
+                images.add(ImageController.base64ToUri(reverseAuction.getImages().get(i).getBase64Data(), itemView.getContext()));
             }
         } else {
             Uri defaultImageUri = Uri.parse("android.resource://com.ingsw.dietiDeals24/" + R.drawable.no_image_available);
@@ -94,21 +95,5 @@ public class MyDownwardAuctionViewHolder extends RecyclerView.ViewHolder {
         }
 
         adapter.renewItems(images);
-    }
-
-    private Uri base64ToUri(String base64) {
-        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
-        File tempFile;
-        try {
-            tempFile = File.createTempFile("image", "jpg", itemView.getContext().getCacheDir());
-            tempFile.deleteOnExit();
-            FileOutputStream fos = new FileOutputStream(tempFile);
-            fos.write(decodedString);
-            fos.close();
-            return Uri.fromFile(tempFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

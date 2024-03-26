@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/constraint_layout_downward_auction_attributes"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,8 +18,8 @@
         android:text="@string/decrement_phrase"
 
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/decrement_amount_layout_downward_auction_attributes"
-        app:layout_constraintTop_toBottomOf="@id/decrement_amount_layout_downward_auction_attributes" />
+        app:layout_constraintStart_toStartOf="@id/decrement_amount_error_text_view_downward_auction_attributes"
+        app:layout_constraintTop_toBottomOf="@id/decrement_amount_error_text_view_downward_auction_attributes" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/initial_price_layout_downward_auction_attributes"
@@ -45,9 +46,17 @@
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/initial_price_error_text_view_downward_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/initial_price_layout_downward_auction_attributes"
+        app:layout_constraintStart_toStartOf="@id/initial_price_layout_downward_auction_attributes"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/minimum_price_layout_downward_auction_attributes"
+        android:id="@+id/secret_minimum_price_layout_downward_auction_attributes"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
@@ -57,7 +66,7 @@
         app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/initial_price_layout_downward_auction_attributes">
+        app:layout_constraintTop_toBottomOf="@id/initial_price_error_text_view_downward_auction_attributes">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -72,6 +81,15 @@
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/secret_minumum_price_error_text_view_downward_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/secret_minimum_price_layout_downward_auction_attributes"
+        app:layout_constraintStart_toStartOf="@id/secret_minimum_price_layout_downward_auction_attributes"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/decrement_amount_layout_downward_auction_attributes"
         android:layout_width="370dp"
@@ -83,7 +101,7 @@
         app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/minimum_price_layout_downward_auction_attributes">
+        app:layout_constraintTop_toBottomOf="@id/secret_minumum_price_error_text_view_downward_auction_attributes">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -97,6 +115,15 @@
             android:maxLength="10"
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/decrement_amount_error_text_view_downward_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/decrement_amount_layout_downward_auction_attributes"
+        app:layout_constraintStart_toStartOf="@id/decrement_amount_layout_downward_auction_attributes"/>
 
     <com.wx.wheelview.widget.WheelView
         android:id="@+id/hours_wheel_view_downward_auction_attributes"
@@ -141,7 +168,7 @@
         android:textColor="@color/white"
         app:initialCornerAngle="50dp"
         app:layout_constraintEnd_toEndOf="@id/months_wheel_view_downward_auction_attributes"
-        app:layout_constraintTop_toBottomOf="@id/months_wheel_view_downward_auction_attributes"
+        app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_goneMarginTop="30dp"
         app:spinning_bar_color="@color/white"

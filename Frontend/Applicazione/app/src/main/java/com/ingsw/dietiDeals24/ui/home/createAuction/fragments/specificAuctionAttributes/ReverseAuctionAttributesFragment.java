@@ -6,8 +6,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
+import com.ingsw.dietiDeals24.controller.formstate.ReverseAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
@@ -45,18 +49,35 @@ import java.util.concurrent.ExecutionException;
 public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity implements DatePickerDialog.OnDateSetListener {
     private HomeActivity parentActivity;
     private Context parentContext;
-
     private TextInputLayout initialPriceTextInputLayout;
     private BottomSheetDialog initialPriceBottomSheetDialog;
-
-    private EditText priceEditText;
-    private TextView dateTextView;
+    private EditText initialPriceEditText;
+    private TextView dateTextView, initialPriceErrorTextView;
 
     private CircularProgressButton createAuctionButton;
 
     private GeneralAuctionAttributesViewModel viewModel;
 
     private AuctionHolder genericAuctionAttributesHolder;
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            CreateAuctionController.reverseAuctionInputChanged(
+                    initialPriceEditText.getText().toString(),
+                    !dateTextView.getText().toString().isEmpty(),
+                    getContext()
+            );
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,16 +98,66 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        observeFormState();
+        setupTextViews(view);
         setBackButtonEnabled(true);
-
-        setupPriceEditText(view);
+        setupEditTexts(view);
         setupDatePicker(view);
         setupCreateAuctionButton(view);
-
         setupBottomSheetDialogs();
         setupTextInputLayout(view);
     }
 
+    private void setupEditTexts(@NonNull View view) {
+        setupPriceEditText(view);
+    }
+
+    private void setupTextViews(@NonNull View view) {
+        initialPriceErrorTextView = view.findViewById(R.id.initial_price_error_text_view_reverse_auction_attributes);
+    }
+
+    private void observeFormState() {
+        CreateAuctionController.getReverseAuctionFormState().observe(getViewLifecycleOwner(), formState -> {
+            if (formState == null) {
+                return;
+            }
+            createAuctionButton.setEnabled(formState.isDataValid());
+            if (formState.getInitialPriceError() != null) {
+                showErrorAndChangeColor(
+                        formState,
+                        initialPriceEditText,
+                        initialPriceErrorTextView,
+                        initialPriceTextInputLayout
+                );
+            } else {
+                hideErrorAndChangeColor(
+                        initialPriceEditText,
+                        initialPriceErrorTextView,
+                        initialPriceTextInputLayout
+                );
+            }
+            if (formState.getExpirationDateError() != null) {
+                dateTextView.setError(formState.getExpirationDateError());
+            } else {
+                dateTextView.setError(null);
+            }
+        });
+    }
+
+    private void hideErrorAndChangeColor(EditText editText, TextView errorTextView, TextInputLayout textInputLayout) {
+        errorTextView.setVisibility(View.GONE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.green));
+        textInputLayout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.green));
+    }
+
+    private void showErrorAndChangeColor(ReverseAuctionAttributesFormState formState, EditText editText, TextView errorTextView, TextInputLayout layout) {
+        if (errorTextView.equals(initialPriceErrorTextView)) {
+            errorTextView.setText(formState.getInitialPriceError());
+        }
+        errorTextView.setVisibility(View.VISIBLE);
+        editText.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+        layout.setBoxStrokeColor(ContextCompat.getColor(requireContext(), R.color.red));
+    }
 
     private void setupBottomSheetDialogs() {
         initialPriceBottomSheetDialog = new BottomSheetDialog(requireContext());
@@ -107,6 +178,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
 
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_reverse_auction_attributes);
+        createAuctionButton.setEnabled(false);
         createAuctionButton.setOnClickListener(v -> new Thread(() -> {
             parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
             String title = genericAuctionAttributesHolder.getTitle();
@@ -114,7 +186,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
             Category category = genericAuctionAttributesHolder.getCategory();
             Wear wear = genericAuctionAttributesHolder.getWear();
             List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
-            String initialPrice = deleteMoneySimbol(priceEditText.getText().toString());
+            String initialPrice = deleteMoneySimbol(initialPriceEditText.getText().toString());
             String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
 
             ReverseAuction newReverseAuction;
@@ -172,7 +244,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
                     0,
                     1
             );
-
+            dateTextView.addTextChangedListener(textWatcher);
             setTheMinumumToday(datePickerDialog);
         });
     }
@@ -196,16 +268,17 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     }
 
     private void setupPriceEditText(@NonNull View view) {
-        priceEditText = view.findViewById(R.id.initial_price_edit_text_reverse_auction_attributes);
-        priceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        priceEditText.setOnFocusChangeListener((v, hasFocus) -> {
+        initialPriceEditText = view.findViewById(R.id.initial_price_edit_text_reverse_auction_attributes);
+        initialPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
+        initialPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                String price = priceEditText.getText().toString();
+                String price = initialPriceEditText.getText().toString();
                 if (!price.equals("") && !price.endsWith("€")) {
                     price = price + "€";
-                    priceEditText.setText(price);
+                    initialPriceEditText.setText(price);
                 }
             }
         });
+        initialPriceEditText.addTextChangedListener(textWatcher);
     }
 }

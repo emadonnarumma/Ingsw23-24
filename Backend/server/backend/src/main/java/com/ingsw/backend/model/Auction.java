@@ -11,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -42,6 +43,10 @@ public abstract class Auction {
     @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Image> images;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Notification> notifications;    
+    
     @Column(nullable = false)
     private String title;
 

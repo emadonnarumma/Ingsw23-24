@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +53,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
 
     private ImageView questionMark;
     private BottomSheetDialog bottomSheetDialog;
-    private TextView dateTextView, withdrawalTimeTextView;
+    private TextView expirationDateTextView, withdrawalTimeTextView;
     private WheelView<String> minutesWheelView, hoursWheelView, daysWheelView, monthsWheelView;
     private WheelView.WheelViewStyle wheelViewStyle;
 
@@ -62,6 +64,24 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
     private AuctionHolder genericAuctionAttributesHolder;
 
     private CircularProgressButton createAuctionButton;
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            CreateAuctionController.silentAuctionInputChanged(
+                    !expirationDateTextView.getText().toString().isEmpty(),
+                    getContext()
+            );
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,13 +153,33 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        observeFormState();
         setupDatePicker(view);
         setupWheelViews(view);
         setupWithdrawalTimeTextView(view);
         setupCreateAuctionButton(view);
-
         setupBottomSheetDialog();
         setupQuestionMark(view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        createAuctionButton.setEnabled(false);
+    }
+
+    private void observeFormState() {
+        CreateAuctionController.getSilentAuctionFormState().observe(getViewLifecycleOwner(), formState -> {
+            if (formState == null) {
+                return;
+            }
+            createAuctionButton.setEnabled(formState.isDataValid());
+            if (formState.getExpirationDateError() != null) {
+                expirationDateTextView.setError(formState.getExpirationDateError());
+            } else {
+                expirationDateTextView.setError(null);
+            }
+        });
     }
 
     private void setupWheelViews(View view) {
@@ -197,8 +237,9 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
         createAuctionButton.setOnClickListener(v -> new Thread(() -> {
-            if (fieldsEmpty()) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Inserisci una data di scadenza", Toast.LENGTH_SHORT).show());
+
+            if (isWithdrawalBidTimeNotValid()) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Il tempo di scadenza delle offerte non puo essere zero", Toast.LENGTH_SHORT).show());
                 return;
             }
 
@@ -206,7 +247,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
             String description = genericAuctionAttributesHolder.getDescription();
             Category category = genericAuctionAttributesHolder.getCategory();
             Wear wear = genericAuctionAttributesHolder.getWear();
-            String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
+            String expirationDate = expirationDateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
 
             SilentAuction newSilentAuction = new SilentAuction(
                     UserHolder.user,
@@ -261,12 +302,11 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         return totalSeconds;
     }
 
-    private boolean fieldsEmpty() {
-        if (dateTextView.getText() != null) {
-            return dateTextView.getText().toString().equals("");
-        }
-
-        return false;
+    private boolean isWithdrawalBidTimeNotValid() {
+        return minutesWheelView.getSelectionItem().equals("0") &&
+                hoursWheelView.getSelectionItem().equals("0") &&
+                daysWheelView.getSelectionItem().equals("0") &&
+                monthsWheelView.getSelectionItem().equals("0");
     }
 
     private void updateWithdrawalTimeTextView() {
@@ -287,18 +327,18 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
     }
 
     private void setupDatePicker(View view) {
-        dateTextView = view.findViewById(R.id.expiration_date_text_view_credit_card_attributes);
-        dateTextView.setFocusable(false);
-        dateTextView.setOnClickListener(v -> {
+        expirationDateTextView = view.findViewById(R.id.expiration_date_text_view_credit_card_attributes);
+        expirationDateTextView.setFocusable(false);
+        expirationDateTextView.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
                     SilentAuctionAttributesFragment.this,
                     2021,
                     0,
                     1
             );
-
             setTheMinumumToday(datePickerDialog);
         });
+        expirationDateTextView.addTextChangedListener(textWatcher);
     }
 
     private void setTheMinumumToday(DatePickerDialog datePickerDialog) {
@@ -316,6 +356,6 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
         sb.append(monthOfYear + 1);
         sb.append("/");
         sb.append(year);
-        dateTextView.setText(sb.toString());
+        expirationDateTextView.setText(sb.toString());
     }
 }

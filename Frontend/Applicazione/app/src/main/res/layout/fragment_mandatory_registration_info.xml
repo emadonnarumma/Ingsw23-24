@@ -10,16 +10,14 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username_layout_registration"
+        android:id="@+id/username_layout_mandatory_registration_info"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
-
-
-
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username_edit_text_madatory_registration_info"
@@ -29,42 +27,54 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
+    <TextView
+        android:id="@+id/username_error_text_view_mandatory_registration_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/username_layout_mandatory_registration_info"
+        app:layout_constraintStart_toStartOf="@id/username_layout_mandatory_registration_info"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_layout_registration"
+        android:id="@+id/email_layout_mandatory_registration_info"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/username_layout_registration" >
+        app:layout_constraintTop_toBottomOf="@id/username_error_text_view_mandatory_registration_info" >
 
 
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_edit_text_madatory_registration_info"
+            android:id="@+id/email_edit_text_mandatory_registration_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/e_mail_input"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
+    <TextView
+        android:id="@+id/email_error_text_view_mandatory_registration_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/email_layout_mandatory_registration_info"
+        app:layout_constraintStart_toStartOf="@id/email_layout_mandatory_registration_info"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_layout_registration"
+        android:id="@+id/password_layout_mandatory_registration_info"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="50dp"
-        app:layout_constraintStart_toStartOf="@id/email_layout_registration"
-        app:layout_constraintEnd_toEndOf="@id/email_layout_registration"
-        app:layout_constraintTop_toBottomOf="@id/email_layout_registration"
+        app:layout_constraintStart_toStartOf="@id/email_layout_mandatory_registration_info"
+        app:layout_constraintEnd_toEndOf="@id/email_layout_mandatory_registration_info"
+        app:layout_constraintTop_toBottomOf="@id/email_error_text_view_mandatory_registration_info"
         app:passwordToggleEnabled="true">
 
 
@@ -78,18 +88,24 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
+    <TextView
+        android:id="@+id/password_error_text_view_mandatory_registration_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/password_layout_mandatory_registration_info"
+        app:layout_constraintStart_toStartOf="@id/password_layout_mandatory_registration_info"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_confirmation_layout_registration"
+        android:id="@+id/password_confirmation_layout_mandatory_registration_info"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@id/password_layout_registration"
-        app:layout_constraintEnd_toEndOf="@id/password_layout_registration"
-        app:layout_constraintTop_toBottomOf="@id/password_layout_registration"
+        app:layout_constraintStart_toStartOf="@id/password_layout_mandatory_registration_info"
+        app:layout_constraintEnd_toEndOf="@id/password_layout_mandatory_registration_info"
+        app:layout_constraintTop_toBottomOf="@id/password_error_text_view_mandatory_registration_info"
         app:passwordToggleEnabled="true" >
 
 
@@ -103,5 +119,12 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <TextView
+        android:id="@+id/password_confirmation_error_text_view_mandatory_registration_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/password_confirmation_layout_mandatory_registration_info"
+        app:layout_constraintStart_toStartOf="@id/password_confirmation_layout_mandatory_registration_info"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

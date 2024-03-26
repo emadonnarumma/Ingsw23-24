@@ -111,7 +111,6 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setupBottomSheetDialog() {
-
         questionMarkAuctionType.setText(R.string.downward_auction_question);
         questionMarkExplanationAuctionType.setText(R.string.downward_auction_description);
     }

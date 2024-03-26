@@ -20,6 +20,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.activities.MakePaymentActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 
 public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private DownwardAuction auction;
@@ -49,6 +50,7 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
             bindImages(auction);
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -81,22 +83,14 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
     }
 
     private void setGreenButton() {
-        greenButton.setText("COMPRA ORA A: " + NumberFormatter.formatPrice(auction.getCurrentPrice()) );
+        greenButton.setText("COMPRA ORA A: " + NumberFormatter.formatPrice(auction.getCurrentPrice()));
         greenButton.setOnClickListener(v -> {
+            if (UserHolder.getUser().equals(auction.getOwner())) {
+                PopupGeneratorOf.errorPopup(v.getContext(), "Non puoi comprare la tua stessa asta!");
+                return;
+            }
             if (!UserHolder.isUserBuyer()) {
-                if (UserHolder.getSeller().equals(auction.getOwner())) {
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("Attenzione")
-                            .setMessage("Non comprare il tuo stesso annuncio!")
-                            .setPositiveButton("OK", null)
-                            .show();
-                } else {
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("Attenzione")
-                            .setMessage("Devi essere un compratore per comprare!")
-                            .setPositiveButton("OK", null)
-                            .show();
-                }
+                PopupGeneratorOf.errorPopup(v.getContext(), "Devi essere un compratore per comprare un'asta!");
             } else {
                 MakePaymentController.setBid(null);
                 MakePaymentController.setAuction(auction);

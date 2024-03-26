@@ -7,6 +7,10 @@ import com.ingsw.dietiDeals24.model.Buyer;
 public class UserHolder {
     public static User user;
 
+    public static User getUser() {
+        return user;
+    }
+
     public static Seller getSeller() {
         return (Seller) user;
     }

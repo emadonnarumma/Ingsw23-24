@@ -18,6 +18,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid.MakeSilentBidActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 
 public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private SilentAuction auction;
@@ -71,20 +72,12 @@ public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActi
 
     private void setGreenButton() {
         greenButton.setOnClickListener(v -> {
+            if (UserHolder.getUser().equals(auction.getOwner())) {
+                PopupGeneratorOf.errorPopup(v.getContext(), "Non puoi fare un'offerta alla tua stessa asta!");
+                return;
+            }
             if (!UserHolder.isUserBuyer()) {
-                if (UserHolder.getSeller().equals(auction.getOwner())) {
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("Attenzione")
-                            .setMessage("Non puoi fare offerte al tuo stesso annuncio!")
-                            .setPositiveButton("OK", null)
-                            .show();
-                } else {
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("Attenzione")
-                            .setMessage("Devi essere un compratore per fare un'offerta!")
-                            .setPositiveButton("OK", null)
-                            .show();
-                }
+                PopupGeneratorOf.errorPopup(v.getContext(), "Devi essere un compratore per fare un'offerta all'asta!");
             } else {
                 MakeBidController.setSilentAuction(auction);
                 Intent intent = new Intent(v.getContext(), MakeSilentBidActivity.class);

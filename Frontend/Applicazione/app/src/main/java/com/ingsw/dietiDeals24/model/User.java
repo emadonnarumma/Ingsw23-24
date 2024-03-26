@@ -148,6 +148,6 @@ public class User implements Serializable {
             return false;
 
         User user = (User) obj;
-        return user.email.equals(email) && user.role.equals(role);
+        return user.email.equals(email);
     }
 }

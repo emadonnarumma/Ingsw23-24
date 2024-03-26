@@ -200,8 +200,7 @@ public class PopupGeneratorOf {
             }
         }).start();
     }
-
-
+    
     public static void areYouSureToDeleteAuctionPopup(Context context) {
         PopupDialog.getInstance(context)
                 .setStyle(Styles.STANDARD)

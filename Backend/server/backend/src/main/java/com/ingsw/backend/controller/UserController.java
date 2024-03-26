@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.service.UserService;
 
-
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -28,27 +26,15 @@ public class UserController {
 
 	@GetMapping("/{email}/seller")
 	public ResponseEntity<Seller> getSellerByEmail(@PathVariable String email) {
-
 		Optional<Seller> user = userService.getSeller(email);
-		
-		if (user.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
-		return ResponseEntity.ok(user.get());
-	}
+        return user.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
 	@GetMapping("/{email}/buyer")
 	public ResponseEntity<Buyer> getBuyerByEmail(@PathVariable String email) {
-
 		Optional<Buyer> user = userService.getBuyer(email);
-
-		if (user.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-		return ResponseEntity.ok(user.get());
-	}
+        return user.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
 	
 	@GetMapping("/check-email/{email}")
@@ -69,34 +55,16 @@ public class UserController {
 	
 	@PutMapping("/{email}/{role}/updateRegion")
     public ResponseEntity<User> updateRegion(@PathVariable String email, @PathVariable Role role, @RequestBody Region newRegion) {
-        
 		Optional<User> optionalUser = userService.updateRegion(email, role, newRegion);
-        
-		if (optionalUser.isPresent()) {
-        
-			return ResponseEntity.ok(optionalUser.get());
-			
-        } else {
-        	
-        	return ResponseEntity.notFound().build();
-        }
+        return optionalUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{email}/{role}/updateBio")
     public ResponseEntity<User> updateBio(@PathVariable String email, @PathVariable Role role, @RequestBody String newBio) {
-
 		Gson gson = new Gson();
 		String bio = gson.fromJson(newBio, String.class);
         Optional<User> optionalUser = userService.updateBio(email, role, bio);
-
-        if (optionalUser.isPresent()) {
-            
-        	return ResponseEntity.ok(optionalUser.get());
-            
-        } else {
-        	
-        	return ResponseEntity.notFound().build();
-        }
+        return optionalUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
 

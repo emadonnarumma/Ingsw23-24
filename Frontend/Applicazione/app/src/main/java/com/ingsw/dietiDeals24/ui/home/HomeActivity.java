@@ -122,7 +122,7 @@ public class HomeActivity extends CheckConnectionActivity {
         }
 
         private void tryToDisconnect() {
-            PopupGeneratorOf.areYouSureToLogoutPopup(getApplicationContext());
+            PopupGeneratorOf.areYouSureToLogoutPopup(HomeActivity.this);
         }
     };
 

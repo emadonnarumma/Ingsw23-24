@@ -7,16 +7,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
-import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
@@ -25,7 +22,6 @@ import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MyAuctionAdapter;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
 
 import java.util.ArrayList;
@@ -36,8 +32,9 @@ import java.util.concurrent.ExecutionException;
 public class OtherUserProfileActivity extends CheckConnectionActivity {
     private TextView usernameTextView;
     private TextView userBioTextView;
-    private ImageView iconLinkImageView;
-    private TextView linkTextView;
+    private ImageView linkIconImageView;
+    private TextView linkTitleTextView;
+    private TextView linkUrlTextView;
     private TextView andNMoreLinksTextView;
     private TextView userRegionTextView;
     private ProgressBar progressBar;
@@ -64,8 +61,9 @@ public class OtherUserProfileActivity extends CheckConnectionActivity {
         usernameTextView = findViewById(R.id.username_text_other_user_profile);
         userBioTextView = findViewById(R.id.user_bio_other_user_profile);
         roleTextView = findViewById(R.id.role_text_other_user_profile);
-        iconLinkImageView = findViewById(R.id.icon_link_other_user_profile);
-        linkTextView = findViewById(R.id.link_other_user_profile);
+        linkIconImageView = findViewById(R.id.link_icon_other_user_profile);
+        linkTitleTextView = findViewById(R.id.link_title_other_user_profile);
+        linkUrlTextView = findViewById(R.id.link_url_other_user_profile);
         andNMoreLinksTextView = findViewById(R.id.and_n_more_links_other_user_profile);
         userRegionTextView = findViewById(R.id.user_region_other_user_profile);
         progressBar = findViewById(R.id.progress_bar_other_user_profile);
@@ -119,7 +117,6 @@ public class OtherUserProfileActivity extends CheckConnectionActivity {
             return;
 
         roleTextView.setText(Role.toItalianString(user.getRole()));
-        roleTextView.setTextColor(ContextCompat.getColor(this, R.color.green));
 
         String username = user.getName();
         String userBio = user.getBio();
@@ -129,12 +126,25 @@ public class OtherUserProfileActivity extends CheckConnectionActivity {
         userRegionTextView.setText(userRegion);
 
         if (user.hasExternalLinks()) {
-            String link = user.getExternalLinks().get(0).getTitle();
-            String andNMoreLinks = " e altri " + (user.getExternalLinks().size() - 1);
-            linkTextView.setText(link);
-            andNMoreLinksTextView.setText(andNMoreLinks);
+            String linkTitle = user.getExternalLinks().get(0).getTitle();
+
+            int numberOfLinks = user.getExternalLinks().size();
+            if (numberOfLinks == 1) {
+                linkTitle = linkTitle + ": ";
+                andNMoreLinksTextView.setVisibility(View.GONE);
+                String linkUrl = user.getExternalLinks().get(0).getUrl();
+                linkUrlTextView.setText(linkUrl);
+            } else {
+                linkUrlTextView.setVisibility(View.GONE);
+                String andNMoreLinks = " e altri " + (numberOfLinks - 1);
+                if(numberOfLinks == 2)
+                    andNMoreLinks = " e un altro";
+                andNMoreLinksTextView.setText(andNMoreLinks);
+            }
+
+            linkTitleTextView.setText(linkTitle);
         } else {
-            iconLinkImageView.setVisibility(View.GONE);
+            linkIconImageView.setVisibility(View.GONE);
         }
     }
 

@@ -8,6 +8,9 @@
     android:layout_marginVertical="@dimen/activity_vertical_margin"
     tools:context=".ui.home.profile.my.ProfileFragment">
 
+
+
+    <!-- USERNAME PROFILE -->
     <androidx.cardview.widget.CardView
         android:id="@+id/username_profile"
         android:layout_width="match_parent"
@@ -59,6 +62,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
+
+
+    <!-- SELLER SWITCH -->
     <LinearLayout
         android:id="@+id/seller_switch_layout_profile"
         android:layout_width="wrap_content"
@@ -90,6 +96,9 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+
+
+    <!-- BIO -->
     <TextView
         android:id="@+id/user_bio_profile"
         android:layout_width="match_parent"
@@ -101,8 +110,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/seller_switch_layout_profile" />
 
+
+
+    <!-- LINK -->
     <ImageView
-        android:id="@+id/icon_link_profile"
+        android:id="@+id/link_icon_profile"
         android:layout_width="@dimen/icon_size_small"
         android:layout_height="@dimen/icon_size_small"
         android:layout_marginEnd="8dp"
@@ -112,14 +124,26 @@
         app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
 
     <TextView
-        android:id="@+id/link_profile"
+        android:id="@+id/link_title_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:autoLink="web"
         android:fontFamily="@font/verdana"
         android:textSize="@dimen/text_medium"
-        app:layout_constraintStart_toEndOf="@id/icon_link_profile"
+        app:layout_constraintStart_toEndOf="@id/link_icon_profile"
+        app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
+
+    <TextView
+        android:id="@+id/link_url_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:maxLines="1"
+        android:textSize="@dimen/text_medium"
+        android:autoLink="web"
+        app:layout_constraintStart_toEndOf="@id/link_title_profile"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
 
     <TextView
@@ -131,13 +155,14 @@
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
         android:autoLink="web"
-        app:layout_constraintStart_toEndOf="@id/link_profile"
+        app:layout_constraintStart_toEndOf="@id/link_title_profile"
         app:layout_constraintTop_toBottomOf="@id/user_bio_profile" />
 
 
 
 
 
+    <!-- REGION -->
     <ImageView
         android:id="@+id/icon_of_ITALY_profile"
         android:layout_width="@dimen/icon_size_medium"
@@ -147,7 +172,7 @@
         android:src="@drawable/ic_italy"
         app:tint="@color/green"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/link_profile" />
+        app:layout_constraintTop_toBottomOf="@id/link_title_profile" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -187,7 +212,7 @@
 
 
 
-
+    <!-- BUTTONS -->
     <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/edit_profile_button_profile"
         android:layout_width="200dp"

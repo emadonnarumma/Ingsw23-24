@@ -35,8 +35,9 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private Switch sellerSwitch;
     private TextView sellerSwitchTextView;
     private TextView userBioTextView;
-    private ImageView iconLinkImageView;
-    private TextView linkTextView;
+    private ImageView linkIconImageView;
+    private TextView linkTitleTextView;
+    private TextView linkUrlTextView;
     private TextView andNMoreLinksTextView;
     private TextView userRegionTextView;
     private CircularProgressButton editProfileButton;
@@ -59,8 +60,9 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         sellerSwitch = view.findViewById(R.id.seller_switch_profile);
         sellerSwitchTextView = view.findViewById(R.id.seller_switch_text_profile);
         userBioTextView = view.findViewById(R.id.user_bio_profile);
-        iconLinkImageView = view.findViewById(R.id.icon_link_profile);
-        linkTextView = view.findViewById(R.id.link_profile);
+        linkIconImageView = view.findViewById(R.id.link_icon_profile);
+        linkTitleTextView = view.findViewById(R.id.link_title_profile);
+        linkUrlTextView = view.findViewById(R.id.link_url_profile);
         andNMoreLinksTextView = view.findViewById(R.id.and_n_more_links_profile);
         userRegionTextView = view.findViewById(R.id.user_region_profile);
         editProfileButton = view.findViewById(R.id.edit_profile_button_profile);
@@ -78,21 +80,6 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         logoutButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToLogoutPopup(getContext()));
     }
 
-    private void retrieveUserData() {
-        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
-        new Thread(() -> {
-            try {
-                ProfileController.retrieveUser().get();
-            } catch (ExecutionException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
-            } catch (InterruptedException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
-            } finally {
-                requireActivity().runOnUiThread(loading::dismissDialog);
-            }
-        }).start();
-    }
-
     private void showUserData() {
         if (UserHolder.user == null)
             return;
@@ -105,12 +92,25 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userRegionTextView.setText(userRegion);
 
         if (UserHolder.user.hasExternalLinks()) {
-            String link = UserHolder.user.getExternalLinks().get(0).getTitle();
-            String andNMoreLinks = " e altri " + (UserHolder.user.getExternalLinks().size() - 1);
-            linkTextView.setText(link);
-            andNMoreLinksTextView.setText(andNMoreLinks);
+            String linkTitle = UserHolder.user.getExternalLinks().get(0).getTitle();
+
+            int numberOfLinks = UserHolder.user.getExternalLinks().size();
+            if (numberOfLinks == 1) {
+                linkTitle = linkTitle + ": ";
+                andNMoreLinksTextView.setVisibility(View.GONE);
+                String linkUrl = UserHolder.user.getExternalLinks().get(0).getUrl();
+                linkUrlTextView.setText(linkUrl);
+            } else {
+                linkUrlTextView.setVisibility(View.GONE);
+                String andNMoreLinks = " e altri " + (numberOfLinks - 1);
+                if(numberOfLinks == 2)
+                    andNMoreLinks = " e un altro";
+                andNMoreLinksTextView.setText(andNMoreLinks);
+            }
+
+            linkTitleTextView.setText(linkTitle);
         } else {
-            iconLinkImageView.setVisibility(View.GONE);
+            linkIconImageView.setVisibility(View.GONE);
         }
 
         if (UserHolder.user.isSeller()) {
@@ -147,15 +147,32 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         userRegionTextView.setText(userRegion);
 
         if (UserHolder.user.hasExternalLinks()) {
-            iconLinkImageView.setVisibility(View.VISIBLE);
-            String link = UserHolder.user.getExternalLinks().get(0).getTitle();
-            String andNMoreLinks = " e altri " + (UserHolder.user.getExternalLinks().size() - 1);
-            linkTextView.setText(link);
-            andNMoreLinksTextView.setText(andNMoreLinks);
+            linkIconImageView.setVisibility(View.VISIBLE);
+            String linkTitle;
+
+            int numberOfLinks = UserHolder.user.getExternalLinks().size();
+            if (numberOfLinks == 1) {
+                linkTitle = UserHolder.user.getExternalLinks().get(0).getTitle() + ": ";
+                andNMoreLinksTextView.setVisibility(View.GONE);
+                linkUrlTextView.setVisibility(View.VISIBLE);
+                String linkUrl = UserHolder.user.getExternalLinks().get(0).getUrl();
+                linkUrlTextView.setText(linkUrl);
+            } else {
+                linkTitle = UserHolder.user.getExternalLinks().get(0).getTitle();
+                linkUrlTextView.setVisibility(View.GONE);
+                andNMoreLinksTextView.setVisibility(View.VISIBLE);
+                String andNMoreLinks = " e altri " + (numberOfLinks - 1);
+                if(numberOfLinks == 2)
+                    andNMoreLinks = " e un altro";
+                andNMoreLinksTextView.setText(andNMoreLinks);
+            }
+
+            linkTitleTextView.setText(linkTitle);
         } else {
-            iconLinkImageView.setVisibility(View.GONE);
-            linkTextView.setText("");
+            linkIconImageView.setVisibility(View.GONE);
+            linkTitleTextView.setText("");
             andNMoreLinksTextView.setText("");
+            linkUrlTextView.setText("");
         }
     }
 
@@ -254,8 +271,23 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if(!ProfileController.wasUserAlreadyRetrieved)
+        if (!ProfileController.wasUserAlreadyRetrieved)
             retrieveUserData();
         updateUserData();
+    }
+
+    private void retrieveUserData() {
+        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
+        new Thread(() -> {
+            try {
+                ProfileController.retrieveUser().get();
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+            } catch (InterruptedException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+            } finally {
+                requireActivity().runOnUiThread(loading::dismissDialog);
+            }
+        }).start();
     }
 }

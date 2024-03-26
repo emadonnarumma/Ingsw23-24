@@ -21,19 +21,19 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="auctions")
+@Table(name = "auctions")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @JsonTypeInfo(
-		  use = JsonTypeInfo.Id.NAME, 
-		  include = JsonTypeInfo.As.PROPERTY, 
-		  property = "type"
-		)
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
 @JsonSubTypes({
-		  @JsonSubTypes.Type(value = SilentAuction.class, name = "SILENT"),
-		  @JsonSubTypes.Type(value = DownwardAuction.class, name = "DOWNWARD"),
-		  @JsonSubTypes.Type(value = ReverseAuction.class, name = "REVERSE")
-				})
+        @JsonSubTypes.Type(value = SilentAuction.class, name = "SILENT"),
+        @JsonSubTypes.Type(value = DownwardAuction.class, name = "DOWNWARD"),
+        @JsonSubTypes.Type(value = ReverseAuction.class, name = "REVERSE")
+})
 public abstract class Auction {
 
     @Id
@@ -45,8 +45,8 @@ public abstract class Auction {
 
     @JsonIgnore
     @OneToMany(mappedBy = "auction", fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Notification> notifications;    
-    
+    private List<Notification> notifications;
+
     @Column(nullable = false)
     private String title;
 
@@ -58,16 +58,13 @@ public abstract class Auction {
 
     @Enumerated(EnumType.STRING)
     private AuctionStatus status;
-    
+
     @Enumerated(EnumType.STRING)
     private Category category;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name="owner_email", referencedColumnName="email"),
-            @JoinColumn(name="owner_role", referencedColumnName="role")
-    })
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    @JoinColumn(name = "owner_role", referencedColumnName = "role")
     private User owner;
-
 }
 

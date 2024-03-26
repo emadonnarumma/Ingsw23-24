@@ -2,10 +2,13 @@ package com.ingsw.dietiDeals24.ui.home;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.OptIn;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,9 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.NotificationController;
@@ -49,11 +49,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HomeActivity extends CheckConnectionActivity {
+    private TextView notificationTextViewNumber;
     private DrawerLayout drawerLayout;
-    private ImageButton notificationButton;
-    private ImageButton closeDrawerButton;
+    private ImageButton notificationButton, closeDrawerButton;
+    private ImageView notificationCountBackgroundImageView;
     private RecyclerView notificationsRecyclerView;
-    private BadgeDrawable notificationBadge;
     private NavigationBarView navigationBarView;
     private Toolbar toolbar;
     private ExecutorService executorService;
@@ -130,8 +130,9 @@ public class HomeActivity extends CheckConnectionActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setupNotificationBadge();
         setupNotificationButton();
+        setupNotificationNumberTextView();
+        setupNotificationNumberBackgroundImageView();
         startNotificationUpdates();
         setupNavigationBarView();
         setupActionBar();
@@ -143,7 +144,6 @@ public class HomeActivity extends CheckConnectionActivity {
         checkRequestToOpenAFragmentFromAnOtherActivity();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -152,8 +152,12 @@ public class HomeActivity extends CheckConnectionActivity {
         }
     }
 
-    private void setupNotificationBadge() {
-        notificationBadge = BadgeDrawable.create(this);
+    private void setupNotificationNumberTextView() {
+        notificationTextViewNumber = findViewById(R.id.notification_count_home);
+    }
+
+    private void setupNotificationNumberBackgroundImageView() {
+        notificationCountBackgroundImageView = findViewById(R.id.notification_count_background_home);
     }
 
     private void startNotificationUpdates() {
@@ -161,7 +165,12 @@ public class HomeActivity extends CheckConnectionActivity {
         executorService.submit(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
-                    notificationBadge.setNumber(NotificationController.updateNotifications().get());
+                    int numberOfNotifications = NotificationController.updateNotifications().get();
+                    if (numberOfNotifications == 0) {
+                        hideNotificationBadge();
+                    } else {
+                        showNotificationBadge(numberOfNotifications);
+                    }
                 } catch (ExecutionException e) {
                     if (e.getCause() instanceof AuthenticationException) {
                         runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Sessione scaduta, effettua nuovamente il login"));
@@ -172,6 +181,21 @@ public class HomeActivity extends CheckConnectionActivity {
                     Thread.currentThread().interrupt();
                 }
             }
+        });
+    }
+
+    private void showNotificationBadge(int numberOfNotifications) {
+        runOnUiThread(() -> {
+            notificationTextViewNumber.setVisibility(View.VISIBLE);
+            notificationCountBackgroundImageView.setVisibility(View.VISIBLE);
+            notificationTextViewNumber.setText(String.valueOf(numberOfNotifications));
+        });
+    }
+
+    private void hideNotificationBadge() {
+        runOnUiThread(() -> {
+            notificationTextViewNumber.setVisibility(View.GONE);
+            notificationCountBackgroundImageView.setVisibility(View.GONE);
         });
     }
 
@@ -231,10 +255,8 @@ public class HomeActivity extends CheckConnectionActivity {
         closeDrawerButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
     }
 
-    @OptIn(markerClass = ExperimentalBadgeUtils.class)
     private void setupNotificationButton() {
         notificationButton = findViewById(R.id.notification_button);
-        BadgeUtils.attachBadgeDrawable(notificationBadge, notificationButton, null);
         notificationButton.setOnClickListener(v -> {
             setupNotificationRecyclerView();
             drawerLayout.openDrawer(GravityCompat.END);

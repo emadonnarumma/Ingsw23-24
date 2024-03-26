@@ -19,13 +19,15 @@ import java.util.Optional;
 @RequestMapping("/bankAccount")
 public class BankAccountController {
 
+    private final BankAccountService bankAccountService;
+    private final UserService userService;
+
     @Autowired
-    @Qualifier("mainBankAccountService")
-    private BankAccountService bankAccountService;
-    
-	@Autowired
-	@Qualifier("mainUserService")
-	private UserService userService;
+    public BankAccountController(@Qualifier("mainBankAccountService") BankAccountService bankAccountService,
+                                 @Qualifier("mainUserService") UserService userService) {
+        this.bankAccountService = bankAccountService;
+        this.userService = userService;
+    }
 
     @PostMapping("/{email}")
     public ResponseEntity<BankAccount> addBankAccount(@Valid @RequestBody BankAccount bankAccount, @PathVariable String email) {
@@ -70,7 +72,7 @@ public class BankAccountController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBankAccount(@PathVariable Integer id) {
         
-    	if (bankAccountService.delete(id)) {
+    	if (Boolean.TRUE.equals(bankAccountService.delete(id))) {
     		
             return ResponseEntity.noContent().build();
             

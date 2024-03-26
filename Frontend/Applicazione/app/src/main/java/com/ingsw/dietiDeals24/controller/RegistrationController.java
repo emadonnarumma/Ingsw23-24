@@ -118,10 +118,10 @@ public class RegistrationController implements RetroFitHolder {
     }
 
     private static boolean isPasswordValid(String password) {
-        return password != null && password.length() > 5;
+        return password != null && password.length() > 5 && password.length() < 17;
     }
 
-    private static boolean isRepeatPasswordValid(String password, String repeat_password) {
-        return repeat_password.equals(password);
+    private static boolean isRepeatPasswordValid(String password, String repeatPassword) {
+        return repeatPassword.equals(password);
     }
 }

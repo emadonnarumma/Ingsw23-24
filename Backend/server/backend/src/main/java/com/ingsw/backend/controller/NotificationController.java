@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ingsw.backend.enumeration.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,28 +17,26 @@ import com.ingsw.backend.model.User;
 import com.ingsw.backend.service.NotificationService;
 import com.ingsw.backend.service.UserService;
 
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/notification")
-@RequiredArgsConstructor
 public class NotificationController {
-	
-	
-	@Autowired
-	@Qualifier("mainUserService")
-	private UserService userService;
-	
-	@Autowired
-	@Qualifier("mainNotificationService")
-	private NotificationService notificationService;
-	
+
+	private final UserService userService;
+	private final NotificationService notificationService;
+
+	public NotificationController(@Qualifier("mainUserService") UserService userService,
+								  @Qualifier("mainNotificationService") NotificationService notificationService) {
+		this.userService = userService;
+		this.notificationService = notificationService;
+	}
+
 	@GetMapping("/{userEmail}/{userRole}/getAllNotifications")
 	public ResponseEntity<List<Notification>> getAllNotificationsByUser(@PathVariable String userEmail, @PathVariable Role userRole) {
 	    
 	    Optional<User> user = userService.getUser(userEmail, userRole);
 	    
-	    if (!user.isPresent()) {
+	    if (user.isEmpty()) {
 	        
 	    	return ResponseEntity.notFound().build();
 	    }

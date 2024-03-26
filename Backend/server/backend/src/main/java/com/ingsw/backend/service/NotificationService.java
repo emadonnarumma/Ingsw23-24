@@ -6,8 +6,7 @@ import com.ingsw.backend.model.Notification;
 import com.ingsw.backend.model.User;
 
 public interface NotificationService {
+    List<Notification> getAllNotificationsByUser(User user);
 
-	public List<Notification> getAllNotificationsByUser(User user);
-	
-	public Boolean delete(Integer id);
+    Boolean delete(Integer id);
 }

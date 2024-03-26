@@ -23,17 +23,15 @@ public class Notification {
 
     @Column(nullable = false)
     private String message;
-    
-    
+
+
     @JsonBackReference
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name="owner_email", referencedColumnName="email"),
-            @JoinColumn(name="owner_role", referencedColumnName="role")
-    })
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    @JoinColumn(name = "owner_role", referencedColumnName = "role")
     @JsonIgnore
     private User user;
-    
+
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
     private DownwardAuction auction;

@@ -8,12 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ingsw.backend.model.User;
 
 public interface UserRepository extends JpaRepository<User, String>{
+	Optional<User> findByEmailAndRoleAndPassword(String email, Role role, String password);
+	Optional<User> findByEmailAndRole(String email, Role role);
 
-	public Optional<User> findByEmailAndRoleAndPassword(String email, Role role, String password);
-	
-	public Optional<User> findByEmailAndRole(String email, Role role);
-
-	public Boolean existsByEmail(String email);
-
-	public Boolean existsByEmailAndRole(String email, Role role);
+	Boolean existsByEmail(String email);
+	Boolean existsByEmailAndRole(String email, Role role);
  }

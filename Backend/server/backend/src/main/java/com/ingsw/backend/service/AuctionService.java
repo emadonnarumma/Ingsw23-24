@@ -10,49 +10,43 @@ import com.ingsw.backend.model.ReverseAuction;
 import com.ingsw.backend.model.SilentAuction;
 
 public interface AuctionService {
-	public List<Auction> getAllAuctions();
-	
-	public List<SilentAuction> getAllSilentAuctions();
-	public List<ReverseAuction> getAllReverseAuctions();
-	public List<DownwardAuction> getAllDownwardAuctions();
-	
-	
-	
-	public List<Auction> getAuctionsByCategory(Category category);
-	public List<Auction> getAuctionsByTitleContaining(String keyword);
-	public List<Auction> getAuctionsByTitleContainingAndCategory(String keyword, Category category);
-	
-	public List<SilentAuction> getSilentAuctionsByCategory(Category category);
-	public List<SilentAuction> getSilentAuctionsByTitleContaining(String keyword);
-	public List<SilentAuction> getSilentAuctionsByTitleContainingAndCategory(String keyword, Category category);
-	
-	public List<DownwardAuction> getDownwardAuctionsByCategory(Category category);
-	public List<DownwardAuction> getDownwardAuctionsByTitleContaining(String keyword);
-	public List<DownwardAuction> getDownwardAuctionsByTitleContainingAndCategory(String keyword, Category category);
-	
-	public List<ReverseAuction> getReverseAuctionsByCategory(Category category);
-	public List<ReverseAuction> getReverseAuctionsByTitleContaining(String keyword);
-	public List<ReverseAuction> getReverseAuctionsByTitleContainingAndCategory(String keyword, Category category);
-	
+    List<Auction> getAllAuctions();
+    List<SilentAuction> getAllSilentAuctions();
+    List<ReverseAuction> getAllReverseAuctions();
+    List<DownwardAuction> getAllDownwardAuctions();
 
-	public List<ReverseAuction> getReverseAuctionsByOwnerEmail(String email);
-	public List<SilentAuction> getSilentAuctionsByOwnerEmail(String email);
-	public List<DownwardAuction> getDownwardAuctionsByOwnerEmail(String email);
+    List<Auction> getAuctionsByCategory(Category category);
+    List<Auction> getAuctionsByTitleContaining(String keyword);
+    List<Auction> getAuctionsByTitleContainingAndCategory(String keyword, Category category);
 
-	public List<ReverseAuction> getInProgressReverseAuctionsByOwnerEmail(String email);
-	public List<SilentAuction> getInProgressSilentAuctionsByOwnerEmail(String email);
-	public List<DownwardAuction> getInProgressDownwardAuctionsByOwnerEmail(String email);
+    List<SilentAuction> getSilentAuctionsByCategory(Category category);
+    List<SilentAuction> getSilentAuctionsByTitleContaining(String keyword);
+    List<SilentAuction> getSilentAuctionsByTitleContainingAndCategory(String keyword, Category category);
 
-	public Long getRemainingSecondsForAuction(Integer auctionId);
+    List<DownwardAuction> getDownwardAuctionsByCategory(Category category);
+    List<DownwardAuction> getDownwardAuctionsByTitleContaining(String keyword);
+    List<DownwardAuction> getDownwardAuctionsByTitleContainingAndCategory(String keyword, Category category);
 
-	public Auction addAuction(Auction auction);
+    List<ReverseAuction> getReverseAuctionsByCategory(Category category);
+    List<ReverseAuction> getReverseAuctionsByTitleContaining(String keyword);
+    List<ReverseAuction> getReverseAuctionsByTitleContainingAndCategory(String keyword, Category category);
+    List<ReverseAuction> getReverseAuctionsByOwnerEmail(String email);
 
-	public Boolean delete(int id);
+    List<SilentAuction> getSilentAuctionsByOwnerEmail(String email);
 
-	public Optional<Auction> findById(Integer auctionId);
+    List<DownwardAuction> getDownwardAuctionsByOwnerEmail(String email);
 
-	public Boolean buyDownwardAuctionNow(Integer auctionId);
+    List<ReverseAuction> getInProgressReverseAuctionsByOwnerEmail(String email);
+    List<SilentAuction> getInProgressSilentAuctionsByOwnerEmail(String email);
+    List<DownwardAuction> getInProgressDownwardAuctionsByOwnerEmail(String email);
 
+    Long getRemainingSecondsForAuction(Integer auctionId);
 
+    Auction addAuction(Auction auction);
 
+    Boolean delete(int id);
+
+    Optional<Auction> findById(Integer auctionId);
+
+    Boolean buyDownwardAuctionNow(Integer auctionId);
 }

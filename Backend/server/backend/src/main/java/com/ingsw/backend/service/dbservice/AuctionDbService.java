@@ -107,28 +107,21 @@ public class AuctionDbService implements AuctionService {
 
 	@Override
 	public Long getRemainingSecondsForAuction(Integer auctionId) {
-		
 		Optional<Auction> optionalAuction = auctionRepository.findById(auctionId);
-		
 		if (optionalAuction.isEmpty() || optionalAuction.get() instanceof DownwardAuction){
-			
 			return 0L;
 		}
 		
 		Auction auction = optionalAuction.get();
 	    Timestamp expirationDate;
 		
-	    if (auction instanceof SilentAuction) {
-	    	
-	        expirationDate = ((SilentAuction) auction).getExpirationDate();
-	        
+	    if (auction instanceof SilentAuction silentAuction) {
+	        expirationDate = silentAuction.getExpirationDate();
 	    } else{
-	    	
 	        expirationDate = ((ReverseAuction) auction).getExpirationDate();
 	    }
 	    
 	    long remainingSeconds = remainingSeconds(expirationDate);
-	    
 	    return remainingSeconds > 0 ? remainingSeconds : 0L;
 		
 	}

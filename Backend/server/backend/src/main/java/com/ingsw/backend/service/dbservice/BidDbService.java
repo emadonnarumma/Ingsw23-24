@@ -1,6 +1,7 @@
 package com.ingsw.backend.service.dbservice;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,19 +45,13 @@ public class BidDbService implements BidService {
 	}
 
 	@Override
-	public List<ReverseBid> getInProgressReverseBidsByAuctionId(Integer auctionId) {
-		return null;
-	}
-
-	@Override
 	public List<SilentBid> getAllSilentBidsBySilentAuction(SilentAuction auction) {
 	    return bidRepository.findAllSilentBidsBySilentAuction(auction);
 	}
 
 	@Override
 	public ReverseBid getMinReverseBidByReverseAuctionId(Integer id) {
-		ReverseBid reverseBid = bidRepository.findPendingReverseBidByAuctionId(id);
-		return reverseBid;
+        return bidRepository.findPendingReverseBidByAuctionId(id);
 	}
 
 	@Override

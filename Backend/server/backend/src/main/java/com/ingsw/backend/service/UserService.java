@@ -9,19 +9,15 @@ import com.ingsw.backend.model.Seller;
 import com.ingsw.backend.model.User;
 
 public interface UserService {
-	public Optional<User> getUser(String email, Role role);
-	
-	public Optional<User> getUser(String email, String password);
+    Optional<User> getUser(String email, Role role);
+    Optional<Seller> getSeller(String email);
+    Optional<Buyer> getBuyer(String email);
 
-	public Optional<Seller> getSeller(String email);
+    Boolean isEmailAlreadyUsed(String email);
 
-	public Optional<Buyer> getBuyer(String email);
-	
-	public Boolean isEmailAlreadyUsed(String email);
+    Optional<User> updateRegion(String email, Role role, Region newRegion);
 
-	public Optional<User> updateRegion(String email, Role role, Region newRegion);
+    Optional<User> updateBio(String email, Role role, String newBio);
 
-	public Optional<User> updateBio(String email, Role role, String newBio);
-
-	public Boolean doesAccountExist(String email, Role role);
+    Boolean doesAccountExist(String email, Role role);
 }

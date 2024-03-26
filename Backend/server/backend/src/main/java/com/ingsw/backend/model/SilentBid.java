@@ -18,12 +18,10 @@ import lombok.NoArgsConstructor;
 public class SilentBid extends Bid {
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name="owner_email", referencedColumnName="email"),
-            @JoinColumn(name="owner_role", referencedColumnName="role")
-    })
+    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    @JoinColumn(name = "owner_role", referencedColumnName = "role")
     private Buyer buyer;
-    
+
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
     private SilentAuction silentAuction;

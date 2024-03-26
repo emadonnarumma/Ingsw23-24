@@ -3,7 +3,6 @@ package com.ingsw.backend.controller;
 import java.util.Optional;
 
 import com.ingsw.backend.enumeration.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +25,14 @@ import jakarta.validation.Valid;
 @RequestMapping("/externalLink")
 public class ExternalLinkController {
 
-    @Autowired
-    @Qualifier("mainExternalLinkService")
-    private ExternalLinkService externalLinkService;
+    private final ExternalLinkService externalLinkService;
+    private final UserService userService;
 
-    @Autowired
-    @Qualifier("mainUserService")
-    private UserService userService;
+    public ExternalLinkController(@Qualifier("mainExternalLinkService") ExternalLinkService externalLinkService,
+                                  @Qualifier("mainUserService") UserService userService) {
+        this.externalLinkService = externalLinkService;
+        this.userService = userService;
+    }
 
     @PostMapping("/{email}/{role}")
     public ResponseEntity<ExternalLink> addExternalLink(@Valid @RequestBody ExternalLink externalLink, @PathVariable Role role, @PathVariable String email) {
@@ -76,7 +76,7 @@ public class ExternalLinkController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExternalLink(@PathVariable Integer id) {
 
-        if (externalLinkService.delete(id)) {
+        if (Boolean.TRUE.equals(externalLinkService.delete(id))) {
 
             return ResponseEntity.noContent().build();
 

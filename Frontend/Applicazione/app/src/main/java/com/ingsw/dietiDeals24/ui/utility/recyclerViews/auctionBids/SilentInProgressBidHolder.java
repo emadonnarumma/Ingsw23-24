@@ -17,6 +17,7 @@ import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsAc
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 
 import java.util.concurrent.ExecutionException;
 
@@ -45,51 +46,7 @@ public class SilentInProgressBidHolder extends RecyclerView.ViewHolder {
             v.getContext().startActivity(intent);
         });
 
-        acceptButton.setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
-                .setTitle("Conferma")
-                .setMessage("Sei sicuro di voler accettare?")
-                .setPositiveButton("Si", (dialog, which) -> new Thread(() -> {
-                    try {
-                        boolean isAccepted = MyAuctionDetailsController.acceptBid(silentBid.getIdBid()).get();
-                        if (isAccepted) {
-                            OnNavigateToHomeActivityFragmentListener.navigateTo("MyAuctionFragment", activity.getApplicationContext());
-                        }
-                    } catch (ExecutionException e) {
-                        v.post(() -> Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start())
-                .setNegativeButton("No", null)
-                .show());
-
-        declineButton.setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
-                .setTitle("Conferma")
-                .setMessage("Sei sicuro di voler rifiutare?")
-                .setPositiveButton("Si", (dialog, which) -> new Thread(() -> {
-                    try {
-                        boolean isRefused = MyAuctionDetailsController.deleteBid(silentBid.getIdBid()).get();
-                        if (isRefused) {
-                            AuctionBidAdapter adapter = (AuctionBidAdapter) activity.getBidsRecyclerView().getAdapter();
-                            int position = adapter.getBids().indexOf(silentBid);
-                            adapter.getBids().remove(silentBid);
-                            v.post(() -> {
-                                activity.getBidsRecyclerView().getAdapter().notifyItemRemoved(position);
-
-                                if (adapter.getBids().isEmpty()) {
-                                    activity.getBidsRecyclerView().setVisibility(View.GONE);
-                                    activity.getEmptyBidsTextView().setText("Nessuna offerta disponibile");
-                                    activity.getEmptyBidsTextView().setVisibility(View.VISIBLE);
-                                    }
-                            });
-                        }
-                    } catch (ExecutionException e) {
-                        v.post(() -> Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start())
-                .setNegativeButton("No", null)
-                .show());
+        acceptButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToAcceptBidPopup(activity, silentBid));
+        declineButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToDeclineBidPopup(activity, silentBid));
     }
 }

@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -28,8 +30,10 @@ import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment;
+import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinksFragment;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
+import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 import com.saadahmedsoft.popupdialog.Styles;
 import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener;
@@ -248,88 +252,6 @@ public class PopupGeneratorOf {
         }
     }
 
-    public static void areYouSureToCancelBidOperationPopUp(Context context) {
-        PopupDialog.getInstance(context)
-                .setStyle(Styles.STANDARD)
-                .setHeading("Vuoi annullare?")
-                .setDescription("Sei sicuro di voler annullare? Tutti i dati inseriti andranno persi.")
-                .setPopupDialogIcon(R.drawable.ic_cancel_24dp)
-                .setPopupDialogIconTint(R.color.red)
-                .setCancelable(false)
-                .setPositiveButtonText("Si")
-                .setNegativeButtonText("No")
-                .showDialog(new OnDialogButtonClickListener() {
-                    @Override
-                    public void onPositiveClicked(Dialog dialog) {
-                        super.onPositiveClicked(dialog);
-                        ((Activity) context).finish();
-                    }
-
-                    @Override
-                    public void onNegativeClicked(Dialog dialog) {
-                        super.onNegativeClicked(dialog);
-                    }
-                });
-    }
-
-    public static void areYouSureToDeleteBidPopup(Activity activity, Bid bid) {
-        PopupDialog.getInstance(context)
-                .setStyle(Styles.STANDARD)
-                .setHeading("Cancellare l'offerta?")
-                .setDescription("Sei sicuro di voler cancellare l'offerta?")
-                .setPopupDialogIcon(R.drawable.ic_delete_forever)
-                .setPopupDialogIconTint(R.color.red)
-                .setCancelable(false)
-                .setPositiveButtonText("Conferma")
-                .setNegativeButtonText("Annulla")
-                .showDialog(new OnDialogButtonClickListener() {
-                    @Override
-                    public void onPositiveClicked(Dialog dialog) {
-                        super.onPositiveClicked(dialog);
-                        deleteBid(activity, bid);
-                    }
-
-                    @Override
-                    public void onNegativeClicked(Dialog dialog) {
-                        super.onNegativeClicked(dialog);
-                    }
-                });
-    }
-
-    private void deleteBid(Activity activity, Bid bid) {
-        try {
-            MyBidDetailsController.deleteBid(bid.getIdBid()).get();
-            activity.finish();
-        } catch (ExecutionException e) {
-            ToastManager.showToast(activity, e.getCause().getMessage());
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public static void areYouSureToAcceptBidPopup(Context context) {
-        PopupDialog.getInstance(context)
-                .setStyle(Styles.STANDARD)
-                .setHeading("Accettare l'offerta?")
-                .setDescription("Sei sicuro di voler accettare l'offerta? L'asta finirà e non potrai più ricevere altre offerte.")
-                .setPopupDialogIcon(R.drawable.ic_check_circle)
-                .setPopupDialogIconTint(R.color.green)
-                .setCancelable(false)
-                .setPositiveButtonText("Conferma")
-                .setNegativeButtonText("Annulla")
-                .showDialog(new OnDialogButtonClickListener() {
-                    @Override
-                    public void onPositiveClicked(Dialog dialog) {
-                        super.onPositiveClicked(dialog);
-                    }
-
-                    @Override
-                    public void onNegativeClicked(Dialog dialog) {
-                        super.onNegativeClicked(dialog);
-                    }
-                });
-    }
 
     public static void areYouSureToRelaunchAuctionPopup(Activity activity, Auction auction) {
         PopupDialog.getInstance(activity)
@@ -383,4 +305,158 @@ public class PopupGeneratorOf {
             throw new RuntimeException(e);
         }
     }
+
+
+    public static void areYouSureToCancelBidOperationPopUp(Context context) {
+        PopupDialog.getInstance(context)
+                .setStyle(Styles.STANDARD)
+                .setHeading("Vuoi annullare?")
+                .setDescription("Sei sicuro di voler annullare? Tutti i dati inseriti andranno persi.")
+                .setPopupDialogIcon(R.drawable.ic_cancel_24dp)
+                .setPopupDialogIconTint(R.color.red)
+                .setCancelable(false)
+                .setPositiveButtonText("Si")
+                .setNegativeButtonText("No")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClicked(Dialog dialog) {
+                        super.onPositiveClicked(dialog);
+                        ((Activity) context).finish();
+                    }
+
+                    @Override
+                    public void onNegativeClicked(Dialog dialog) {
+                        super.onNegativeClicked(dialog);
+                    }
+                });
+    }
+
+
+    public static void areYouSureToDeleteBidPopup(Activity activity, Bid bid) {
+        PopupDialog.getInstance(activity)
+                .setStyle(Styles.STANDARD)
+                .setHeading("Cancellare l'offerta?")
+                .setDescription("Sei sicuro di voler cancellare l'offerta?")
+                .setPopupDialogIcon(R.drawable.ic_delete_forever)
+                .setPopupDialogIconTint(R.color.red)
+                .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClicked(Dialog dialog) {
+                        super.onPositiveClicked(dialog);
+                        deleteBid(activity, bid);
+                    }
+
+                    @Override
+                    public void onNegativeClicked(Dialog dialog) {
+                        super.onNegativeClicked(dialog);
+                    }
+                });
+    }
+
+    private static void deleteBid(Activity activity, Bid bid) {
+        try {
+            MyBidDetailsController.deleteBid(bid.getIdBid()).get();
+            activity.finish();
+        } catch (ExecutionException e) {
+            ToastManager.showToast(activity, e.getCause().getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void areYouSureToAcceptBidPopup(Activity activity, Bid bid) {
+        PopupDialog.getInstance(activity)
+                .setStyle(Styles.STANDARD)
+                .setHeading("Accettare l'offerta?")
+                .setDescription("Sei sicuro di voler accettare l'offerta? L'asta finirà e non potrai più ricevere altre offerte.")
+                .setPopupDialogIcon(R.drawable.ic_check_circle)
+                .setPopupDialogIconTint(R.color.green)
+                .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClicked(Dialog dialog) {
+                        super.onPositiveClicked(dialog);
+                        acceptBid(activity, bid);
+                    }
+
+                    @Override
+                    public void onNegativeClicked(Dialog dialog) {
+                        super.onNegativeClicked(dialog);
+                    }
+                });
+    }
+
+    private static void acceptBid(Activity activity, Bid bid) {
+        new Thread(() -> {
+            try {
+                boolean isAccepted = MyAuctionDetailsController.acceptBid(bid.getIdBid()).get();
+                if (isAccepted) {
+                    OnNavigateToHomeActivityFragmentListener.navigateTo("MyAuctionFragment", activity);
+                }
+            } catch (ExecutionException e) {
+                activity.runOnUiThread(() -> Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+
+    public static void areYouSureToDeclineBidPopup(AuctionDetailsActivity activity, Bid bid) {
+        PopupDialog.getInstance(activity)
+                .setStyle(Styles.STANDARD)
+                .setHeading("Rifiutare l'offerta?")
+                .setDescription("Sei sicuro di voler rifiutare l'offerta?")
+                .setPopupDialogIcon(R.drawable.ic_cancel_24dp)
+                .setPopupDialogIconTint(R.color.red)
+                .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClicked(Dialog dialog) {
+                        super.onPositiveClicked(dialog);
+                        declineBid(activity, bid);
+                    }
+
+                    @Override
+                    public void onNegativeClicked(Dialog dialog) {
+                        super.onNegativeClicked(dialog);
+                    }
+                });
+    }
+
+    private static void declineBid(AuctionDetailsActivity activity, Bid bid) {
+        new Thread(() -> {
+            try {
+                boolean isRefused = MyAuctionDetailsController.deleteBid(bid.getIdBid()).get();
+                if (isRefused) {
+                    AuctionBidAdapter adapter = (AuctionBidAdapter) activity.getBidsRecyclerView().getAdapter();
+                    int position = adapter.getBids().indexOf(bid);
+                    adapter.getBids().remove(bid);
+                    activity.runOnUiThread(() -> {
+                        activity.getBidsRecyclerView().getAdapter().notifyItemRemoved(position);
+
+                        if (adapter.getBids().isEmpty()) {
+                            activity.getBidsRecyclerView().setVisibility(View.GONE);
+                            activity.getEmptyBidsTextView().setText("Nessuna offerta disponibile");
+                            activity.getEmptyBidsTextView().setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            } catch (ExecutionException e) {
+                activity.runOnUiThread(() -> Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show());
+            } catch (InterruptedException e) {
+                activity.runOnUiThread(() -> Toast.makeText(activity, "Operazione interrotta, riprovare", Toast.LENGTH_SHORT).show());
+            }
+        }).start();
+    }
+
+
 }

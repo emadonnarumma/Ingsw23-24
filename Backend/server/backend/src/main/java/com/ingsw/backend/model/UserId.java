@@ -7,6 +7,5 @@ import lombok.Data;
 @Data
 public class UserId implements Serializable {
     private String email;
-    
     private Role role;
 }

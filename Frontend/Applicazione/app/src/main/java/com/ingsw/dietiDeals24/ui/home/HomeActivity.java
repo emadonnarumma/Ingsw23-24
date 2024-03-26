@@ -129,11 +129,11 @@ public class HomeActivity extends CheckConnectionActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
         setupNotificationBadge();
         setupNotificationButton();
         startNotificationUpdates();
         setupNavigationBarView();
-        setContentView(R.layout.activity_home);
         setupActionBar();
         setupDrawerLayout();
         getOnBackPressedDispatcher().addCallback(this, callback);
@@ -231,7 +231,8 @@ public class HomeActivity extends CheckConnectionActivity {
         closeDrawerButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
     }
 
-    private void  setupNotificationButton() {
+    @OptIn(markerClass = ExperimentalBadgeUtils.class)
+    private void setupNotificationButton() {
         notificationButton = findViewById(R.id.notification_button);
         BadgeUtils.attachBadgeDrawable(notificationBadge, notificationButton, null);
         notificationButton.setOnClickListener(v -> {

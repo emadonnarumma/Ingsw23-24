@@ -1,5 +1,6 @@
 package com.ingsw.backend.configuration;
 
+import com.ingsw.backend.enumeration.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,7 @@ public class ApplicationConfig {
 
     @Bean
     UserDetailsService userDetailsService() {
-        return username -> userRepository.findByEmail(username)
+        return username -> userRepository.findByEmailAndRole(username, Role.BUYER)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

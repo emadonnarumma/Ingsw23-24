@@ -1,5 +1,6 @@
 package com.ingsw.backend.controller;
 
+import com.ingsw.backend.enumeration.Role;
 import com.ingsw.backend.model.*;
 import com.ingsw.backend.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,10 +123,14 @@ public class AuctionController {
     
     @PostMapping
     public ResponseEntity<Auction> addAuction(@Valid @RequestBody Auction auction) {
-        Optional<User> owner = userService.getUser(auction.getOwner().getEmail());
+        if(auction.getOwner() instanceof Buyer)
+            auction.getOwner().setRole(Role.BUYER);
+        else
+            auction.getOwner().setRole(Role.SELLER);
+
+        Optional<User> owner = userService.getUser(auction.getOwner().getEmail(), auction.getOwner().getRole());
         
 		if (owner.isEmpty()) {
-
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         

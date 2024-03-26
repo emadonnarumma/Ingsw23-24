@@ -1,6 +1,7 @@
 package com.ingsw.dietiDeals24.network.dao;
 
 import com.ingsw.dietiDeals24.model.ExternalLink;
+import com.ingsw.dietiDeals24.model.enumeration.Role;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -11,8 +12,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ExternalLinkDao {
-    @POST("externalLink/{email}")
-    Call<ExternalLink> addExternalLink(@Path("email") String email, @Body ExternalLink externalLink, @Header("Authorization") String token);
+    @POST("externalLink/{email}/{role}")
+    Call<ExternalLink> addExternalLink(@Path("email") String email, @Path("role") Role role, @Body ExternalLink externalLink, @Header("Authorization") String token);
 
     @PUT("externalLink/{id}")
     Call<ExternalLink> updateExternalLink(@Path("id") Integer id, @Body ExternalLink externalLink, @Header("Authorization") String token);

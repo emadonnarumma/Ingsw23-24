@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
+import org.hibernate.annotations.WhereJoinTable;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +25,10 @@ public class BankAccount {
     private Integer idBankAccount;
 
     @OneToOne
-    @JoinColumn(name = "seller_email", referencedColumnName = "email")
+    @JoinColumns({
+            @JoinColumn(name="seller_email", referencedColumnName="email"),
+            @JoinColumn(name="seller_role", referencedColumnName="role")
+    })
     @JsonIgnore
     private Seller seller;
 

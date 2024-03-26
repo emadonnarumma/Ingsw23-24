@@ -1,10 +1,7 @@
 package com.ingsw.backend.model;
 
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +18,10 @@ import lombok.NoArgsConstructor;
 public class ReverseBid extends Bid {
 
     @ManyToOne
-    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    @JoinColumns({
+            @JoinColumn(name="owner_email", referencedColumnName="email"),
+            @JoinColumn(name="owner_role", referencedColumnName="role")
+    })
     private Seller seller;
     
     @ManyToOne

@@ -11,10 +11,10 @@ import com.ingsw.backend.model.User;
 public interface UserService {
 
 	public User addUser(User user);
+
+	public Optional<User> getUser(String email, Role role);
 	
 	public Optional<User> getUser(String email, String password);
-	
-	public Optional<User> getUser(String email);
 
 	public Optional<Seller> getSeller(String email);
 
@@ -22,11 +22,9 @@ public interface UserService {
 	
 	public Boolean isEmailAlreadyUsed(String email);
 
-	public Optional<User> updateRegion(String email, Region newRegion);
+	public Optional<User> updateRegion(String email, Role role, Region newRegion);
 
-	public Optional<User> updateBio(String email, String newBio);
+	public Optional<User> updateBio(String email, Role role, String newBio);
 
-	public Optional<User> updateRole(String email, Role newRole);
-
-	public Boolean hasBankAccount(String email);
+	public Boolean doesAccountExist(String email, Role role);
 }

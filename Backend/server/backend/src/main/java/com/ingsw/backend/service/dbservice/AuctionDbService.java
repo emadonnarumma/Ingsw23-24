@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import com.ingsw.backend.enumeration.Role;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,32 +130,32 @@ public class AuctionDbService implements AuctionService {
 
 	@Override
 	public List<SilentAuction> getSilentAuctionsByOwnerEmail(String email) {
-		return auctionRepository.findSilentByOwnerEmail(email);
+		return auctionRepository.findSilentByOwnerEmailAndOwnerRole(email, Role.SELLER);
 	}
 
 	@Override
 	public List<DownwardAuction> getDownwardAuctionsByOwnerEmail(String email) {
-		return auctionRepository.findDownwardByOwnerEmail(email);
+		return auctionRepository.findDownwardByOwnerEmailAndOwnerRole(email, Role.SELLER);
 	}
 
 	@Override
 	public List<ReverseAuction> getReverseAuctionsByOwnerEmail(String email) {
-		return auctionRepository.findReverseByOwnerEmail(email);
+		return auctionRepository.findReverseByOwnerEmailAndOwnerRole(email, Role.BUYER);
 	}
 
 	@Override
 	public List<ReverseAuction> getInProgressReverseAuctionsByOwnerEmail(String email) {
-		return auctionRepository.findInProgressReverseByOwnerEmail(email);
+		return auctionRepository.findInProgressReverseByOwnerEmailAndOwnerRole(email, Role.BUYER);
 	}
 
 	@Override
 	public List<SilentAuction> getInProgressSilentAuctionsByOwnerEmail(String email) {
-		return auctionRepository.findInProgressSilentByOwnerEmail(email);
+		return auctionRepository.findInProgressSilentByOwnerEmailAndOwnerRole(email, Role.SELLER);
 	}
 
 	@Override
 	public List<DownwardAuction> getInProgressDownwardAuctionsByOwnerEmail(String email) {
-		return auctionRepository.findInProgressDownwardByOwnerEmail(email);
+		return auctionRepository.findInProgressDownwardByOwnerEmailAndOwnerRole(email, Role.SELLER);
 	}
 
 	@Scheduled(fixedRate = 60000) //executed every minute

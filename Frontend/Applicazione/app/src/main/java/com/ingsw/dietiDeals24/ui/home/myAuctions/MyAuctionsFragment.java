@@ -111,9 +111,9 @@ public class MyAuctionsFragment extends Fragment {
         executorService.submit(() -> {
 
             try {
-                List<SilentAuction> silentAuctions = MyAuctionsController.getSilentAuctions(UserHolder.user.getEmail()).get();
-                List<DownwardAuction> downwardAuctions = MyAuctionsController.getDownwardAuctions(UserHolder.user.getEmail()).get();
-                List<ReverseAuction> reverseAuctions = MyAuctionsController.getReverseAuctions(UserHolder.user.getEmail()).get();
+                List<SilentAuction> silentAuctions = MyAuctionsController.getSilentAuctions().get();
+                List<DownwardAuction> downwardAuctions = MyAuctionsController.getDownwardAuctions().get();
+                List<ReverseAuction> reverseAuctions = MyAuctionsController.getReverseAuctions().get();
 
                 if (isAdded()) {
                     requireActivity().runOnUiThread(() -> {

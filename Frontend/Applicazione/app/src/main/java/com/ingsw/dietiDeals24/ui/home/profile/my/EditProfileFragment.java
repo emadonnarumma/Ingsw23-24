@@ -9,8 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+
+import java.util.concurrent.ExecutionException;
 
 public class EditProfileFragment extends FragmentOfHomeActivity {
     private ConstraintLayout editRegionButton;
@@ -41,7 +44,10 @@ public class EditProfileFragment extends FragmentOfHomeActivity {
             editBankAccountButton.setVisibility(View.VISIBLE);
         } else {
             editBankAccountButton.setVisibility(View.GONE);
-            unlockSellerModeButton.setVisibility(View.VISIBLE);
+            if(ProfileController.hasSellerAccount)
+                unlockSellerModeButton.setVisibility(View.GONE);
+            else
+                unlockSellerModeButton.setVisibility(View.VISIBLE);
         }
 
         editRegionButton.setOnClickListener(v -> goToEditRegion());

@@ -131,7 +131,12 @@ public class EditBankAccountFragment extends FragmentOfHomeActivity {
     }
 
     private boolean isBankAccountChanged() {
-        return !ibanEditText.getText().toString().equals(UserHolder.getSeller().getBankAccount().getIban()) ||
-                !ivaEditText.getText().toString().equals(UserHolder.getSeller().getBankAccount().getIva());
+        String userIban = UserHolder.getSeller().getBankAccount().getIban().replaceAll("\\s", "");
+        String newIban = ibanEditText.getText().toString().replaceAll("\\s", "");
+
+        String userIva = UserHolder.getSeller().getBankAccount().getIva();
+        String newIva = ivaEditText.getText().toString();
+
+        return !newIban.equals(userIban) || !newIva.equals(userIva);
     }
 }

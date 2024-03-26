@@ -56,9 +56,12 @@ public abstract class Auction {
     
     @Enumerated(EnumType.STRING)
     private Category category;
-    
+
     @ManyToOne
-    @JoinColumn(name = "owner_email", referencedColumnName = "email")
+    @JoinColumns({
+            @JoinColumn(name="owner_email", referencedColumnName="email"),
+            @JoinColumn(name="owner_role", referencedColumnName="role")
+    })
     private User owner;
 
 }

@@ -29,26 +29,31 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name="users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="role", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("USER")
 @JsonTypeInfo(
-		  use = JsonTypeInfo.Id.NAME, 
-		  include = JsonTypeInfo.As.PROPERTY, 
+		  use = JsonTypeInfo.Id.NAME,
+		  include = JsonTypeInfo.As.PROPERTY,
 		  property = "role"
 		)
 @JsonSubTypes({
 		  @JsonSubTypes.Type(value = Seller.class, name = "SELLER"),
 		  @JsonSubTypes.Type(value = Buyer.class, name = "BUYER")
-		  
+
 		})
+@IdClass(UserId.class)
 public abstract class User implements UserDetails{
-	
-	@Column(nullable = false)
-	private String name;
-	
+
+	@Id
+	@Enumerated(EnumType.STRING)
+	@Column(name="role", insertable = false, updatable = false)
+	private Role role;
+
 	@Id
 	@Column(length = 330)
 	private String email;
+
+	@Column(nullable = false)
+	private String name;
 
 	@Column(nullable = false)
 	private String password;
@@ -56,14 +61,11 @@ public abstract class User implements UserDetails{
 	@Column(length = 500)
 	@Length(max = 500)
 	private String bio;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Region region;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="role", insertable = false, updatable = false)
-	private Role role;
-	
+
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<ExternalLink> externalLinks;
 
@@ -71,7 +73,7 @@ public abstract class User implements UserDetails{
 	@JsonIgnore
 	@JsonProperty(value = "authorities")
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
+
 		return List.of(new SimpleGrantedAuthority(role.name()));
 	}
 

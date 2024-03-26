@@ -12,9 +12,9 @@ public class RegistrationRequest {
     private Region region;
 
 
-    public RegistrationRequest(String name, String email, String password, String bio, Region region) {
-        this.role = Role.BUYER;
-        this.email = email;
+    public RegistrationRequest(Role role, String name, String email, String password, String bio, Region region) {
+        this.role = role;
+        this.email = email.toLowerCase();
         this.password = password;
         this.name = name;
         this.region = region;

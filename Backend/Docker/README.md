@@ -5,11 +5,6 @@
 2. Per creare e far partire un container da questo file yaml scrivere nel cmd il comando:
     docker-compose -f dietidealsDB.yaml up
 
-3. Rinominare il database:
-    docker rename docker-db-1 dietidealsdb
-   O in generale:
-    docker rename <old_container_name> <new_container_name>
-
 Per far partire il container già creato:
     docker start dietidealsdb
 

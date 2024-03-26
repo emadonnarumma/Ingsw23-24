@@ -3,14 +3,7 @@ package com.ingsw.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,7 +30,10 @@ public class ExternalLink {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "user_email", referencedColumnName = "email")
+    @JoinColumns({
+            @JoinColumn(name="owner_email", referencedColumnName="email"),
+            @JoinColumn(name="owner_role", referencedColumnName="role")
+    })
     @JsonIgnore
     private User user;
 }

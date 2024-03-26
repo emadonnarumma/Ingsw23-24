@@ -101,7 +101,7 @@ public class AddBankAccountFragment extends FragmentOfHomeActivity {
         PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
         new Thread(() -> {
             try {
-                ProfileController.switchAccountType().get();
+                ProfileController.addSellerAccount().get();
                 sleep(500);
                 ProfileController.addBankAccount(
                         ibanEditText.getText().toString(),
@@ -109,7 +109,7 @@ public class AddBankAccountFragment extends FragmentOfHomeActivity {
                 ).get();
                 sleep(500);
                 requireActivity().runOnUiThread(() -> {
-                    ToastManager.showToast(getContext(), R.string.seller_mode_unlocked);
+                    PopupGeneratorOf.successPopup(getContext(), getString(R.string.seller_mode_unlocked));
                     goToProfileFragment();
                 });
             } catch (InterruptedException e) {

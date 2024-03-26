@@ -24,37 +24,53 @@ public class UserDbService implements UserService {
 
     @Override
     public Optional<User> getUser(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
+        return userRepository.findByEmailAndRoleAndPassword(email, Role.BUYER, password);
     }
 
     @Override
     public User addUser(User user) {
-        return userRepository.save(user);
+        if(user.getRole() == null) {
+            throw new IllegalArgumentException("Role must be specified");
+        }
+
+        User newUser;
+        if (user.getRole() == Role.BUYER) {
+            newUser = Buyer.builder()
+                    .bio(user.getBio())
+                    .email(user.getEmail())
+                    .password(user.getPassword())
+                    .name(user.getName())
+                    .region(user.getRegion())
+                    .role(Role.BUYER)
+                    .build();
+        } else {
+            newUser = Seller.builder()
+                    .bio(user.getBio())
+                    .email(user.getEmail())
+                    .password(user.getPassword())
+                    .name(user.getName())
+                    .region(user.getRegion())
+                    .role(Role.SELLER)
+                    .build();
+        }
+        return userRepository.save(newUser);
     }
 
     @Override
-    public Optional<User> getUser(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<User> getUser(String email, Role role) {
+        return userRepository.findByEmailAndRole(email, role);
     }
 
     @Override
     public Optional<Seller> getSeller(String email) {
-        User user = userRepository.findByEmail(email).get();
-        if (user.getRole() == Role.SELLER) {
-            return Optional.of((Seller) user);
-        }
-
-        return Optional.empty();
+        User user = userRepository.findByEmailAndRole(email, Role.SELLER).get();
+        return Optional.of((Seller) user);
     }
 
     @Override
     public Optional<Buyer> getBuyer(String email) {
-        User user = userRepository.findByEmail(email).get();
-        if (user.getRole() == Role.BUYER) {
-            return Optional.of((Buyer) user);
-        }
-
-        return Optional.empty();
+        User user = userRepository.findByEmailAndRole(email, Role.BUYER).get();
+        return Optional.of((Buyer) user);
     }
 
     @Override
@@ -64,9 +80,9 @@ public class UserDbService implements UserService {
     }
 
     @Override
-    public Optional<User> updateRegion(String email, Region newRegion) {
+    public Optional<User> updateRegion(String email, Role role, Region newRegion) {
 
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findByEmailAndRole(email, role);
 
         if (optionalUser.isPresent()) {
 
@@ -81,9 +97,9 @@ public class UserDbService implements UserService {
     }
 
     @Override
-    public Optional<User> updateBio(String email, String newBio) {
+    public Optional<User> updateBio(String email, Role role, String newBio) {
 
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = userRepository.findByEmailAndRole(email, role);
 
         if (optionalUser.isPresent()) {
 
@@ -97,63 +113,8 @@ public class UserDbService implements UserService {
     }
 
     @Override
-    public Optional<User> updateRole(String email, Role newRole) {
-
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-
-        if (optionalUser.isPresent()) {
-
-            User user = optionalUser.get();
-            user.setRole(newRole);
-
-            return Optional.of(userRepository.save(user));
-        }
-
-        return Optional.empty();
-
-        /*
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-
-        if (optionalUser.isPresent()) {
-            User existingUser = optionalUser.get();
-
-            if (existingUser.getRole() == newRole) {
-                // The user is already of the desired role, so there's nothing to do.
-                return Optional.of(existingUser);
-            }
-
-            User newUser;
-            if (newRole == Role.SELLER) {
-                newUser = new Seller();
-            } else if (newRole == Role.BUYER) {
-                newUser = new Buyer();
-            } else {
-                throw new IllegalArgumentException("Invalid role: " + newRole);
-            }
-
-            // Copy all relevant fields from the existing user to the new user.
-            newUser.setEmail(existingUser.getEmail());
-            newUser.setPassword(existingUser.getPassword());
-            newUser.setName(existingUser.getName());
-            newUser.setRegion(existingUser.getRegion());
-            newUser.setBio(existingUser.getBio());
-            newUser.setExternalLinks(existingUser.getExternalLinks());
-
-            // Delete the existing user and save the new user.
-            userRepository.delete(existingUser);
-            userRepository.save(newUser);
-            //Non funziona, non posso cancellare il buyer, perderei tutte le sue aste e offerte così, il buyer deve persistere anche quando passo a seller
-
-            return Optional.of(newUser);
-        }
-        */
-
-        //return Optional.empty();
-    }
-
-    @Override
-    public Boolean hasBankAccount(String email) {
-        return userRepository.hasBankAccount(email);
+    public Boolean doesAccountExist(String email, Role role) {
+        return userRepository.existsByEmailAndRole(email, role);
     }
 
 }

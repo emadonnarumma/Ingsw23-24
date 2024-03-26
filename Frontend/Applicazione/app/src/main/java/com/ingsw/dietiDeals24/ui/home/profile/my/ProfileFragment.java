@@ -1,13 +1,11 @@
 package com.ingsw.dietiDeals24.ui.home.profile.my;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.view.animation.Animation;
@@ -25,10 +23,8 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.EditableExternalLinksAdapter;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
@@ -71,29 +67,32 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         logoutButton = view.findViewById(R.id.logout_button_profile);
 
         userBioTextView.setMovementMethod(new ScrollingMovementMethod());
+        retrieveUserData();
         showUserData();
 
         setupBottomSheetDialog();
         andNMoreLinksTextView.setOnClickListener(v -> bottomSheetDialog.show());
 
-        sellerSwitch.setOnClickListener(v -> setupSellerSwitch());
+        sellerSwitch.setOnClickListener(v -> onSellerSwitchClick());
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
         logoutButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToLogoutPopup(getContext()));
     }
 
-    private void setupBottomSheetDialog() {
-        bottomSheetDialog = new BottomSheetDialog(requireContext());
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_layout);
-
-        RecyclerView recyclerView = bottomSheetDialog.findViewById(R.id.recycler_view_bottom_sheet);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        ExternalLinksAdapter adapter = new ExternalLinksAdapter(UserHolder.user.getExternalLinks());
-        recyclerView.setAdapter(adapter);
+    private void retrieveUserData() {
+        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
+        new Thread(() -> {
+            try {
+                ProfileController.retrieveUser().get();
+            } catch (ExecutionException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+            } catch (InterruptedException e) {
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+            } finally {
+                requireActivity().runOnUiThread(loading::dismissDialog);
+            }
+        }).start();
     }
 
-    /**
-     * Puts the user data in the text views of the profile fragment
-     */
     private void showUserData() {
         if (UserHolder.user == null)
             return;
@@ -115,22 +114,66 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         }
 
         if (UserHolder.user.isSeller()) {
-            sellerSwitch.performClick();
+            sellerSwitch.setChecked(true);
             startSellerAnimation();
+        } else {
+            sellerSwitch.setChecked(false);
+            startNotSellerAnimation();
         }
     }
 
-    private void setupSellerSwitch() {
+    private void setupBottomSheetDialog() {
+        bottomSheetDialog = new BottomSheetDialog(requireContext());
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_layout);
+
+        RecyclerView recyclerView = bottomSheetDialog.findViewById(R.id.recycler_view_bottom_sheet);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        ExternalLinksAdapter adapter = new ExternalLinksAdapter(UserHolder.user.getExternalLinks());
+        recyclerView.setAdapter(adapter);
+    }
+
+    /**
+     * Puts the user data in the text views of the profile fragment
+     */
+    private void updateUserData() {
+        if (UserHolder.user == null)
+            return;
+
+        String username = UserHolder.user.getName();
+        String userBio = UserHolder.user.getBio();
+        String userRegion = " " + UserHolder.user.getRegion().toString() + " ";
+        usernameTextView.setText(username);
+        userBioTextView.setText(userBio);
+        userRegionTextView.setText(userRegion);
+
+        if (UserHolder.user.hasExternalLinks()) {
+            iconLinkImageView.setVisibility(View.VISIBLE);
+            String link = UserHolder.user.getExternalLinks().get(0).getTitle();
+            String andNMoreLinks = " e altri " + (UserHolder.user.getExternalLinks().size() - 1);
+            linkTextView.setText(link);
+            andNMoreLinksTextView.setText(andNMoreLinks);
+        } else {
+            iconLinkImageView.setVisibility(View.GONE);
+            linkTextView.setText("");
+            andNMoreLinksTextView.setText("");
+        }
+    }
+
+    private void onSellerSwitchClick() {
         PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
         new Thread(() -> {
             if (sellerSwitch.isChecked()) {
                 try {
-                    if (!ProfileController.hasBankAccount().get()) {
+                    if (!ProfileController.hasSellerAccount) {
                         requireActivity().runOnUiThread(this::goToAddBankAccountFragment);
                         return;
                     }
                     ProfileController.switchAccountType().get();
-                    requireActivity().runOnUiThread(this::startSellerAnimation);
+                    requireActivity().runOnUiThread(() -> {
+                        startSellerAnimation();
+                        updateUserData();
+                        PopupGeneratorOf.successPopup(getContext(), getString(R.string.switched_to_seller_account));
+                    });
                 } catch (ExecutionException e) {
                     requireActivity().runOnUiThread(() -> {
                         sellerSwitch.setChecked(false);
@@ -147,7 +190,11 @@ public class ProfileFragment extends FragmentOfHomeActivity {
             } else {
                 try {
                     ProfileController.switchAccountType().get();
-                    requireActivity().runOnUiThread(this::startNotSellerAnimation);
+                    requireActivity().runOnUiThread(() -> {
+                        startNotSellerAnimation();
+                        updateUserData();
+                        PopupGeneratorOf.successPopup(getContext(), getString(R.string.switched_to_buyer_account));
+                    });
                 } catch (ExecutionException e) {
                     requireActivity().runOnUiThread(() -> {
                         sellerSwitch.setChecked(true);

@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Buyer extends User {
 
-    public Buyer(Role role, String name, String email, String password, String bio, Region region,
+    public Buyer(String name, String email, String password, String bio, Region region,
                  List<ExternalLink> externalLinks) {
 
-        super(role, name, email, password, bio, region, externalLinks);
+        super(Role.BUYER, name, email, password, bio, region, externalLinks);
     }
 
     /**

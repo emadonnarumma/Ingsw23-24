@@ -3,6 +3,7 @@ package com.ingsw.backend.repository;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.ingsw.backend.enumeration.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ingsw.backend.enumeration.AuctionStatus;
@@ -15,16 +16,16 @@ import org.springframework.data.jpa.repository.Query;
 
 
 public interface AuctionRepository extends JpaRepository<Auction, Integer>{
-	List<ReverseAuction> findReverseByOwnerEmail(String email);
-	List<SilentAuction> findSilentByOwnerEmail(String email);
-	List<DownwardAuction> findDownwardByOwnerEmail(String email);
+	List<ReverseAuction> findReverseByOwnerEmailAndOwnerRole(String email, Role role);
+	List<SilentAuction> findSilentByOwnerEmailAndOwnerRole(String email, Role role);
+	List<DownwardAuction> findDownwardByOwnerEmailAndOwnerRole(String email, Role role);
 
-	@Query("SELECT ra FROM ReverseAuction ra WHERE ra.owner.email = :email AND ra.status = 'IN_PROGRESS'")
-	List<ReverseAuction> findInProgressReverseByOwnerEmail(String email);
-	@Query("SELECT sa FROM SilentAuction sa WHERE sa.owner.email = :email AND sa.status = 'IN_PROGRESS'")
-	List<SilentAuction> findInProgressSilentByOwnerEmail(String email);
-	@Query("SELECT da FROM DownwardAuction da WHERE da.owner.email = :email AND da.status = 'IN_PROGRESS'")
-	List<DownwardAuction> findInProgressDownwardByOwnerEmail(String email);
+	@Query("SELECT ra FROM ReverseAuction ra WHERE ra.owner.email = :email AND ra.owner.role = :role AND ra.status = 'IN_PROGRESS'")
+	List<ReverseAuction> findInProgressReverseByOwnerEmailAndOwnerRole(String email, Role role);
+	@Query("SELECT sa FROM SilentAuction sa WHERE sa.owner.email = :email AND sa.owner.role = :role AND sa.status = 'IN_PROGRESS'")
+	List<SilentAuction> findInProgressSilentByOwnerEmailAndOwnerRole(String email, Role role);
+	@Query("SELECT da FROM DownwardAuction da WHERE da.owner.email = :email AND da.owner.role = :role AND da.status = 'IN_PROGRESS'")
+	List<DownwardAuction> findInProgressDownwardByOwnerEmailAndOwnerRole(String email, Role role);
 
 	List<SilentAuction> findAllSilentByStatus(AuctionStatus status);
 	List<ReverseAuction> findAllReverseByStatus(AuctionStatus status);

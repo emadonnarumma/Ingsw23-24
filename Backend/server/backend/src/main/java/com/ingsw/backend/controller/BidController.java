@@ -69,14 +69,14 @@ public class BidController {
 	@GetMapping("/silent/buyer/{buyerEmail}")
     public ResponseEntity<List<SilentBid>> getAllSilentBidsByBuyer(@PathVariable String buyerEmail) {
         
-		Optional<User> buyer = userService.getUser(buyerEmail);
+		Optional<Buyer> buyer = userService.getBuyer(buyerEmail);
 		
-		if (buyer.isEmpty() || buyer.get().getRole() != Role.BUYER) {
+		if (buyer.isEmpty()) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
         
-		List<SilentBid> bids = bidService.getAllSilentBidsByBuyer((Buyer) buyer.get());
+		List<SilentBid> bids = bidService.getAllSilentBidsByBuyer(buyer.get());
 
 		return ResponseEntity.ok(bids);
     }
@@ -84,14 +84,14 @@ public class BidController {
 	@GetMapping("/downward/buyer/{buyerEmail}")
     public ResponseEntity<List<DownwardBid>> getAllDownwardBidsByBuyer(@PathVariable String buyerEmail) {
         
-		Optional<User> buyer = userService.getUser(buyerEmail);
+		Optional<Buyer> buyer = userService.getBuyer(buyerEmail);
 		
-		if (buyer.isEmpty() || buyer.get().getRole() != Role.BUYER) {
+		if (buyer.isEmpty()) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
         
-		List<DownwardBid> bids = bidService.getAllDownwardBidsByBuyer((Buyer) buyer.get());
+		List<DownwardBid> bids = bidService.getAllDownwardBidsByBuyer(buyer.get());
 
 		return ResponseEntity.ok(bids);
     }
@@ -99,14 +99,14 @@ public class BidController {
     @GetMapping("/reverse/seller/{sellerEmail}")
     public ResponseEntity<List<ReverseBid>> getAllReverseBidsBySeller(@PathVariable String sellerEmail) {
 		
-    	Optional<User> seller = userService.getUser(sellerEmail);
+    	Optional<Seller> seller = userService.getSeller(sellerEmail);
 		
-		if (seller.isEmpty() || seller.get().getRole() != Role.SELLER) {
+		if (seller.isEmpty()) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
         
-		List<ReverseBid> bids = bidService.getAllReverseBidsBySeller((Seller) seller.get());
+		List<ReverseBid> bids = bidService.getAllReverseBidsBySeller(seller.get());
         
 		return ResponseEntity.ok(bids);
     }
@@ -140,14 +140,14 @@ public class BidController {
 	@PostMapping("/downward")
 	public ResponseEntity<DownwardBid> addDownwardBid(@Valid @RequestBody DownwardBid downwardBid) {
 
-		Optional<User> owner = userService.getUser(downwardBid.getBuyer().getEmail());
+		Optional<Buyer> owner = userService.getBuyer(downwardBid.getBuyer().getEmail());
 
-		if (owner.isEmpty() || owner.get().getRole() == Role.SELLER) {
+		if (owner.isEmpty()) {
 
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		downwardBid.setBuyer((Buyer) owner.get());
+		downwardBid.setBuyer(owner.get());
 
 		Optional<Auction> auction = auctionService.findById(downwardBid.getDownwardAuction().getIdAuction());
 
@@ -167,14 +167,14 @@ public class BidController {
     @PostMapping("/silent")
     public ResponseEntity<SilentBid> addSilentBid(@Valid @RequestBody SilentBid silentBid) {
         
-        Optional<User> owner = userService.getUser(silentBid.getBuyer().getEmail());
+        Optional<Buyer> owner = userService.getBuyer(silentBid.getBuyer().getEmail());
         
-		if (owner.isEmpty() || owner.get().getRole() == Role.SELLER) {
+		if (owner.isEmpty()) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-        silentBid.setBuyer((Buyer) owner.get());
+        silentBid.setBuyer(owner.get());
         
         Optional<Auction> auction = auctionService.findById(silentBid.getSilentAuction().getIdAuction());
         
@@ -193,14 +193,14 @@ public class BidController {
     @PostMapping("/reverse")
     public ResponseEntity<ReverseBid> addReverseBid(@Valid @RequestBody ReverseBid reverseBid) {
         
-        Optional<User> owner = userService.getUser(reverseBid.getSeller().getEmail());
+        Optional<Seller> owner = userService.getSeller(reverseBid.getSeller().getEmail());
         
-		if (owner.isEmpty() || owner.get().getRole() == Role.BUYER) {
+		if (owner.isEmpty()) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		reverseBid.setSeller((Seller) owner.get());
+		reverseBid.setSeller(owner.get());
         
         Optional<Auction> auction = auctionService.findById(reverseBid.getReverseAuction().getIdAuction());
         

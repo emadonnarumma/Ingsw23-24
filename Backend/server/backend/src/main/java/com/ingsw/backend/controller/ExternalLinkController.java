@@ -2,6 +2,7 @@ package com.ingsw.backend.controller;
 
 import java.util.Optional;
 
+import com.ingsw.backend.enumeration.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -33,10 +34,10 @@ public class ExternalLinkController {
     @Qualifier("mainUserService")
     private UserService userService;
 
-    @PostMapping("/{email}")
-    public ResponseEntity<ExternalLink> addExternalLink(@Valid @RequestBody ExternalLink externalLink, @PathVariable String email) {
+    @PostMapping("/{email}/{role}")
+    public ResponseEntity<ExternalLink> addExternalLink(@Valid @RequestBody ExternalLink externalLink, @PathVariable Role role, @PathVariable String email) {
 
-        Optional<User> user = userService.getUser(email);
+        Optional<User> user = userService.getUser(email, role);
 
         if (user.isEmpty()) {
 

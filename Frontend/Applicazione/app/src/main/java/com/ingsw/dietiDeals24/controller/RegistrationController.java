@@ -12,9 +12,9 @@ import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.model.User;
-import com.ingsw.dietiDeals24.network.dao.CurrentUserDao;
 import com.ingsw.dietiDeals24.network.dao.RegistrationDao;
 import com.ingsw.dietiDeals24.model.RegistrationRequest;
+import com.ingsw.dietiDeals24.network.dao.UserDao;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -49,8 +49,8 @@ public class RegistrationController implements RetroFitHolder {
 
     public static CompletableFuture<Boolean> register() {
         RegistrationDao registrationDao = retrofit.create(RegistrationDao.class);
-        CurrentUserDao currentUserDao = retrofit.create(CurrentUserDao.class);
-        RegistrationRequest registrationRequest =  new RegistrationRequest(user.getName(), user.getEmail(), user.getPassword(), user.getBio(), user.getRegion());
+        UserDao currentUserDao = retrofit.create(UserDao.class);
+        RegistrationRequest registrationRequest =  new RegistrationRequest(Role.BUYER ,user.getName(), user.getEmail(), user.getPassword(), user.getBio(), user.getRegion());
         return CompletableFuture.supplyAsync(() -> {
             try {
                 Response<TokenHolder> response = registrationDao.register(registrationRequest).execute();
@@ -63,12 +63,7 @@ public class RegistrationController implements RetroFitHolder {
                     tokenHolder.setToken(response.body().getToken());
 
                     String email = user.getEmail();
-                    Role role = currentUserDao.getRole(email, TokenHolder.getAuthToken()).execute().body();
-                    if (role == Role.BUYER) {
-                        UserHolder.user = currentUserDao.getBuyerByEmail(email, TokenHolder.getAuthToken()).execute().body();
-                    } else if (role == Role.SELLER) {
-                        UserHolder.user = currentUserDao.getSellerByEmail(email, TokenHolder.getAuthToken()).execute().body();
-                    }
+                    UserHolder.user = currentUserDao.getBuyerByEmail(email, TokenHolder.getAuthToken()).execute().body();
 
                     return true;
                 } else if (response.code() == 403) {
@@ -92,7 +87,7 @@ public class RegistrationController implements RetroFitHolder {
                     return response.body();
 
                 } else {
-                    throw new RuntimeException("Errore inaspettato");
+                    throw new ConnectionException("Errore di connessione");
                 }
 
             } catch (IOException e) {

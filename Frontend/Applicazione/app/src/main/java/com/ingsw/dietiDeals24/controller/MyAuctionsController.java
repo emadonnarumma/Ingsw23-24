@@ -1,10 +1,13 @@
 package com.ingsw.dietiDeals24.controller;
 
+import static com.ingsw.dietiDeals24.controller.UserHolder.user;
+
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.MyAuctionsDao;
@@ -46,15 +49,15 @@ public class MyAuctionsController implements RetroFitHolder {
     protected MyAuctionsController() {
     }
 
-    public static CompletableFuture<List<SilentAuction>> getSilentAuctions(String email) {
+    public static CompletableFuture<List<SilentAuction>> getSilentAuctions() {
         return CompletableFuture.supplyAsync(() -> {
-            if (!UserHolder.user.isSeller()) {
+            if (!user.isSeller()) {
                 return new ArrayList<>();
             }
             if (!updatedSilent) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
-                    Response<List<SilentAuction>> response = myAuctionsDao.getSilentAuctions(email, TokenHolder.getAuthToken()).execute();
+                    Response<List<SilentAuction>> response = myAuctionsDao.getSilentAuctions(user.getEmail(), TokenHolder.getAuthToken()).execute();
                     List<SilentAuction> auctions = response.body();
                     for (SilentAuction auction : auctions) {
                         Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
@@ -80,15 +83,15 @@ public class MyAuctionsController implements RetroFitHolder {
         });
     }
 
-    public static CompletableFuture<List<ReverseAuction>> getReverseAuctions(String email) {
+    public static CompletableFuture<List<ReverseAuction>> getReverseAuctions() {
         return CompletableFuture.supplyAsync(() -> {
-            if (UserHolder.user.isSeller()) {
+            if (user.isSeller()) {
                 return new ArrayList<>();
             }
             if (!updatedReverse) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
-                    Response<List<ReverseAuction>> response = myAuctionsDao.getReverseAuctions(email, TokenHolder.getAuthToken()).execute();
+                    Response<List<ReverseAuction>> response = myAuctionsDao.getReverseAuctions(user.getEmail(), TokenHolder.getAuthToken()).execute();
                     List<ReverseAuction> auctions = response.body();
                     for (ReverseAuction auction : auctions) {
                         Response<List<Image>> imagesResponse = myAuctionsDao.getAllAuctionImages(auction.getIdAuction(), TokenHolder.getAuthToken()).execute();
@@ -114,15 +117,15 @@ public class MyAuctionsController implements RetroFitHolder {
         });
     }
 
-    public static CompletableFuture<List<DownwardAuction>> getDownwardAuctions(String email) {
+    public static CompletableFuture<List<DownwardAuction>> getDownwardAuctions() {
         return CompletableFuture.supplyAsync(() -> {
-            if (!UserHolder.user.isSeller()) {
+            if (!user.isSeller()) {
                 return new ArrayList<>();
             }
             if (!updatedDownward) {
                 try {
                     MyAuctionsDao myAuctionsDao = retrofit.create(MyAuctionsDao.class);
-                    Response<List<DownwardAuction>> response = myAuctionsDao.getDownwardAuctions(email, TokenHolder.getAuthToken()).execute();
+                    Response<List<DownwardAuction>> response = myAuctionsDao.getDownwardAuctions(user.getEmail(),TokenHolder.getAuthToken()).execute();
                     List<DownwardAuction> auctions = response.body();
 
                     for (DownwardAuction auction : auctions) {

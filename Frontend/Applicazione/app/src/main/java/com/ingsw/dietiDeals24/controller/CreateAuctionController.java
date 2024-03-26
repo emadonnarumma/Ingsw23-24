@@ -79,7 +79,7 @@ public class CreateAuctionController implements RetroFitHolder {
         if (initialPrice == null) {
             return false;
         }
-        if (initialPrice.isEmpty()) {
+        if (initialPrice.isEmpty() || Double.parseDouble(initialPrice) <= 0) {
             return false;
         }
         return initialPrice.length() <= 10;

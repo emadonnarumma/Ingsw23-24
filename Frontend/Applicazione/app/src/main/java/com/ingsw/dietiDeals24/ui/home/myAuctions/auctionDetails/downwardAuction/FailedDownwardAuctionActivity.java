@@ -76,35 +76,7 @@ public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
     private void setGreenButton() {
         greenButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_green));
         greenButton.setText("RILANCIA");
-        greenButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Sei sicuro di voler rilanciare l'asta?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        GeneralAuctionAttributesViewModel viewModel = GeneralAuctionAttributesViewModel.getInstance();
-                        AuctionHolder auctionHolder = new AuctionHolder(
-                                auction.getTitle(),
-                                new ArrayList<>(ImageController.convertImageListToUriList(auction.getImages(), getApplicationContext())),
-                                auction.getDescription(),
-                                auction.getWear(),
-                                auction.getCategory()
-                        );
-
-                        viewModel.setNewAuction(new MutableLiveData<>(auctionHolder));
-
-                        try {
-                            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
-                            OnNavigateToHomeActivityFragmentListener.navigateTo("DownwardAuctionAttributesFragment", getApplicationContext());
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-        });
+        greenButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToRelaunchAuctionPopup(this, auction));
     }
 
     private void setRedButton() {

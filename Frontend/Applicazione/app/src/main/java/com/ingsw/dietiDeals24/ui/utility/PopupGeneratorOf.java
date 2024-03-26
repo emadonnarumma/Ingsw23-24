@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.controller.MyBidDetailsController;
@@ -18,8 +20,13 @@ import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.Bid;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
+import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
+import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditExternalLinksFragment;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
@@ -27,6 +34,7 @@ import com.saadahmedsoft.popupdialog.PopupDialog;
 import com.saadahmedsoft.popupdialog.Styles;
 import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class PopupGeneratorOf {
@@ -43,7 +51,7 @@ public class PopupGeneratorOf {
     public static void errorPopup(Context context, String message) {
         PopupDialog.getInstance(context)
                 .setStyle(Styles.FAILED)
-                .setHeading("Riprova!")
+                .setHeading("Errore!")
                 .setDescription(message)
                 .setCancelable(false)
                 .setDismissButtonText("Chiudi")
@@ -321,5 +329,58 @@ public class PopupGeneratorOf {
                         super.onNegativeClicked(dialog);
                     }
                 });
+    }
+
+    public static void areYouSureToRelaunchAuctionPopup(Activity activity, Auction auction) {
+        PopupDialog.getInstance(activity)
+                .setStyle(Styles.STANDARD)
+                .setHeading("Sicuro di voler rilanciare l'asta?")
+                .setDescription("L'asta sarà resa di nuovo pubblica e sarà possibile fare nuove offerte.")
+                .setPopupDialogIcon(R.drawable.ic_restore)
+                .setPopupDialogIconTint(R.color.green)
+                .setCancelable(false)
+                .setPositiveButtonText("Conferma")
+                .setNegativeButtonText("Annulla")
+                .showDialog(new OnDialogButtonClickListener() {
+                    @Override
+                    public void onPositiveClicked(Dialog dialog) {
+                        super.onPositiveClicked(dialog);
+                        relaunchAuction(activity, auction);
+                    }
+
+                    @Override
+                    public void onNegativeClicked(Dialog dialog) {
+                        super.onNegativeClicked(dialog);
+                    }
+                });
+    }
+
+    private static void relaunchAuction(Activity activity, Auction auction) {
+        GeneralAuctionAttributesViewModel viewModel = GeneralAuctionAttributesViewModel.getInstance();
+        AuctionHolder auctionHolder = new AuctionHolder(
+                auction.getTitle(),
+                new ArrayList<>(ImageController.convertImageListToUriList(auction.getImages(), activity)),
+                auction.getDescription(),
+                auction.getWear(),
+                auction.getCategory()
+        );
+
+        viewModel.setNewAuction(new MutableLiveData<>(auctionHolder));
+
+        try {
+            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
+
+            if (auction instanceof DownwardAuction) {
+                OnNavigateToHomeActivityFragmentListener.navigateTo("DownwardAuctionAttributesFragment", activity);
+            } else if (auction instanceof SilentAuction) {
+                OnNavigateToHomeActivityFragmentListener.navigateTo("SilentAuctionAttributesFragment", activity);
+            } else if (auction instanceof ReverseAuction) {
+                OnNavigateToHomeActivityFragmentListener.navigateTo("ReverseAuctionAttributesFragment", activity);
+            }
+        } catch (ExecutionException e) {
+            ToastManager.showToast(activity, e.getCause().getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

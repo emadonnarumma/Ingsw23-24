@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction;
+package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
-import com.ingsw.dietiDeals24.model.ReverseAuction;
-import com.ingsw.dietiDeals24.model.ReverseBid;
+import com.ingsw.dietiDeals24.model.DownwardAuction;
+import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
@@ -26,13 +26,14 @@ import com.saadahmedsoft.popupdialog.PopupDialog;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
-    private ReverseAuction auction;
+public class SuccessfulDownwardAuctionActivity extends AuctionDetailsActivity {
+
+    private DownwardAuction auction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        auction = (ReverseAuction) MyAuctionDetailsController.getAuction();
+        auction = (DownwardAuction) MyAuctionDetailsController.getAuction();
 
         setupBottomSheetDialog();
     }
@@ -47,7 +48,7 @@ public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setAuctionDetails() {
-        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.cyan));
         auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
         categoryTextView.setText(Category.toItalianString(auction.getCategory()));
         titleTextView.setText(auction.getTitle());
@@ -58,10 +59,11 @@ public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
 
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
-        priceTextView.setText("Prezzo iniziale: " + NumberFormatter.formatPrice(auction.getStartingPrice()));
-        specificInformation1TextView.setText("Scadeva il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextView.setVisibility(View.GONE);
-        specificInformation3TextView.setVisibility(View.GONE);
+        priceTextView.setText("Prezzo attuale: " + NumberFormatter.formatPrice(auction.getCurrentPrice()));
+
+        specificInformation1TextView.setText("Valore di decremento: " + NumberFormatter.formatPrice(auction.getDecrementAmount()));
+        specificInformation2TextView.setText(MyAuctionDetailsController.getDecrementTimeText(auction.getDecrementTime()));
+        specificInformation3TextView.setText("Prezzo minimo segreto " + NumberFormatter.formatPrice(auction.getSecretMinimumPrice()));
         specificInformation4TextView.setVisibility(View.GONE);
         setButtons();
     }
@@ -74,15 +76,14 @@ public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
     private void setGreenButton() {
         greenButton.setText("VISUALIZZA DETTAGLI DELL'AFFARE");
         greenButton.setOnClickListener(v -> {
-
             PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
             new Thread(() -> {
                 try {
-                    List<ReverseBid> bids = List.of(MyAuctionDetailsController.getWinningReverseBidByAuctionId(auction.getIdAuction()).get());
+                    List<DownwardBid> bids = List.of(MyAuctionDetailsController.getWinningDownwardBidByAuctionId(auction.getIdAuction()).get());
                     runOnUiThread(() -> {
                         emptyBidsTextView.setVisibility(View.GONE);
                         bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this, true));
-                        bidsRecyclerView.setLayoutManager(new LinearLayoutManager(SuccessfullReverseAuctionActivity.this));
+                        bidsRecyclerView.setLayoutManager(new LinearLayoutManager(SuccessfulDownwardAuctionActivity.this));
                         bidsRecyclerView.setVisibility(View.VISIBLE);
                         bottomSheetDialog.show();
                     });
@@ -100,30 +101,15 @@ public class SuccessfullReverseAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setRedButton() {
-        redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
-        redButton.setText("RIMUOVI ASTA");
+        redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Sei sicuro di voler cancellare l'asta?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        try {
-                            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
-                            finish();
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 
     private void setupBottomSheetDialog() {
 
-        questionMarkAuctionType.setText(R.string.reverse_auction_question);
-        questionMarkExplanationAuctionType.setText(R.string.reverse_auction_description);
+        questionMarkAuctionType.setText(R.string.downward_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.downward_auction_description);
     }
 }

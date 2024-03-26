@@ -43,9 +43,19 @@ public class BankAccountDbService implements BankAccountService {
 	        return Optional.empty();
 	    }
 
+		bankAccount.setIdBankAccount(id);
 	    BankAccount updatedBankAccount = bankAccountRepository.save(bankAccount);
 	    
 	    return Optional.of(updatedBankAccount);
+	}
+
+	@Override
+	public Optional<BankAccount> get(Integer id) {
+		if(!bankAccountRepository.existsById(id)) {
+			return Optional.empty();
+		}
+
+		return bankAccountRepository.findById(id);
 	}
 
 

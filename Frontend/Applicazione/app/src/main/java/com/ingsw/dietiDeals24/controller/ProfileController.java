@@ -127,6 +127,7 @@ public class ProfileController {
         return CompletableFuture.runAsync(() -> {
             try {
                 hasSellerAccount = hasSellerAccount().get();
+                wasUserAlreadyRetrieved = true;
             } catch (ExecutionException e) {
                 throw new ConnectionException("Errore di connessione");
             } catch (InterruptedException e) {

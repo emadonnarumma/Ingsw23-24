@@ -6,10 +6,11 @@ import com.ingsw.backend.model.BankAccount;
 
 public interface BankAccountService {
 	
-	public BankAccount addBankAccount(BankAccount bankAccount);
+	BankAccount addBankAccount(BankAccount bankAccount);
 	
-	public Boolean delete(Integer id);
+	Boolean delete(Integer id);
 	
-	public Optional<BankAccount> update(Integer id, BankAccount bankAccount);
+	Optional<BankAccount> update(Integer id, BankAccount bankAccount);
 
+    Optional<BankAccount> get(Integer id);
 }

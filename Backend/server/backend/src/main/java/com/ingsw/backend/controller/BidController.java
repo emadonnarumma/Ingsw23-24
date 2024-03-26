@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ingsw.backend.enumeration.Role;
 import com.ingsw.backend.service.AuctionService;
 import com.ingsw.backend.service.BidService;
 import com.ingsw.backend.service.UserService;

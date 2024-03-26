@@ -27,7 +27,9 @@ public class NotificationController implements RetroFitHolder {
         NotificationController.notifications = notifications;
     }
 
-    public static CompletableFuture<Void> updateNotifications() {
+    private NotificationController() {}
+
+    public static CompletableFuture<Integer> updateNotifications() {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 NotificationDao notificationDao = retrofit.create(NotificationDao.class);
@@ -35,6 +37,7 @@ public class NotificationController implements RetroFitHolder {
 
                 if (response.isSuccessful()) {
                     notifications = response.body();
+                    return notifications.size();
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Errore di autenticazione");
                 }

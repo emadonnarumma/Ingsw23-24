@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.OptIn;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
+import com.google.android.material.badge.ExperimentalBadgeUtils;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.NotificationController;
@@ -117,23 +120,29 @@ public class HomeActivity extends CheckConnectionActivity {
                 callback.setEnabled(true);
             }
         }
+
+        private void tryToDisconnect() {
+            PopupGeneratorOf.areYouSureToLogoutPopup(getApplicationContext());
+        }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startNotificationUpdates();
         setContentView(R.layout.activity_home);
+        setupNotificationBadge();
+        setupNotificationButton();
+        startNotificationUpdates();
+        setupNavigationBarView();
         setupActionBar();
         setupDrawerLayout();
-        setupNotificationButton();
-        setupNavigationBarView();
         getOnBackPressedDispatcher().addCallback(this, callback);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_home,
                 new SearchAuctionsFragment()).commit();
 
         checkRequestToOpenAFragmentFromAnOtherActivity();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -143,12 +152,16 @@ public class HomeActivity extends CheckConnectionActivity {
         }
     }
 
+    private void setupNotificationBadge() {
+        notificationBadge = BadgeDrawable.create(this);
+    }
+
     private void startNotificationUpdates() {
         executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
-                    NotificationController.updateNotifications().get();
+                    notificationBadge.setNumber(NotificationController.updateNotifications().get());
                 } catch (ExecutionException e) {
                     if (e.getCause() instanceof AuthenticationException) {
                         runOnUiThread(() -> ToastManager.showToast(getApplicationContext(), "Sessione scaduta, effettua nuovamente il login"));
@@ -218,8 +231,10 @@ public class HomeActivity extends CheckConnectionActivity {
         closeDrawerButton.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
     }
 
+    @OptIn(markerClass = ExperimentalBadgeUtils.class)
     private void setupNotificationButton() {
         notificationButton = findViewById(R.id.notification_button);
+        BadgeUtils.attachBadgeDrawable(notificationBadge, notificationButton, null);
         notificationButton.setOnClickListener(v -> {
             setupNotificationRecyclerView();
             drawerLayout.openDrawer(GravityCompat.END);
@@ -275,10 +290,5 @@ public class HomeActivity extends CheckConnectionActivity {
 
     public NavigationBarView getNavigationBarView() {
         return navigationBarView;
-    }
-
-    private void tryToDisconnect() {
-
-        PopupGeneratorOf.areYouSureToLogoutPopup(this);
     }
 }

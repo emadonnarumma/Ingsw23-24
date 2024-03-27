@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.silentAuction;
+package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.reverseAuction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,15 +9,15 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ingsw.dietiDeals24.R;
-
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
-import com.ingsw.dietiDeals24.model.SilentAuction;
-import com.ingsw.dietiDeals24.model.SilentBid;
+import com.ingsw.dietiDeals24.model.ReverseAuction;
+import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
@@ -26,15 +26,13 @@ import com.saadahmedsoft.popupdialog.PopupDialog;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-
-public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
-
-    private SilentAuction auction;
+public class SuccessfulReverseAuctionActivity extends AuctionDetailsActivity {
+    private ReverseAuction auction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        auction = (SilentAuction) MyAuctionDetailsController.getAuction();
+        auction = (ReverseAuction) MyAuctionDetailsController.getAuction();
 
         setupBottomSheetDialog();
     }
@@ -49,27 +47,28 @@ public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
     }
 
     private void setAuctionDetails() {
-        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+        scrollView.setBackground(AppCompatResources.getDrawable(this, R.color.brown));
         auctionTypeTextView.setText(AuctionType.toItalianString(auction.getType()));
-        auctionTypeTextView.setBackground(AppCompatResources.getDrawable(this, R.color.purple));
+        categoryTextView.setText(Category.toItalianString(auction.getCategory()));
+        titleTextView.setText(auction.getTitle());
 
         auctionStatusTextView.setText(AuctionStatus.toItalianString(auction.getStatus()));
         auctionStatusTextView.setTextColor(ContextCompat.getColor(this, R.color.green));
         auctionStatusTextView.setStrokeColor(R.color.black);
 
-        categoryTextView.setText(Category.toItalianString(auction.getCategory()));
-        titleTextView.setText(auction.getTitle());
         wearTextView.setText(Wear.toItalianString(auction.getWear()));
         descriptionTextView.setText(auction.getDescription());
-        priceTextView.setVisibility(View.GONE);
-
+        priceTextView.setText("Prezzo iniziale: " + NumberFormatter.formatPrice(auction.getStartingPrice()));
         specificInformation1TextView.setText("Scadeva il: " + MyAuctionDetailsController.getFormattedExpirationDate(auction));
-        specificInformation2TextView.setText("I compratori avevano: " + MyAuctionDetailsController.getWithdrawalTimeText(auction) + " per ritirare le offerte");
+        specificInformation2TextView.setVisibility(View.GONE);
         specificInformation3TextView.setVisibility(View.GONE);
         specificInformation4TextView.setVisibility(View.GONE);
+        setButtons();
+    }
 
-        setGreenButton();
+    private void setButtons() {
         setRedButton();
+        setGreenButton();
     }
 
     private void setGreenButton() {
@@ -79,11 +78,11 @@ public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
             PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
             new Thread(() -> {
                 try {
-                    SilentBid bid = MyAuctionDetailsController.getWinningSilentBidByAuctionId(auction.getIdAuction()).get();
+                    List<ReverseBid> bids = List.of(MyAuctionDetailsController.getWinningReverseBidByAuctionId(auction.getIdAuction()).get());
                     runOnUiThread(() -> {
                         emptyBidsTextView.setVisibility(View.GONE);
-                        bidsRecyclerView.setAdapter(new AuctionBidAdapter(List.of(bid), this, false));
-                        bidsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+                        bidsRecyclerView.setAdapter(new AuctionBidAdapter(bids, this, true));
+                        bidsRecyclerView.setLayoutManager(new LinearLayoutManager(SuccessfulReverseAuctionActivity.this));
                         bidsRecyclerView.setVisibility(View.VISIBLE);
                         bottomSheetDialog.show();
                     });
@@ -104,27 +103,13 @@ public class SuccessfullSilentAuctionActivity extends AuctionDetailsActivity {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("RIMUOVI ASTA");
         redButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Sei sicuro di voler cancellare l'asta?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        try {
-                            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
-                            finish();
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 
     private void setupBottomSheetDialog() {
 
-        questionMarkAuctionType.setText(R.string.silent_auction_question);
-        questionMarkExplanationAuctionType.setText(R.string.silent_auction_description);
+        questionMarkAuctionType.setText(R.string.reverse_auction_question);
+        questionMarkExplanationAuctionType.setText(R.string.reverse_auction_description);
     }
 }

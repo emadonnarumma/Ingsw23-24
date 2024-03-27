@@ -20,6 +20,7 @@ import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.ArrayList;
@@ -71,56 +72,14 @@ public class FailedSilentAuctionActivity extends AuctionDetailsActivity {
     private void setGreenButton() {
         greenButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_green));
         greenButton.setText("RILANCIA");
-        greenButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Sei sicuro di voler rilanciare l'asta?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        GeneralAuctionAttributesViewModel viewModel = GeneralAuctionAttributesViewModel.getInstance();
-                        AuctionHolder auctionHolder = new AuctionHolder(
-                                auction.getTitle(),
-                                new ArrayList<>(ImageController.convertImageListToUriList(auction.getImages(), getApplicationContext())),
-                                auction.getDescription(),
-                                auction.getWear(),
-                                auction.getCategory()
-                        );
-
-                        viewModel.setNewAuction(new MutableLiveData<>(auctionHolder));
-
-                        try {
-                            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        OnNavigateToHomeActivityFragmentListener.navigateTo("SilentAuctionAttributesFragment", getApplicationContext());
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
-        });
+        greenButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToRelaunchAuctionPopup(this, auction));
     }
 
     private void setRedButton() {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Sei sicuro di voler cancellare l'asta?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        try {
-                            MyAuctionDetailsController.deleteAuction(auction.getIdAuction()).get();
-                            finish();
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 

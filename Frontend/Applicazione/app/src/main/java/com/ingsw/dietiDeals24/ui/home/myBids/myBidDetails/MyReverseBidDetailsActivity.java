@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
@@ -20,6 +19,7 @@ import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
+import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.ui.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
@@ -121,21 +121,7 @@ public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
         bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
         bidButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Rimuovere l'offerta dalla cronologia?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        try {
-                            MyBidDetailsController.deleteBid(bid.getIdBid()).get();
-                            finish();
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
         });
     }
 
@@ -148,21 +134,7 @@ public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
         bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
         bidButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Conferma")
-                    .setMessage("Rimuovere l'offerta dalla cronologia?")
-                    .setPositiveButton("Si", (dialog, which) -> {
-                        try {
-                            MyBidDetailsController.deleteBid(bid.getIdBid()).get();
-                            finish();
-                        } catch (ExecutionException e) {
-                            ToastManager.showToast(getApplicationContext(), e.getCause().getMessage());
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
         });
     }
     private void setupOwnerButton() {

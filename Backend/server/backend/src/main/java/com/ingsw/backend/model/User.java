@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ingsw.backend.enumeration.Region;
 import com.ingsw.backend.enumeration.Role;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,8 +64,8 @@ public abstract class User implements UserDetails{
 	private String bio;
 
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Region region;
-
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<ExternalLink> externalLinks;
@@ -72,8 +73,6 @@ public abstract class User implements UserDetails{
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Notification> notifications;
-    
-    
 
 	@Override
 	@JsonIgnore
@@ -122,6 +121,4 @@ public abstract class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-
-
 }

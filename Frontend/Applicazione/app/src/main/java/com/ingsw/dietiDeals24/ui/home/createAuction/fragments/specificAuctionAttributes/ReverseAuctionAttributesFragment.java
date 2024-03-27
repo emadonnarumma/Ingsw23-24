@@ -186,7 +186,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
             Category category = genericAuctionAttributesHolder.getCategory();
             Wear wear = genericAuctionAttributesHolder.getWear();
             List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
-            String initialPrice = deleteMoneySimbol(initialPriceEditText.getText().toString());
+            String initialPrice = initialPriceEditText.getText().toString();
             String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
 
             ReverseAuction newReverseAuction;
@@ -227,13 +227,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
         }).start());
     }
 
-    private String deleteMoneySimbol(String string) {
-        if (string.endsWith("€"))
-            return string.substring(0, string.length() - 1);
-
-        return string;
-    }
-
     private void setupDatePicker(View view) {
         dateTextView = view.findViewById(R.id.date_text_reverse_auction_attributes);
         dateTextView.setFocusable(false);
@@ -270,15 +263,6 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     private void setupPriceEditText(@NonNull View view) {
         initialPriceEditText = view.findViewById(R.id.initial_price_edit_text_reverse_auction_attributes);
         initialPriceEditText.setFilters(new DecimalInputFilter[]{new DecimalInputFilter()});
-        initialPriceEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                String price = initialPriceEditText.getText().toString();
-                if (!price.equals("") && !price.endsWith("€")) {
-                    price = price + "€";
-                    initialPriceEditText.setText(price);
-                }
-            }
-        });
         initialPriceEditText.addTextChangedListener(textWatcher);
     }
 }

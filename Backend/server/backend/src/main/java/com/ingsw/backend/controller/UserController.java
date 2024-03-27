@@ -47,9 +47,7 @@ public class UserController {
 
 	@GetMapping("/does-account-exist/{email}/{role}")
 	public ResponseEntity<Boolean> doesAccountExist(@PathVariable String email, @PathVariable Role role) {
-
 		Boolean accountExists = userService.doesAccountExist(email, role);
-
 		return ResponseEntity.ok(accountExists);
 	}
 	
@@ -63,6 +61,9 @@ public class UserController {
     public ResponseEntity<User> updateBio(@PathVariable String email, @PathVariable Role role, @RequestBody String newBio) {
 		Gson gson = new Gson();
 		String bio = gson.fromJson(newBio, String.class);
+		if (bio == null) {
+			bio="";
+		}
         Optional<User> optionalUser = userService.updateBio(email, role, bio);
         return optionalUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }

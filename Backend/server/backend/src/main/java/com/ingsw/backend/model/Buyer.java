@@ -33,5 +33,4 @@ public class Buyer extends User {
     @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<SilentBid> bids;
-
 }

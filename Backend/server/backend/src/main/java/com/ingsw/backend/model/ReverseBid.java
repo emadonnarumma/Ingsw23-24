@@ -2,11 +2,7 @@ package com.ingsw.backend.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -20,10 +16,12 @@ public class ReverseBid extends Bid {
     @ManyToOne
     @JoinColumn(name = "owner_email", referencedColumnName = "email")
     @JoinColumn(name = "owner_role", referencedColumnName = "role")
+    @ToString.Exclude
     private Seller seller;
 
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
+    @ToString.Exclude
     private ReverseAuction reverseAuction;
 
 }

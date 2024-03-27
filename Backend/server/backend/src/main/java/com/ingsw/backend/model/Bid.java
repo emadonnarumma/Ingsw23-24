@@ -46,6 +46,4 @@ public abstract class Bid {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", locale = "it_IT", timezone = "Europe/Rome")
     @Column(nullable = false)
     private Timestamp timestamp;
-
-
 }

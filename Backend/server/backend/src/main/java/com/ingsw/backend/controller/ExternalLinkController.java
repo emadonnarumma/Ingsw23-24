@@ -53,7 +53,6 @@ public class ExternalLinkController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ExternalLink> updateExternalLink(@PathVariable Integer id, @Valid @RequestBody ExternalLink externalLink) {
-
         Optional<ExternalLink> existingExternalLink = externalLinkService.get(id);
         if (existingExternalLink.isPresent())
             externalLink.setUser(existingExternalLink.get().getUser());

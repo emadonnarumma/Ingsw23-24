@@ -29,6 +29,4 @@ public class ReverseAuction extends Auction {
     @OneToMany(mappedBy = "reverseAuction", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private List<ReverseBid> receivedBids;
-
-
 }

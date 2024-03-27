@@ -258,7 +258,7 @@ public class PopupGeneratorOf {
         PopupDialog.getInstance(activity)
                 .setStyle(Styles.STANDARD)
                 .setHeading("Sicuro di voler rilanciare l'asta?")
-                .setDescription("L'asta sarà resa di nuovo pubblica e sarà possibile fare nuove offerte.")
+                .setDescription("L'asta verrà cancelata e verrai riportato al menù di creazione dove potrai modificare i parametri specifici per la tipologia di asta.")
                 .setPopupDialogIcon(R.drawable.ic_restore)
                 .setPopupDialogIconTint(R.color.green)
                 .setCancelable(false)

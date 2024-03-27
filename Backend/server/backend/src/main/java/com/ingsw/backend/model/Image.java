@@ -2,10 +2,7 @@ package com.ingsw.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
@@ -25,6 +22,7 @@ public class Image {
     @ManyToOne
     @JoinColumn(name = "auction_id", referencedColumnName = "idAuction")
     @JsonIgnore
+    @ToString.Exclude
     private Auction auction;
 
     

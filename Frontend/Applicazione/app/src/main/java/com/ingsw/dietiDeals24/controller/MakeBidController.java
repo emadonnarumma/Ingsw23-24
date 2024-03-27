@@ -9,9 +9,7 @@ import com.ingsw.dietiDeals24.controller.formstate.ReverseBidFormState;
 import com.ingsw.dietiDeals24.controller.formstate.SilentBidFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
-import com.ingsw.dietiDeals24.model.CreditCard;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
-import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
@@ -55,7 +53,7 @@ public class MakeBidController implements RetroFitHolder {
 
     public static void silentBidInputChanged(Context context, String bid) {
         if (!isSilentBidValid(bid)) {
-            silentBidFormState.setValue(new SilentBidFormState(context.getString(R.string.bid_error)));
+            silentBidFormState.setValue(new SilentBidFormState(context.getString(R.string.silent_bid_error)));
         } else {
             silentBidFormState.setValue(new SilentBidFormState(true));
         }

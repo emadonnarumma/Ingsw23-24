@@ -93,16 +93,23 @@ public class CreateAuctionController implements RetroFitHolder {
                                                   String hoursString,
                                                   String minutesString) {
 
+
         if (decrementAmountString == null || initialPriceString == null ||
                 secretMinimalPriceString == null || monthsString == null ||
                 daysString == null || hoursString == null || minutesString == null) {
             return false;
         }
+
         if (decrementAmountString.isEmpty() || initialPriceString.isEmpty() ||
                 secretMinimalPriceString.isEmpty() || monthsString.isEmpty() ||
                 daysString.isEmpty() || hoursString.isEmpty() || minutesString.isEmpty()) {
             return false;
         }
+
+        if (Double.parseDouble(decrementAmountString) == 0) {
+            return false;
+        }
+
 
         double initialPrice = Double.parseDouble(initialPriceString);
         double decrementAmount = Double.parseDouble(decrementAmountString);

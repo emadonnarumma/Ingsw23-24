@@ -1,10 +1,7 @@
 package com.ingsw.backend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +22,7 @@ public class BankAccount {
     @JoinColumn(name = "seller_email", referencedColumnName = "email")
     @JoinColumn(name = "seller_role", referencedColumnName = "role")
     @JsonIgnore
+    @ToString.Exclude
     private Seller seller;
 
     @Length(min = 27, max = 27)

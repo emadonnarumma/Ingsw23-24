@@ -150,7 +150,7 @@
     <string name="downward_auction_decrement_amount_error">L\'importo di decremento non può essere più del 15% del prezzo iniziale e l\'asta non può durare meno di 30 minuti.</string>
     <string name="downward_auction_decrement_time_error">L\'asta non può durare meno di 30 minuti.</string>
 
-    <string name="bid_error">L\'offerta non deve avere più di 10 cifre e non deve essere vuota</string>
+    <string name="bid_error">L\'offerta non può essere da 0€ o vuota o troppo grande</string>
     <string name="secret_minimum_price_error">Il prezzo segreto non può essere superiore a quello iniziale e non può essere vuoto</string>
     <string name="reverse_bid_error">L\'offerta non può essere uguale o superiore a quella corrente e non puo essere 0</string>
 

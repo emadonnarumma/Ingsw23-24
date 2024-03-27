@@ -305,9 +305,11 @@ public class ProfileController {
 
                     TokenHolder tokenHolder = TokenHolder.getInstance();
                     tokenHolder.setToken(response.body().getToken());
+                    hasSellerAccount = true;
 
                     String email = user.getEmail();
                     user = currentUserDao.getSellerByEmail(email, TokenHolder.getAuthToken()).execute().body();
+
                 } else if (response.code() == 403) {
                     throw new AuthenticationException("Account già esistente");
                 }

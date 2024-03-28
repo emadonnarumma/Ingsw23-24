@@ -29,5 +29,4 @@ services:
 
 networks:
   dietideals-network:
-    name: dietideals
     driver: bridge

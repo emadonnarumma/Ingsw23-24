@@ -64,7 +64,6 @@ public abstract class User implements UserDetails{
 	private String bio;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
 	private Region region;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)

@@ -44,7 +44,7 @@
         android:id="@+id/auction_type_icon_item_silent_auction"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/down_chart_arrow"
+        android:background="@drawable/closed_mouth"
 
         app:layout_constraintBottom_toTopOf="@id/card_view_item_silent_auction"
         app:layout_constraintTop_toTopOf="@id/container_text_view_item_silent_auction"

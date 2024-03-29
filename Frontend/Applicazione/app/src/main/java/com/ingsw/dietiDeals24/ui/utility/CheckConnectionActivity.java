@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.droidnet.DroidListener;
 import com.droidnet.DroidNet;
 
-public abstract class CheckConnectionActivity extends AppCompatActivity implements DroidListener {
+public abstract class
+CheckConnectionActivity extends AppCompatActivity implements DroidListener {
 
     private DroidNet mDroidNet;
 

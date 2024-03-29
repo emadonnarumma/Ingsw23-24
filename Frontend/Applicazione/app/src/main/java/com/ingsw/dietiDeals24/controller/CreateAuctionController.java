@@ -82,6 +82,15 @@ public class CreateAuctionController implements RetroFitHolder {
         if (initialPrice.isEmpty() || Double.parseDouble(initialPrice) <= 0) {
             return false;
         }
+        if (initialPrice.equals(".")) {
+            return false;
+        }
+        if (initialPrice.matches("0*\\.?0*")) {
+            return false;
+        }
+        if (initialPrice.startsWith(".") || initialPrice.endsWith(".")) { // aggiunto questo controllo
+            return false;
+        }
         return initialPrice.length() <= 10;
     }
 
@@ -99,17 +108,23 @@ public class CreateAuctionController implements RetroFitHolder {
                 daysString == null || hoursString == null || minutesString == null) {
             return false;
         }
-
         if (decrementAmountString.isEmpty() || initialPriceString.isEmpty() ||
                 secretMinimalPriceString.isEmpty() || monthsString.isEmpty() ||
                 daysString.isEmpty() || hoursString.isEmpty() || minutesString.isEmpty()) {
             return false;
         }
-
+        if (decrementAmountString.equals(".")) {
+            return false;
+        }
+        if (decrementAmountString.matches("0*\\.?0*")) {
+            return false;
+        }
+        if (decrementAmountString.startsWith(".") || decrementAmountString.endsWith(".")) { // aggiunto questo controllo
+            return false;
+        }
         if (Double.parseDouble(decrementAmountString) == 0) {
             return false;
         }
-
 
         double initialPrice = Double.parseDouble(initialPriceString);
         double decrementAmount = Double.parseDouble(decrementAmountString);
@@ -161,6 +176,15 @@ public class CreateAuctionController implements RetroFitHolder {
             return false;
         }
         if (minimalPrice.isEmpty()) {
+            return false;
+        }
+        if (minimalPrice.equals(".")) {
+            return false;
+        }
+        if (minimalPrice.matches("0*\\.?0*")) {
+            return false;
+        }
+        if (minimalPrice.startsWith(".") || minimalPrice.endsWith(".")) { // aggiunto questo controllo
             return false;
         }
         if (Double.parseDouble(minimalPrice) > Double.parseDouble(initialPrice)) {

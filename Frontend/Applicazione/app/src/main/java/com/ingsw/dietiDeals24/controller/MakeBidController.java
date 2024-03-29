@@ -66,23 +66,38 @@ public class MakeBidController implements RetroFitHolder {
         if (bid.isEmpty()) {
             return false;
         }
-        if (bid.equals("0")) {
+        if (bid.equals(".")) {
+            return false;
+        }
+        if (bid.matches("0*\\.?0*")) {
+            return false;
+        }
+        if (bid.startsWith(".") || bid.endsWith(".")) { // aggiunto questo controllo
             return false;
         }
         return bid.length() <= 10;
     }
 
-    private static boolean isReverseBidValid(String currentBid, double minBid) {
-        if (currentBid == null) {
+    private static boolean isReverseBidValid(String bid, double minBid) {
+        if (bid == null) {
             return false;
         }
-        if (currentBid.isEmpty()) {
+        if (bid.isEmpty()) {
             return false;
         }
-        if (Double.parseDouble(currentBid) >= minBid || currentBid.equals("0")) {
+        if (bid.equals(".")) {
             return false;
         }
-        return currentBid.length() <= 10;
+        if (bid.matches("0*\\.?0*")) {
+            return false;
+        }
+        if (bid.startsWith(".") || bid.endsWith(".")) { // aggiunto questo controllo
+            return false;
+        }
+        if (Double.parseDouble(bid) >= minBid || bid.equals("0")) {
+            return false;
+        }
+        return bid.length() <= 10;
     }
 
     public static SilentAuction getSilentAuction() {

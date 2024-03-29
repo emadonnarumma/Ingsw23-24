@@ -57,6 +57,7 @@ public class HomeActivity extends CheckConnectionActivity {
     private NavigationBarView navigationBarView;
     private Toolbar toolbar;
     private ExecutorService executorService;
+    private volatile boolean isConnected = true;
 
     private final OnBackPressedCallback callback = new OnBackPressedCallback(true) {
         @Override
@@ -163,7 +164,7 @@ public class HomeActivity extends CheckConnectionActivity {
     private void startNotificationUpdates() {
         executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
+            while (!Thread.currentThread().isInterrupted() && isConnected) {
                 try {
                     int numberOfNotifications = NotificationController.updateNotifications().get();
                     if (numberOfNotifications == 0) {
@@ -184,6 +185,17 @@ public class HomeActivity extends CheckConnectionActivity {
         });
     }
 
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+        this.isConnected = isConnected;
+        if (!isConnected) {
+            executorService.shutdownNow();
+            PopupGeneratorOf.connectionLostPopup(this);
+        } else {
+            startNotificationUpdates();
+        }
+    }
+
     private void showNotificationBadge(int numberOfNotifications) {
         runOnUiThread(() -> {
             notificationTextViewNumber.setVisibility(View.VISIBLE);
@@ -198,7 +210,6 @@ public class HomeActivity extends CheckConnectionActivity {
             notificationCountBackgroundImageView.setVisibility(View.GONE);
         });
     }
-
 
     private void checkRequestToOpenAFragmentFromAnOtherActivity() {
         String fragmentToOpen = getIntent().getStringExtra("openFragment");

@@ -319,7 +319,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
                 });
             } catch (InterruptedException e) {
                 requireActivity().runOnUiThread(() -> {
-                    if (isAdded()) { 
+                    if (isAdded()) {
                         ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
                     }
                 });

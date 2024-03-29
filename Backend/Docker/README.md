@@ -1,14 +1,8 @@
 # Ingsw23-24
 
-1. Pullare l'immagine "postgres" ufficiale da docker desktop.
-
-2. Per creare e far partire un container da questo file yaml scrivere nel cmd il comando:
-    docker-compose -f dietidealsDB.yaml up
-
-Per far partire il container già creato:
-    docker start dietidealsdb
+1. Assicurarsi di essere nella directory con i file Dockerfile e docker-compose
+2. Eseguire il comando `docker-compose up --build`
 
 Per eseguire comandi SQL dentro questo container:
-    docker exec -it <container_id> psql -U <username> -d <database> -c "<SQL command>"
-Esempio:
-    docker exec -it dietidealsdb psql -U postgres -d dietidealsdb -c "SELECT* FROM Users;"
+```bash
+docker exec -it <container_id> psql -U <username> -d <database> -c "<SQL command>"

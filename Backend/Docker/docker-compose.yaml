@@ -15,7 +15,7 @@ services:
       - dietideals-network
   dietideals-server:
     container_name: dietideals-server
-    image: dietideals-server
+    build: .
     restart: on-failure
     environment:
       - SPRING_PROFILES_ACTIVE=production
@@ -25,7 +25,6 @@ services:
       - db
     networks:
       - dietideals-network
-
 
 networks:
   dietideals-network:

@@ -29,6 +29,8 @@ import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLin
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ProfileFragment extends FragmentOfHomeActivity {
     private TextView usernameTextView;
@@ -44,9 +46,13 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private CircularProgressButton logoutButton;
     private BottomSheetDialog bottomSheetDialog;
 
+    private ExecutorService executorService;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        executorService = Executors.newSingleThreadExecutor();
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -178,7 +184,13 @@ public class ProfileFragment extends FragmentOfHomeActivity {
 
     private void onSellerSwitchClick() {
         PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
-        new Thread(() -> {
+
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+        executorService = Executors.newSingleThreadExecutor();
+
+        executorService.submit(() -> {
             if (sellerSwitch.isChecked()) {
                 try {
                     if (!ProfileController.hasSellerAccount) {
@@ -226,7 +238,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
                     requireActivity().runOnUiThread(loading::dismissDialog);
                 }
             }
-        }).start();
+        });
     }
 
 
@@ -266,6 +278,18 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
             bottomSheetDialog.dismiss();
         }
+
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
     }
 
     @Override
@@ -278,16 +302,30 @@ public class ProfileFragment extends FragmentOfHomeActivity {
 
     private void retrieveUserData() {
         PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
-        new Thread(() -> {
+
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+        executorService = Executors.newSingleThreadExecutor();
+
+        executorService.submit(() -> {
             try {
                 ProfileController.retrieveUser().get();
             } catch (ExecutionException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+                requireActivity().runOnUiThread(() -> {
+                    if (isAdded()) {
+                        ToastManager.showToast(getContext(), e.getCause().getMessage());
+                    }
+                });
             } catch (InterruptedException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+                requireActivity().runOnUiThread(() -> {
+                    if (isAdded()) { 
+                        ToastManager.showToast(getContext(), "Operazione interrotta, riprovare");
+                    }
+                });
             } finally {
                 requireActivity().runOnUiThread(loading::dismissDialog);
             }
-        }).start();
+        });
     }
 }

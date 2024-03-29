@@ -81,7 +81,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
         setupBottomSheetDialog();
         andNMoreLinksTextView.setOnClickListener(v -> bottomSheetDialog.show());
 
-        sellerSwitch.setOnClickListener(v -> onSellerSwitchClick());
+        sellerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> onSellerSwitchClick());
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
         logoutButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToLogoutPopup(getContext()));
     }
@@ -303,12 +303,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     private void retrieveUserData() {
         PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
 
-        if (!executorService.isShutdown()) {
-            executorService.shutdownNow();
-        }
-        executorService = Executors.newSingleThreadExecutor();
-
-        executorService.submit(() -> {
+        new Thread(() -> {
             try {
                 ProfileController.retrieveUser().get();
             } catch (ExecutionException e) {
@@ -326,6 +321,6 @@ public class ProfileFragment extends FragmentOfHomeActivity {
             } finally {
                 requireActivity().runOnUiThread(loading::dismissDialog);
             }
-        });
+        }).start();
     }
 }

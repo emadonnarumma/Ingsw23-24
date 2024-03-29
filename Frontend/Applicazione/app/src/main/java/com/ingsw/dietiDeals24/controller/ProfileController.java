@@ -30,6 +30,7 @@ import com.ingsw.dietiDeals24.network.dao.UserDao;
 import com.ingsw.dietiDeals24.network.dao.ExternalLinkDao;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -352,6 +353,12 @@ public class ProfileController {
 
     public static void logout() {
         user = null;
-        //TokenHolder.getInstance().setToken(null);
+        hasSellerAccount = false;
+        wasUserAlreadyRetrieved = false;
+        MyAuctionsController.setUpdatedAll(false);
+        MyBidsController.setUpdatedAll(false);
+        NotificationController.setNotifications(new ArrayList<>());
+        SearchAuctionsController.setUpdatedAll(false);
+        TokenHolder.getInstance().setToken("");
     }
 }

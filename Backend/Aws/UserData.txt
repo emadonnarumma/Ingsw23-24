@@ -15,5 +15,10 @@ chmod +x /usr/local/bin/docker-compose
 # Navigate to the application directory
 cd 
 
-# Run Docker Compose
-docker-compose up --build -d
+# Check if necessary files exist
+if [ -f Dockerfile ] && [ -f docker-compose.yaml ] && [ -f dietideals-server.jar ]; then
+    # Run Docker Compose
+    docker-compose up --build -d
+else
+    echo "Necessary files for Docker Compose are missing. Please ensure Dockerfile, docker-compose.yaml, and dietideals-server.jar are present."
+fi

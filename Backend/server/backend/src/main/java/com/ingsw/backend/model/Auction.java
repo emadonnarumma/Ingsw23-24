@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @Entity
 @Table(name = "auctions")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", discriminatorType = D\iscriminatorType.STRING)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,

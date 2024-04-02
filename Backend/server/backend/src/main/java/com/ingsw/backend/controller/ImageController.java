@@ -21,7 +21,6 @@ import com.ingsw.backend.service.AuctionService;
 import com.ingsw.backend.service.ImageService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/image")

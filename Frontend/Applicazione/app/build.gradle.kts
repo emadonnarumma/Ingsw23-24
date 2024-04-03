@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
 }
+
 
 android {
     namespace = "com.ingsw.dietiDeals24"
@@ -45,6 +47,8 @@ android {
 }
 
 dependencies {
+
+    implementation("com.google.firebase:firebase-analytics:21.6.1")
 
     implementation("com.google.android.material:material:1.11.0")
     implementation ("com.github.JobGetabu:DroidNet:v2.0.0")

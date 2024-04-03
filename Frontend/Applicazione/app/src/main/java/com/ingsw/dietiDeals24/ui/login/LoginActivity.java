@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.controller.formstate.LoginFormState;
@@ -35,6 +36,8 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
     private TextView registrationTextView, emailErrorTextView, passwordErrorTextView;
     private EditText emailEditText, passwordEditText;
     private CircularProgressButton loginButton;
+
+//    private FirebaseAnalytics firebaseAnalytics;
 
     private TextWatcher loginTextWatcher = new TextWatcher() {
         @Override
@@ -59,6 +62,15 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+//
+//        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Schermata di Login");
+//        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "LoginActivity");
+//        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
+//        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+
         setupLoginButton();
         setupTextViews();
         setupEditText();

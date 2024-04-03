@@ -193,7 +193,7 @@ public class ProfileController {
                 if (response.isSuccessful()) {
                     if (response.body() == null)
                         throw new ConnectionException("Errore di connessione");
-                    user = response.body();
+                    user.setBio(response.body().getBio());
                 } else {
                     throw new ConnectionException("Errore di connessione");
                 }

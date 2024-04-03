@@ -37,7 +37,6 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
     private EditText emailEditText, passwordEditText;
     private CircularProgressButton loginButton;
 
-//    private FirebaseAnalytics firebaseAnalytics;
 
     private TextWatcher loginTextWatcher = new TextWatcher() {
         @Override
@@ -62,14 +61,6 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//
-//        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, "Schermata di Login");
-//        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "LoginActivity");
-//        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle);
-//        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
         setupLoginButton();
         setupTextViews();

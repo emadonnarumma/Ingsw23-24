@@ -78,6 +78,7 @@
             android:layout_marginTop="16dp"
             android:hint="@string/edit_iva_phrase"
             android:maxLength="11"
+            android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_of_edit_bank_account" />

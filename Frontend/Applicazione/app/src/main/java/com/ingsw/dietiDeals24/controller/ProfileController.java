@@ -90,7 +90,7 @@ public class ProfileController {
         if (iban == null)
             return false;
         // IBAN ITALIANO: 2 lettere + 2 cifre + 1 lettera + 22 cifre con eventuali spazi
-        return iban.matches("^IT\\s?[0-9]{2}\\s?[A-Z]\\s?(?:\\s?[0-9]){22}$");
+        return iban.matches("^IT\\s?[0-9]{2}\\s?[A-Z]\\s?(?:\\s?[0-9]){10}(?:\\s?[A-Z0-9]){12}$");
         // REGEX ITALIANA: ^[A-Z]{2}[0-9]{2}[A-Z][0-9]{22}$
 
         // IBAN GENERICO: 2 lettere + 13-30 cifre o lettere

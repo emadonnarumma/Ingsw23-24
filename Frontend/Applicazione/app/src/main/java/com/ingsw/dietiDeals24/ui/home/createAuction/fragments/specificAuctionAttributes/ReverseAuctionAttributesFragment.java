@@ -179,52 +179,60 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_reverse_auction_attributes);
         createAuctionButton.setEnabled(false);
-        createAuctionButton.setOnClickListener(v -> new Thread(() -> {
-            parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
-            String title = genericAuctionAttributesHolder.getTitle();
-            String description = genericAuctionAttributesHolder.getDescription();
-            Category category = genericAuctionAttributesHolder.getCategory();
-            Wear wear = genericAuctionAttributesHolder.getWear();
-            List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
-            String initialPrice = initialPriceEditText.getText().toString();
-            String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
+        createAuctionButton.setOnClickListener(v -> creteReverseAuction());
+    }
 
-            ReverseAuction newReverseAuction;
-            newReverseAuction = new ReverseAuction(
-                    UserHolder.user,
-                    title,
-                    description,
-                    wear,
-                    category,
-                    AuctionStatus.IN_PROGRESS,
-                    Double.parseDouble(initialPrice),
-                    expirationDate
-            );
+    private void creteReverseAuction() {
+        new Thread(() -> {
+            createReverseAuctionThread();
+        }).start();
+    }
+
+    private void createReverseAuctionThread() {
+        parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
+        String title = genericAuctionAttributesHolder.getTitle();
+        String description = genericAuctionAttributesHolder.getDescription();
+        Category category = genericAuctionAttributesHolder.getCategory();
+        Wear wear = genericAuctionAttributesHolder.getWear();
+        List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
+        String initialPrice = initialPriceEditText.getText().toString();
+        String expirationDate = dateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
+
+        ReverseAuction newReverseAuction;
+        newReverseAuction = new ReverseAuction(
+                UserHolder.user,
+                title,
+                description,
+                wear,
+                category,
+                AuctionStatus.IN_PROGRESS,
+                Double.parseDouble(initialPrice),
+                expirationDate
+        );
 
 
-            try {
+        try {
 
-                List<Image> images = ImageController.convertUriListToImageList(getContext(), uriImages);
-                newReverseAuction.setImages(images);
-                CreateAuctionController.createAuction(newReverseAuction).get();
+            List<Image> images = ImageController.convertUriListToImageList(getContext(), uriImages);
+            newReverseAuction.setImages(images);
+            CreateAuctionController.createAuction(newReverseAuction).get();
+            parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
+            viewModel.setNewAuction(new MutableLiveData<>());
+            parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
+
+        } catch (ExecutionException e) {
+
+            if (e.getCause() instanceof AuthenticationException) {
                 parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
-                viewModel.setNewAuction(new MutableLiveData<>());
-                parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
-
-            } catch (ExecutionException e) {
-
-                if (e.getCause() instanceof AuthenticationException) {
-                    parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    parentActivity.runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
-                } else if (e.getCause() instanceof ConnectionException) {
-                    parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    parentActivity.runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
-                }
-
-            } catch (InterruptedException | IOException e) {
-                throw new RuntimeException(e);
+                parentActivity.runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
+            } else if (e.getCause() instanceof ConnectionException) {
+                parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
+                parentActivity.runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
             }
-        }).start());
+
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setupDatePicker(View view) {

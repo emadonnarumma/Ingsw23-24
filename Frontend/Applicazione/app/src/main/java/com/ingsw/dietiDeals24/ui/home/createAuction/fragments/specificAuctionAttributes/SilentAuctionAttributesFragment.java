@@ -236,54 +236,58 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
 
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
-        createAuctionButton.setOnClickListener(v -> new Thread(() -> {
+        createAuctionButton.setOnClickListener(v -> createSilentAuction());
+    }
 
-            if (isWithdrawalBidTimeNotValid()) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Il tempo di scadenza delle offerte non puo essere zero", Toast.LENGTH_SHORT).show());
-                return;
+    private void createSilentAuction() {
+        new Thread(this::createSilentAuctionThread).start();
+    }
+
+    private void createSilentAuctionThread() {
+        if (isWithdrawalBidTimeNotValid()) {
+            requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Il tempo di scadenza delle offerte non puo essere zero", Toast.LENGTH_SHORT).show());
+            return;
+        }
+
+        String title = genericAuctionAttributesHolder.getTitle();
+        String description = genericAuctionAttributesHolder.getDescription();
+        Category category = genericAuctionAttributesHolder.getCategory();
+        Wear wear = genericAuctionAttributesHolder.getWear();
+        String expirationDate = expirationDateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
+
+        SilentAuction newSilentAuction = new SilentAuction(
+                UserHolder.user,
+                title,
+                description,
+                wear,
+                category,
+                AuctionStatus.IN_PROGRESS,
+                expirationDate,
+                getWithDrawalTime()
+        );
+
+        parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
+
+        try {
+            List<Image> images = ImageController.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
+            newSilentAuction.setImages(images);
+            CreateAuctionController.createAuction(newSilentAuction).get();
+            parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
+            viewModel.setNewAuction(new MutableLiveData<>());
+            parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
+        } catch (ExecutionException e) {
+
+            if (e.getCause() instanceof AuthenticationException) {
+                requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
+            } else if (e.getCause() instanceof ConnectionException) {
+                requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
             }
 
-            String title = genericAuctionAttributesHolder.getTitle();
-            String description = genericAuctionAttributesHolder.getDescription();
-            Category category = genericAuctionAttributesHolder.getCategory();
-            Wear wear = genericAuctionAttributesHolder.getWear();
-            String expirationDate = expirationDateTextView.getText().toString().replace("/", "-").concat(" 00:00:00");
-
-            SilentAuction newSilentAuction = new SilentAuction(
-                    UserHolder.user,
-                    title,
-                    description,
-                    wear,
-                    category,
-                    AuctionStatus.IN_PROGRESS,
-                    expirationDate,
-                    getWithDrawalTime()
-            );
-
-            parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
-
-            try {
-                List<Image> images = ImageController.convertUriListToImageList(getContext(), genericAuctionAttributesHolder.getImages());
-                newSilentAuction.setImages(images);
-                CreateAuctionController.createAuction(newSilentAuction).get();
-                parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
-                viewModel.setNewAuction(new MutableLiveData<>());
-                parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
-            } catch (ExecutionException e) {
-
-                if (e.getCause() instanceof AuthenticationException) {
-                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
-                } else if (e.getCause() instanceof ConnectionException) {
-                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
-                }
-
-            } catch (InterruptedException | IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        }).start());
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private long getWithDrawalTime() {

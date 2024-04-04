@@ -372,77 +372,83 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private void setupCreateAuctionButton(View view) {
         createAuctionButton = view.findViewById(R.id.create_auction_button_downward_auction_attributes);
-        createAuctionButton.setOnClickListener(v -> new Thread(() -> {
-            parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
+        createAuctionButton.setOnClickListener(v -> createDownwardAuction());
+    }
 
-            if (fieldsEmpty()) {
-                parentActivity.runOnUiThread(() -> {
-                    Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
-                    createAuctionButton.revertAnimation();
-                });
-                return;
+    private void createDownwardAuction() {
+        new Thread(this::createDownwardAuctionThread).start();
+    }
+
+    private void createDownwardAuctionThread() {
+        parentActivity.runOnUiThread(() -> createAuctionButton.startAnimation());
+
+        if (fieldsEmpty()) {
+            parentActivity.runOnUiThread(() -> {
+                Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
+                createAuctionButton.revertAnimation();
+            });
+            return;
+        }
+
+        if (!CreateAuctionController.isValidDecrementAmount(Double.parseDouble(initialPriceEditText.getText().toString()), Double.parseDouble(decrementAmountEditText.getText().toString()))) {
+            parentActivity.runOnUiThread(() -> {
+                decrementAmountEditText.setError("Inserisci un valore di decremento valido");
+                createAuctionButton.revertAnimation();
+            });
+            return;
+        }
+
+        String title = genericAuctionAttributesHolder.getTitle();
+        String description = genericAuctionAttributesHolder.getDescription();
+        Category category = genericAuctionAttributesHolder.getCategory();
+        Wear wear = genericAuctionAttributesHolder.getWear();
+        List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
+        double initialPrice = Double.parseDouble(initialPriceEditText.getText().toString());
+        double secretMinimumPrice = Double.parseDouble(secretMinimumPriceEditText.getText().toString());
+        double decrementAmount = Double.parseDouble(decrementAmountEditText.getText().toString());
+        long months = Long.parseLong(monthsWheelView.getSelectionItem());
+        long days = Long.parseLong(daysWheelView.getSelectionItem());
+        long hours = Long.parseLong(hoursWheelView.getSelectionItem());
+        long minutes = Long.parseLong(minutesWheelView.getSelectionItem());
+        DownwardAuction newDownwardAuction = new DownwardAuction(
+                UserHolder.user,
+                title,
+                description,
+                wear,
+                category,
+                AuctionStatus.IN_PROGRESS,
+                secretMinimumPrice,
+                initialPrice,
+                decrementAmount,
+                CreateAuctionController.getDecrementTime(months, days, hours, minutes),
+                CreateAuctionController.calculateNextDecrement(months, days, hours, minutes)
+        );
+
+
+        try {
+
+            List<Image> images = ImageController.convertUriListToImageList(getContext(), uriImages);
+            newDownwardAuction.setImages(images);
+            CreateAuctionController.createAuction(newDownwardAuction).get();
+            viewModel.setNewAuction(new MutableLiveData<>());
+            parentActivity.runOnUiThread(() -> {
+                createAuctionButton.revertAnimation();
+                parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
+            });
+
+        } catch (ExecutionException e) {
+
+            if (e.getCause() instanceof AuthenticationException) {
+                requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
+            } else if (e.getCause() instanceof ConnectionException) {
+                requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
             }
 
-            if (!CreateAuctionController.isValidDecrementAmount(Double.parseDouble(initialPriceEditText.getText().toString()), Double.parseDouble(decrementAmountEditText.getText().toString()))) {
-                parentActivity.runOnUiThread(() -> {
-                    decrementAmountEditText.setError("Inserisci un valore di decremento valido");
-                    createAuctionButton.revertAnimation();
-                });
-                return;
-            }
-
-            String title = genericAuctionAttributesHolder.getTitle();
-            String description = genericAuctionAttributesHolder.getDescription();
-            Category category = genericAuctionAttributesHolder.getCategory();
-            Wear wear = genericAuctionAttributesHolder.getWear();
-            List<Uri> uriImages = genericAuctionAttributesHolder.getImages();
-            double initialPrice = Double.parseDouble(initialPriceEditText.getText().toString());
-            double secretMinimumPrice = Double.parseDouble(secretMinimumPriceEditText.getText().toString());
-            double decrementAmount = Double.parseDouble(decrementAmountEditText.getText().toString());
-            long months = Long.parseLong(monthsWheelView.getSelectionItem());
-            long days = Long.parseLong(daysWheelView.getSelectionItem());
-            long hours = Long.parseLong(hoursWheelView.getSelectionItem());
-            long minutes = Long.parseLong(minutesWheelView.getSelectionItem());
-            DownwardAuction newDownwardAuction = new DownwardAuction(
-                    UserHolder.user,
-                    title,
-                    description,
-                    wear,
-                    category,
-                    AuctionStatus.IN_PROGRESS,
-                    secretMinimumPrice,
-                    initialPrice,
-                    decrementAmount,
-                    CreateAuctionController.getDecrementTime(months, days, hours, minutes),
-                    CreateAuctionController.calculateNextDecrement(months, days, hours, minutes)
-            );
-
-
-            try {
-
-                List<Image> images = ImageController.convertUriListToImageList(getContext(), uriImages);
-                newDownwardAuction.setImages(images);
-                CreateAuctionController.createAuction(newDownwardAuction).get();
-                viewModel.setNewAuction(new MutableLiveData<>());
-                parentActivity.runOnUiThread(() -> {
-                    createAuctionButton.revertAnimation();
-                    parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
-                });
-
-            } catch (ExecutionException e) {
-
-                if (e.getCause() instanceof AuthenticationException) {
-                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Sessione scaduta, effettua nuovamente il login"));
-                } else if (e.getCause() instanceof ConnectionException) {
-                    requireActivity().runOnUiThread(() -> createAuctionButton.revertAnimation());
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Errore di connessione"));
-                }
-
-            } catch (InterruptedException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start());
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean fieldsEmpty() {

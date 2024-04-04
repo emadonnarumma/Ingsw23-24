@@ -183,9 +183,7 @@ public class ReverseAuctionAttributesFragment extends FragmentOfHomeActivity imp
     }
 
     private void creteReverseAuction() {
-        new Thread(() -> {
-            createReverseAuctionThread();
-        }).start();
+        new Thread(this::createReverseAuctionThread).start();
     }
 
     private void createReverseAuctionThread() {

@@ -123,25 +123,32 @@ public class MakeSilentBidActivity extends CheckConnectionActivity {
         sendBidButton = findViewById(R.id.send_button_make_silent_bid);
         sendBidButton.setEnabled(false);
         sendBidButton.setOnClickListener(v -> {
-            sendBidButton.startAnimation();
-
-            new Thread(() -> {
-                try {
-                    MakeBidController.makeSilentBid(Double.parseDouble(bidEditText.getText().toString())).get();
-                    runOnUiThread(() -> {
-                        sendBidButton.revertAnimation();
-                        PopupGeneratorOf.bidSendedSuccessfullyPopup(this);
-                    });
-
-                } catch (ExecutionException e) {
-                    runOnUiThread(() -> {
-                        sendBidButton.revertAnimation();
-                        ToastManager.showToast(this, e.getCause().getMessage());
-                    });
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+            makeSilentBid();
         });
+    }
+
+    private void makeSilentBid() {
+        sendBidButton.startAnimation();
+        new Thread(() -> {
+            makeSilentBidThread();
+        }).start();
+    }
+
+    private void makeSilentBidThread() {
+        try {
+            MakeBidController.makeSilentBid(Double.parseDouble(bidEditText.getText().toString())).get();
+            runOnUiThread(() -> {
+                sendBidButton.revertAnimation();
+                PopupGeneratorOf.bidSendedSuccessfullyPopup(this);
+            });
+
+        } catch (ExecutionException e) {
+            runOnUiThread(() -> {
+                sendBidButton.revertAnimation();
+                ToastManager.showToast(this, e.getCause().getMessage());
+            });
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

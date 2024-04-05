@@ -17,11 +17,11 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.formstate.ReverseBidFormState;
 import com.ingsw.dietiDeals24.model.ReverseBid;
-import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
-import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.utility.DecimalInputFilter;
+import com.ingsw.dietiDeals24.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
 

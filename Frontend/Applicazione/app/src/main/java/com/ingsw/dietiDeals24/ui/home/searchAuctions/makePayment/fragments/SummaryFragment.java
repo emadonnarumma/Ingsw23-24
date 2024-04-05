@@ -19,10 +19,10 @@ import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.Bid;
 import com.ingsw.dietiDeals24.model.CreditCard;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
-import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
+import com.ingsw.dietiDeals24.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

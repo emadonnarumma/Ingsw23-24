@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ingsw.dietiDeals24.R;
@@ -18,7 +17,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid.MakeSilentBidActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
 
 public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private SilentAuction auction;

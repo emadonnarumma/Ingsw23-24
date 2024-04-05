@@ -9,22 +9,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
-import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.controller.formstate.SilentBidFormState;
-import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
-import com.ingsw.dietiDeals24.ui.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.utility.DecimalInputFilter;
+import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
 

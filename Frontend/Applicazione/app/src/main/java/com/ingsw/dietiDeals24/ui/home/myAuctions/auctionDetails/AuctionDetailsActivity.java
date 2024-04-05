@@ -1,14 +1,10 @@
 package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ScrollView;
 
@@ -18,9 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
-import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
-import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
-import com.ingsw.dietiDeals24.ui.utility.slider.adapter.SmallScreenSliderAdapter;
+import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.utility.slider.adapter.SmallScreenSliderAdapter;
 import com.smarteist.autoimageslider.SliderView;
 import com.ingsw.dietiDeals24.R;
 

@@ -18,7 +18,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
 import com.saadahmedsoft.popupdialog.PopupDialog;

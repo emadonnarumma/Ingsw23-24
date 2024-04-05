@@ -5,13 +5,12 @@ import android.view.MenuItem;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.fragments.SelectPaymentMethodFragment;
-import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
 
 public class MakePaymentActivity extends CheckConnectionActivity {
     private Toolbar toolbar;

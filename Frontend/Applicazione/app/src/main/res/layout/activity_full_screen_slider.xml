@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.utility.slider.activity.FullScreenSliderActivity"
+    tools:context=".utility.slider.activity.FullScreenSliderActivity"
     android:background="@color/black">
 
 

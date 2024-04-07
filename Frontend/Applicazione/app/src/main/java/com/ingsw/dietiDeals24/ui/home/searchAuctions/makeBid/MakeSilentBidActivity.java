@@ -16,9 +16,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.formstate.SilentBidFormState;
-import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
@@ -134,7 +134,7 @@ public class MakeSilentBidActivity extends CheckConnectionActivity {
             MakeBidController.makeSilentBid(Double.parseDouble(bidEditText.getText().toString())).get();
             runOnUiThread(() -> {
                 sendBidButton.revertAnimation();
-                PopupGeneratorOf.bidSendedSuccessfullyPopup(this);
+                PopupGenerator.bidSendedSuccessfullyPopup(this);
             });
 
         } catch (ExecutionException e) {

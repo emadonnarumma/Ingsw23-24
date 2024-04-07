@@ -14,9 +14,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
-import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.utility.OnNavigateToHomeActivityFragmentListener;
-import com.ingsw.dietiDeals24.utility.slider.adapter.SmallScreenSliderAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public abstract class MyBidDetailsActivity extends CheckConnectionActivity imple
 
 
     protected void bindImages(Auction auction) {
-        SmallScreenSliderAdapter adapter = new SmallScreenSliderAdapter(getApplicationContext());
+        SmallScreenImagesAdapter adapter = new SmallScreenImagesAdapter(getApplicationContext());
         sliderView.setSliderAdapter(adapter);
 
         ArrayList<Uri> images = new ArrayList<>();

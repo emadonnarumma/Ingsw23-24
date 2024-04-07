@@ -37,7 +37,7 @@ import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.utility.DecimalInputFilter;
-import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
@@ -433,7 +433,7 @@ public class DownwardAuctionAttributesFragment extends FragmentOfHomeActivity {
             viewModel.setNewAuction(new MutableLiveData<>());
             parentActivity.runOnUiThread(() -> {
                 createAuctionButton.revertAnimation();
-                parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
+                parentActivity.runOnUiThread(() -> PopupGenerator.successAuctionCreationPopup(parentActivity));
             });
 
         } catch (ExecutionException e) {

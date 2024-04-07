@@ -38,10 +38,10 @@ import com.ingsw.dietiDeals24.ui.home.profile.my.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditRegionFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchAuctionsFragment;
-import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
-import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.utility.recyclerViews.notifications.NotificationAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.notifications.NotificationAdapter;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -122,7 +122,7 @@ public class HomeActivity extends CheckConnectionActivity {
         }
 
         private void tryToDisconnect() {
-            PopupGeneratorOf.areYouSureToLogoutPopup(HomeActivity.this);
+            PopupGenerator.areYouSureToLogoutPopup(HomeActivity.this);
         }
     };
 
@@ -189,7 +189,7 @@ public class HomeActivity extends CheckConnectionActivity {
         this.isConnected = isConnected;
         if (!isConnected) {
             executorService.shutdownNow();
-            PopupGeneratorOf.connectionLostPopup(this);
+            PopupGenerator.connectionLostPopup(this);
         } else {
             startNotificationUpdates();
         }

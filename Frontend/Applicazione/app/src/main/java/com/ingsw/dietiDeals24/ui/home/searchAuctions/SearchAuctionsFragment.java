@@ -23,7 +23,7 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.searchAuctions.SearchAuctionAdapter;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 

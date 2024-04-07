@@ -41,7 +41,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
-import com.ingsw.dietiDeals24.utility.slider.adapter.SmallScreenSliderAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.io.File;
@@ -66,7 +66,7 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
     private SliderView sliderView;
     private FloatingActionButton addButton, deleteButton, nextStepButton;
 
-    private SmallScreenSliderAdapter smallScreenSliderAdapter;
+    private SmallScreenImagesAdapter smallScreenImagesAdapter;
     private SmartMaterialSpinner<String> wearSmartSpinner, categorySmartSpinner;
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -106,7 +106,7 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         selectPictureLauncher = registerForActivityResult(new ActivityResultContracts.OpenMultipleDocuments(), uris -> {
             if (uris != null && !uris.isEmpty()) {
                 selectedImages.addAll(uris);
-                smallScreenSliderAdapter.renewItems(selectedImages);
+                smallScreenImagesAdapter.renewItems(selectedImages);
                 updateDeleteButton();
             }
         });
@@ -116,7 +116,7 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         takePictureLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), isSuccess -> {
             if (isSuccess) {
                 selectedImages.add(currentPhotoUri);
-                smallScreenSliderAdapter.renewItems(selectedImages);
+                smallScreenImagesAdapter.renewItems(selectedImages);
                 updateDeleteButton();
             }
             requireContext().revokeUriPermission(currentPhotoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -237,8 +237,8 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
 
     private void setupSlider(@NonNull View view) {
         sliderView = view.findViewById(R.id.slider_view_small);
-        smallScreenSliderAdapter = new SmallScreenSliderAdapter(getContext());
-        sliderView.setSliderAdapter(smallScreenSliderAdapter);
+        smallScreenImagesAdapter = new SmallScreenImagesAdapter(getContext());
+        sliderView.setSliderAdapter(smallScreenImagesAdapter);
         updateDeleteButton();
     }
 
@@ -278,7 +278,7 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
                 }
 
                 selectedImages = auction.getImages();
-                smallScreenSliderAdapter.renewItems((ArrayList<Uri>) auction.getImages());
+                smallScreenImagesAdapter.renewItems((ArrayList<Uri>) auction.getImages());
                 updateDeleteButton();
             }
         });
@@ -373,7 +373,7 @@ public class GeneralAuctionAttributesFragment extends FragmentOfHomeActivity {
         deleteButton.setOnClickListener(v -> {
             if (!selectedImages.isEmpty()) {
                 selectedImages.remove(sliderView.getCurrentPagePosition());
-                smallScreenSliderAdapter.renewItems(selectedImages);
+                smallScreenImagesAdapter.renewItems(selectedImages);
                 updateDeleteButton();
             }
         });

@@ -18,7 +18,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid.MakeReverseBidActivity;
 import com.ingsw.dietiDeals24.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
@@ -66,11 +66,11 @@ public class SearchReverseAuctionDetailsActivity extends SearchAuctionDetailsAct
         greenButton.setText("OFFRI A MENO");
         greenButton.setOnClickListener(v -> {
             if (UserHolder.getUser().equals(auction.getOwner())) {
-                PopupGeneratorOf.errorPopup(v.getContext(), "Non puoi fare un'offerta alla tua stessa asta!");
+                PopupGenerator.errorPopup(v.getContext(), "Non puoi fare un'offerta alla tua stessa asta!");
                 return;
             }
             if (!UserHolder.isUserSeller()) {
-                PopupGeneratorOf.errorPopup(v.getContext(), "Devi essere un venditore per fare un offerta all'asta!");
+                PopupGenerator.errorPopup(v.getContext(), "Devi essere un venditore per fare un offerta all'asta!");
             } else {
                 MakeBidController.setReverseAuction(auction);
                 Intent intent = new Intent(v.getContext(), MakeReverseBidActivity.class);

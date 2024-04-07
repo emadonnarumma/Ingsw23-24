@@ -34,7 +34,7 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
-import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -274,7 +274,7 @@ public class SilentAuctionAttributesFragment extends FragmentOfHomeActivity impl
             CreateAuctionController.createAuction(newSilentAuction).get();
             parentActivity.runOnUiThread(() -> createAuctionButton.revertAnimation());
             viewModel.setNewAuction(new MutableLiveData<>());
-            parentActivity.runOnUiThread(() -> PopupGeneratorOf.successAuctionCreationPopup(parentActivity));
+            parentActivity.runOnUiThread(() -> PopupGenerator.successAuctionCreationPopup(parentActivity));
         } catch (ExecutionException e) {
 
             if (e.getCause() instanceof AuthenticationException) {

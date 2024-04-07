@@ -17,7 +17,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
 import com.ingsw.dietiDeals24.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 
 public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
     private DownwardAuction auction;
@@ -87,7 +87,7 @@ public class InProgressDownwardAuctionActivity extends AuctionDetailsActivity {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
+            PopupGenerator.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 

@@ -18,10 +18,10 @@ import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
-import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
-import com.ingsw.dietiDeals24.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.externalLinks.ExternalLinksAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.searchAuctions.SearchAuctionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

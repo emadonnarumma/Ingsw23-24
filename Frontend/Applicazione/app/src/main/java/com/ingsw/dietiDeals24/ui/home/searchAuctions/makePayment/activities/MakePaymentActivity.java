@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.fragments.SelectPaymentMethodFragment;
-import com.ingsw.dietiDeals24.utility.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
 
 public class MakePaymentActivity extends CheckConnectionActivity {
     private Toolbar toolbar;

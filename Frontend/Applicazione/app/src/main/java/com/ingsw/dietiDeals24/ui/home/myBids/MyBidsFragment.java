@@ -23,7 +23,7 @@ import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.utility.recyclerViews.myBids.MyBidAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.myBids.MyBidAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

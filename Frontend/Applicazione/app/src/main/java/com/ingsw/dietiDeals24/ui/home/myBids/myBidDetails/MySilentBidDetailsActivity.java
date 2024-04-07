@@ -22,7 +22,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.activities.MakePaymentActivity;
 import com.ingsw.dietiDeals24.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
@@ -143,7 +143,7 @@ public class MySilentBidDetailsActivity extends MyBidDetailsActivity {
                 bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
                 bidButton.setOnClickListener(v -> {
-                    PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+                    PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
                 });
 
             } else {
@@ -170,7 +170,7 @@ public class MySilentBidDetailsActivity extends MyBidDetailsActivity {
 
 
         bidButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+            PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
         });
     }
 
@@ -183,7 +183,7 @@ public class MySilentBidDetailsActivity extends MyBidDetailsActivity {
         bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
         bidButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+            PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
         });
     }
 

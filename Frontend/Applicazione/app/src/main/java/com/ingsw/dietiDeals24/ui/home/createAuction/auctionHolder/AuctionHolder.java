@@ -7,7 +7,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Wear;
 
 import java.util.ArrayList;
 
-public class AuctionHolder {
+public class  AuctionHolder {
     private String title;
     private ArrayList<Uri> images;
     private String description;

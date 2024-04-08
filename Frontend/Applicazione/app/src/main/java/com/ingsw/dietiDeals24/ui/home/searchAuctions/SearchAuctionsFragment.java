@@ -1,12 +1,9 @@
 package com.ingsw.dietiDeals24.ui.home.searchAuctions;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
@@ -26,8 +22,8 @@ import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.recyclerViews.searchAuctions.SearchAuctionAdapter;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 

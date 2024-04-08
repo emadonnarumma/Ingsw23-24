@@ -3,7 +3,6 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,10 +16,10 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
-import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
+import com.ingsw.dietiDeals24.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.recyclerViews.auctionBids.AuctionBidAdapter;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.List;
@@ -76,7 +75,7 @@ public class SuccessfulDownwardAuctionActivity extends AuctionDetailsActivity {
     private void setGreenButton() {
         greenButton.setText("VISUALIZZA DETTAGLI DELL'AFFARE");
         greenButton.setOnClickListener(v -> {
-            PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
+            PopupDialog loading = PopupGenerator.loadingPopup(this);
             new Thread(() -> {
                 try {
                     List<DownwardBid> bids = List.of(MyAuctionDetailsController.getWinningDownwardBidByAuctionId(auction.getIdAuction()).get());
@@ -103,7 +102,7 @@ public class SuccessfulDownwardAuctionActivity extends AuctionDetailsActivity {
     private void setRedButton() {
         redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
+            PopupGenerator.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 

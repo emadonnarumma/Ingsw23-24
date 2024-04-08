@@ -1,7 +1,5 @@
 package com.ingsw.dietiDeals24.ui.registration.fragment;
 
-import static java.lang.Thread.sleep;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,13 +18,12 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.controller.formstate.RegistrationFormState;
 import com.ingsw.dietiDeals24.ui.login.LoginActivity;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
@@ -203,11 +200,11 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
 
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
-        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
+        PopupDialog loading = PopupGenerator.loadingPopup(getContext());
         new Thread(() -> {
             try {
                 if (RegistrationController.emailAlreadyExists(emailEditText.getText().toString()).get()) {
-                    requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(getContext(), getString(R.string.email_already_exists)));
+                    requireActivity().runOnUiThread(() -> PopupGenerator.errorPopup(getContext(), getString(R.string.email_already_exists)));
                 } else {
                     requireActivity().runOnUiThread(() -> {
                         if (verifyStep() == null) {
@@ -217,9 +214,9 @@ public class MandatoryRegistrationInfoFragment extends Fragment implements Block
                     });
                 }
             } catch (ExecutionException e) {
-                requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(getContext(), e.getCause().getMessage()));
+                requireActivity().runOnUiThread(() -> PopupGenerator.errorPopup(getContext(), e.getCause().getMessage()));
             } catch (InterruptedException e) {
-                requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(getContext(), "Operazione interrotta, riprovare"));
+                requireActivity().runOnUiThread(() -> PopupGenerator.errorPopup(getContext(), "Operazione interrotta, riprovare"));
             } finally {
                 requireActivity().runOnUiThread(loading::dismissDialog);
             }

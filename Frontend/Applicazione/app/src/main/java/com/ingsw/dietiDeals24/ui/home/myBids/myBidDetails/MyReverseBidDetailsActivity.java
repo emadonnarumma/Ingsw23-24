@@ -19,10 +19,7 @@ import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-
-import java.util.concurrent.ExecutionException;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 
 public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
 
@@ -121,7 +118,7 @@ public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
         bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
         bidButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+            PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
         });
     }
 
@@ -134,7 +131,7 @@ public class MyReverseBidDetailsActivity extends MyBidDetailsActivity{
         bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
         bidButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+            PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
         });
     }
     private void setupOwnerButton() {

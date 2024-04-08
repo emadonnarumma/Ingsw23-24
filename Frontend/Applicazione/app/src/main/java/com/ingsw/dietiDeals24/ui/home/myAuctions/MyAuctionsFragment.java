@@ -16,12 +16,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyAuctionsController;
-import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myAuctions.MyAuctionAdapter;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.recyclerViews.myAuctions.MyAuctionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

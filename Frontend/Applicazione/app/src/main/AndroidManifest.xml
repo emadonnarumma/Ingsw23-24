@@ -54,7 +54,7 @@
         </provider>
 
         <activity
-            android:name=".ui.utility.slider.activity.FullScreenSliderActivity"
+            android:name=".ui.home.imageSlider.FullScreenSliderActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

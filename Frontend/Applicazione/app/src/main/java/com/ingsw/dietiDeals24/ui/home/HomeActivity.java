@@ -3,7 +3,6 @@ package com.ingsw.dietiDeals24.ui.home;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,10 +38,10 @@ import com.ingsw.dietiDeals24.ui.home.profile.my.EditProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.EditRegionFragment;
 import com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchAuctionsFragment;
-import com.ingsw.dietiDeals24.ui.utility.CheckConnectionActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.notifications.NotificationAdapter;
+import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.recyclerViews.notifications.NotificationAdapter;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -123,7 +122,7 @@ public class HomeActivity extends CheckConnectionActivity {
         }
 
         private void tryToDisconnect() {
-            PopupGeneratorOf.areYouSureToLogoutPopup(HomeActivity.this);
+            PopupGenerator.areYouSureToLogoutPopup(HomeActivity.this);
         }
     };
 
@@ -190,7 +189,7 @@ public class HomeActivity extends CheckConnectionActivity {
         this.isConnected = isConnected;
         if (!isConnected) {
             executorService.shutdownNow();
-            PopupGeneratorOf.connectionLostPopup(this);
+            PopupGenerator.connectionLostPopup(this);
         } else {
             startNotificationUpdates();
         }

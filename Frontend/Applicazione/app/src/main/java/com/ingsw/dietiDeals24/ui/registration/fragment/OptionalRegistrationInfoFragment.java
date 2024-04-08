@@ -18,7 +18,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.model.User;
 import com.saadahmedsoft.popupdialog.PopupDialog;
@@ -105,18 +105,18 @@ public class OptionalRegistrationInfoFragment extends Fragment implements Blocki
 
                 RegistrationController.register().get();
                 goToHomeActivity();
-                requireActivity().runOnUiThread(() -> PopupGeneratorOf.successPopup(requireContext(), getString(R.string.registration_successful)));
+                requireActivity().runOnUiThread(() -> PopupGenerator.successPopup(requireContext(), getString(R.string.registration_successful)));
 
             } catch(ExecutionException e){
 
                 if (e.getCause() instanceof AuthenticationException) {
-                    requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(requireContext(), getString(R.string.email_already_exists)));
+                    requireActivity().runOnUiThread(() -> PopupGenerator.errorPopup(requireContext(), getString(R.string.email_already_exists)));
                 } else if (e.getCause() instanceof ConnectionException) {
-                    requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(requireContext(), "Errore di connessione"));
+                    requireActivity().runOnUiThread(() -> PopupGenerator.errorPopup(requireContext(), "Errore di connessione"));
                 }
 
             } catch(InterruptedException e){
-                requireActivity().runOnUiThread(() -> PopupGeneratorOf.errorPopup(requireContext(), "Operazione interrotta, riprovare"));
+                requireActivity().runOnUiThread(() -> PopupGenerator.errorPopup(requireContext(), "Operazione interrotta, riprovare"));
             } finally {
                 requireActivity().runOnUiThread(loading::dismissDialog);
             }

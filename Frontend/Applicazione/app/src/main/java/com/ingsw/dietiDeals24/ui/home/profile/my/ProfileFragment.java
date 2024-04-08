@@ -23,9 +23,9 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.ExternalLinksAdapter;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.recyclerViews.externalLinks.ExternalLinksAdapter;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.concurrent.ExecutionException;
@@ -83,7 +83,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
 
         sellerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> onSellerSwitchClick());
         editProfileButton.setOnClickListener(v -> goToEditProfileFragment());
-        logoutButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToLogoutPopup(getContext()));
+        logoutButton.setOnClickListener(v -> PopupGenerator.areYouSureToLogoutPopup(getContext()));
     }
 
     private void showUserData() {
@@ -183,7 +183,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     }
 
     private void onSellerSwitchClick() {
-        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
+        PopupDialog loading = PopupGenerator.loadingPopup(getContext());
 
         if (!executorService.isShutdown()) {
             executorService.shutdownNow();
@@ -201,7 +201,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
                     requireActivity().runOnUiThread(() -> {
                         startSellerAnimation();
                         updateUserData();
-                        PopupGeneratorOf.successPopup(getContext(), getString(R.string.switched_to_seller_account));
+                        PopupGenerator.successPopup(getContext(), getString(R.string.switched_to_seller_account));
                     });
                 } catch (ExecutionException e) {
                     requireActivity().runOnUiThread(() -> {
@@ -222,7 +222,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
                     requireActivity().runOnUiThread(() -> {
                         startNotSellerAnimation();
                         updateUserData();
-                        PopupGeneratorOf.successPopup(getContext(), getString(R.string.switched_to_buyer_account));
+                        PopupGenerator.successPopup(getContext(), getString(R.string.switched_to_buyer_account));
                     });
                 } catch (ExecutionException e) {
                     requireActivity().runOnUiThread(() -> {
@@ -301,7 +301,7 @@ public class ProfileFragment extends FragmentOfHomeActivity {
     }
 
     private void retrieveUserData() {
-        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
+        PopupDialog loading = PopupGenerator.loadingPopup(getContext());
 
         new Thread(() -> {
             try {

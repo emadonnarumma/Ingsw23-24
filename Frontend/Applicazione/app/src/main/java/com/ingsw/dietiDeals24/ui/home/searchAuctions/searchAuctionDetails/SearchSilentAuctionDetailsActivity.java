@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ingsw.dietiDeals24.R;
@@ -18,7 +17,7 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makeBid.MakeSilentBidActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 
 public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private SilentAuction auction;
@@ -73,11 +72,11 @@ public class SearchSilentAuctionDetailsActivity extends SearchAuctionDetailsActi
     private void setGreenButton() {
         greenButton.setOnClickListener(v -> {
             if (UserHolder.getUser().equals(auction.getOwner())) {
-                PopupGeneratorOf.errorPopup(v.getContext(), "Non puoi fare un'offerta alla tua stessa asta!");
+                PopupGenerator.errorPopup(v.getContext(), "Non puoi fare un'offerta alla tua stessa asta!");
                 return;
             }
             if (!UserHolder.isUserBuyer()) {
-                PopupGeneratorOf.errorPopup(v.getContext(), "Devi essere un compratore per fare un'offerta all'asta!");
+                PopupGenerator.errorPopup(v.getContext(), "Devi essere un compratore per fare un'offerta all'asta!");
             } else {
                 MakeBidController.setSilentAuction(auction);
                 Intent intent = new Intent(v.getContext(), MakeSilentBidActivity.class);

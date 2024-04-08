@@ -17,18 +17,13 @@ import android.widget.TextView;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyBidsController;
-import com.ingsw.dietiDeals24.controller.SearchAuctionsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
-import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.DownwardBid;
-import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.ReverseBid;
-import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.myBids.MyBidAdapter;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.searchAuctions.SearchAuctionAdapter;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.recyclerViews.myBids.MyBidAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

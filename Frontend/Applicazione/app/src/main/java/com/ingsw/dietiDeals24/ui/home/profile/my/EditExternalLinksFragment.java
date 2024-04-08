@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.externalLinks.EditableExternalLinksAdapter;
+import com.ingsw.dietiDeals24.ui.recyclerViews.externalLinks.EditableExternalLinksAdapter;
 
 public class EditExternalLinksFragment extends FragmentOfHomeActivity {
     private ConstraintLayout addExternalLinkButton;

@@ -3,29 +3,19 @@ package com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.downwardAuction
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
-import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
-import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
-import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import com.ingsw.dietiDeals24.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 
 public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
     private DownwardAuction auction;
@@ -76,14 +66,14 @@ public class FailedDownwardAuctionActivity extends AuctionDetailsActivity {
     private void setGreenButton() {
         greenButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_green));
         greenButton.setText("RILANCIA");
-        greenButton.setOnClickListener(v -> PopupGeneratorOf.areYouSureToRelaunchAuctionPopup(this, auction));
+        greenButton.setOnClickListener(v -> PopupGenerator.areYouSureToRelaunchAuctionPopup(this, auction));
     }
 
     private void setRedButton() {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("CANCELLA L'ASTA");
         redButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
+            PopupGenerator.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 

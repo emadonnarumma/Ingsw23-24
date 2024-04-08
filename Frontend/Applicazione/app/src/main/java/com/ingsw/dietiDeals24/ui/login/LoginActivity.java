@@ -15,15 +15,13 @@ import android.widget.TextView;
 
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.controller.formstate.LoginFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
-import com.ingsw.dietiDeals24.ui.utility.OnNavigateToHomeActivityFragmentListener;
+import com.ingsw.dietiDeals24.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.registration.activity.RegistrationActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.controller.LogInController;
 
 
@@ -181,15 +179,15 @@ public class LoginActivity extends AppCompatActivity implements OnNavigateToHome
 
                 if (e.getCause() instanceof AuthenticationException) {
                     runOnUiThread(() -> loginButton.revertAnimation());
-                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(this, "Credenziali errate"));
+                    runOnUiThread(() -> PopupGenerator.errorPopup(this, "Credenziali errate"));
 
                 } else if (e.getCause() instanceof ConnectionException) {
                     runOnUiThread(() -> loginButton.revertAnimation());
-                    runOnUiThread(() -> PopupGeneratorOf.errorPopup(this, "Errore di connessione"));
+                    runOnUiThread(() -> PopupGenerator.errorPopup(this, "Errore di connessione"));
                 }
 
             } catch (InterruptedException e) {
-                runOnUiThread(() -> PopupGeneratorOf.errorPopup(this, "Operazione interrotta, riprovare"));
+                runOnUiThread(() -> PopupGenerator.errorPopup(this, "Operazione interrotta, riprovare"));
             }
         });
     }

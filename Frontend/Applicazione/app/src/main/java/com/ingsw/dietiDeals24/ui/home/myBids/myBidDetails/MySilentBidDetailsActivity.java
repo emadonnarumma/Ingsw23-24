@@ -9,9 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.MakePaymentController;
-import com.ingsw.dietiDeals24.controller.MyAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.MyBidDetailsController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
 import com.ingsw.dietiDeals24.model.SilentAuction;
@@ -23,9 +21,9 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.activities.MakePaymentActivity;
-import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.concurrent.ExecutionException;
 
@@ -145,7 +143,7 @@ public class MySilentBidDetailsActivity extends MyBidDetailsActivity {
                 bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
                 bidButton.setOnClickListener(v -> {
-                    PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+                    PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
                 });
 
             } else {
@@ -172,7 +170,7 @@ public class MySilentBidDetailsActivity extends MyBidDetailsActivity {
 
 
         bidButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+            PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
         });
     }
 
@@ -185,7 +183,7 @@ public class MySilentBidDetailsActivity extends MyBidDetailsActivity {
         bidButton.setCompoundDrawablesWithIntrinsicBounds(null, null, trashIcon, null);
 
         bidButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteBidPopup(this, bid);
+            PopupGenerator.areYouSureToDeleteBidPopup(this, bid);
         });
     }
 

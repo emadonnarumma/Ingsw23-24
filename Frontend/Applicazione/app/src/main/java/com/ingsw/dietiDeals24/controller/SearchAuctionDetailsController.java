@@ -2,22 +2,18 @@ package com.ingsw.dietiDeals24.controller;
 
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
-import com.ingsw.dietiDeals24.model.Image;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.SearchAuctionDetailsDao;
-import com.ingsw.dietiDeals24.network.dao.SearchAuctionsDao;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Response;

@@ -17,9 +17,9 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.utility.recyclerViews.auctionBids.AuctionBidAdapter;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
+import com.ingsw.dietiDeals24.utility.ToastManager;
+import com.ingsw.dietiDeals24.ui.recyclerViews.auctionBids.AuctionBidAdapter;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.List;
@@ -75,7 +75,7 @@ public class SuccessfulSilentAuctionActivity extends AuctionDetailsActivity {
         greenButton.setText("VISUALIZZA DETTAGLI DELL'AFFARE");
         greenButton.setOnClickListener(v -> {
 
-            PopupDialog loading = PopupGeneratorOf.loadingPopup(this);
+            PopupDialog loading = PopupGenerator.loadingPopup(this);
             new Thread(() -> {
                 try {
                     SilentBid bid = MyAuctionDetailsController.getWinningSilentBidByAuctionId(auction.getIdAuction()).get();
@@ -103,7 +103,7 @@ public class SuccessfulSilentAuctionActivity extends AuctionDetailsActivity {
         redButton.setBackground(AppCompatResources.getDrawable(this, R.drawable.square_shape_red));
         redButton.setText("RIMUOVI ASTA");
         redButton.setOnClickListener(v -> {
-            PopupGeneratorOf.areYouSureToDeleteAuctionPopup(this, auction);
+            PopupGenerator.areYouSureToDeleteAuctionPopup(this, auction);
         });
     }
 

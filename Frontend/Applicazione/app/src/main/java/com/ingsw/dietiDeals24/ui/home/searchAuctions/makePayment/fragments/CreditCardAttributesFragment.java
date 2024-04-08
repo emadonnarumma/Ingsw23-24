@@ -17,13 +17,10 @@ import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgre
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.CreateAuctionController;
-import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.MakePaymentController;
-import com.ingsw.dietiDeals24.controller.formstate.DownwardAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.controller.formstate.MakePaymentFormState;
-import com.ingsw.dietiDeals24.ui.utility.ExpirationDateTextWatcher;
-import com.ingsw.dietiDeals24.ui.utility.FourDigitCardFormatWatcher;
+import com.ingsw.dietiDeals24.utility.ExpirationDateTextWatcher;
+import com.ingsw.dietiDeals24.utility.FourDigitCardFormatWatcher;
 
 public class CreditCardAttributesFragment extends FragmentOfMakePaymentActivity {
     private EditText cardNumberEditText, cardOwnerNameEditText,

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,8 +20,8 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.formstate.BankAccountFormState;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
-import com.ingsw.dietiDeals24.ui.utility.ToastManager;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.concurrent.ExecutionException;
@@ -161,7 +160,7 @@ public class AddBankAccountFragment extends FragmentOfHomeActivity {
 
 
     private void unlockSellerMode() {
-        PopupDialog loading = PopupGeneratorOf.loadingPopup(getContext());
+        PopupDialog loading = PopupGenerator.loadingPopup(getContext());
         new Thread(() -> {
             try {
                 ProfileController.addSellerAccount().get();
@@ -172,7 +171,7 @@ public class AddBankAccountFragment extends FragmentOfHomeActivity {
                 ).get();
                 sleep(500);
                 requireActivity().runOnUiThread(() -> {
-                    PopupGeneratorOf.successPopup(getContext(), getString(R.string.seller_mode_unlocked));
+                    PopupGenerator.successPopup(getContext(), getString(R.string.seller_mode_unlocked));
                     goToProfileFragment();
                 });
             } catch (InterruptedException e) {

@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.controller.MakeBidController;
 import com.ingsw.dietiDeals24.controller.MakePaymentController;
 import com.ingsw.dietiDeals24.controller.SearchAuctionDetailsController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
@@ -19,8 +17,8 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.profile.other.OtherUserProfileActivity;
 import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.activities.MakePaymentActivity;
-import com.ingsw.dietiDeals24.ui.utility.NumberFormatter;
-import com.ingsw.dietiDeals24.ui.utility.PopupGeneratorOf;
+import com.ingsw.dietiDeals24.utility.NumberFormatter;
+import com.ingsw.dietiDeals24.utility.PopupGenerator;
 
 public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsActivity {
     private DownwardAuction auction;
@@ -86,11 +84,11 @@ public class SearchDownwardAuctionDetailsActivity extends SearchAuctionDetailsAc
         greenButton.setText("COMPRA ORA A: " + NumberFormatter.formatPrice(auction.getCurrentPrice()));
         greenButton.setOnClickListener(v -> {
             if (UserHolder.getUser().equals(auction.getOwner())) {
-                PopupGeneratorOf.errorPopup(v.getContext(), "Non puoi comprare la tua stessa asta!");
+                PopupGenerator.errorPopup(v.getContext(), "Non puoi comprare la tua stessa asta!");
                 return;
             }
             if (!UserHolder.isUserBuyer()) {
-                PopupGeneratorOf.errorPopup(v.getContext(), "Devi essere un compratore per comprare un'asta!");
+                PopupGenerator.errorPopup(v.getContext(), "Devi essere un compratore per comprare un'asta!");
             } else {
                 MakePaymentController.setBid(null);
                 MakePaymentController.setAuction(auction);

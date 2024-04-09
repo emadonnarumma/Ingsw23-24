@@ -5,11 +5,11 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +23,9 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
+import com.ingsw.dietiDeals24.ui.recyclerViews.externalLinks.ExternalLinksAdapter;
 import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.recyclerViews.externalLinks.ExternalLinksAdapter;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.concurrent.ExecutionException;

@@ -7,7 +7,6 @@ import com.ingsw.dietiDeals24.model.SilentBid;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;

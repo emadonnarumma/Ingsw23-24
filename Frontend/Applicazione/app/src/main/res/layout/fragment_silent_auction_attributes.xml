@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.createAuction.fragments.specificAuctionAttributes.SilentAuctionAttributesFragment">
+    tools:context=".ui.home.createAuction.specificAuctionAttributes.SilentAuctionAttributesFragment">
 
     <TextView
         android:id="@+id/date_hint_text_view_silent_auction_attributes"

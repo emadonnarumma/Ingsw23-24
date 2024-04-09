@@ -2,25 +2,24 @@ package com.ingsw.dietiDeals24.ui.registration.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.model.enumeration.Region;
+import com.ingsw.dietiDeals24.controller.RegistrationController;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
 import com.ingsw.dietiDeals24.utility.PopupGenerator;
-import com.ingsw.dietiDeals24.controller.RegistrationController;
-import com.ingsw.dietiDeals24.model.User;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;

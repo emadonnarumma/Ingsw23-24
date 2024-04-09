@@ -17,9 +17,9 @@ import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
+import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
 import com.ingsw.dietiDeals24.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;

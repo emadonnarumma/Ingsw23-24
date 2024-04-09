@@ -5,9 +5,6 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 
-import java.io.Serializable;
-import java.util.List;
-
 public class SilentAuction extends Auction {
 
     private String expirationDate;

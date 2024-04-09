@@ -5,7 +5,6 @@ import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentBid;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import retrofit2.Call;
 import retrofit2.http.DELETE;

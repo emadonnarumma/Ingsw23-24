@@ -10,11 +10,11 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.MyAuctionsController;
-import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.SilentAuction;
-import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
 import com.smarteist.autoimageslider.SliderView;

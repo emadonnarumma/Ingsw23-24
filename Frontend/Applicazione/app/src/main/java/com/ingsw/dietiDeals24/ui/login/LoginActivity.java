@@ -1,10 +1,5 @@
 package com.ingsw.dietiDeals24.ui.login;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,17 +8,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.LogInController;
 import com.ingsw.dietiDeals24.controller.formstate.LoginFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
-import com.ingsw.dietiDeals24.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.registration.activity.RegistrationActivity;
+import com.ingsw.dietiDeals24.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.utility.PopupGenerator;
-import com.ingsw.dietiDeals24.controller.LogInController;
-
 
 import java.util.concurrent.ExecutionException;
 

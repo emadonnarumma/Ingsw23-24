@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder;
+package com.ingsw.dietiDeals24.controller;
 
 import android.net.Uri;
 

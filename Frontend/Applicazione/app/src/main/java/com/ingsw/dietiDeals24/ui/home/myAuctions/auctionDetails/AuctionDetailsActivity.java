@@ -5,19 +5,19 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
 import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
 import com.smarteist.autoimageslider.SliderView;
-import com.ingsw.dietiDeals24.R;
 
 import java.util.ArrayList;
 

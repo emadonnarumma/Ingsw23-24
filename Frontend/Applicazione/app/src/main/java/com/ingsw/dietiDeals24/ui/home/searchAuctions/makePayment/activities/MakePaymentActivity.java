@@ -9,8 +9,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.ingsw.dietiDeals24.R;
-import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.fragments.SelectPaymentMethodFragment;
 import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
+import com.ingsw.dietiDeals24.ui.home.searchAuctions.makePayment.fragments.SelectPaymentMethodFragment;
 
 public class MakePaymentActivity extends CheckConnectionActivity {
     private Toolbar toolbar;

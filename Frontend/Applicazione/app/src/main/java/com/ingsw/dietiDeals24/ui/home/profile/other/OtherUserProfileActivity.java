@@ -19,9 +19,9 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
-import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.recyclerViews.externalLinks.ExternalLinksAdapter;
 import com.ingsw.dietiDeals24.ui.recyclerViews.searchAuctions.SearchAuctionAdapter;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.ArrayList;
 import java.util.List;

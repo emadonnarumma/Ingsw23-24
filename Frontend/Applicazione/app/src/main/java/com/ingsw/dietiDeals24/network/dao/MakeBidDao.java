@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.network.dao;
 
-import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentBid;
 

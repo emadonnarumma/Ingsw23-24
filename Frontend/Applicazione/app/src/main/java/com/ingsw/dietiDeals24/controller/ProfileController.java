@@ -19,15 +19,14 @@ import com.ingsw.dietiDeals24.model.Buyer;
 import com.ingsw.dietiDeals24.model.ExternalLink;
 import com.ingsw.dietiDeals24.model.RegistrationRequest;
 import com.ingsw.dietiDeals24.model.Seller;
-import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
-import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.BankAccountDao;
+import com.ingsw.dietiDeals24.network.dao.ExternalLinkDao;
 import com.ingsw.dietiDeals24.network.dao.RegistrationDao;
 import com.ingsw.dietiDeals24.network.dao.UserDao;
-import com.ingsw.dietiDeals24.network.dao.ExternalLinkDao;
 
 import java.io.IOException;
 import java.util.ArrayList;

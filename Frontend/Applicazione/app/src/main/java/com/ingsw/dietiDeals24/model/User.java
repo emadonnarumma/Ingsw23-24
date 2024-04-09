@@ -1,6 +1,5 @@
 package com.ingsw.dietiDeals24.model;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ingsw.dietiDeals24.model.enumeration.Region;

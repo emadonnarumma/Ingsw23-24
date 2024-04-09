@@ -1,14 +1,8 @@
-package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes;
+package com.ingsw.dietiDeals24.ui.home.createAuction.specificAuctionAttributes;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,28 +11,33 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
+
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.AuctionHolder;
 import com.ingsw.dietiDeals24.controller.CreateAuctionController;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.controller.formstate.ReverseAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.model.Image;
+import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionStatus;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
-import com.ingsw.dietiDeals24.model.Image;
-import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.home.HomeActivity;
-import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
+import com.ingsw.dietiDeals24.ui.home.createAuction.generalAuctionAttributes.GeneralAuctionAttributesViewModel;
 import com.ingsw.dietiDeals24.utility.DecimalInputFilter;
 import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.IOException;

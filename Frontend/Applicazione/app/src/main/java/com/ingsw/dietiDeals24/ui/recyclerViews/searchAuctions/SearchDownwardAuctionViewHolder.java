@@ -14,8 +14,8 @@ import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
-import com.ingsw.dietiDeals24.utility.NumberFormatter;
 import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
+import com.ingsw.dietiDeals24.utility.NumberFormatter;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;

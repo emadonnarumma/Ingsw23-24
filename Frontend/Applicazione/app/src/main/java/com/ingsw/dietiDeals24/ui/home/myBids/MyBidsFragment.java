@@ -2,18 +2,17 @@ package com.ingsw.dietiDeals24.ui.home.myBids;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.MyBidsController;
@@ -22,8 +21,8 @@ import com.ingsw.dietiDeals24.model.DownwardBid;
 import com.ingsw.dietiDeals24.model.ReverseBid;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.recyclerViews.myBids.MyBidAdapter;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 
 import java.util.ArrayList;
 import java.util.List;

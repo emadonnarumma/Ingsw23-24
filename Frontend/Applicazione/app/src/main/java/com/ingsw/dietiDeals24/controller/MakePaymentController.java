@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.formstate.MakePaymentFormState;
-import com.ingsw.dietiDeals24.controller.formstate.ReverseAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
@@ -14,11 +13,9 @@ import com.ingsw.dietiDeals24.model.Bid;
 import com.ingsw.dietiDeals24.model.CreditCard;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.DownwardBid;
-import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.dao.MakeBidDao;
 import com.ingsw.dietiDeals24.network.dao.MakePaymentDao;
 
 import java.io.IOException;

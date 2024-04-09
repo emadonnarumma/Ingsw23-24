@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes;
+package com.ingsw.dietiDeals24.ui.home.createAuction.generalAuctionAttributes;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,8 +39,8 @@ import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
-import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes.SellerAuctionTypesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.userTypeAuctionAttributes.BuyerAuctionTypesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.userTypeAuctionAttributes.SellerAuctionTypesFragment;
 import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
 import com.smarteist.autoimageslider.SliderView;
 

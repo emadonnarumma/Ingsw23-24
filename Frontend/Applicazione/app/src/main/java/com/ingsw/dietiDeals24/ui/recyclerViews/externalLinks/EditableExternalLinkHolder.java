@@ -1,7 +1,5 @@
 package com.ingsw.dietiDeals24.ui.recyclerViews.externalLinks;
 
-import static java.lang.Thread.sleep;
-
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;

@@ -1,4 +1,4 @@
-package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes;
+package com.ingsw.dietiDeals24.ui.home.createAuction.generalAuctionAttributes;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,10 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.ingsw.dietiDeals24.R;
+import com.ingsw.dietiDeals24.controller.AuctionHolder;
 import com.ingsw.dietiDeals24.controller.formstate.GeneralAuctionAttributesFormState;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
-import com.ingsw.dietiDeals24.ui.home.createAuction.auctionHolder.AuctionHolder;
 
 import java.util.ArrayList;
 

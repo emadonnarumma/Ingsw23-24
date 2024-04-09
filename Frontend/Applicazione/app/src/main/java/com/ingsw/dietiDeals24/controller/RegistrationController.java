@@ -6,14 +6,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.formstate.RegistrationFormState;
-import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
+import com.ingsw.dietiDeals24.model.RegistrationRequest;
+import com.ingsw.dietiDeals24.model.User;
+import com.ingsw.dietiDeals24.model.enumeration.Role;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.network.dao.RegistrationDao;
-import com.ingsw.dietiDeals24.model.RegistrationRequest;
 import com.ingsw.dietiDeals24.network.dao.UserDao;
 
 import java.io.IOException;

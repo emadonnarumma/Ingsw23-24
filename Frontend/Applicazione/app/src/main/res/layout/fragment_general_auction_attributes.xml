@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment"
+    tools:context=".ui.home.createAuction.generalAuctionAttributes.GeneralAuctionAttributesFragment"
     android:id="@+id/general_auction_attributes_layout">
 
     <com.google.android.material.textfield.TextInputLayout

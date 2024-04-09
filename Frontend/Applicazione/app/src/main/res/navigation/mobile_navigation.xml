@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/navigation_create_auction"
-        android:name="com.ingsw.dietiDeals24.ui.home.createAuction.fragments.generalAuctionAttributes.GeneralAuctionAttributesFragment"
+        android:name="com.ingsw.dietiDeals24.ui.home.createAuction.generalAuctionAttributes.GeneralAuctionAttributesFragment"
         android:label="@string/bottom_nav_create_auction"
         tools:layout="@layout/fragment_profile" />
 

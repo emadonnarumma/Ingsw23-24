@@ -13,8 +13,6 @@ import com.ingsw.dietiDeals24.controller.ProfileController;
 import com.ingsw.dietiDeals24.controller.UserHolder;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 
-import java.util.concurrent.ExecutionException;
-
 public class EditProfileFragment extends FragmentOfHomeActivity {
     private ConstraintLayout editRegionButton;
     private ConstraintLayout editBioButton;

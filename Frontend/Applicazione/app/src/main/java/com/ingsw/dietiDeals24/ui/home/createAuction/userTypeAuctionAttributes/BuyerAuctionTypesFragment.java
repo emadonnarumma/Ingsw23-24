@@ -1,20 +1,19 @@
-package com.ingsw.dietiDeals24.ui.home.createAuction.fragments.userTypeAuctionAttributes;
+package com.ingsw.dietiDeals24.ui.home.createAuction.userTypeAuctionAttributes;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
-import com.ingsw.dietiDeals24.ui.home.createAuction.fragments.specificAuctionAttributes.ReverseAuctionAttributesFragment;
+import com.ingsw.dietiDeals24.ui.home.createAuction.specificAuctionAttributes.ReverseAuctionAttributesFragment;
 
 public class BuyerAuctionTypesFragment extends FragmentOfHomeActivity {
 

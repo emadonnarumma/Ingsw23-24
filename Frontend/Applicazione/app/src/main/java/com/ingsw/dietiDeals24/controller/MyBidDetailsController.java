@@ -6,7 +6,6 @@ import com.ingsw.dietiDeals24.model.Bid;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.MyBidDetailsDao;
-import com.ingsw.dietiDeals24.network.dao.MyBidsDao;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;

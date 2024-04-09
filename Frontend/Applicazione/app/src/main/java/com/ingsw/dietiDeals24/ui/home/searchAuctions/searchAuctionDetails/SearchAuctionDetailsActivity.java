@@ -16,8 +16,8 @@ import com.ingsw.dietiDeals24.R;
 import com.ingsw.dietiDeals24.controller.ImageController;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.ui.CheckConnectionActivity;
-import com.ingsw.dietiDeals24.utility.OnNavigateToHomeActivityFragmentListener;
 import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
+import com.ingsw.dietiDeals24.utility.OnNavigateToHomeActivityFragmentListener;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;

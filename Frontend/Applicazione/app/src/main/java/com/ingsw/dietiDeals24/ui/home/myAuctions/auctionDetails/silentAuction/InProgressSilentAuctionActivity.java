@@ -16,9 +16,9 @@ import com.ingsw.dietiDeals24.model.enumeration.AuctionType;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.model.enumeration.Wear;
 import com.ingsw.dietiDeals24.ui.home.myAuctions.auctionDetails.AuctionDetailsActivity;
+import com.ingsw.dietiDeals24.ui.recyclerViews.auctionBids.AuctionBidAdapter;
 import com.ingsw.dietiDeals24.utility.PopupGenerator;
 import com.ingsw.dietiDeals24.utility.ToastManager;
-import com.ingsw.dietiDeals24.ui.recyclerViews.auctionBids.AuctionBidAdapter;
 import com.saadahmedsoft.popupdialog.PopupDialog;
 
 import java.util.List;

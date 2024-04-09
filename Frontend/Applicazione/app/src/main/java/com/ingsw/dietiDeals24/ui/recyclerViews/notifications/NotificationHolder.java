@@ -16,8 +16,8 @@ import com.ingsw.dietiDeals24.exceptions.AuthenticationException;
 import com.ingsw.dietiDeals24.exceptions.ConnectionException;
 import com.ingsw.dietiDeals24.model.Auction;
 import com.ingsw.dietiDeals24.model.Notification;
-import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.ingsw.dietiDeals24.ui.recyclerViews.auctionImages.SmallScreenImagesAdapter;
+import com.ingsw.dietiDeals24.utility.ToastManager;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;

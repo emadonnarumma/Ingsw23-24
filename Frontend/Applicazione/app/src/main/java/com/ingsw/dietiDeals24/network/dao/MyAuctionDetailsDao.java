@@ -13,7 +13,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface MyAuctiondDetailsDao {
+public interface MyAuctionDetailsDao {
     @DELETE("auction/{id}")
     Call<Boolean> deleteAuction(@Path("id") Integer idBid, @Header("Authorization") String authToken);
 

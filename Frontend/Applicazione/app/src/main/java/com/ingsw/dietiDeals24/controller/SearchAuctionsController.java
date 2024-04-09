@@ -11,7 +11,7 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.enumeration.Category;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
+import com.ingsw.dietiDeals24.network.dao.MyAuctionDetailsDao;
 import com.ingsw.dietiDeals24.network.dao.SearchAuctionsDao;
 
 import java.io.IOException;
@@ -473,8 +473,8 @@ public class SearchAuctionsController implements RetroFitHolder {
         reverseAuction){
             return CompletableFuture.supplyAsync(() -> {
                 try {
-                    MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                    Response<ReverseBid> response = myAuctiondDetailsDao.getMinPricedReverseBidsByAuctionId(reverseAuction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                    MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                    Response<ReverseBid> response = myAuctionDetailsDao.getMinPricedReverseBidsByAuctionId(reverseAuction.getIdAuction(), TokenHolder.getAuthToken()).execute();
 
                     if (response.isSuccessful()) {
                         return response.body();

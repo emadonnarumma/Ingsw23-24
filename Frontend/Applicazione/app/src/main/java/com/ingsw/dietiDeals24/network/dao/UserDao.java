@@ -26,21 +26,6 @@ public interface UserDao {
     @PUT("user/{email}/{role}/updateBio")
     Call<User> updateBio(@Path("email") String email, @Path("role") Role role, @Body String bio, @Header("Authorization") String token);
 
-    /*
-    @PUT("user/{email}/updateRole")
-    Call<User> updateRole(@Path("email") String email, @Body Role role, @Header("Authorization") String token);
-     */
-
-    /*
-    @POST("user")
-    Call<User> addAccount(@Body User user, @Header("Authorization") String token);
-     */
-
     @GET("user/does-account-exist/{email}/{role}")
     Call<Boolean> doesAccountExist(@Path("email") String email, @Path("role") Role role, @Header("Authorization") String token);
-
-    /*
-    @GET("user/{email}/hasBankAccount")
-    Call<Boolean> hasBankAccount(@Path("email") String email, @Header("Authorization") String token);
-     */
 }

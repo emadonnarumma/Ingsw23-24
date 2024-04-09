@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,6 +18,7 @@ import com.ingsw.dietiDeals24.controller.MyAuctionsController;
 import com.ingsw.dietiDeals24.model.DownwardAuction;
 import com.ingsw.dietiDeals24.model.ReverseAuction;
 import com.ingsw.dietiDeals24.model.SilentAuction;
+import com.ingsw.dietiDeals24.ui.home.FragmentOfHomeActivity;
 import com.ingsw.dietiDeals24.ui.recyclerViews.myAuctions.MyAuctionAdapter;
 import com.ingsw.dietiDeals24.utility.ToastManager;
 
@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MyAuctionsFragment extends Fragment {
+public class MyAuctionsFragment extends FragmentOfHomeActivity {
     private RecyclerView myAuctionsRecyclerView;
     private ProgressBar progressBar;
     private SwipeRefreshLayout auctionsSwipeRefreshLayout;
@@ -54,6 +54,7 @@ public class MyAuctionsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setBackButtonEnabled(false);
         setupMyAuctionsRecyclerView(view);
         setupProgresBar(view);
         setupSwipeAuctionRefreshLayout(view);

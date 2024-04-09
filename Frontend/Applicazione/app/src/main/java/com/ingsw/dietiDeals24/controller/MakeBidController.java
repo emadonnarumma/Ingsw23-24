@@ -18,7 +18,7 @@ import com.ingsw.dietiDeals24.model.enumeration.BidStatus;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.MakeBidDao;
-import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
+import com.ingsw.dietiDeals24.network.dao.MyAuctionDetailsDao;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -178,8 +178,8 @@ public class MakeBidController implements RetroFitHolder {
     public static CompletableFuture<ReverseBid> getCurrentReverseBid() {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<ReverseBid> response = myAuctiondDetailsDao.getMinPricedReverseBidsByAuctionId(reverseAuction.getIdAuction(), TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<ReverseBid> response = myAuctionDetailsDao.getMinPricedReverseBidsByAuctionId(reverseAuction.getIdAuction(), TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();

@@ -1,7 +1,6 @@
 package com.ingsw.dietiDeals24.controller;
 
 import static com.ingsw.dietiDeals24.controller.UserHolder.user;
-import static com.ingsw.dietiDeals24.network.RetroFitHolder.retrofit;
 
 import android.content.res.Resources;
 
@@ -22,6 +21,7 @@ import com.ingsw.dietiDeals24.model.Seller;
 import com.ingsw.dietiDeals24.model.User;
 import com.ingsw.dietiDeals24.model.enumeration.Region;
 import com.ingsw.dietiDeals24.model.enumeration.Role;
+import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
 import com.ingsw.dietiDeals24.network.dao.BankAccountDao;
 import com.ingsw.dietiDeals24.network.dao.ExternalLinkDao;
@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 
 import retrofit2.Response;
 
-public class ProfileController {
+public class ProfileController implements RetroFitHolder {
     private static MutableLiveData<ExternalLinkFormState> externalLinkFormState = new MutableLiveData<>();
     private static MutableLiveData<BankAccountFormState> bankAccountFormState = new MutableLiveData<>();
     private static ExternalLink selectedLink;

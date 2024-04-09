@@ -9,7 +9,7 @@ import com.ingsw.dietiDeals24.model.SilentAuction;
 import com.ingsw.dietiDeals24.model.SilentBid;
 import com.ingsw.dietiDeals24.network.RetroFitHolder;
 import com.ingsw.dietiDeals24.network.TokenHolder;
-import com.ingsw.dietiDeals24.network.dao.MyAuctiondDetailsDao;
+import com.ingsw.dietiDeals24.network.dao.MyAuctionDetailsDao;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -40,8 +40,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<DownwardBid> getWinningDownwardBidByAuctionId(Integer idAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<DownwardBid> response = myAuctiondDetailsDao.getWinningDownwardBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<DownwardBid> response = myAuctionDetailsDao.getWinningDownwardBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -59,8 +59,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<ReverseBid> getWinningReverseBidByAuctionId(Integer idAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<ReverseBid> response = myAuctiondDetailsDao.getWinningReverseBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<ReverseBid> response = myAuctionDetailsDao.getWinningReverseBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -78,8 +78,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<SilentBid> getWinningSilentBidByAuctionId(Integer idAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<SilentBid> response = myAuctiondDetailsDao.getWinningSilentBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<SilentBid> response = myAuctionDetailsDao.getWinningSilentBidByAuctionId(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -97,8 +97,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<List<SilentBid>> getInProgressSilentBidsByAuctionId(Integer idBid) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<List<SilentBid>> response = myAuctiondDetailsDao.getInProgressSilentBidsByAuctionId(idBid, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<List<SilentBid>> response = myAuctionDetailsDao.getInProgressSilentBidsByAuctionId(idBid, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -116,8 +116,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<Boolean> deleteBid(Integer idBid) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<Boolean> response = myAuctiondDetailsDao.deleteBid(idBid, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<Boolean> response = myAuctionDetailsDao.deleteBid(idBid, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -135,8 +135,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<Boolean> deleteAuction(Integer idAuction) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<Boolean> response = myAuctiondDetailsDao.deleteAuction(idAuction, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<Boolean> response = myAuctionDetailsDao.deleteAuction(idAuction, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     MyAuctionsController.setUpdatedAll(false);
@@ -155,8 +155,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<List<SilentBid>> getAllSilentBidsByAuctionId(Integer auctionId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<List<SilentBid>> response = myAuctiondDetailsDao.getAllSilentBidsBySilentAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<List<SilentBid>> response = myAuctionDetailsDao.getAllSilentBidsBySilentAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -174,8 +174,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<ReverseBid> getMinPricedReverseBidByAuctionId(Integer auctionId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<ReverseBid> response = myAuctiondDetailsDao.getMinPricedReverseBidsByAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<ReverseBid> response = myAuctionDetailsDao.getMinPricedReverseBidsByAuctionId(auctionId, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     return response.body();
@@ -193,8 +193,8 @@ public class MyAuctionDetailsController extends MyAuctionsController implements 
     public static CompletableFuture<Boolean> acceptBid(int id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                MyAuctiondDetailsDao myAuctiondDetailsDao = retrofit.create(MyAuctiondDetailsDao.class);
-                Response<Boolean> response = myAuctiondDetailsDao.acceptBid(id, TokenHolder.getAuthToken()).execute();
+                MyAuctionDetailsDao myAuctionDetailsDao = retrofit.create(MyAuctionDetailsDao.class);
+                Response<Boolean> response = myAuctionDetailsDao.acceptBid(id, TokenHolder.getAuthToken()).execute();
 
                 if (response.isSuccessful()) {
                     MyAuctionsController.setUpdatedAll(false);

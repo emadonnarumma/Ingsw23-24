@@ -188,24 +188,28 @@ public class EditExternalLinkFragment extends FragmentOfHomeActivity {
     private void onDoneButtonClick() {
         PopupDialog loading = PopupGenerator.loadingPopup(getContext());
         new Thread(() -> {
-            try {
-                if(isExternalLinkChanged()) {
-                    ProfileController.updateLink(
-                            titleEditText.getText().toString(),
-                            urlEditText.getText().toString()
-                    ).get();
-                    sleep(500);
-                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.link_updated));
-                }
-                requireActivity().runOnUiThread(this::goToEditExternalLinksFragment);
-            } catch (InterruptedException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
-            } catch (ExecutionException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
-            } finally {
-                requireActivity().runOnUiThread(loading::dismissDialog);
-            }
+            changeLinkThread(loading);
         }).start();
+    }
+
+    private void changeLinkThread(PopupDialog loading) {
+        try {
+            if(isExternalLinkChanged()) {
+                ProfileController.updateLink(
+                        titleEditText.getText().toString(),
+                        urlEditText.getText().toString()
+                ).get();
+                sleep(500);
+                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.link_updated));
+            }
+            requireActivity().runOnUiThread(() -> goToEditExternalLinksFragment());
+        } catch (InterruptedException e) {
+            requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta, riprovare"));
+        } catch (ExecutionException e) {
+            requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+        } finally {
+            requireActivity().runOnUiThread(() -> loading.dismissDialog());
+        }
     }
 
     private void goToEditExternalLinksFragment() {

@@ -65,23 +65,27 @@ public class EditRegionFragment extends FragmentOfHomeActivity {
     private void onDoneButtonClick() {
         PopupDialog loading = PopupGenerator.loadingPopup(getContext());
         new Thread(() -> {
-            try {
-                if(regionSmartSpinner.getSelectedItem() != null) {
-                    if(isRegionChanged()) {
-                        ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem())).get();
-                        sleep(500);
-                        requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.region_updated));
-                    }
-                }
-                requireActivity().runOnUiThread(this::goToProfileFragment);
-            } catch (InterruptedException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta"));
-            } catch (ExecutionException e) {
-                requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
-            } finally {
-                requireActivity().runOnUiThread(loading::dismissDialog);
-            }
+            changeRegionThread(loading);
         }).start();
+    }
+
+    private void changeRegionThread(PopupDialog loading) {
+        try {
+            if(regionSmartSpinner.getSelectedItem() != null) {
+                if(isRegionChanged()) {
+                    ProfileController.updateRegion(Region.fromItalianString(regionSmartSpinner.getSelectedItem())).get();
+                    sleep(500);
+                    requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), R.string.region_updated));
+                }
+            }
+            requireActivity().runOnUiThread(() -> goToProfileFragment());
+        } catch (InterruptedException e) {
+            requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), "Operazione interrotta"));
+        } catch (ExecutionException e) {
+            requireActivity().runOnUiThread(() -> ToastManager.showToast(getContext(), e.getCause().getMessage()));
+        } finally {
+            requireActivity().runOnUiThread(() -> loading.dismissDialog());
+        }
     }
 
     private boolean isRegionChanged() {

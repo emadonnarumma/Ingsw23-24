@@ -1,3 +1,0 @@
-Scrivi il codice java di questo form state che controlla:
-- String title
-- String url

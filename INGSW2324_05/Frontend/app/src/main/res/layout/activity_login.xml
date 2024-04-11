@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/logo_login"
+        android:layout_width="370dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dieti_deals_24_logo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_layout_login"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/email_error_text_view_login"
+        app:layout_constraintTop_toBottomOf="@id/email_error_text_view_login"
+        app:passwordToggleEnabled="true">
+
+
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_edit_text_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password_input"
+            android:inputType="textPassword"
+            android:importantForAutofill="no"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/password_error_text_view_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/password_layout_login"
+        app:layout_constraintStart_toStartOf="@id/password_layout_login"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_layout_login"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/logo_login"
+        app:layout_constraintTop_toBottomOf="@id/logo_login">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_edit_text_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/e_mail_input"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/email_error_text_view_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/email_layout_login"
+        app:layout_constraintStart_toStartOf="@id/email_layout_login"/>
+
+    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/login_button"
+        android:layout_width="120dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/login_phrase"
+        android:textColor="@color/white"
+        app:spinning_bar_padding="10dp"
+        app:initialCornerAngle="50dp"
+        app:spinning_bar_color="@color/white"
+
+        app:layout_constraintEnd_toEndOf="@id/password_layout_login"
+        app:layout_constraintTop_toBottomOf="@id/password_layout_login" />
+
+    <View
+        android:id="@+id/or_line_login"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="40dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_button" />
+
+    <TextView
+        android:id="@+id/or_text_view_registration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:background="@color/cardview_light_background"
+        android:text="@string/or_phrase"
+
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_button" />
+
+    <TextView
+        android:id="@+id/registration_phrase_registration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+
+        android:text="@string/registration_phrase"
+        app:layout_constraintEnd_toEndOf="@id/or_text_view_registration"
+        app:layout_constraintStart_toStartOf="@id/or_text_view_registration"
+        app:layout_constraintTop_toBottomOf="@id/or_text_view_registration" />
+
+    <TextView
+        android:id="@+id/go_to_registration_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registration_link"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:textStyle=""
+
+
+        app:layout_constraintEnd_toEndOf="@id/registration_phrase_registration"
+        app:layout_constraintStart_toStartOf="@id/registration_phrase_registration"
+        app:layout_constraintTop_toBottomOf="@id/registration_phrase_registration" />
+</androidx.constraintlayout.widget.ConstraintLayout>

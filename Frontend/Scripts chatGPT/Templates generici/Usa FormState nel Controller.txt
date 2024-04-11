@@ -1,6 +1,0 @@
-Dentro questo controller usa <NOME_DEL_FORM_STATE> tramite:
-1. Un MutableLivedata
-2. Il metodo public void <nome>inputChanged(...) che in caso di errore prende i seguenti valori del file string.xml:
-	-
-	- 
-(dovrà avere come parametro anche Context per utilizzare le stringa del file strings.xml)

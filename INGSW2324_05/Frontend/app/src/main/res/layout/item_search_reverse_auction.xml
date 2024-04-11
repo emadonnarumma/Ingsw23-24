@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/container_text_view_item_reverse_auction"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/rounded_corners_brown"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_item_reverse_auction"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="10dp"
+
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="@id/container_text_view_item_reverse_auction"
+        app:layout_constraintBottom_toBottomOf="@id/container_text_view_item_reverse_auction">
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/slider_item_reverse_auction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorSelectedColor="@color/white"
+            app:sliderIndicatorUnselectedColor="@color/green"
+            app:sliderIndicatorEnabled="false" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/auction_type_icon_item_reverse_auction"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/reverse_arrow"
+
+        app:layout_constraintBottom_toTopOf="@id/card_view_item_reverse_auction"
+        app:layout_constraintTop_toTopOf="@id/container_text_view_item_reverse_auction"
+        app:layout_constraintEnd_toStartOf="@id/auction_type_text_view_item_reverse_auction"
+        app:layout_constraintStart_toStartOf="@id/card_view_item_reverse_auction" />
+
+    <TextView
+        android:id="@+id/auction_type_text_view_item_reverse_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/verdana_bold"
+        android:text="Asta inversa"
+        android:textColor="@color/white"
+
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/auction_type_icon_item_reverse_auction"
+        app:layout_constraintTop_toTopOf="@id/auction_type_icon_item_reverse_auction" />
+
+    <TextView
+        android:id="@+id/auction_category_text_view_item_reverse_auction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/verdana_bold"
+        android:gravity="right"
+        android:maxLines="1"
+        android:shadowColor="#000000"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="2"
+        android:text="Categoria"
+
+        android:textColor="@color/yellow"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_reverse_auction"
+        app:layout_constraintTop_toTopOf="@+id/auction_type_text_view_item_reverse_auction" />
+
+
+    <TextView
+        android:id="@+id/title_text_view_item_reverse_auction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Titolo"
+        android:gravity="center"
+        android:fontFamily="@font/verdana_bold"
+        android:textColor="@color/white"
+
+        android:layout_marginStart="5dp"
+        app:layout_constraintTop_toTopOf="@id/card_view_item_reverse_auction"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_reverse_auction"
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_reverse_auction" />
+
+
+    <ImageView
+        android:id="@+id/expiration_date_icon_item_reverse_auction"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/hourglass"
+
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_reverse_auction"
+        app:layout_constraintEnd_toStartOf="@id/expiration_date_hint_text_view_item_reverse_auction"
+        app:layout_constraintTop_toTopOf="@id/expiration_date_hint_text_view_item_reverse_auction" />
+
+    <TextView
+        android:id="@+id/expiration_date_hint_text_view_item_reverse_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/expiration_date_hint_phrase"
+        android:fontFamily="@font/verdana"
+        android:textColor="@color/white"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/title_text_view_item_reverse_auction"
+        app:layout_constraintStart_toEndOf="@id/expiration_date_icon_item_reverse_auction" />
+
+    <TextView
+        android:id="@+id/expiration_date_text_view_item_reverse_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00/00/0000"
+        android:fontFamily="@font/verdana"
+        android:textColor="@color/white"
+
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@id/expiration_date_hint_text_view_item_reverse_auction"
+        app:layout_constraintStart_toEndOf="@id/expiration_date_icon_item_reverse_auction" />
+
+
+    <ImageView
+        android:id="@+id/current_bid_icon_item_reverse_auction"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/ic_cash_white24dp"
+
+        android:layout_marginEnd="5dp"
+        app:layout_constraintTop_toTopOf="@id/current_bid_hint_text_view_item_reverse_auction"
+        app:layout_constraintStart_toStartOf="@id/expiration_date_icon_item_reverse_auction" />
+
+    <TextView
+        android:id="@+id/current_bid_hint_text_view_item_reverse_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Offerta corrente:"
+        android:fontFamily="@font/verdana"
+        android:textColor="@color/white"
+
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/current_bid_icon_item_reverse_auction"
+        app:layout_constraintTop_toBottomOf="@id/expiration_date_text_view_item_reverse_auction" />
+
+    <TextView
+        android:id="@+id/current_bid_text_view_item_reverse_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:fontFamily="@font/verdana"
+        android:textColor="@color/white"
+
+        app:layout_constraintTop_toBottomOf="@id/current_bid_hint_text_view_item_reverse_auction"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_reverse_auction"
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_reverse_auction"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

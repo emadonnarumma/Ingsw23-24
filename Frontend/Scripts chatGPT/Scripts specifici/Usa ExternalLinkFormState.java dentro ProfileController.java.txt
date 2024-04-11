@@ -1,5 +1,0 @@
-Dentro questo controller usa ExternalLinkFormState tramite:
-1. Un MutableLivedata
-2. Il metodo public void dataChanged(...) che in caso di errore prende i seguenti valori del file string.xml:
-	- url_title_format_invalid
-	- url_format_invalid

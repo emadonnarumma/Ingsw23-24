@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.createAuction.generalAuctionAttributes.GeneralAuctionAttributesFragment"
+    android:id="@+id/general_auction_attributes_layout">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_layout_general_auction_attributes"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_edit_text_general_auction_attributes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:maxLength="40"
+            android:hint="Titolo" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/title_error_text_view_general_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/title_layout_general_auction_attributes"
+        app:layout_constraintStart_toStartOf="@id/title_layout_general_auction_attributes"/>
+
+    <ImageView
+        android:id="@+id/default_create_auction_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:src="@drawable/no_image_available"
+        android:elevation="10dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_error_text_view_general_auction_attributes" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_general_auction_attributes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="6dp"
+
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_error_text_view_general_auction_attributes">
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/slider_view_small"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorSelectedColor="@color/white"
+            app:sliderIndicatorUnselectedColor="@color/green" />
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_image_button_general_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="12dp"
+
+        android:backgroundTint="@color/green"
+        android:clickable="true"
+        android:src="@drawable/ic_plus_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/card_view_general_auction_attributes"
+        app:layout_constraintEnd_toEndOf="@id/card_view_general_auction_attributes" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_image_button_general_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:src="@drawable/ic_delete_cross24dp"
+        android:backgroundTint="@color/red"
+
+        app:layout_constraintEnd_toEndOf="@id/card_view_general_auction_attributes"
+        app:layout_constraintTop_toTopOf="@id/card_view_general_auction_attributes" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/description_layout_general_auction_attributes"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_view_general_auction_attributes"
+        app:counterEnabled="true"
+        app:counterMaxLength="500">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/description_edit_text_general_auction_attributes"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:hint="@string/auction_description_phrase"
+        android:inputType="textMultiLine|textCapSentences"
+        android:maxLength="500" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/description_error_text_view_general_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/description_layout_general_auction_attributes"
+        app:layout_constraintStart_toStartOf="@id/description_layout_general_auction_attributes"/>
+
+    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+        android:id="@+id/wear_spinner_general_auction_attributes"
+        android:layout_width="177dp"
+        android:layout_height="wrap_content"
+        app:smsp_hint="@string/wear_phrase"
+        app:smsp_hintColor="@color/black"
+        app:smsp_itemColor="@color/green"
+        app:smsp_itemListColor="@color/black"
+        app:smsp_selectedItemListColor="@color/green"
+        app:smsp_itemListHintBackgroundColor="#808080"
+        app:smsp_itemListHintColor="#FFFFFF"
+        app:smsp_multilineError="false"
+        app:smsp_isSearchable="true"
+        app:smsp_searchHint="@string/search_hint"
+        app:smsp_searchHeaderText="@string/wear_phrase"
+        app:smsp_searchHeaderBackgroundColor="@color/green"
+        app:smsp_isOutlined="true"
+
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/description_error_text_view_general_auction_attributes"
+        app:layout_constraintStart_toStartOf="@id/description_error_text_view_general_auction_attributes" />
+
+
+
+
+    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+        android:id="@+id/category_spinner_general_auction_attributes"
+        android:layout_width="177dp"
+        android:layout_height="wrap_content"
+        app:smsp_hint="@string/category_phrase"
+        app:smsp_hintColor="@color/black"
+        app:smsp_itemColor="@color/green"
+        app:smsp_itemListColor="@color/black"
+        app:smsp_selectedItemListColor="@color/green"
+        app:smsp_itemListHintBackgroundColor="#808080"
+        app:smsp_itemListHintColor="#FFFFFF"
+        app:smsp_multilineError="false"
+        app:smsp_isSearchable="true"
+        app:smsp_searchHint="@string/search_hint"
+        app:smsp_searchHeaderText="@string/category_phrase"
+        app:smsp_searchHeaderBackgroundColor="@color/green"
+        app:smsp_isOutlined="true"
+
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/description_error_text_view_general_auction_attributes"
+        app:layout_constraintEnd_toEndOf="@id/description_layout_general_auction_attributes" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/next_step_button_general_auction_attributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/green"
+        android:clickable="true"
+        android:src="@drawable/ic_next_arrow_24"
+        android:enabled="false"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/category_spinner_general_auction_attributes"
+        app:layout_constraintEnd_toEndOf="@id/category_spinner_general_auction_attributes" />
+</androidx.constraintlayout.widget.ConstraintLayout>

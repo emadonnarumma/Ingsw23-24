@@ -1,9 +1,0 @@
-Dentro questa classe:
-1. Scrivi un textWatcher per i listener dei campi di testo:
--
-- 
-2: Scrivi i listener degli spinner:
-- 
-- 
-3. Dentro questi listener chiama l' inputChanged del controller così da aggiornare il formState.
-4. Infine scrivi un observer del form state che ogni volta in base all'errore presente nel form state aggiorna il campo di testo corrispondente con setError. Il tasto nextStepButton deve essere enabled se e solo se isDataValid è true nel form state

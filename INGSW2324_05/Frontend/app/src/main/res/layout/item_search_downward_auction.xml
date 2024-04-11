@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+    android:layout_marginVertical="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/container_text_view_item_downward_auction"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/rounded_corners_cyan"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_item_downward_auction"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/container_text_view_item_downward_auction"
+        app:layout_constraintStart_toStartOf="@id/container_text_view_item_downward_auction">
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/slider_item_downward_auction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:sliderIndicatorEnabled="false"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorSelectedColor="@color/white"
+            app:sliderIndicatorUnselectedColor="@color/green" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/auction_type_icon_item_downward_auction"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/down_chart_arrow"
+
+        app:layout_constraintBottom_toTopOf="@id/card_view_item_downward_auction"
+        app:layout_constraintStart_toStartOf="@id/card_view_item_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/container_text_view_item_downward_auction" />
+
+    <TextView
+        android:id="@+id/auction_type_text_view_item_downward_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/verdana_bold"
+        android:text="Asta al ribasso"
+        android:textColor="@color/white"
+
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/auction_type_icon_item_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/auction_type_icon_item_downward_auction" />
+
+    <TextView
+        android:id="@+id/auction_category_text_view_item_downward_auction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/verdana_bold"
+        android:gravity="right"
+        android:maxLines="1"
+        android:shadowColor="#000000"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="2"
+        android:text="Categoria"
+
+        android:textColor="@color/yellow"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
+        app:layout_constraintTop_toTopOf="@+id/auction_type_text_view_item_downward_auction" />
+
+    <TextView
+        android:id="@+id/title_text_view_item_downward_auction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/verdana_bold"
+        android:gravity="center"
+        android:text="Titolo"
+
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_downward_auction"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/card_view_item_downward_auction" />
+
+    <ImageView
+        android:id="@+id/buy_now_icon_item_downward_auction"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_cart_shopping_24dp"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
+        app:layout_constraintTop_toBottomOf="@id/title_text_view_item_downward_auction" />
+
+    <TextView
+        android:id="@+id/buy_now_hint_text_view_item_downward_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/verdana"
+        android:text="@string/buy_now_hint_phrase"
+        android:textColor="@color/white"
+
+        app:layout_constraintStart_toEndOf="@id/buy_now_icon_item_downward_auction"
+        app:layout_constraintTop_toTopOf="@id/buy_now_icon_item_downward_auction" />
+
+    <TextView
+        android:id="@+id/buy_now_text_view_item_downward_auction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/verdana"
+        android:text="20€"
+        android:textColor="@color/white"
+
+        app:layout_constraintEnd_toEndOf="@id/container_text_view_item_downward_auction"
+        app:layout_constraintStart_toEndOf="@id/card_view_item_downward_auction"
+        app:layout_constraintTop_toBottomOf="@id/buy_now_icon_item_downward_auction" />
+</androidx.constraintlayout.widget.ConstraintLayout>

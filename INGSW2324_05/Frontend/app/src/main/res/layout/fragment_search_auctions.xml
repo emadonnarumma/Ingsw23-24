@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
+    tools:context=".ui.home.searchAuctions.SearchAuctionsFragment">
+
+    <ProgressBar
+        android:id="@+id/progress_bar_search_auctions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+        android:id="@+id/filter_button_search"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:smsp_hint="@string/category_phrase"
+        app:smsp_hintColor="@color/black"
+        app:smsp_isOutlined="true"
+        app:smsp_isSearchable="true"
+        app:smsp_itemColor="@color/green"
+        app:smsp_itemListColor="@color/black"
+        app:smsp_itemListHintBackgroundColor="#808080"
+        app:smsp_itemListHintColor="#FFFFFF"
+        app:smsp_multilineError="false"
+        app:smsp_searchHeaderBackgroundColor="@color/green"
+        app:smsp_searchHeaderText="@string/category_phrase"
+
+
+        app:smsp_searchHint="@string/search_hint"
+        app:smsp_selectedItemListColor="@color/green" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_search_auctions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="@dimen/corner_radius"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_button_search">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout_fragment_search_auctions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_fragment_search_auctions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ms_material_grey_400"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/no_found_auction_text_view_my_auctions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_search_auction_phrase"
+            android:textAlignment="center"
+            android:fontFamily="@font/verdana_bold"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_size_large" />
+    </androidx.cardview.widget.CardView>
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/search_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/filter_button_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mt_hint="Cerca"
+        app:mt_searchBarColor="@color/gray"
+        app:mt_searchIconTint="@color/green"
+        app:mt_roundedSearchBarEnabled="false"
+        app:mt_maxSuggestionsCount="6"
+        android:elevation="8dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

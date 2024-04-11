@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_search">
+
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.ingsw.dietiDeals24.ui.home.searchAuctions.SearchAuctionsFragment"
+        android:label="@string/bottom_nav_search"
+        tools:layout="@layout/fragment_search_auctions" />
+
+
+    <fragment
+        android:id="@+id/navigation_create_auction"
+        android:name="com.ingsw.dietiDeals24.ui.home.createAuction.generalAuctionAttributes.GeneralAuctionAttributesFragment"
+        android:label="@string/bottom_nav_create_auction"
+        tools:layout="@layout/fragment_profile" />
+
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.ingsw.dietiDeals24.ui.home.profile.my.ProfileFragment"
+        android:label="@string/bottom_nav_profile"
+        tools:layout="@layout/fragment_general_auction_attributes" />
+
+
+    <fragment
+        android:id="@+id/navigation_my_auctions"
+        android:name="com.ingsw.dietiDeals24.ui.home.myAuctions.MyAuctionsFragment"
+        android:label="@string/bottom_nav_my_auctions"
+        tools:layout="@layout/fragment_my_auctions" />
+
+
+    <fragment
+        android:id="@+id/navigation_my_bids"
+        android:name="com.ingsw.dietiDeals24.ui.home.myBids.MyBidsFragment"
+        android:label="@string/bottom_nav_my_bids"
+        tools:layout="@layout/fragment_my_bids" />
+</navigation>
